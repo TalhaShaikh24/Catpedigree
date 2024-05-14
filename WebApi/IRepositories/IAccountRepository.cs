@@ -12,5 +12,6 @@ namespace WebApi.IRepositories
     {
         Register Authenticate(Register obj);
         Register RegisterUser(Register obj);
+        Register UpdateProfile(Register obj);
     }
 }

@@ -37,5 +37,14 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Dashboard/GetAllDashboard", "", HttpContext);
 
         }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateProfile")]
+        public Task<object> UpdateProfile()
+        {
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Dashboard/UpdateProfile", "", HttpContext);
+
+        }
     }
 }
