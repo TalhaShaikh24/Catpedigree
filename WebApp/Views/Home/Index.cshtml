@@ -1,0 +1,556 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!--====== Start Hero Section ======-->
+<section class="hero-area">
+    <div class="hero-wrapper-three bg_cover" style="background-image: url(assets/images/hero/hero-three-bg-1.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hero-content text-center">
+                        <img src="~/webAssets/images/logo/happy-cat.png" class="mb-4" />
+                        <h1 class="wow fadeInUp" data-wow-delay=".30s">Cat Pedigree World</h1>
+                        <h3 class="wow fadeInDown" data-wow-delay=".50s">What do you want to see today?</h3>
+                        <div class="hero-search-wrapper wow fadeInUp" data-wow-delay=".70s">
+                            <form>
+                                <div class="hero-search-form tab-content">
+                                    <div class="tab-pane fade show active">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-6">
+                                                <div class="form_group">
+                                                    <input type="text" class="form_control" placeholder="Search By Keyword" name="search" required>
+                                                    <i class="ti-ink-pen"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6">
+                                                <div class="form_group">
+                                                    <select class="wide">
+                                                        <option value="-1" disabled>Search By Category</option>
+                                                        <option value="01">Kitten for Sell</option>
+                                                        <option value="02">Studmales</option>
+                                                        <option value="03">Relocation</option>
+                                                        <option value="04">Pedigree</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6">
+                                                <div class="form_group">
+                                                    <input type="text" class="form_control" placeholder="Location" name="location" required>
+                                                    <i class="ti-location-pin"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6">
+                                                <div class="form_group">
+                                                    <button class="main-btn icon-btn">Search Now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Hero Section ======-->
+<!--====== Start Place Section ======-->
+<section class="place-area masonry-place-area light-bg pt-115 pb-90">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section-title text-center mb-60 wow fadeInUp">
+                    <span class="sub-title">Featured List</span>
+                    <h2><span class="line">Popular</span> Listings</h2>
+                </div>
+            </div>  
+        </div>
+        <div class="row masonry-place-row">
+            <div class="col-lg-4 col-md-6 col-sm-12 place-column">
+                <div class="place-item place-item-three mb-30 wow fadeInUp" data-wow-delay=".2s">
+                    <div class="place-thumbnail">
+                        <img src="" alt="place image">
+                        <div class="place-overlay">
+                            <div class="place-content">
+                                <h4>Cat 1</h4>
+                                <ul class="ratings ratings-four">
+                                    <li><span>Venezia, Italy</span></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 place-column">
+                <div class="place-item place-item-three mb-30 wow fadeInUp" data-wow-delay=".25s">
+                    <div class="place-thumbnail">
+                        <img src="~/webassets//images/place/place-12.jpg" alt="place image">
+                        <div class="place-overlay">
+                            <div class="place-content">
+                                <h4>Cat 2</h4>
+                                <ul class="ratings ratings-four">
+                                    <li><span>Venezia, Italy</span></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 place-column">
+                <div class="place-item place-item-three mb-30 wow fadeInUp" data-wow-delay=".30s">
+                    <div class="place-thumbnail">
+                        <img src="~/webassets//images/place/place-13.jpg" alt="place image">
+                        <div class="place-overlay">
+                            <div class="place-content">
+                                <h4>Cat 3</h4>
+                                <ul class="ratings ratings-four">
+                                    <li><span>Venezia, Italy</span></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 place-column">
+                <div class="place-item place-item-three mb-30 wow fadeInUp" data-wow-delay=".35s">
+                    <div class="place-thumbnail">
+                        <img src="~/webassets//images/place/place-14.jpg" alt="place image">
+                        <div class="place-overlay">
+                            <div class="place-content">
+                                <h4>Cat 4</h4>
+                                <ul class="ratings ratings-four">
+                                    <li><span>Venezia, Italy</span></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 place-column">
+                <div class="place-item place-item-three mb-30 wow fadeInUp" data-wow-delay=".40s">
+                    <div class="place-thumbnail">
+                        <img src="~/webassets//images/place/place-15.jpg" alt="place image">
+                        <div class="place-overlay">
+                            <div class="place-content">
+                                <h4>Cat 5</h4>
+                                <ul class="ratings ratings-four">
+                                    <li><span>Venezia, Italy</span></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                    <li class="star"><i class="fas fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Hero Section ======-->
+<!--====== Start category Section ======-->
+<section class="category-area">
+    <div class="category-wrapper-bg bg_cover pt-75 pb-50" style="background-image: url(assets/images/bg/catgory-bg-1.jpg);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="section-title section-title-white text-center mb-60 wow fadeInUp">
+                        <span class="sub-title">What We Offer</span>
+                        <h2>Popular Category</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="category-item category-item-three mb-30 wow fadeInUp">
+                        <div class="icon">
+                            <img src="~/webAssets/images/category/cat.png" width="90" />
+                        </div>
+                        <div class="info">
+                            <h4 class="title"><a href="listing-grid.html">Kittens</a></h4>
+                            <p>Sed perspi ciaund natus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="category-item category-item-three mb-30 wow fadeInDown">
+                        <div class="icon">
+                            <img src="~/webAssets/images/category/happy.png" width="90" />
+                        </div>
+                        <div class="info">
+                            <h4 class="title"><a href="listing-grid.html">Studmales</a></h4>
+                            <p>Sed perspi ciaund natus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="category-item category-item-three mb-30 wow fadeInUp">
+                        <div class="icon">
+                            <img src="~/webAssets/images/category/smile.png" width="90" />
+                        </div>
+                        <div class="info">
+                            <h4 class="title"><a href="listing-grid.html">Relocation</a></h4>
+                            <p>Sed perspi ciaund natus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="category-item category-item-three mb-30 wow fadeInDown" data-wow-delay=".15s">
+                        <div class="icon">
+                            <img src="~/webAssets/images/category/pedigree.png" width="75" />
+                        </div>
+                        <div class="info">
+                            <h4 class="title"><a href="listing-grid.html">Pedigree</a></h4>
+                            <p>Sed perspi ciaund natus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--====== Start Features Section ======-->
+<section class="features-area">
+    <div class="features-wrapper-two bg_cover pt-115 pb-80" style="background-image: url(assets/images/bg/features-bg-1.jpg);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-title section-title-white text-center mb-50 wow fadeInUp">
+                        <span class="sub-title">Working Process</span>
+                        <h2>How Does We Works</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInDown">
+                        <div class="icon">
+                            <i class="flaticon-map"></i>
+                        </div>
+                        <div class="content">
+                            <h4>Find Your Places</h4>
+                            <p>
+                                Amet consectetur adipiscing elitsed
+                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInUp" data-wow-delay="20ms">
+                        <div class="icon">
+                            <i class="flaticon-star"></i>
+                        </div>
+                        <div class="content">
+                            <h4>Customer Reviews</h4>
+                            <p>
+                                Amet consectetur adipiscing elitsed
+                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInDown">
+                        <div class="icon">
+                            <i class="flaticon-calendar"></i>
+                        </div>
+                        <div class="content">
+                            <h4>Find Your Places</h4>
+                            <p>
+                                Amet consectetur adipiscing elitsed
+                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Features Section ======-->
+<!--====== Start CTA Section ======-->
+@* <div class="cta-area">
+    <div class="cta-wrapper-three bg_cover pt-50 pb-50" style="background-image: url(assets/images/bg/cta-bg-3.jpg);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-9">
+                    <div class="cta-content-box wow fadeInLeft">
+                        <h3>Splash Yourself Bigger Offer on Everyday</h3>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="button text-center wow fadeInRight">
+                        <a href="listing-grid.html" class="main-btn icon-btn">Explore Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+<!--====== End CTA Section ======-->
+<!--====== Start Testimonial Section ======-->
+<section class="testimonial-area pt-120 pb-120">
+    <div class="container">
+        <div class="testimonial-wrapper-two">
+            <div class="row no-gutters">
+                <div class="col-lg-6">
+                    <div class="testimonial-bg bg_cover wow fadeInLeft" style="background-image: url(assets/images/testimonial/testimonial-img-1.jpg);"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="testimonial-content-box bg_cover wow fadeInRight" style="background-image: url(assets/images/bg/testimonial-bg-3.jpg);">
+                        <div class="section-title section-title-left mb-45">
+                            <span class="sub-title">Customer Feedback</span>
+                            <h2>Customer Say</h2>
+                        </div>
+                        <div class="testimonial-review-area">
+                            <div class="testimonial-thumb-slider-one">
+                                <div class="single-thumb">
+                                    <img src="~/webassets//images/testimonial/tm-thumb-1.jpg" alt="testimonial thumb">
+                                </div>
+                                <div class="single-thumb">
+                                    <img src="~/webassets//images/testimonial/tm-thumb-2.jpg" alt="testimonial thumb">
+                                </div>
+                                <div class="single-thumb">
+                                    <img src="~/webassets//images/testimonial/tm-thumb-3.jpg" alt="testimonial thumb">
+                                </div>
+                                <div class="single-thumb">
+                                    <img src="~/webassets//images/testimonial/tm-thumb-2.jpg" alt="testimonial thumb">
+                                </div>
+                            </div>
+                            <div class="testimonial-content-slider-one">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-content">
+                                        <p>
+                                            multiply given all hath given may meat god abundant appear lioud
+                                            fourth madman mane said god dominion great gathering called very shall after cre ated from fruitful place over the mitual
+                                        </p>
+                                        <div class="author-info d-flex">
+                                            <div class="quote">
+                                                <img src="~/webassets//images/quote.png" alt="">
+                                            </div>
+                                            <div class="author-title">
+                                                <h4>Melisa Powels</h4>
+                                                <span class="position">Sr. Designer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-item">
+                                    <div class="testimonial-content">
+                                        <p>
+                                            multiply given all hath given may meat god abundant appear lioud
+                                            fourth madman mane said god dominion great gathering called very shall after cre ated from fruitful place over the mitual
+                                        </p>
+                                        <div class="author-info d-flex">
+                                            <div class="quote">
+                                                <img src="~/webassets//images/quote.png" alt="">
+                                            </div>
+                                            <div class="author-title">
+                                                <h4>Martyn Decode</h4>
+                                                <span class="position">Sr. Designer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-item">
+                                    <div class="testimonial-content">
+                                        <p>
+                                            multiply given all hath given may meat god abundant appear lioud
+                                            fourth madman mane said god dominion great gathering called very shall after cre ated from fruitful place over the mitual
+                                        </p>
+                                        <div class="author-info d-flex">
+                                            <div class="quote">
+                                                <img src="~/webassets//images/quote.png" alt="">
+                                            </div>
+                                            <div class="author-title">
+                                                <h4>Alesha Mature</h4>
+                                                <span class="position">Sr. Designer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-item">
+                                    <div class="testimonial-content">
+                                        <p>
+                                            multiply given all hath given may meat god abundant appear lioud
+                                            fourth madman mane said god dominion great gathering called very shall after cre ated from fruitful place over the mitual
+                                        </p>
+                                        <div class="author-info d-flex">
+                                            <div class="quote">
+                                                <img src="~/webassets//images/quote.png" alt="">
+                                            </div>
+                                            <div class="author-title">
+                                                <h4>Martyn Decode</h4>
+                                                <span class="position">Sr. Designer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== End Testimonial Section ======-->
+<!--====== Start Client Section ======-->
+<section class="client-area">
+    <div class="client-wrapper-two bg_cover pt-120 pb-70" style="background-image: url(assets/images/bg/testimonial-bg-1.jpg);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="client-content-box mb-50 wow fadeInLeft">
+                        <div class="section-title section-title-left section-title-white mb-35">
+                            <span class="sub-title">Premium Partners</span>
+                            <h2>Glod Sponsors</h2>
+                        </div>
+                        <p>
+                            Sed ut perspiciatis omnis iste natus error voluptatem
+                            accusantium doloremque laudantiu totam rem aperiam
+                            eaque quae abillo inventore veritatis quasi architectos
+                            beatae vitae dicta sunt explicabo.
+                        </p>
+                        <a href="listing-grid.html" class="main-btn icon-btn">Explore Now</a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="client-item-wrapper mb-50 wow fadeInRight">
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/05.png" alt="client image"></a>
+                        </div>
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/06.png" alt="client image"></a>
+                        </div>
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/07.png" alt="client image"></a>
+                        </div>
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/08.png" alt="client image"></a>
+                        </div>
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/09.png" alt="client image"></a>
+                        </div>
+                        <div class="client-item client-item-two">
+                            <a href="#"><img src="~/webassets//images/client/10.png" alt="client image"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Client Section ======-->
+<!--====== Start Blog Section ======-->
+<section class="blog-area pt-115 pb-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section-title text-center mb-60 wow fadeInUp">
+                    <span class="sub-title">Recent Articles</span>
+                    <h2>Blogs</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-item blog-post-item-three mb-40 wow fadeInUp">
+                    <div class="post-thumbnail">
+                        <a href="blog-details.html"><img src="~/webassets//images/blog/blog-7.jpg" alt="Blog Image"></a>
+                        <div class="post-date"><a href="#">20 <span>Oct</span></a></div>
+                    </div>
+                    <div class="entry-content">
+                        <a href="#" class="cat-btn"><i class="ti-bookmark-alt"></i>Tours & Travel</a>
+                        <h3 class="title">
+                            <a href="blog-details.html">
+                                Duis nonummy socios mattis
+                                tempus penatibus
+                            </a>
+                        </h3>
+                        <div class="post-meta">
+                            <ul>
+                                <li><span><i class="ti-comments-smiley"></i><a href="#">0 Comment</a></span></li>
+                                <li><span><i class="ti-id-badge"></i><a href="#">By admin</a></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-item blog-post-item-three mb-40 wow fadeInDown" data-wow-delay="20ms">
+                    <div class="post-thumbnail">
+                        <a href="blog-details.html"><img src="~/webassets//images/blog/blog-8.jpg" alt="Blog Image"></a>
+                        <div class="post-date"><a href="#">20 <span>Oct</span></a></div>
+                    </div>
+                    <div class="entry-content">
+                        <a href="#" class="cat-btn"><i class="ti-bookmark-alt"></i>Tours & Travel</a>
+                        <h3 class="title">
+                            <a href="blog-details.html">
+                                Litora phasellus in phasellus
+                                curabitur porta eun
+                            </a>
+                        </h3>
+                        <div class="post-meta">
+                            <ul>
+                                <li><span><i class="ti-comments-smiley"></i><a href="#">0 Comment</a></span></li>
+                                <li><span><i class="ti-id-badge"></i><a href="#">By admin</a></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-item blog-post-item-three mb-40 wow fadeInUp">
+                    <div class="post-thumbnail">
+                        <a href="blog-details.html"><img src="~/webassets//images/blog/blog-9.jpg" alt="Blog Image"></a>
+                        <div class="post-date"><a href="#">20 <span>Oct</span></a></div>
+                    </div>
+                    <div class="entry-content">
+                        <a href="#" class="cat-btn"><i class="ti-bookmark-alt"></i> Tours & Travel</a>
+                        <h3 class="title">
+                            <a href="blog-details.html">
+                                Mattis parturent tortor lectus
+                                lestie sapien Dapus
+                            </a>
+                        </h3>
+                        <div class="post-meta">
+                            <ul>
+                                <li><span><i class="ti-comments-smiley"></i><a href="#">0 Comment</a></span></li>
+                                <li><span><i class="ti-id-badge"></i><a href="#">By admin</a></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="button text-center mt-40 wow fadeInUp">
+                    <a href="blog.html" class="main-btn icon-btn">View Blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

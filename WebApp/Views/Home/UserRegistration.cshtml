@@ -1,0 +1,136 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--====== Title ======-->
+    <title>@ViewData["Title"] - WebApp</title>
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="~/webassets/images/favicon.ico" type="image/png">
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="~/webassets/css/bootstrap.min.css">
+    <!--====== FontAwesoem css ======-->
+    <link rel="stylesheet" href="~/webassets/fonts/themify-icons/themify-icons.css">
+
+    <!--====== Jquery ui css ======-->
+    <link rel="stylesheet" href="~/webassets/css/jquery-ui.min.css">
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="~/webassets/css/animate.css">
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="~/webassets/css/default.css">
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="~/webassets/css/style.css">
+    <!--====== SweetAlert css ======-->
+    <link rel="stylesheet" href="~/webassets/css/sweetalert2.css">
+</head>
+<body>
+
+    <!--====== Start Add Listing Section ======-->
+    <section class="fioxen-add-listing pt-120 pb-120">
+        <div class="container">
+            <form id="registerForm" enctype="multipart/form-data">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">General Information</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="contactNo">Contact Number</label>
+                                        <input type="text" class="form-control" id="contactNo" name="contactNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="profileInfo">Profile Info</label>
+                                        <textarea class="form-control" id="profileInfo" name="profileInfo"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="zoologicalNumber">Zoological Number</label>
+                                        <input type="text" class="form-control" id="zoologicalNumber" name="zoologicalNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profilePic">Profile Picture</label>
+                                        <input type="file" class="form-control-file" id="profilePic" name="profilePic">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="breederLicense">Breeder License</label>
+                                        <input type="file" class="form-control-file" id="breederLicense" name="breederLicense">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button text-center">
+                            <button class="main-btn icon-btn" id="registerBtn" type="button">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section><!--====== End Add Listing Section ======-->
+    <!--====== Jquery js ======-->
+    <script src="~/webassets/js/vendor/jquery-3.6.0.min.js"></script>
+    <!--====== Popper js ======-->
+    <script src="~/webassets/js/popper.min.js"></script>
+    <!--====== Bootstrap js ======-->
+    <script src="~/webassets/js/bootstrap.min.js"></script>
+    <!--====== SweetAlerts js ======-->
+    <script src="~/webassets/js/sweetalert2.min.js"></script>
+
+    
+
+    <script src="~/webassets/pagesjs/userregistration.js"></script>
+</body>
+</html>
+
+

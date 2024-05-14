@@ -1,0 +1,140 @@
+﻿:root {
+    --main-color: #db1b37;
+}
+
+body {
+    background: #EAEAEA;
+}
+
+.pricingTable {
+    color: var(--main-color);
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 0 0 50px;
+    position: relative;
+    z-index: 1;
+}
+
+    .pricingTable:before,
+    .pricingTable:after {
+        content: "";
+        background: var(--main-color);
+        width: 100%;
+        height: calc(100% - 100px);
+        border-radius: 20px 20px;
+        transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+    }
+
+    .pricingTable:after {
+        background: #fff;
+        width: calc(100% - 30px);
+        height: calc(100% - 1px);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .pricingTable .pricingTable-header {
+        color: #fff;
+        background: var(--main-color);
+        width: calc(100% - 70px);
+        border-radius: 0 0 50px 50px;
+        padding: 10px 0;
+        margin: 0 auto 30px;
+    }
+
+    .pricingTable .title {
+        font-size: 40px;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin: 0;
+        color:#fff;
+    }
+
+    .pricingTable .price-value {
+        margin: 0 0 30px;
+    }
+
+        .pricingTable .price-value .amount {
+            font-size: 50px;
+            font-weight: 700;
+            line-height: 50px;
+            text-transform: capitalize;
+            display: block;
+        }
+
+    .pricingTable .pricing-content {
+        padding: 0;
+        margin: 0 0 30px;
+        list-style: none;
+        display: inline-block;
+    }
+
+        .pricingTable .pricing-content li {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            line-height: 25px;
+            letter-spacing: .5px;
+            padding: 0 0 0 30px;
+            margin: 0 0 15px;
+            position: relative;
+        }
+
+            .pricingTable .pricing-content li:last-child {
+                margin: 0;
+            }
+
+            .pricingTable .pricing-content li:before {
+                color: var(--main-color);
+                background-color: #fff;
+                content: "✔";
+                font-family: "Font Awesome 5 free";
+                font-size: 14px;
+                font-weight: 900;
+                text-align: center;
+                line-height: 21px;
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                position: absolute;
+                top: 2px;
+                left: 0;
+            }
+
+            .pricingTable .pricing-content li.disable:before {
+                content: "\f00d";
+            }
+
+    .pricingTable .pricingTable-signup a {
+        color: #fff;
+        background: var(--main-color);
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 8px 35px;
+        border-radius: 50px 50px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: inline-block;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .pricingTable .pricingTable-signup a:hover {
+            text-shadow: -2px 2px 1px #000;
+        }
+
+    .pricingTable.blue {
+        --main-color: #37474f;
+    }
+
+    .pricingTable.magenta {
+        --main-color: #971F45;
+    }
+
+@media only screen and (max-width: 990px) {
+    .pricingTable {
+        margin: 0 0 58px;
+    }
+}

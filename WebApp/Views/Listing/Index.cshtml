@@ -1,0 +1,509 @@
+﻿
+<style>
+    .transparent-header {
+        background-color: #000000 !important;
+    }
+</style>
+<section class="fioxen-add-listing pt-120 pb-120 mt-60">
+    <div class="container-fluid">
+        <form>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
+                        <h4 class="title">General Information</h4>
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>Pakages</label>
+                                    <select class="wide" id="PackageId">
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>Category</label>
+                                    <select class="wide" id="Category">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>Title</label>
+                                    <div class="form_group">
+                                        <input type="text" class="form_control" id="Title" placeholder="Title" name="name" required value="TestTitle">
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>Gender</label>
+                                    <select class="wide" id="Gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>TYPE OF CAT</label>
+                                    <select class="wide" id="TypeOfCat">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>AGE</label>
+
+                                    <select class="wide" id="Age">
+                                        <option value="-1" disabled selected>Select Age</option>
+                                        <option value="1">3 Months</option>
+                                        <option value="2">4 Months</option>
+                                        <option value="3">5 Months</option>
+                                        <option value="4">6 Months</option>
+                                        <option value="5">7 Months</option>
+                                        <option value="6">8 Months</option>
+                                        <option value="7">9 Months</option>
+                                        <option value="8">10 Months</option>
+                                        <option value="9">11 Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form_group">
+                                    <label class="d-block">DESCRIPTION</label>
+
+                                    <div class="form_group">
+                                        <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value="Test Description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp" id="PEDIGREE" style="display:none;">
+                        <h4 class="title">PEDIGREE</h4>
+                        <p>Click here or drop files to upload</p>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                        <h4 class="title">Gallery Images</h4>
+                        <p>Click here or drop files to upload</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form_group file-input-two">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
+
+                                        <div class="form_group">
+                                            <input type="file" id="FeaturedFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row my-2" id="FeaturedImageAppend">
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="form_group file-input-two">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 20px; font-weight:900">GALLERY (OPTIONAL)</label>
+
+                                        <div class="form_group">
+                                            <input type="file" multiple id="Gallery_Files" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" id="GalleryFilesAppend">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                        <h4 class="title">Video</h4>
+                        <p>Click here or drop files to upload</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form_group file-input-two">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
+                                        <small> Post video of your beloved kittens</small>
+                                        <div class="form_group">
+                                            <input type="file" id="VideoFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row my-2" id="VideoFileAppend">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                        <h4 class="title">Detailed Information</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>Location</label>
+                                    <div class="form_group">
+                                        <input type="text" class="form_control" id="Location" placeholder="Location" name="name" required value="TestLocation">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>State</label>
+                                    <div class="form_group">
+                                        <input type="text" class="form_control" id="State" placeholder="State" name="name" required value="TestState">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>City</label>
+                                    <div class="form_group">
+                                        <input type="text" class="form_control" id="City" placeholder="City" name="name" required value="TestCity">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>PHONE (OPTIONAL)</label>
+                                    <div class="form_group">
+                                        <input id="Phone" type="tel" name="mobile" class="form_control" autofocus required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>EMAIL</label>
+                                    <div class="form_group">
+                                        <input type="text" id="Email" class="form_control" placeholder="EMAIL" name="name" value="Khasnainali8@gmail.com">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group">
+                                    <label>BREEDER'S NAME</label>
+                                    <div class="form_group">
+                                        <input type="text" id="BreerderName" class="form_control" placeholder="BREEDER'S NAME" name="name" value="TestBreerderName">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-8">
+                                <div class="form_group">
+                                    <label class="d-block" style="line-height: 5px; font-weight:600">BREEDER'S LICENSE</label>
+                                    <small>We need your Breeder's License to verify that you are an authorized person.</small>
+                                    <small>No listing will be posted until we have and review all documentation.</small>
+                                    <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                    <small>Please check our Terms and Conditions page for further information.</small>
+                                    <div class="form_group mt-3 mb-4">
+                                        <div class="single-checkbox d-flex mb-2">
+                                            <input type="radio" id="check2" name="IsBreerderLicenseUpload" value="false">
+                                            <label for="check2"><span>I will upload my license to my profile.</span></label>
+                                        </div>
+                                        <div class="single-checkbox d-flex">
+                                            <input type="radio" id="check3" name="IsBreerderLicenseUpload" value="true">
+                                            <label for="check3"><span>I've already uploaded my license to my profile.</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="form_group">
+                                    <label class="d-block" style="line-height: 30px; font-weight:900">ZOOLOGICAL NUMBER (OPTIONAL)</label>
+                                    <label class="d-block mb-3" style="line-height: 5px; font-size:12px; font-style:italic; font-weight:900">VENDORS FROM SPAIN ONLY</label>
+                                    <small>If you're selling from spain, we need your zoological number, to verify that you are an authorized vendor.</small>
+                                    <small>No listing will be posted until we have, and review all documentation.</small>
+                                    <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                    <small>Please check our Terms and Conditions page for further information.</small>
+                                    
+                                    <div class="form_group mt-2">
+                                        <div class="single-checkbox d-flex">
+                                            <input type="checkbox" id="ZoologicalNumber" name="hereby" value="true">
+                                            <label for="ZoologicalNumber"><span>Hereby i confirm, that I've added my zoological number to my profile.</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button text-center">
+                        <button class="main-btn icon-btn" type="button" id="Btn_Post_Listing">Submit Listing</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+
+    $("#FeaturedFile").on('change', function (e) {
+
+        debugger
+
+        let FeaturedFile = e.target.files[0];
+
+        $('#FeaturedImageAppend').empty();
+        $("#FeaturedImageAppend").append(`
+                                         <div class="col-lg-4 mb-4">
+                                     <div class="form_group file-input-one">
+
+                                            <div class="img-thumbnail" style="width:50%!important">
+                                            <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                                            <img src="${URL.createObjectURL(FeaturedFile)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
+                                                <div style="position:absolute;top:0px;right:0px;">
+                                                  <button class="btn btn-danger btn-xs Featured-remove-button" style="border-radius: 25px;">X</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`);
+
+    });
+
+    $(document).on('click', '.Featured-remove-button', function () {
+        $("#FeaturedImageAppend").children().remove();
+        $("#FeaturedFile").val(null);
+    });
+
+
+    var filesToUpload = [];
+
+    $("#Gallery_Files").on('change', function (e) {
+        for (let i = 0; i < e.target.files.length; i++) {
+            let myFile = e.target.files[i];
+            let myFileID = "FID" + (1000 + Math.random() * 9000).toFixed(0);
+
+            filesToUpload.push({
+                file: myFile,
+                size: myFile.size,
+                FID: myFileID,
+                name: myFile.name
+            });
+        }
+        GalleryView();
+        e.target.value = null;
+    });
+
+    $(document).on('click', '.gallery-remove-button', function () {
+        var fidToRemove = $(this).data('fid');
+        for (let i = 0; i < filesToUpload.length; i++) {
+            if (filesToUpload[i].FID === fidToRemove) {
+                filesToUpload.splice(i, 1);
+                break;
+            }
+        }
+        GalleryView();
+    });
+
+
+    const GalleryView = () => {
+
+        $('#GalleryFilesAppend').empty();
+        for (let i = 0; i < filesToUpload.length; i++) {
+            $("#GalleryFilesAppend").append(`
+                                 <div class="col-lg-4 mb-4">
+                             <div class="form_group file-input-one">
+                                    <div class="img-thumbnail" style="width:50%!important">
+                                    <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                                             <img src="${URL.createObjectURL(filesToUpload[i].file)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
+                                        <div style="position:absolute;top:0px;right:0px;">
+                                              <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${filesToUpload[i].FID}" style="border-radius: 25px;">X</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`);
+        }
+
+    };
+
+    $("#Btn_Post_Listing").click(function () {
+
+        debugger
+
+        let formData = new FormData();
+
+        for (let i = 0; i < filesToUpload.length; i++) {
+
+            formData.append("GalleryImageFiles", filesToUpload[i].file);
+        }
+
+        if ($('body').find('#PedigreeFile').length > 0) {
+            
+            formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
+        }
+        formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
+        formData.append("VideoFile", $("#VideoFile")[0].files[0]);
+        formData.append("CategoryId", $("#Category").val());
+        formData.append("Title", $("#Title").val());
+        formData.append("Location", $("#Location").val());
+        formData.append("State", $("#State").val());
+        formData.append("City", $("#City").val());
+        formData.append("PackageId", $("#PackageId").val());
+        formData.append("Gender", $("#Gender").val());
+        formData.append("Phone", $("#Phone").val());
+        formData.append("Email", $("#Email").val());
+        formData.append("BreerderName", $("#BreerderName").val());
+        formData.append("TypeOfCat", $("#TypeOfCat").val());
+        formData.append("Age", $("#Age").val());
+        formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
+        formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
+        formData.append("Description", $("#Description").val());
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Listing/AddListting",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+                console.log('RESPONSE', data)
+
+            },
+            error: function (error) {
+                console.log('ERORR:::::::', error)
+            },
+            dataType: 'JSON'
+        });
+
+    })
+
+
+
+    $(document).ready(function () {
+
+        GetAllData();
+        $('#Phone').intlTelInput({
+            initialCountry: 'br',
+            preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
+            autoPlaceholder: 'aggressive',
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
+        });
+    });
+
+    $("#Category").change(function (e) {
+        if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
+            $("#PEDIGREE").show().append(`
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form_group">
+                            <label class="d-block" style="line-height: 5px;">PEDIGREE</label>
+                            <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
+                            <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
+                            <div class="form_group">
+                                <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
+                                <div class="w-100" id="PedigreeImageViewAppend"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+        } else {
+            $("#PEDIGREE").hide().empty();
+        }
+    });
+
+
+    
+
+    $(document).on("change", "#PedigreeFile", function (e) {
+        $("#PedigreeImageViewAppend").empty();
+        $("#PedigreeImageViewAppend").append(`
+                  <div class="col-lg-4 mb-4 pl-0">
+                      <div class="mb-4 img-thumbnail" style="width:50%!important;">
+                       <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                        <img src="${URL.createObjectURL(e.target.files[0])}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
+                      </div>
+                 </div>
+                 </div>`);
+    })
+
+    function GetAllData() {
+        $(".preloader").show();
+        Promise.all([
+            MultipleRequest("/Listing/GetAllPackage"),
+            MultipleRequest("/Listing/GetAllCatType"),
+            MultipleRequest("/Listing/GetAllCatCategory")
+        ]).then(function (responses) {
+            $("#PackageId").empty();
+            $("#Category").empty();
+            $("#TypeOfCat").empty();
+
+            $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+            $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+            $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
+
+            $.each(responses[0].data, function (i, v) {
+                $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+            });
+
+            $.each(responses[1].data, function (i, v) {
+                $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
+            });
+
+            $.each(responses[2].data, function (i, v) {
+                $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+            });
+
+
+            $('select').niceSelect('update');
+            $(".preloader").hide();
+
+        }).catch(function (error) {
+            console.error('Error fetching data:', error);
+        });
+
+
+    }
+
+    function MultipleRequest(url) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function (response) {
+                    resolve(JSON.parse(response)) // Resolve the Promise with the response data
+                },
+                error: function (xhr, status, error) {
+                    reject(error); // Reject the Promise with the error
+                }
+            });
+        });
+    }
+
+</script>

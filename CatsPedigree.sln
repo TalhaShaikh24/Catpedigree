@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{11CD2FCF-7AB1-4C9F-B717-40C518EC9D6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{8D72CD9B-DE8B-4FF9-BE74-03D2CEFEF680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{883009D4-2C09-499B-8255-BC8ED4AF15C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11CD2FCF-7AB1-4C9F-B717-40C518EC9D6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11CD2FCF-7AB1-4C9F-B717-40C518EC9D6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11CD2FCF-7AB1-4C9F-B717-40C518EC9D6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11CD2FCF-7AB1-4C9F-B717-40C518EC9D6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D72CD9B-DE8B-4FF9-BE74-03D2CEFEF680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D72CD9B-DE8B-4FF9-BE74-03D2CEFEF680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D72CD9B-DE8B-4FF9-BE74-03D2CEFEF680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D72CD9B-DE8B-4FF9-BE74-03D2CEFEF680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{883009D4-2C09-499B-8255-BC8ED4AF15C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{883009D4-2C09-499B-8255-BC8ED4AF15C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{883009D4-2C09-499B-8255-BC8ED4AF15C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{883009D4-2C09-499B-8255-BC8ED4AF15C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A488A7F-AAF8-4482-8191-E24721D0F835}
+	EndGlobalSection
+EndGlobal
