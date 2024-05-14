@@ -2,7 +2,286 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome Areas Dashboard</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalListingText">0</h3>
+                <b>Total Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+          
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="ActiveListingText">0</h3>
+                <b>Active Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+           
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="ExpiredListingText">0</h3>
+                <b>Expired Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+           
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="PendingListingText">0</h3>
+                <b>Pending Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="ApprovedListingText">0</h3>
+                <b>Approved Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            
+        </div>
+    </div>  
+    
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="RejectedListingText">0</h3>
+                <b>Rejected Listing</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="ActivePlanText">0</h3>
+                <b>Active Plan</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>    
+    
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="ExpiredPlanText">0</h3>
+                <b>Expired Plan</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
+    <!-- ./col -->
 </div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>My Packages</b></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6"></div>
+                        <div class="col-sm-12 col-md-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="TableMyPackages" class="table table-bordered table-hover dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>AllowedListings</th>
+                                        <th>RemainingListings</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="AppendMyPackages">
+                                   
+                              
+                                </tbody>
+                              
+                            </table>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+          
+        </div>
+
+    </div>
+   
+</div>
+
+
+
+<script>
+
+    $(document).ready(function(){
+
+        GetAllDashbaord();
+
+    })
+
+    function GetAllDashbaord() {
+        
+        postRequest('/Dashboard/GetAllDashboard', null, function (res) {
+
+            if (res.status == 200) {
+
+                if (res.data != null) {
+
+                  var IndexZero = JSON.parse(res.data)[0];
+                    $("#TotalListingText").text(IndexZero.TotalListing);
+                    $("#ActiveListingText").text(IndexZero.ActiveListing);
+                    $("#ExpiredListingText").text(IndexZero.ExpiredListing);
+                    $("#PendingListingText").text(IndexZero.TotalPendingListing);
+                    $("#ApprovedListingText").text(IndexZero.TotalApprovedListing);
+                    $("#RejectedListingText").text(IndexZero.TotalRejectedListing);
+                    $("#ActivePlanText").text(IndexZero.TotalActivePlan);
+                    $("#ExpiredPlanText").text(IndexZero.TotalExpiredPlan);
+                    $("#AppendMyPackages").empty();
+
+                    for (let i = 1; i <= JSON.parse(res.data).length-1; i++) 
+                    {
+
+                        $("#AppendMyPackages").append(`
+                        <tr>
+                                <td>${JSON.parse(res.data)[i].Name}</td>
+                                <td>${JSON.parse(res.data)[i].AllowedListings}</td>
+                                <td>${JSON.parse(res.data)[i].RemainingListings}</td>
+                        </tr>`);
+                    }
+
+                    $('#TableMyPackages').DataTable();
+
+                }
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+        });
+    }
+
+    function postRequest(url, requestData, handledata) {
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: "json",
+            url: url,
+            data: JSON.stringify(requestData),
+            success: function (data, textStatus, xhr) {
+
+                handledata(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Something Went Wrong!",
+                    icon: "error",
+                    dangerMode: true,
+                })
+            }
+        });
+    }
+</script>

@@ -14,6 +14,7 @@ builder.Services.AddTransient<IDapper, Dapperr>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IListingRepository, ListingRepository>();
 builder.Services.AddTransient<IPackagesRepository, PackagesRepository> ();
+builder.Services.AddTransient<IDashboardRepository, DashboardRepository> ();
 
 var app = builder.Build();
 
