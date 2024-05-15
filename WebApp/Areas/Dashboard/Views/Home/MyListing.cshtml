@@ -1,16 +1,17 @@
 ﻿<section class="content pt-4">
     <div class="container-fluid">
-        <div class="card card-primary">
+        <div class="card card-primary collapsed-card">
             <div class="card-header">
                 <h3 class="card-title"><b>Edit Listing</b></h3>
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <button type="button" id="Edit_Collapsed-card" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
 
                 </div>
             </div>
             <div class="card-body">
+                <input type="hidden" id="HDID"/>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form_group">
@@ -76,7 +77,7 @@
                     <div class="col-md-12">
                         <div class="form_group">
                             <label class="d-block">DESCRIPTION</label>
-                            <textarea class="form-control" rows="5"></textarea>
+                            <textarea class="form-control" id="Description" rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -161,7 +162,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="PHONE">PHONE (OPTIONAL)</label>
+                            <label for="PHONE" class="d-block">PHONE (OPTIONAL)</label>
                             <input type="tel" class="form-control" id="Phone" autofocus>
                         </div>
                     </div>
@@ -175,8 +176,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="BREEDER">BREEDER'S NAM</label>
-                            <input type="tel" class="form-control" id="BREEDER'S NAM" placeholder="BREEDER'S NAM">
+                            <label for="BREEDER">BREEDER'S NAME</label>
+                            <input type="tel" class="form-control" id="BreerderName" placeholder="BREEDER'S NAME">
                         </div>
                     </div>
                 </div>
@@ -268,6 +269,7 @@
                             <th>IsActive</th>
                             <th>CreatedBy</th>
                             <th>CreatedOn</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="AppendMyListings">
@@ -285,112 +287,92 @@
 <script>
 
     $(document).ready(function () {
-
-        GetAllMyListings();
-
-    })
-
-    function GetAllMyListings() {
-
-        postRequest('/Dashboard/GetAllMyListings', null, function (res) {
-
-            if (res.status == 200) {
-
-                if (res.data != null) {
-
-
-                    $.each(res.data, function (i, v) {
-                       
-                        $("#AppendMyListings").append(`
-                                <tr>
-                                    <td>${v.Id}</td>
-                                   <td>${v.Title}</td>
-                                   <td>${v.Location}</td>
-                                   <td>${v.State}</td>
-                                   <td>${v.City}</td>
-                                   <td>${v.IsBreerderLicenseUpload}</td>
-                                   <td>${v.Phone}</td>
-                                   <td>${v.Email}</td>
-                                   <td>${v.BreerderName}</td>
-                                   <td>${v.TypeOfCat}</td>
-                                   <td>${v.Gender}</td>
-                                   <td>${v.Description}</td>
-                                   <td>${v.Age}</td>
-                                   <td>${v.CategoryId}</td>
-                                   <td>${v.PackageId}</td>
-                                   <td>${v.IsActive}</td>
-                                   <td>${v.CreatedBy}</td>
-                                   <td>${v.CreatedOn}</td>
-                                </tr>`);
-
-                    })
-
-                        
-                    
-
-                    $('#TableMyListings').DataTable();
-
-                }
-            }
-            if (res.status == 304) {
-
-                Swal.fire({
-                    title: "Error",
-                    text: res.responseMsg,
-                    icon: "error"
-                })
-            }
-            if (res.status == 305) {
-
-                Swal.fire({
-                    title: "Error",
-                    text: res.responseMsg,
-                    icon: "error"
-                })
-            }
-            if (res.status == 401) {
-
-                Swal.fire({
-                    title: "Error",
-                    text: res.responseMsg,
-                    icon: "error"
-                })
-            }
-            if (res.status == 403) {
-
-                Swal.fire(res.responseMsg, {
-                    icon: "error",
-                    title: "Error"
-                });
-            }
-            if (res.status == 320) {
-
-                Swal.fire({
-                    title: "Error",
-                    text: res.responseMsg,
-                    icon: "error"
-                })
-            }
-            if (res.status == 500) {
-
-                Swal.fire({
-                    title: "Error",
-                    text: res.responseMsg,
-                    icon: "error"
-                })
-            }
-            if (res.status == 600) {
-
-                Swal.fire({
-                    title: "Warning",
-                    text: res.responseMsg,
-                    icon: "warning"
-                })
-
-            }
+        GetAllData();
+        $('#Phone').intlTelInput({
+            initialCountry: 'br',
+            preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
+            autoPlaceholder: 'aggressive',
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
         });
+    });
+   
+    
+    function GetAllData() {
+        $(".preloader").show();
+        Promise.all([
+            MultipleRequest("/Listing/GetAllPackage"),
+            MultipleRequest("/Listing/GetAllCatType"),
+            MultipleRequest("/Listing/GetAllCatCategory"),
+            MultipleRequest("/Dashboard/GetAllMyListings")
+        ]).then(function (responses) {
+            $("#PackageId").empty();
+            $("#Category").empty();
+            $("#TypeOfCat").empty();
+
+            $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+            $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+            $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
+
+            $.each(responses[0].data, function (i, v) {
+                $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+            });
+
+            $.each(responses[1].data, function (i, v) {
+                $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
+            });
+
+            $.each(responses[2].data, function (i, v) {
+                $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+            });
+
+            $.each(responses[3].data, function (i, v) {
+
+                debugger
+                $("#AppendMyListings").append(`
+                                        <tr>
+                                           <td>${v.id}</td>
+                                           <td>${v.title}</td>
+                                           <td>${v.location}</td>
+                                           <td>${v.state}</td>
+                                           <td>${v.city}</td>
+                                           <td>${v.isBreerderLicenseUpload}</td>
+                                           <td>${v.phone}</td>
+                                           <td>${v.email}</td>
+                                           <td>${v.breerderName}</td>
+                                           <td>${v.typeOfCat}</td>
+                                           <td>${v.zoologicalNumber}</td>
+                                           <td>${v.gender}</td>
+                                           <td>${v.description}</td>
+                                           <td>${v.age}</td>
+                                           <td>${v.categoryId}</td>
+                                           <td>${v.packageId}</td>
+                                           <td>${v.isActive}</td>
+                                           <td>${v.createdBy}</td>
+                                           <td>${v.createdOn}</td>
+                                           <td><button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info" data-id="${v.id}"><i class="fa fa-edit"></i></button></td>
+                                        </tr>`);
+
+            });
+
+
+
+
+            $('#TableMyListings').DataTable();
+
+
+            $('select').niceSelect('update');
+            $(".preloader").hide();
+
+        }).catch(function (error) {
+            console.error('Error fetching data:', error);
+        });
+
+
     }
 
+
+  
     $("#FeaturedFile").on('change', function (e) {
 
         debugger
@@ -472,6 +454,81 @@
 
     };
 
+ 
+    $("#Category").change(function (e) {
+        if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
+            $("#PEDIGREE").show().append(`
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form_group">
+                                    <label class="d-block" style="line-height: 5px;">PEDIGREE</label>
+                                    <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
+                                    <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
+                                    <div class="form_group">
+                                        <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
+                                        <div class="w-100" id="PedigreeImageViewAppend"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+        } 
+        else 
+        {
+            
+            $("#PEDIGREE").hide().empty();
+        }
+    });
+
+
+    $(document).on("change", "#PedigreeFile", function (e) {
+        $("#PedigreeImageViewAppend").empty();
+        $("#PedigreeImageViewAppend").append(`
+                      <div class="col-lg-4 mb-4 pl-0">
+                          <div class="mb-4 img-thumbnail" style="width:50%!important;">
+                           <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                            <img src="${URL.createObjectURL(e.target.files[0])}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
+                          </div>
+                     </div>
+                     </div>`);
+    })
+
+    $(document).on("click", "#btn_Listing_Edit", function (e) {
+
+       debugger
+
+        Promise.all([
+            MultipleRequest("/Dashboard/GetListingDetailById/" + Number(e.currentTarget.dataset.id))
+        ]).then(function (responses) {
+           
+            debugger
+
+            $("#HDID").val(responses[0].data.id);
+            $("#PackageId").val(responses[0].data.packageId);
+            $("#Category").val(responses[0].data.categoryId);
+            $("#Title").val(responses[0].data.title);
+            $("#Gender").val(responses[0].data.gender);
+            $("#TypeOfCat").val(responses[0].data.typeOfCat);
+            $("#Age").val(responses[0].data.age);
+            $("#Description").val(responses[0].data.description);
+            $("#Location").val(responses[0].data.location);
+            $("#State").val(responses[0].data.state);
+            $("#City").val(responses[0].data.city);
+            $("#Phone").val(responses[0].data.phone);
+            $("#EMAIL").val(responses[0].data.email);
+            $("#BreerderName").val(responses[0].data.breerderName);
+            $("input[name='IsBreerderLicenseUpload']").prop("Checked", responses[0].data.isBreerderLicenseUpload);
+            $("#ZoologicalNumber").prop("checked", responses[0].data.zoologicalNumber);
+            $('#Edit_Collapsed-card').click();
+
+        }).catch(function (error) {
+            console.error('Error fetching data:', error);
+        });
+
+
+    })
+
+
     $("#Btn_Post_Listing").click(function () {
 
         debugger
@@ -528,92 +585,6 @@
 
 
 
-    $(document).ready(function () {
-
-        GetAllData();
-        $('#Phone').intlTelInput({
-            initialCountry: 'br',
-            preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
-            autoPlaceholder: 'aggressive',
-            separateDialCode: true,
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
-        });
-    });
-
-    $("#Category").change(function (e) {
-        if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
-            $("#PEDIGREE").show().append(`
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form_group">
-                                <label class="d-block" style="line-height: 5px;">PEDIGREE</label>
-                                <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
-                                <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
-                                <div class="form_group">
-                                    <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
-                                    <div class="w-100" id="PedigreeImageViewAppend"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `);
-        } else {
-            $("#PEDIGREE").hide().empty();
-        }
-    });
-
-
-
-
-    $(document).on("change", "#PedigreeFile", function (e) {
-        $("#PedigreeImageViewAppend").empty();
-        $("#PedigreeImageViewAppend").append(`
-                      <div class="col-lg-4 mb-4 pl-0">
-                          <div class="mb-4 img-thumbnail" style="width:50%!important;">
-                           <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
-                            <img src="${URL.createObjectURL(e.target.files[0])}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
-                          </div>
-                     </div>
-                     </div>`);
-    })
-
-    function GetAllData() {
-        $(".preloader").show();
-        Promise.all([
-            MultipleRequest("/Listing/GetAllPackage"),
-            MultipleRequest("/Listing/GetAllCatType"),
-            MultipleRequest("/Listing/GetAllCatCategory")
-        ]).then(function (responses) {
-            $("#PackageId").empty();
-            $("#Category").empty();
-            $("#TypeOfCat").empty();
-
-            $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
-            $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
-            $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
-
-            $.each(responses[0].data, function (i, v) {
-                $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
-            });
-
-            $.each(responses[1].data, function (i, v) {
-                $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
-            });
-
-            $.each(responses[2].data, function (i, v) {
-                $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
-            });
-
-
-            $('select').niceSelect('update');
-            $(".preloader").hide();
-
-        }).catch(function (error) {
-            console.error('Error fetching data:', error);
-        });
-
-
-    }
 
     function MultipleRequest(url) {
         return new Promise(function (resolve, reject) {

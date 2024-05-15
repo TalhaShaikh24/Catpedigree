@@ -192,7 +192,7 @@ namespace WebApi.Repositories
         public List<Listing> GetAllMyListings()
         {
             DynamicParameters parameters = new DynamicParameters();
-            var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllListing]", parameters);
+            var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllMyListing]", parameters);
             return data;
         }
         public List<Category> GetAllCatCategory()
@@ -214,6 +214,14 @@ namespace WebApi.Repositories
         {
             DynamicParameters parameters = new DynamicParameters();
             var data = _dapper.GetAll<Package>(@"[dbo].[sp_GetAllPackage]", parameters);
+            return data;
+        }
+
+        public Listing GetListingDetailById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id",Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Get<Listing>(@"[dbo].[sp_GetListingDetailById]", parameters);
             return data;
         }
     }

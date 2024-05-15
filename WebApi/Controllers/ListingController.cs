@@ -135,6 +135,45 @@ namespace WebApi.Controllers
                 response.ResponseMsg = "Internal server error!";
                 return response;
             }
+        }  
+        
+        
+        [HttpPost("GetListingDetailById/{Id}")]
+
+        public Response GetListingDetailById(int Id)
+        {
+            Response response = new Response();
+
+            try
+            {
+                var res = _listing.GetListingDetailById(Id);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
         }
         
         [HttpPost("GetAllPackage")]

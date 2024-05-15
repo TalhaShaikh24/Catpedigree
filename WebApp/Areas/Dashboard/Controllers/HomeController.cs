@@ -47,6 +47,24 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
+        [Route("Dashboard/GetAllMyListings")]
+        public Task<object> GetAllMyListings()
+        {
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllMyListings", "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetListingDetailById/{Id}")]
+        public Task<object> GetListingDetailById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetListingDetailById/"+Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
         [Route("Dashboard/UpdateProfile")]
         public Task<object> UpdateProfile()
         {
