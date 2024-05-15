@@ -21,8 +21,8 @@ namespace WebApi.DBManager
         public Dapperr(IConfiguration configuration)
         {
 
-            //Connectionstring = configuration.GetConnectionString("dbconnection");
-            Connectionstring = "Data Source=DESKTOP-554BILU;Initial Catalog=CatPedigree_db;Integrated Security=True;";
+             Connectionstring = configuration.GetConnectionString("dbconnection");
+            //Connectionstring = "Data Source=DESKTOP-554BILU;Initial Catalog=CatPedigree_db;Integrated Security=True;";
 
 
 
