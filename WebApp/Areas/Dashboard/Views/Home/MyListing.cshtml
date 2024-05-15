@@ -7,170 +7,226 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                 
+
                 </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Minimal</label>
-                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                <option selected="selected" data-select2-id="3">Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
+                        <div class="form_group">
+                            <label>Pakages</label>
+                            <select class="form-control" id="PackageId">
                             </select>
-                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
-                                <span class="selection">
-                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-baga-container">
-                                        <span class="select2-selection__rendered" id="select2-baga-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span>
-                                        <span class="select2-selection__arrow" role="presentation">
-                                            <b role="presentation"></b>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span class="dropdown-wrapper" aria-hidden="true"></span>
-                            </span>
                         </div>
-                        <div class="form-group">
-                            <label>Disabled</label>
-                            <select class="form-control select2 select2-hidden-accessible" disabled="" style="width: 100%;" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                                <option selected="selected" data-select2-id="6">Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
-                            </select>
-                            <span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="5" style="width: 100%;">
-                                <span class="selection">
-                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true" aria-labelledby="select2-cqyu-container">
-                                        <span class="select2-selection__rendered" id="select2-cqyu-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span>
-                                        <span class="select2-selection__arrow" role="presentation">
-                                            <b role="presentation"></b>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span class="dropdown-wrapper" aria-hidden="true"></span>
-                            </span>
-                        </div>
+
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Multiple</label>
-                            <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
-                                <option>Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
+                        <div class="form_group">
+                            <label>Category</label>
+                            <select class="form-control" id="Category">
                             </select>
-                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="8" style="width: 100%;">
-                                <span class="selection">
-                                    <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
-                                        <ul class="select2-selection__rendered">
-                                            <li class="select2-search select2-search--inline">
-                                                <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Select a State" style="width: 664px;">
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </span>
-                                <span class="dropdown-wrapper" aria-hidden="true"></span>
-                            </span>
-                        </div>
-                        <div class="form-group">
-                            <label>Disabled Result</label>
-                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="9" tabindex="-1" aria-hidden="true">
-                                <option selected="selected" data-select2-id="11">Alabama</option>
-                                <option>Alaska</option>
-                                <option disabled="disabled">California (disabled)</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
-                            </select>
-                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="10" style="width: 100%;">
-                                <span class="selection">
-                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-eq56-container">
-                                        <span class="select2-selection__rendered" id="select2-eq56-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span>
-                                        <span class="select2-selection__arrow" role="presentation">
-                                            <b role="presentation"></b>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span class="dropdown-wrapper" aria-hidden="true"></span>
-                            </span>
                         </div>
                     </div>
                 </div>
-                <h5>Custom Color Variants</h5>
-                <div class="row">
-                    <div class="col-12 col-sm-6">
+                <div class="row pt-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Minimal (.select2-danger)</label>
-                            <select class="form-control select2 select2-danger select2-hidden-accessible" data-dropdown-css-class="select2-danger" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true">
-                                <option selected="selected" data-select2-id="14">Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
-                            </select>
-                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="13" style="width: 100%;">
-                                <span class="selection">
-                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-2ha3-container">
-                                        <span class="select2-selection__rendered" id="select2-2ha3-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span>
-                                        <span class="select2-selection__arrow" role="presentation">
-                                            <b role="presentation"></b>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span class="dropdown-wrapper" aria-hidden="true"></span>
-                            </span>
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="Title" name="Title">
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label>Multiple (.select2-purple)</label>
-                            <div class="select2-purple">
-                                <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;" data-select2-id="15" tabindex="-1" aria-hidden="true">
-                                    <option>Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
-                                </select>
-                                <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="16" style="width: 100%;">
-                                    <span class="selection">
-                                        <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
-                                            <ul class="select2-selection__rendered">
-                                                <li class="select2-search select2-search--inline">
-                                                    <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Select a State" style="width: 664px;">
-                                                </li>
-                                            </ul>
-                                        </span>
-                                    </span>
-                                    <span class="dropdown-wrapper" aria-hidden="true"></span>
-                                </span>
+                    <div class="col-md-6">
+                        <div class="form_group">
+                            <label>Gender</label>
+                            <select class="form-control" id="Gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-md-6">
+                        <div class="form_group">
+                            <label>TYPE OF CAT</label>
+                            <select class="form-control" id="TypeOfCat">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form_group">
+                            <label>AGE</label>
+                            <select class="form-control" id="Age">
+                                <option value="-1" disabled selected>Select Age</option>
+                                <option value="1">3 Months</option>
+                                <option value="2">4 Months</option>
+                                <option value="3">5 Months</option>
+                                <option value="4">6 Months</option>
+                                <option value="5">7 Months</option>
+                                <option value="6">8 Months</option>
+                                <option value="7">9 Months</option>
+                                <option value="8">10 Months</option>
+                                <option value="9">11 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-md-12">
+                        <div class="form_group">
+                            <label class="d-block">DESCRIPTION</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                @*  Gallery Work *@
+                <h4 class="title pt-4">Gallery Images</h4>
+                <p>Click here or drop files to upload</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form_group file-input-two">
+                            <div class="form_group">
+                                <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
+
+                                <div class="form_group">
+                                    <input type="file" id="FeaturedFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-2" id="FeaturedImageAppend">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form_group file-input-two">
+                            <div class="form_group">
+                                <label class="d-block" style="line-height: 20px; font-weight:900">GALLERY (OPTIONAL)</label>
+
+                                <div class="form_group">
+                                    <input type="file" multiple id="Gallery_Files" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="GalleryFilesAppend">
+                        </div>
+                    </div>
+                </div>
+
+                @* Video Work *@
+                <h4 class="title pt-4">Video</h4>
+                <p>Click here or drop files to upload</p>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form_group file-input-two">
+                            <div class="form_group">
+                                <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
+                                <small> Post video of your beloved kittens</small>
+                                <div class="form_group">
+                                    <input type="file" id="VideoFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+
+                                </div>
+                            </div>
+
+                            <div class="row my-2" id="VideoFileAppend">
                             </div>
                         </div>
                     </div>
                 </div>
+
+                @* Details Information *@
+                <h4 class="title pt-4">Detailed Information</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Location">Location</label>
+                            <input type="text" class="form-control" id="Location" placeholder="Location">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="State">State</label>
+                            <input type="text" class="form-control" id="State" placeholder="State">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="City">City</label>
+                            <input type="text" class="form-control" id="City" placeholder="City">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="PHONE">PHONE (OPTIONAL)</label>
+                            <input type="tel" class="form-control" id="Phone" autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="EMAIL">EMAIL</label>
+                            <input type="text" class="form-control" id="EMAIL" placeholder="EMAIL">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="BREEDER">BREEDER'S NAM</label>
+                            <input type="tel" class="form-control" id="BREEDER'S NAM" placeholder="BREEDER'S NAM">
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-md-6">
+                        <div class="form_group">
+                            <label class="d-block" style="line-height: 5px; font-weight:600">BREEDER'S LICENSE</label>
+                            <small>We need your Breeder's License to verify that you are an authorized person.</small>
+                            <small>No listing will be posted until we have and review all documentation.</small>
+                            <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                            <small>Please check our Terms and Conditions page for further information.</small>
+                            <div class="form_group mt-3 mb-4">
+                                <div class="single-checkbox d-flex mb-2">
+                                    <input type="radio" id="check2" name="IsBreerderLicenseUpload" value="false">
+                                    <label for="check2"><span>I will upload my license to my profile.</span></label>
+                                </div>
+                                <div class="single-checkbox d-flex">
+                                    <input type="radio" id="check3" name="IsBreerderLicenseUpload" value="true">
+                                    <label for="check3"><span>I've already uploaded my license to my profile.</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form_group">
+                            <label class="d-block" style="line-height: 30px; font-weight:900">ZOOLOGICAL NUMBER (OPTIONAL)</label>
+                            <label class="d-block mb-3" style="line-height: 5px; font-size:12px; font-style:italic; font-weight:900">VENDORS FROM SPAIN ONLY</label>
+                            <small>If you're selling from spain, we need your zoological number, to verify that you are an authorized vendor.</small>
+                            <small>No listing will be posted until we have, and review all documentation.</small>
+                            <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                            <small>Please check our Terms and Conditions page for further information.</small>
+
+                            <div class="form_group mt-2">
+                                <div class="single-checkbox d-flex">
+                                    <input type="checkbox" id="ZoologicalNumber" name="hereby" value="true">
+                                    <label for="ZoologicalNumber"><span>Hereby i confirm, that I've added my zoological number to my profile.</span></label>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </div>
+
+                <div class="button text-right">
+                    <button class="main-btn btn-danger icon-btn" type="button" id="Btn_Update_Listing">Update Listing</button>
+                </div>
         </div>
 
-
-       
+    </div>
     </div>
 </section>
 
@@ -186,41 +242,392 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                   
+
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <table id="TableMyListings" class="table table-bordered table-responsive" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>IsBreerderLicenseUpload</th>
+                            <th>Phone</th>
                             <th>Email</th>
+                            <th>BreerderName</th>
+                            <th>TypeOfCat</th>
+                            <th>ZoologicalNumber</th>
+                            <th>Gender</th>
+                            <th>Description</th>
+                            <th>Age</th>
+                            <th>CategoryId</th>
+                            <th>PackageId</th>
+                            <th>IsActive</th>
+                            <th>CreatedBy</th>
+                            <th>CreatedOn</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                        </tr>
+                    <tbody id="AppendMyListings">
+                        
                     </tbody>
                 </table>
             </div>
         </div>
 
-       
+
     </div>
 </section>
 
 
+<script>
+
+    $(document).ready(function () {
+
+        GetAllMyListings();
+
+    })
+
+    function GetAllMyListings() {
+
+        postRequest('/Dashboard/GetAllMyListings', null, function (res) {
+
+            if (res.status == 200) {
+
+                if (res.data != null) {
+
+
+                    $.each(res.data, function (i, v) {
+                       
+                        $("#AppendMyListings").append(`
+                                <tr>
+                                    <td>${v.Id}</td>
+                                   <td>${v.Title}</td>
+                                   <td>${v.Location}</td>
+                                   <td>${v.State}</td>
+                                   <td>${v.City}</td>
+                                   <td>${v.IsBreerderLicenseUpload}</td>
+                                   <td>${v.Phone}</td>
+                                   <td>${v.Email}</td>
+                                   <td>${v.BreerderName}</td>
+                                   <td>${v.TypeOfCat}</td>
+                                   <td>${v.Gender}</td>
+                                   <td>${v.Description}</td>
+                                   <td>${v.Age}</td>
+                                   <td>${v.CategoryId}</td>
+                                   <td>${v.PackageId}</td>
+                                   <td>${v.IsActive}</td>
+                                   <td>${v.CreatedBy}</td>
+                                   <td>${v.CreatedOn}</td>
+                                </tr>`);
+
+                    })
+
+                        
+                    
+
+                    $('#TableMyListings').DataTable();
+
+                }
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+        });
+    }
+
+    $("#FeaturedFile").on('change', function (e) {
+
+        debugger
+
+        let FeaturedFile = e.target.files[0];
+
+        $('#FeaturedImageAppend').empty();
+        $("#FeaturedImageAppend").append(`
+                                             <div class="col-lg-4 mb-4">
+                                         <div class="form_group file-input-one">
+
+                                                <div class="img-thumbnail" style="width:50%!important">
+                                                <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                                                <img src="${URL.createObjectURL(FeaturedFile)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
+                                                    <div style="position:absolute;top:0px;right:0px;">
+                                                      <button class="btn btn-danger btn-xs Featured-remove-button" style="border-radius: 25px;">X</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`);
+
+    });
+
+    $(document).on('click', '.Featured-remove-button', function () {
+        $("#FeaturedImageAppend").children().remove();
+        $("#FeaturedFile").val(null);
+    });
+
+
+    var filesToUpload = [];
+
+    $("#Gallery_Files").on('change', function (e) {
+        for (let i = 0; i < e.target.files.length; i++) {
+            let myFile = e.target.files[i];
+            let myFileID = "FID" + (1000 + Math.random() * 9000).toFixed(0);
+
+            filesToUpload.push({
+                file: myFile,
+                size: myFile.size,
+                FID: myFileID,
+                name: myFile.name
+            });
+        }
+        GalleryView();
+        e.target.value = null;
+    });
+
+    $(document).on('click', '.gallery-remove-button', function () {
+        var fidToRemove = $(this).data('fid');
+        for (let i = 0; i < filesToUpload.length; i++) {
+            if (filesToUpload[i].FID === fidToRemove) {
+                filesToUpload.splice(i, 1);
+                break;
+            }
+        }
+        GalleryView();
+    });
+
+
+    const GalleryView = () => {
+
+        $('#GalleryFilesAppend').empty();
+        for (let i = 0; i < filesToUpload.length; i++) {
+            $("#GalleryFilesAppend").append(`
+                                     <div class="col-lg-4 mb-4">
+                                 <div class="form_group file-input-one">
+                                        <div class="img-thumbnail" style="width:50%!important">
+                                        <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                                                 <img src="${URL.createObjectURL(filesToUpload[i].file)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
+                                            <div style="position:absolute;top:0px;right:0px;">
+                                                  <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${filesToUpload[i].FID}" style="border-radius: 25px;">X</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`);
+        }
+
+    };
+
+    $("#Btn_Post_Listing").click(function () {
+
+        debugger
+
+        let formData = new FormData();
+
+        for (let i = 0; i < filesToUpload.length; i++) {
+
+            formData.append("GalleryImageFiles", filesToUpload[i].file);
+        }
+
+        if ($('body').find('#PedigreeFile').length > 0) {
+
+            formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
+        }
+        formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
+        formData.append("VideoFile", $("#VideoFile")[0].files[0]);
+        formData.append("CategoryId", $("#Category").val());
+        formData.append("Title", $("#Title").val());
+        formData.append("Location", $("#Location").val());
+        formData.append("State", $("#State").val());
+        formData.append("City", $("#City").val());
+        formData.append("PackageId", $("#PackageId").val());
+        formData.append("Gender", $("#Gender").val());
+        formData.append("Phone", $("#Phone").val());
+        formData.append("Email", $("#Email").val());
+        formData.append("BreerderName", $("#BreerderName").val());
+        formData.append("TypeOfCat", $("#TypeOfCat").val());
+        formData.append("Age", $("#Age").val());
+        formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
+        formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
+        formData.append("Description", $("#Description").val());
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Listing/UpdateListting",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+                console.log('RESPONSE', data)
+
+            },
+            error: function (error) {
+                console.log('ERORR:::::::', error)
+            },
+            dataType: 'JSON'
+        });
+
+    })
+
+
+
+    $(document).ready(function () {
+
+        GetAllData();
+        $('#Phone').intlTelInput({
+            initialCountry: 'br',
+            preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
+            autoPlaceholder: 'aggressive',
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
+        });
+    });
+
+    $("#Category").change(function (e) {
+        if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
+            $("#PEDIGREE").show().append(`
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form_group">
+                                <label class="d-block" style="line-height: 5px;">PEDIGREE</label>
+                                <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
+                                <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
+                                <div class="form_group">
+                                    <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
+                                    <div class="w-100" id="PedigreeImageViewAppend"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+        } else {
+            $("#PEDIGREE").hide().empty();
+        }
+    });
+
+
+
+
+    $(document).on("change", "#PedigreeFile", function (e) {
+        $("#PedigreeImageViewAppend").empty();
+        $("#PedigreeImageViewAppend").append(`
+                      <div class="col-lg-4 mb-4 pl-0">
+                          <div class="mb-4 img-thumbnail" style="width:50%!important;">
+                           <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                            <img src="${URL.createObjectURL(e.target.files[0])}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
+                          </div>
+                     </div>
+                     </div>`);
+    })
+
+    function GetAllData() {
+        $(".preloader").show();
+        Promise.all([
+            MultipleRequest("/Listing/GetAllPackage"),
+            MultipleRequest("/Listing/GetAllCatType"),
+            MultipleRequest("/Listing/GetAllCatCategory")
+        ]).then(function (responses) {
+            $("#PackageId").empty();
+            $("#Category").empty();
+            $("#TypeOfCat").empty();
+
+            $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+            $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+            $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
+
+            $.each(responses[0].data, function (i, v) {
+                $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+            });
+
+            $.each(responses[1].data, function (i, v) {
+                $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
+            });
+
+            $.each(responses[2].data, function (i, v) {
+                $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+            });
+
+
+            $('select').niceSelect('update');
+            $(".preloader").hide();
+
+        }).catch(function (error) {
+            console.error('Error fetching data:', error);
+        });
+
+
+    }
+
+    function MultipleRequest(url) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function (response) {
+                    resolve(JSON.parse(response)) // Resolve the Promise with the response data
+                },
+                error: function (xhr, status, error) {
+                    reject(error); // Reject the Promise with the error
+                }
+            });
+        });
+    }
+
+</script>

@@ -24,6 +24,8 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
             return View();
         }
+
+    
         public IActionResult AddCategory()
         {
             return View();
