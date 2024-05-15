@@ -17,7 +17,13 @@ namespace WebApp.Areas.Dashboard.Controllers
         public IActionResult Index()
         {
             return View();
-        } 
+        }
+
+        [Route("Dashboard/MyListing")]
+        public IActionResult MyListing()
+        {
+            return View();
+        }
         public IActionResult AddCategory()
         {
             return View();
