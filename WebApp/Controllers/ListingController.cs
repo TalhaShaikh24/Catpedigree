@@ -25,8 +25,20 @@ namespace WebApp.Controllers
         public Task<object> AddListting([FromForm] Listing obj)
         {
 
+            obj.Id = 0;
 
             return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/AddListing", obj, HttpContext);
+
+        }
+              
+        
+        
+        [HttpPost]
+        public Task<object> UpdateListing([FromForm] Listing obj)
+        {
+
+
+            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
 
         }
 

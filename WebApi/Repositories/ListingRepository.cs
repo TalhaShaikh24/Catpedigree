@@ -17,66 +17,66 @@ namespace WebApi.Repositories
             _dapper = dapper;
             _hostingEnvironment = hostingEnvironment;
         }
-        public Listing AddListing(Listing obj)
+        public async Task<Listing> AddListing(Listing obj)
         {
-
             if (obj.PedigreeFile != null)
             {
                 string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.PedigreeFile.FileName);
                 string PedigreeFilePath = Path.Combine("UploadImages", PedigreeFileName);
                 string PedigreeFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, PedigreeFilePath);
 
-                using (var Stream = new FileStream(PedigreeFilePathDirectory, FileMode.Create))
+                using (var stream = new FileStream(PedigreeFilePathDirectory, FileMode.Create))
                 {
-                    obj.PedigreeFile.CopyToAsync(Stream);
-
-                    obj.PedigreeFilePath = "~/"+PedigreeFilePath;
-
-				}
+                    await obj.PedigreeFile.CopyToAsync(stream);
+                }
+                obj.PedigreeFilePath = PedigreeFilePath;
             }
 
-            string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
-            string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
-            string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
-
-            using (var Stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+            if (obj.FeatureImageFile != null)
             {
-                obj.FeatureImageFile.CopyToAsync(Stream);
-				obj.FeatureImagePath = "~/" +FeatureFilePath;
-			}
+                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
+                string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
+                string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
 
-            if (obj.GalleryImageFiles.Count > 0)
+                using (var stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+                {
+                    await obj.FeatureImageFile.CopyToAsync(stream);
+                }
+                obj.FeatureImagePath = FeatureFilePath;
+            }
+
+            if (obj.GalleryImageFiles != null)
             {
-                List<string> GallaryPath = new List<string>();
+                List<string> GalleryPath = new List<string>();
 
                 foreach (var item in obj.GalleryImageFiles)
                 {
-
                     string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
                     string GalleryFilePath = Path.Combine("UploadImages", GalleryFileName);
                     string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
 
-                    using (var Stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
+                    using (var stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
                     {
-
-                        item.CopyToAsync(Stream);
-                        GallaryPath.Add("~/" + GalleryFilePath);
+                        await item.CopyToAsync(stream);
                     }
+                    GalleryPath.Add(GalleryFilePath);
                 }
 
-                 obj.GallaryImagesPath = String.Join(",", GallaryPath);
-
+                obj.GallaryImagesPath = string.Join(",", GalleryPath);
             }
 
-			string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
-            string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
-            string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
-
-            using (var Stream = new FileStream(VideoFilePathDirectory, FileMode.Create))
+            if (obj.VideoFile != null)
             {
-                obj.VideoFile.CopyToAsync(Stream);
-				obj.VideoPath = "~/" + VideoFilePath;
-			}
+                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
+                string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
+                string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
+
+                using (var stream = new FileStream(VideoFilePathDirectory, FileMode.Create))
+                {
+                    await obj.VideoFile.CopyToAsync(stream);
+                }
+                obj.VideoPath = VideoFilePath;
+            }
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Title", obj.Title, DbType.String, ParameterDirection.Input);
@@ -97,75 +97,80 @@ namespace WebApi.Repositories
             parameters.Add("@Age", obj.Age, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("IsActive", false, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("IsActive", true, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
             return data;
         }
 
-        public Listing UpdateListing(Listing obj)
+
+        public async Task<Listing> UpdateListing(Listing obj)
         {
 
             if (obj.PedigreeFile != null)
             {
+
                 string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.PedigreeFile.FileName);
                 string PedigreeFilePath = Path.Combine("UploadImages", PedigreeFileName);
                 string PedigreeFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, PedigreeFilePath);
 
-                using (var Stream = new FileStream(PedigreeFilePathDirectory, FileMode.Create))
+                using (var stream = new FileStream(PedigreeFilePathDirectory, FileMode.Create))
                 {
-                    obj.PedigreeFile.CopyToAsync(Stream);
-
-                    obj.PedigreeFilePath = "~/" + PedigreeFilePath;
-
+                    await obj.PedigreeFile.CopyToAsync(stream);
                 }
+                obj.PedigreeFilePath = PedigreeFilePath;
             }
 
-            string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
-            string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
-            string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
-
-            using (var Stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+            if (obj.FeatureImageFile != null)
             {
-                obj.FeatureImageFile.CopyToAsync(Stream);
-                obj.FeatureImagePath = "~/" + FeatureFilePath;
+                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
+                string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
+                string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
+
+                using (var stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+                {
+                    await obj.FeatureImageFile.CopyToAsync(stream);
+                }
+                obj.FeatureImagePath = FeatureFilePath;
             }
 
-            if (obj.GalleryImageFiles.Count > 0)
+            if (obj.GalleryImageFiles != null)
             {
-                List<string> GallaryPath = new List<string>();
+                List<string> GalleryPath = new List<string>();
 
                 foreach (var item in obj.GalleryImageFiles)
                 {
-
+       
                     string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
                     string GalleryFilePath = Path.Combine("UploadImages", GalleryFileName);
                     string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
 
-                    using (var Stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
+                    using (var stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
                     {
-
-                        item.CopyToAsync(Stream);
-                        GallaryPath.Add("~/" + GalleryFilePath);
+                        await item.CopyToAsync(stream);
                     }
+                    GalleryPath.Add(GalleryFilePath);
                 }
 
-                obj.GallaryImagesPath = String.Join(",", GallaryPath);
-
+                obj.GallaryImagesPath = string.Join(",", GalleryPath);
             }
 
-            string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
-            string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
-            string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
-
-            using (var Stream = new FileStream(VideoFilePathDirectory, FileMode.Create))
+            if (obj.VideoFile != null)
             {
-                obj.VideoFile.CopyToAsync(Stream);
-                obj.VideoPath = "~/" + VideoFilePath;
+                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
+                string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
+                string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
+
+                using (var stream = new FileStream(VideoFilePathDirectory, FileMode.Create))
+                {
+                    await obj.VideoFile.CopyToAsync(stream);
+                }
+                obj.VideoPath = VideoFilePath;
             }
+
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", 1, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Id",obj.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Title", obj.Title, DbType.String, ParameterDirection.Input);
             parameters.Add("@Location", obj.Location, DbType.String, ParameterDirection.Input);
             parameters.Add("@State", obj.State, DbType.String, ParameterDirection.Input);
@@ -189,6 +194,8 @@ namespace WebApi.Repositories
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);
             return data;
         }
+   
+        
         public List<Listing> GetAllMyListings()
         {
             DynamicParameters parameters = new DynamicParameters();
