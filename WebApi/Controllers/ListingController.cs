@@ -34,7 +34,7 @@ namespace WebApi.Controllers
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
                 obj.CreatedBy = claimDTO.UserId;
 
-                var res = _listing.AddListing(obj);
+                var res = await _listing.AddListing(obj);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
@@ -104,8 +104,43 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("GetAllMyListings")]
+        [HttpPost("GetHomePageListings")]
+        public Response GetHomePageListings()
+        {
+            Response response = new Response();
 
+            try
+            {
+                var res = _listing.GetHomePageListings();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
+        }  
+        
+        [HttpPost("GetAllMyListings")]
         public Response GetAllMyListings()
         {
             Response response = new Response();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class Listing
+    public class Listing:Category
     {
         public int Id { get; set; }
         public string? Title { get; set; }

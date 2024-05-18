@@ -35,10 +35,9 @@ namespace WebApi.Repositories
            
             return data;
         }
-        public  Register RegisterUser(Register formData)
+        public  async Task<Register> RegisterUser(Register formData)
         {
-            try
-            {
+            try{
                 string folder = "Profile"; // Relative path
 
                 //For Profile Picture
@@ -49,7 +48,7 @@ namespace WebApi.Repositories
 
                 using (var profileStream = new FileStream(absoluteProfileFilePath, FileMode.Create))
                 {
-                     formData.ProfilePic.CopyToAsync(profileStream);
+                    await formData.ProfilePic.CopyToAsync(profileStream);
                 }
 
                 //For Breeder License
@@ -60,7 +59,7 @@ namespace WebApi.Repositories
 
                 using (var licenseStream = new FileStream(absoluteLicenseFilePath, FileMode.Create))
                 {
-                     formData.BreederLicense.CopyToAsync(licenseStream);
+                    await formData.BreederLicense.CopyToAsync(licenseStream);
                 }
 
                 DynamicParameters parameters = new DynamicParameters();
@@ -78,8 +77,7 @@ namespace WebApi.Repositories
                 parameters.Add("@ZoologicalNumber", formData.ZoologicalNumber, DbType.String, ParameterDirection.Input);
 
                 var data = _dapper.Insert<Register>(@"[sp_userRegister]", parameters);
-
-                return data;
+                return data  ;
             }
             catch (Exception ex)
             {

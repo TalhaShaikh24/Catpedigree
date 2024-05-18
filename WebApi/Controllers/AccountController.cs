@@ -57,46 +57,46 @@ namespace WebApi.Controllers
         }
 
         
-        [HttpPost("RegisterUser")]
-        public Response RegisterUser([FromForm] Register formData)
-        {
-            Response response = new Response();
+        //[HttpPost("RegisterUser")]
+        //public async Task<Response> RegisterUser([FromForm] Register formData)
+        //{
+        //    Response response = new Response();
 
-            try
-            {
+        //    try
+        //    {
                
-                var res = _repository.RegisterUser(formData);
-                response = CustomStatusResponse.GetResponse(200);
-                response.Token = null;
-                if (res != null)
-                {
+        //        var res = await _repository.RegisterUser(formData);
+        //        response = CustomStatusResponse.GetResponse(200);
+        //        response.Token = null;
+        //        if (res != null)
+        //        {
 
-                    response.Data = res;
-                    response.ResponseMsg = "Data save successfully!";
+        //            response.Data = res;
+        //            response.ResponseMsg = "Data save successfully!";
                    
 
-                }
-                return response;
+        //        }
+        //        return response;
 
 
 
-            }
-            catch (DbException ex)
-            {
-                response = CustomStatusResponse.GetResponse(600);
-                response.Token = null;
-                response.ResponseMsg = ex.Message;
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response = CustomStatusResponse.GetResponse(500);
-                response.Token = null;
-                response.ResponseMsg = ex.Message;
-                return response;
-            }
+        //    }
+        //    catch (DbException ex)
+        //    {
+        //        response = CustomStatusResponse.GetResponse(600);
+        //        response.Token = null;
+        //        response.ResponseMsg = ex.Message;
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response = CustomStatusResponse.GetResponse(500);
+        //        response.Token = null;
+        //        response.ResponseMsg = ex.Message;
+        //        return response;
+        //    }
 
-        }
+        //}
 
 
         [HttpPost("UpdateProfile")]

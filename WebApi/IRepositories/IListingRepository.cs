@@ -6,6 +6,7 @@ namespace WebApi.IRepositories
     {
         Task<Listing> AddListing(Listing obj);
         Task<Listing> UpdateListing(Listing obj);
+        List<Listing> GetHomePageListings();
         List<Listing> GetAllMyListings();
         Listing GetListingDetailById(int Id);
         List<Package> GetAllPackage();

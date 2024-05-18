@@ -11,7 +11,7 @@ namespace WebApi.IRepositories
     public interface IAccountRepository
     {
         Register Authenticate(Register obj);
-        Register RegisterUser(Register obj);
+        Task<Register> RegisterUser(Register obj);
         Register UpdateProfile(Register obj);
     }
 }

@@ -21,34 +21,42 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public Task<object> AddListting([FromForm] Listing obj)
-        {
+        //[HttpPost]
+        //public Task<object> AddListting([FromForm] Listing obj)
+        //{
 
-            obj.Id = 0;
+        //    obj.Id = 0;
 
-            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/AddListing", obj, HttpContext);
+        //    return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/AddListing", obj, HttpContext);
 
-        }
+        //}
               
         
         
+        //[HttpPost]
+        //public Task<object> UpdateListing([FromForm] Listing obj)
+        //{
+
+
+        //    return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
+
+        //}
+
+
         [HttpPost]
-        public Task<object> UpdateListing([FromForm] Listing obj)
+        public Task<object> GetHomePageListings()
         {
+            string content = "";
 
-
-            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
-
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
         }
 
-
-        [HttpPost]
+         [HttpPost]
         public Task<object> GetAllPackage()
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttp("https://localhost:7280/", "api/Listing/GetAllPackage", content, HttpContext);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllPackage", content, HttpContext);
         }
 
 
@@ -58,7 +66,7 @@ namespace WebApp.Controllers
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttp("https://localhost:7280/", "api/Listing/GetAllCatType", content, HttpContext);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllCatType", content, HttpContext);
         }
 
 
@@ -67,7 +75,7 @@ namespace WebApp.Controllers
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttp("https://localhost:7280/", "api/Listing/GetAllCatCategory", content, HttpContext);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllCatCategory", content, HttpContext);
         }
 
   
