@@ -133,6 +133,7 @@ namespace WebApp.HttpMethods
                     var multiContent = new MultipartFormDataContent();
 
                     multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
+                    multiContent.Add(new StringContent(obj.Id.ToString()??"0"), "Id");
                     multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
                     multiContent.Add(new StringContent(obj.Location ?? ""), "Location");
                     multiContent.Add(new StringContent(obj.State ?? ""), "State");
@@ -160,16 +161,17 @@ namespace WebApp.HttpMethods
 
                 }
 
-				if (obj.PedigreeFile != null)
-				{
-			
-			     multiContent.Add(new StreamContent(obj.PedigreeFile.OpenReadStream()), "GalleryImageFiles", obj.PedigreeFile.FileName);
+                if (obj.PedigreeFile != null)
+                {
 
-					
+                   
+                  multiContent.Add(new StreamContent(obj.PedigreeFile.OpenReadStream()), "GalleryImageFiles", obj.PedigreeFile.FileName);
 
-				}
 
-				if (obj.FeatureImageFile != null)
+
+                }
+
+                if (obj.FeatureImageFile != null)
                 {
 
                     multiContent.Add(new StreamContent(obj.FeatureImageFile.OpenReadStream()), "FeatureImageFile", obj.FeatureImageFile.FileName);

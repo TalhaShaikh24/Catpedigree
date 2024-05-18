@@ -22,7 +22,7 @@ namespace WebApi.Controllers
 
         [HttpPost("AddListing")]
 
-        public Response AddListing([FromForm] Listing obj)
+        public async Task<Response> AddListing([FromForm] Listing obj)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -67,13 +67,13 @@ namespace WebApi.Controllers
 
         [HttpPost("UpdateListing")]
 
-        public Response UpdateListing([FromForm] Listing obj)
+        public async Task<Response> UpdateListing([FromForm] Listing obj)
         {
             Response response = new Response();
 
             try
             {
-                var res = _listing.UpdateListing(obj);
+                var res = await _listing.UpdateListing(obj);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else

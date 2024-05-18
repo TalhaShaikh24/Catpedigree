@@ -1,238 +1,4 @@
-﻿<section class="content pt-4">
-    <div class="container-fluid">
-        <div class="card card-primary collapsed-card">
-            <div class="card-header">
-                <h3 class="card-title"><b>Edit Listing</b></h3>
-                <div class="card-tools">
-                    <button type="button" id="Edit_Collapsed-card" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-
-                </div>
-            </div>
-            <div class="card-body">
-                <input type="hidden" id="HDID"/>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label>Pakages</label>
-                            <select class="form-control" id="PackageId">
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label>Category</label>
-                            <select class="form-control" id="Category">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="Title" name="Title">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label>Gender</label>
-                            <select class="form-control" id="Gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label>TYPE OF CAT</label>
-                            <select class="form-control" id="TypeOfCat">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label>AGE</label>
-                            <select class="form-control" id="Age">
-                                <option value="-1" disabled selected>Select Age</option>
-                                <option value="1">3 Months</option>
-                                <option value="2">4 Months</option>
-                                <option value="3">5 Months</option>
-                                <option value="4">6 Months</option>
-                                <option value="5">7 Months</option>
-                                <option value="6">8 Months</option>
-                                <option value="7">9 Months</option>
-                                <option value="8">10 Months</option>
-                                <option value="9">11 Months</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12">
-                        <div class="form_group">
-                            <label class="d-block">DESCRIPTION</label>
-                            <textarea class="form-control" id="Description" rows="5"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                @*  Gallery Work *@
-                <h4 class="title pt-4">Gallery Images</h4>
-                <p>Click here or drop files to upload</p>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form_group file-input-two">
-                            <div class="form_group">
-                                <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
-
-                                <div class="form_group">
-                                    <input type="file" id="FeaturedFile" class="form_control bg-white pt-4" required style="opacity:1!important">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row my-2" id="FeaturedImageAppend">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form_group file-input-two">
-                            <div class="form_group">
-                                <label class="d-block" style="line-height: 20px; font-weight:900">GALLERY (OPTIONAL)</label>
-
-                                <div class="form_group">
-                                    <input type="file" multiple id="Gallery_Files" class="form_control bg-white pt-4" required style="opacity:1!important">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" id="GalleryFilesAppend">
-                        </div>
-                    </div>
-                </div>
-
-                @* Video Work *@
-                <h4 class="title pt-4">Video</h4>
-                <p>Click here or drop files to upload</p>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form_group file-input-two">
-                            <div class="form_group">
-                                <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
-                                <small> Post video of your beloved kittens</small>
-                                <div class="form_group">
-                                    <input type="file" id="VideoFile" class="form_control bg-white pt-4" required style="opacity:1!important">
-
-                                </div>
-                            </div>
-
-                            <div class="row my-2" id="VideoFileAppend">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Details Information *@
-                <h4 class="title pt-4">Detailed Information</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="Location">Location</label>
-                            <input type="text" class="form-control" id="Location" placeholder="Location">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="State">State</label>
-                            <input type="text" class="form-control" id="State" placeholder="State">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="City">City</label>
-                            <input type="text" class="form-control" id="City" placeholder="City">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="PHONE" class="d-block">PHONE (OPTIONAL)</label>
-                            <input type="tel" class="form-control" id="Phone" autofocus>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="EMAIL">EMAIL</label>
-                            <input type="text" class="form-control" id="EMAIL" placeholder="EMAIL">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="BREEDER">BREEDER'S NAME</label>
-                            <input type="tel" class="form-control" id="BreerderName" placeholder="BREEDER'S NAME">
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label class="d-block" style="line-height: 5px; font-weight:600">BREEDER'S LICENSE</label>
-                            <small>We need your Breeder's License to verify that you are an authorized person.</small>
-                            <small>No listing will be posted until we have and review all documentation.</small>
-                            <small>Please upload your license to your profile. This is your profile page: My Profile</small>
-                            <small>Please check our Terms and Conditions page for further information.</small>
-                            <div class="form_group mt-3 mb-4">
-                                <div class="single-checkbox d-flex mb-2">
-                                    <input type="radio" id="check2" name="IsBreerderLicenseUpload" value="false">
-                                    <label for="check2"><span>I will upload my license to my profile.</span></label>
-                                </div>
-                                <div class="single-checkbox d-flex">
-                                    <input type="radio" id="check3" name="IsBreerderLicenseUpload" value="true">
-                                    <label for="check3"><span>I've already uploaded my license to my profile.</span></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form_group">
-                            <label class="d-block" style="line-height: 30px; font-weight:900">ZOOLOGICAL NUMBER (OPTIONAL)</label>
-                            <label class="d-block mb-3" style="line-height: 5px; font-size:12px; font-style:italic; font-weight:900">VENDORS FROM SPAIN ONLY</label>
-                            <small>If you're selling from spain, we need your zoological number, to verify that you are an authorized vendor.</small>
-                            <small>No listing will be posted until we have, and review all documentation.</small>
-                            <small>Please upload your license to your profile. This is your profile page: My Profile</small>
-                            <small>Please check our Terms and Conditions page for further information.</small>
-
-                            <div class="form_group mt-2">
-                                <div class="single-checkbox d-flex">
-                                    <input type="checkbox" id="ZoologicalNumber" name="hereby" value="true">
-                                    <label for="ZoologicalNumber"><span>Hereby i confirm, that I've added my zoological number to my profile.</span></label>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-
-                <div class="button text-right">
-                    <button class="main-btn btn-danger icon-btn" type="button" id="Btn_Update_Listing">Update Listing</button>
-                </div>
-        </div>
-
-    </div>
-    </div>
-</section>
-
-
-
+﻿
 <section class="content pb-4 pt-4">
     <div class="container-fluid">
 
@@ -281,10 +47,259 @@
 
 
     </div>
+
+
 </section>
+
+<div class="modal" id="UpdateListingModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Listing</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              
+              
+                            <input type="hidden" id="HDID" />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label>Pakages</label>
+                                        <select class="form-control" id="PackageId">
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label>Category</label>
+                                        <select class="form-control" id="Category">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control" id="Title" name="Title">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label>Gender</label>
+                                        <select class="form-control" id="Gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label>TYPE OF CAT</label>
+                                        <select class="form-control" id="TypeOfCat">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label>AGE</label>
+                                        <select class="form-control" id="Age">
+                                            <option value="-1" disabled selected>Select Age</option>
+                                            <option value="1">3 Months</option>
+                                            <option value="2">4 Months</option>
+                                            <option value="3">5 Months</option>
+                                            <option value="4">6 Months</option>
+                                            <option value="5">7 Months</option>
+                                            <option value="6">8 Months</option>
+                                            <option value="7">9 Months</option>
+                                            <option value="8">10 Months</option>
+                                            <option value="9">11 Months</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col-md-12">
+                                    <div class="form_group">
+                                        <label class="d-block">DESCRIPTION</label>
+                                        <textarea class="form-control" id="Description" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*  Gallery Work *@
+                            <h4 class="title pt-4">Gallery Images</h4>
+                            <p>Click here or drop files to upload</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form_group file-input-two">
+                                        <div class="form_group">
+                                            <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
+
+                                            <div class="form_group">
+                                                <input type="file" id="FeaturedFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-2" id="FeaturedImageAppend">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form_group file-input-two">
+                                        <div class="form_group">
+                                            <label class="d-block" style="line-height: 20px; font-weight:900">GALLERY (OPTIONAL)</label>
+
+                                            <div class="form_group">
+                                                <input type="file" multiple id="Gallery_Files" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="GalleryFilesAppend">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Video Work *@
+                            <h4 class="title pt-4">Video</h4>
+                            <p>Click here or drop files to upload</p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form_group file-input-two">
+                                        <div class="form_group">
+                                            <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
+                                            <small> Post video of your beloved kittens</small>
+                                            <div class="form_group">
+                                                <input type="file" id="VideoFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row my-2" id="VideoFileAppend">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Details Information *@
+                            <h4 class="title pt-4">Detailed Information</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Location">Location</label>
+                                        <input type="text" class="form-control" id="Location" placeholder="Location">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="State">State</label>
+                                        <input type="text" class="form-control" id="State" placeholder="State">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="City">City</label>
+                                        <input type="text" class="form-control" id="City" placeholder="City">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="PHONE" class="d-block">Phone (Optional)</label>
+                                        <input type="tel" class="form-control" id="Phone" autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Email">Email</label>
+                                        <input type="text" class="form-control" id="Email" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="BREEDER">BREEDER'S NAME</label>
+                                        <input type="tel" class="form-control" id="BreerderName" placeholder="BREEDER'S NAME">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 5px; font-weight:600">BREEDER'S LICENSE</label>
+                                        <small>We need your Breeder's License to verify that you are an authorized person.</small>
+                                        <small>No listing will be posted until we have and review all documentation.</small>
+                                        <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                        <small>Please check our Terms and Conditions page for further information.</small>
+                                        <div class="form_group mt-3 mb-4">
+                                            <div class="single-checkbox d-flex mb-2">
+                                                <input type="radio" id="check2" name="IsBreerderLicenseUpload" value="false">
+                                                <label for="check2"><span>I will upload my license to my profile.</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex">
+                                                <input type="radio" id="check3" name="IsBreerderLicenseUpload" value="true">
+                                                <label for="check3"><span>I've already uploaded my license to my profile.</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 30px; font-weight:900">ZOOLOGICAL NUMBER (OPTIONAL)</label>
+                                        <label class="d-block mb-3" style="line-height: 5px; font-size:12px; font-style:italic; font-weight:900">VENDORS FROM SPAIN ONLY</label>
+                                        <small>If you're selling from spain, we need your zoological number, to verify that you are an authorized vendor.</small>
+                                        <small>No listing will be posted until we have, and review all documentation.</small>
+                                        <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                        <small>Please check our Terms and Conditions page for further information.</small>
+
+                                        <div class="form_group mt-2">
+                                            <div class="single-checkbox d-flex">
+                                                <input type="checkbox" id="ZoologicalNumber" name="hereby" value="true">
+                                                <label for="ZoologicalNumber"><span>Hereby i confirm, that I've added my zoological number to my profile.</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+                       
+
+                
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" id="Btn_Update_Listing">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 <script>
+
+    
+   var filesToUpload = [];
+   var FeaturedFileUpload = [];
+   var VideoFileUpload = [];
+  
 
     $(document).ready(function () {
         GetAllData();
@@ -361,7 +376,7 @@
             $('#TableMyListings').DataTable();
 
 
-            $('select').niceSelect('update');
+            //$('select').niceSelect('update');
             $(".preloader").hide();
 
         }).catch(function (error) {
@@ -371,30 +386,36 @@
 
     }
 
-
-  
     $("#FeaturedFile").on('change', function (e) {
 
-        debugger
-
-        let FeaturedFile = e.target.files[0];
+        if (e.target.files[0] != undefined) {
+          FeaturedFileUpload = [];
+          FeaturedFileUpload = e.target.files[0];
+        }
 
         $('#FeaturedImageAppend').empty();
         $("#FeaturedImageAppend").append(`
-                                             <div class="col-lg-4 mb-4">
+                                         <div class="col-lg-4 mb-4">
                                          <div class="form_group file-input-one">
-
-                                                <div class="img-thumbnail" style="width:50%!important">
                                                 <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
-                                                <img src="${URL.createObjectURL(FeaturedFile)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
-                                                    <div style="position:absolute;top:0px;right:0px;">
-                                                      <button class="btn btn-danger btn-xs Featured-remove-button" style="border-radius: 25px;">X</button>
-                                                    </div>
+                                                                <img src="${URL.createObjectURL(FeaturedFileUpload)}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
+                                                    <div style="position:absolute;top:5px;right:5px;">
+                                                      <button class="btn btn-danger btn-xs Featured-remove-button" style="border-radius: 25px;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;">X</button>
+                                                  
                                                 </div>
                                             </div>
                                         </div>
                                     </div>`);
 
+    });
+   
+    
+    $("#VideoFile").on('change', function (e) {
+
+        if (e.target.files[0] != undefined) {
+            VideoFileUpload = [];
+            VideoFileUpload = e.target.files[0];
+        }
     });
 
     $(document).on('click', '.Featured-remove-button', function () {
@@ -402,9 +423,7 @@
         $("#FeaturedFile").val(null);
     });
 
-
-    var filesToUpload = [];
-
+ 
     $("#Gallery_Files").on('change', function (e) {
         for (let i = 0; i < e.target.files.length; i++) {
             let myFile = e.target.files[i];
@@ -417,7 +436,7 @@
                 name: myFile.name
             });
         }
-        GalleryView();
+         GalleryView();
         e.target.value = null;
     });
 
@@ -440,12 +459,12 @@
             $("#GalleryFilesAppend").append(`
                                      <div class="col-lg-4 mb-4">
                                  <div class="form_group file-input-one">
-                                        <div class="img-thumbnail" style="width:50%!important">
+                                       
                                         <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
                                                  <img src="${URL.createObjectURL(filesToUpload[i].file)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
-                                            <div style="position:absolute;top:0px;right:0px;">
-                                                  <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${filesToUpload[i].FID}" style="border-radius: 25px;">X</button>
-                                            </div>
+                                            <div style="position:absolute;top:5px;right:5px;">
+                                             <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${filesToUpload[i].FID}"style="border-radius: 25px;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;">X</button>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -454,7 +473,7 @@
 
     };
 
- 
+
     $("#Category").change(function (e) {
         if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
             $("#PEDIGREE").show().append(`
@@ -493,16 +512,16 @@
                      </div>`);
     })
 
+   
     $(document).on("click", "#btn_Listing_Edit", function (e) {
 
-       debugger
-
-        Promise.all([
-            MultipleRequest("/Dashboard/GetListingDetailById/" + Number(e.currentTarget.dataset.id))
-        ]).then(function (responses) {
-           
-            debugger
-
+  
+        Promise.all([MultipleRequest("/Dashboard/GetListingDetailById/" + Number(e.currentTarget.dataset.id))]).then(function (responses) {
+          
+            var promises = [];
+            filesToUpload = [];
+            FeaturedFileUpload =[];
+            VideoFileUpload =[];
             $("#HDID").val(responses[0].data.id);
             $("#PackageId").val(responses[0].data.packageId);
             $("#Category").val(responses[0].data.categoryId);
@@ -515,13 +534,129 @@
             $("#State").val(responses[0].data.state);
             $("#City").val(responses[0].data.city);
             $("#Phone").val(responses[0].data.phone);
-            $("#EMAIL").val(responses[0].data.email);
+            $("#Email").val(responses[0].data.email);
             $("#BreerderName").val(responses[0].data.breerderName);
-            $("input[name='IsBreerderLicenseUpload']").prop("Checked", responses[0].data.isBreerderLicenseUpload);
+            $('#check1').prop("Checked",!responses[0].data.isBreerderLicenseUpload);
+            $('#check2').prop("Checked",!responses[0].data.isBreerderLicenseUpload);
             $("#ZoologicalNumber").prop("checked", responses[0].data.zoologicalNumber);
-            $('#Edit_Collapsed-card').click();
+           
+            $.each(responses[0].data.featureImagePath.split(","), function (i, v) {
 
-        }).catch(function (error) {
+                debugger
+                   
+               var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+
+                var promise = new Promise(function (resolve, reject) {
+                   
+                    $.ajax({
+                        url: Path,
+                        type: "GET",
+                        xhrFields: {
+                            responseType: "blob"
+                        },
+                        success: function (blob) {
+                            debugger
+
+                            FeaturedFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+                          
+            
+                            resolve();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Error fetching image:", errorThrown);
+                            reject(errorThrown);
+                        }
+                    });
+                });
+                promises.push(promise);
+            });     
+            
+              
+            $.each(responses[0].data.videoPath.split(","), function (i, v) {
+
+                debugger
+                   
+               var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+
+                var promise = new Promise(function (resolve, reject) {
+                   
+                    $.ajax({
+                        url: Path,
+                        type: "GET",
+                        xhrFields: {
+                            responseType: "blob"
+                        },
+                        success: function (blob) {
+                            debugger
+
+                            VideoFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+                          
+            
+                            resolve();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Error fetching image:", errorThrown);
+                            reject(errorThrown);
+                        }
+                    });
+                });
+                promises.push(promise);
+            });    
+            
+           
+            $.each(responses[0].data.gallaryImagesPath.split(","), function (i, v) {
+                   
+               var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+
+                var promise = new Promise(function (resolve, reject) {
+                   
+                    $.ajax({
+                        url: Path,
+                        type: "GET",
+                        xhrFields: {
+                            responseType: "blob"
+                        },
+                        success: function (blob) {
+                            debugger
+                            
+                            var myFileID = "FID" + (1000 + Math.floor(Math.random() * 9000));
+
+                            var file = new File([blob],v.split("\\")[1], { type: blob.type });
+                          
+                            debugger
+
+                            filesToUpload.push({
+                                file: file,
+                                size: file.size,
+                                FID: myFileID,
+                                name: file.name
+                            });
+                            resolve();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Error fetching image:", errorThrown);
+                            reject(errorThrown);
+                        }
+                    });
+                });
+                promises.push(promise);
+            });
+
+          
+            
+            
+            Promise.all(promises).then(function () {
+             
+             $("#FeaturedFile").change();
+             GalleryView();
+             $("#UpdateListingModal").modal("show");
+
+            }).catch(function (error) {
+               
+                console.error("One or more AJAX requests failed:", error);
+            });
+
+           }).catch(function (error) {
             console.error('Error fetching data:', error);
         });
 
@@ -529,7 +664,7 @@
     })
 
 
-    $("#Btn_Post_Listing").click(function () {
+    $("#Btn_Update_Listing").click(function () {
 
         debugger
 
@@ -544,9 +679,10 @@
 
             formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
         }
-        formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
-        formData.append("VideoFile", $("#VideoFile")[0].files[0]);
+        formData.append("FeatureImageFile", FeaturedFileUpload);
+        formData.append("VideoFile", VideoFileUpload);
         formData.append("CategoryId", $("#Category").val());
+        formData.append("Id", $("#HDID").val());
         formData.append("Title", $("#Title").val());
         formData.append("Location", $("#Location").val());
         formData.append("State", $("#State").val());
@@ -558,21 +694,23 @@
         formData.append("BreerderName", $("#BreerderName").val());
         formData.append("TypeOfCat", $("#TypeOfCat").val());
         formData.append("Age", $("#Age").val());
-        formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
+        formData.append("IsBreerderLicenseUpload",$('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
         formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
         formData.append("Description", $("#Description").val());
 
-
-
         $.ajax({
             type: "POST",
-            url: "/Listing/UpdateListting",
+            url: "/Listing/UpdateListing",
             data: formData,
             processData: false,
             contentType: false,
             success: function (data) {
 
-                console.log('RESPONSE', data)
+                filesToUpload = [];
+                FeaturedFileUpload = [];
+                VideoFileUpload = [];
+               $("#UpdateListingModal").modal("hide");
+              console.log('RESPONSE', data)
 
             },
             error: function (error) {
@@ -583,9 +721,7 @@
 
     })
 
-
-
-
+  
     function MultipleRequest(url) {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -600,5 +736,8 @@
             });
         });
     }
+
+
+
 
 </script>
