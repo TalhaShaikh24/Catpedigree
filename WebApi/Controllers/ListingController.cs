@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using WebApi.IRepositories;
+using WebApi.Utility;
 
 namespace WebApi.Controllers
 {
@@ -23,10 +24,16 @@ namespace WebApi.Controllers
 
         public Response AddListing([FromForm] Listing obj)
         {
+            Register claimDTO = null;
             Response response = new Response();
 
             try
             {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                obj.CreatedBy = claimDTO.UserId;
+
                 var res = _listing.AddListing(obj);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
@@ -44,16 +51,14 @@ namespace WebApi.Controllers
             {
 
                 response = CustomStatusResponse.GetResponse(600);
-
                 response.ResponseMsg = ex.Message;
-
                 return response;
             }
             catch (Exception ex)
             {
 
                 response = CustomStatusResponse.GetResponse(500);
-                response.ResponseMsg = "Internal server error!";
+                response.ResponseMsg = ex.Message;
                 return response;
             }
         }
@@ -115,7 +120,6 @@ namespace WebApi.Controllers
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = null;
                     response.Data = res;
-
                     return response;
                 }
             }
