@@ -76,20 +76,24 @@ namespace WebApp.HttpMethods
 
                     if (obj.ProfilePic != null)
                     {
-                        //using (var profileStream = obj.ProfilePic.OpenReadStream())
-                        //{
-                        //    multiContent.Add(new StreamContent(profileStream), "profilePic", obj.ProfilePic.FileName);
-                        //}
+
                         multiContent.Add(new StreamContent(obj.ProfilePic.OpenReadStream()), "profilePic", obj.ProfilePic.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.ProfilePicPath ?? ""), "ProfilePicPath");
                     }
 
                     if (obj.BreederLicense != null)
                     {
-                        //using (var licenseStream = obj.BreederLicense.OpenReadStream())
-                        //{
-                        //    multiContent.Add(new StreamContent(licenseStream), "breederLicense", obj.BreederLicense.FileName);
-                        //}
+
                         multiContent.Add(new StreamContent(obj.BreederLicense.OpenReadStream()), "breederLicense", obj.BreederLicense.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.BreederLicensePath ?? ""), "BreederLicensePath");
                     }
 
                     // Send the HTTP request

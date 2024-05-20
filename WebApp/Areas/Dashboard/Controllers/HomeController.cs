@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClassLibrary;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebApp.HttpMethods;
 
@@ -64,12 +65,22 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+
+
+        [HttpPost]
+        [Route("Dashboard/GetProfileDetailById")]
+        public Task<object> GetProfileDetailById()
+        {
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Account/GetProfileDetailById", "", HttpContext);
+        }
+
+
         [HttpPost]
         [Route("Dashboard/UpdateProfile")]
-        public Task<object> UpdateProfile()
+        public Task<object> UpdateProfile([FromForm] Register obj)
         {
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Dashboard/UpdateProfile", "", HttpContext);
+            return HttpClientUtility.CustomHttpIfile(BaseUrl, "api/Account/UpdateProfile", obj, HttpContext);
 
         }
     }

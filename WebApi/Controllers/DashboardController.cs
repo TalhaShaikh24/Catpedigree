@@ -20,16 +20,14 @@ namespace WebApi.Controllers
 
         [HttpPost("GetAllDashboard")]
         public Response GetAllDashboard()
-        {
-
-
+        { 
             Register claimDTO = null;
             Response response = new Response();
 
             try
             {
-                //claimDTO = TokenManager.GetValidateToken(Request);
-                //if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
                 var res = _repository.GetJsonDataAsync(1);
                 
@@ -39,14 +37,12 @@ namespace WebApi.Controllers
                    
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
-                    //response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data save successfully!";
 
 
                 }
                 return response;
-
-
 
             }
             catch (DbException ex)

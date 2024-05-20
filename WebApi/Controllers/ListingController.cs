@@ -24,14 +24,18 @@ namespace WebApi.Controllers
 
         public async Task<Response> AddListing([FromForm] Listing obj)
         {
-            Register claimDTO = null;
+        
             Response response = new Response();
+
+            Register claimDTO = null;
 
             try
             {
-
+               
                 claimDTO = TokenManager.GetValidateToken(Request);
+               
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
                 obj.CreatedBy = claimDTO.UserId;
 
                 var res = await _listing.AddListing(obj);
@@ -40,7 +44,7 @@ namespace WebApi.Controllers
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data Save SuccessFully";
                     response.Data = res;
 
@@ -52,6 +56,7 @@ namespace WebApi.Controllers
 
                 response = CustomStatusResponse.GetResponse(600);
                 response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
             catch (Exception ex)
@@ -59,10 +64,10 @@ namespace WebApi.Controllers
 
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
-
 
 
         [HttpPost("UpdateListing")]
@@ -70,16 +75,23 @@ namespace WebApi.Controllers
         public async Task<Response> UpdateListing([FromForm] Listing obj)
         {
             Response response = new Response();
-
+            Register claimDTO = null;
+          
             try
             {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                obj.ModifiedBy = claimDTO.UserId;
+
                 var res = await _listing.UpdateListing(obj);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data Update SuccessFully";
                     response.Data = res;
 
@@ -90,7 +102,7 @@ namespace WebApi.Controllers
             {
 
                 response = CustomStatusResponse.GetResponse(600);
-
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
 
                 return response;
@@ -100,10 +112,12 @@ namespace WebApi.Controllers
 
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
 
+      
         [HttpPost("GetHomePageListings")]
         public Response GetHomePageListings()
         {
@@ -139,21 +153,26 @@ namespace WebApi.Controllers
                 return response;
             }
         }  
+
         
         [HttpPost("GetAllMyListings")]
         public Response GetAllMyListings()
         {
             Response response = new Response();
-
+            Register claimDTO = null;
             try
             {
-                var res = _listing.GetAllMyListings();
+                 claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _listing.GetAllMyListings(claimDTO.UserId);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = res;
                     return response;
                 }
@@ -164,6 +183,7 @@ namespace WebApi.Controllers
                 response = CustomStatusResponse.GetResponse(600);
 
                 response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
 
                 return response;
             }
@@ -172,6 +192,7 @@ namespace WebApi.Controllers
 
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }  
@@ -182,16 +203,22 @@ namespace WebApi.Controllers
         public Response GetListingDetailById(int Id)
         {
             Response response = new Response();
+            Register claimDTO = null;
 
             try
             {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
                 var res = _listing.GetListingDetailById(Id);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = res;
 
                     return response;
@@ -203,7 +230,7 @@ namespace WebApi.Controllers
                 response = CustomStatusResponse.GetResponse(600);
 
                 response.ResponseMsg = ex.Message;
-
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
             catch (Exception ex)
@@ -211,10 +238,12 @@ namespace WebApi.Controllers
 
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
         
+
         [HttpPost("GetAllPackage")]
 
         public Response GetAllPackage()

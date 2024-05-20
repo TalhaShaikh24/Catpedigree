@@ -21,26 +21,26 @@ namespace WebApp.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public Task<object> AddListting([FromForm] Listing obj)
-        //{
+        [HttpPost]
+        public Task<object> AddListting([FromForm] Listing obj)
+        {
 
-        //    obj.Id = 0;
+            obj.Id = 0;
 
-        //    return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/AddListing", obj, HttpContext);
+            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/AddListing", obj, HttpContext);
 
-        //}
-              
-        
-        
-        //[HttpPost]
-        //public Task<object> UpdateListing([FromForm] Listing obj)
-        //{
+        }
 
 
-        //    return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
 
-        //}
+        [HttpPost]
+        public Task<object> UpdateListing([FromForm] Listing obj)
+        {
+
+
+            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
+
+        }
 
 
         [HttpPost]

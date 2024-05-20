@@ -23,6 +23,8 @@ namespace ClassLibrary
         public string? ProfileInfo { get; set; }
         public IFormFile? ProfilePic { get; set; }
         public IFormFile? BreederLicense { get; set; }
+        public string? ProfilePicPath { get; set; }
+        public string? BreederLicensePath { get; set; }
         public string? ZoologicalNumber { get; set; }
     }
 

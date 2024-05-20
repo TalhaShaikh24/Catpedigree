@@ -56,65 +56,23 @@ namespace WebApi.Controllers
             }
         }
 
-        
-        //[HttpPost("RegisterUser")]
-        //public async Task<Response> RegisterUser([FromForm] Register formData)
-        //{
-        //    Response response = new Response();
 
-        //    try
-        //    {
-               
-        //        var res = await _repository.RegisterUser(formData);
-        //        response = CustomStatusResponse.GetResponse(200);
-        //        response.Token = null;
-        //        if (res != null)
-        //        {
-
-        //            response.Data = res;
-        //            response.ResponseMsg = "Data save successfully!";
-                   
-
-        //        }
-        //        return response;
-
-
-
-        //    }
-        //    catch (DbException ex)
-        //    {
-        //        response = CustomStatusResponse.GetResponse(600);
-        //        response.Token = null;
-        //        response.ResponseMsg = ex.Message;
-        //        return response;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response = CustomStatusResponse.GetResponse(500);
-        //        response.Token = null;
-        //        response.ResponseMsg = ex.Message;
-        //        return response;
-        //    }
-
-        //}
-
-
-        [HttpPost("UpdateProfile")]
-        public Response UpdateProfile([FromForm] Register formData)
+        [HttpPost("RegisterUser")]
+        public async Task<Response> RegisterUser([FromForm] Register formData)
         {
             Response response = new Response();
 
             try
             {
 
-                var res = _repository.UpdateProfile(formData);
+                var res = await _repository.RegisterUser(formData);
                 response = CustomStatusResponse.GetResponse(200);
                 response.Token = null;
                 if (res != null)
                 {
 
                     response.Data = res;
-                    response.ResponseMsg = "Data Update successfully!";
+                    response.ResponseMsg = "Data save successfully!";
 
 
                 }
@@ -134,6 +92,101 @@ namespace WebApi.Controllers
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.Token = null;
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("GetProfileDetailById")]
+        public Response GetProfileDetailById()
+        {
+            Response response = new Response();
+
+            Register claimDTO = null;
+
+            try
+            {
+                
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+ 
+                var res = _repository.GetProfileDetailById(claimDTO.UserId);
+
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                if (res != null)
+                {
+
+                    response.Data = res;
+                    response.ResponseMsg = "Data Update successfully!";
+
+
+                }
+                return response;
+
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("UpdateProfile")]
+        public async Task<Response> UpdateProfile([FromForm] Register formData)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+
+            try
+            {
+                
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+               
+                formData.UserId = claimDTO.UserId;
+
+                var res = await _repository.UpdateProfile(formData);
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                if (res != null)
+                {
+
+                    response.Data = res;
+                    response.ResponseMsg = "Data Update successfully!";
+
+
+                }
+                return response;
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
                 return response;
             }
