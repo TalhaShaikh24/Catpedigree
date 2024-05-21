@@ -26,7 +26,13 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
-    
+        [Route("Dashboard/ListingApproval")]
+        public IActionResult ListingApproval()
+        {
+            return View();
+        }
+
+
         public IActionResult AddCategory()
         {
             return View();
@@ -43,16 +49,26 @@ namespace WebApp.Areas.Dashboard.Controllers
         public Task<object> GetAllDashboard()
         {
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Dashboard/GetAllDashboard", "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllDashboard", "", HttpContext);
 
         }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllDropdowns")]
+        public Task<object> GetAllDropdowns()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllDropdowns", "", HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetAllMyListings")]
         public Task<object> GetAllMyListings()
         {
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllMyListings", "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllMyListings", "", HttpContext);
 
         }
 
@@ -61,17 +77,15 @@ namespace WebApp.Areas.Dashboard.Controllers
         public Task<object> GetListingDetailById(int Id)
         {
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetListingDetailById/"+Id, "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetListingDetailById/" + Id, "", HttpContext);
 
         }
-
-
 
         [HttpPost]
         [Route("Dashboard/GetProfileDetailById")]
         public Task<object> GetProfileDetailById()
         {
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Account/GetProfileDetailById", "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetProfileDetailById", "", HttpContext);
         }
 
 
@@ -80,8 +94,36 @@ namespace WebApp.Areas.Dashboard.Controllers
         public Task<object> UpdateProfile([FromForm] Register obj)
         {
 
-            return HttpClientUtility.CustomHttpIfile(BaseUrl, "api/Account/UpdateProfile", obj, HttpContext);
+            return HttpClientUtility.CustomHttpIfileDashboard(BaseUrl, "api/Dashboard/UpdateProfile", obj, HttpContext);
 
         }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateListing")]
+        public Task<object> UpdateListing([FromForm] Listing obj)
+        {
+
+            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Dashboard/UpdateListing", obj, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateListingStatus")]
+        public Task<object> UpdateListingStatus(int Id, string Status)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateListingStatus?Id=" + Id + "&Status=" + Status, "", HttpContext);
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllListings")]
+        public Task<object> GetAllListings()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllListings","", HttpContext);
+        }
+
+
     }
 }

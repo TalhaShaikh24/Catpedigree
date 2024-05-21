@@ -12,8 +12,6 @@ namespace WebApi.IRepositories
     {
         Register Authenticate(Register obj);
         Task<Register> RegisterUser(Register obj);
-        Task<Register> UpdateProfile(Register obj);
-
-        Register GetProfileDetailById(int Id);
+ 
     }
 }

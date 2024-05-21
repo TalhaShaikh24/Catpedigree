@@ -13,15 +13,122 @@ namespace WebApp.HttpMethods
 {
     public class HttpClientUtility
     {
+
+
+
+
+        public static async Task<object> CustomHttpDashboard(string BaseUrl, string Url, string content, HttpContext httpContext)
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+
+                client.DefaultRequestHeaders
+                      .Accept
+                      .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
+                if (!String.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                    request.Headers.Add("authorization", httpContext.Session.GetString("authorization"));
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+                HttpResponseMessage Res = await client.SendAsync(request);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = Res.Content.ReadAsStringAsync().Result;
+                    var obj = JsonConvert.DeserializeObject<Response>(response);
+                    httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+                    return response;
+
+                }
+                else
+                    return null;
+            }
+        }
+
+        public static async Task<object> CustomHttpIfileDashboard(string baseUrl, string url, Register obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    // Set the authorization header if it exists in the session
+                    if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                        client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                    var multiContent = new MultipartFormDataContent();
+
+                    // Add JSON content
+                    multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
+                    multiContent.Add(new StringContent(obj.Lastname ?? ""), "lastname");
+                    multiContent.Add(new StringContent(obj.Username ?? ""), "username");
+                    multiContent.Add(new StringContent(obj.Email ?? ""), "email");
+                    multiContent.Add(new StringContent(obj.Password ?? ""), "password");
+                    multiContent.Add(new StringContent(obj.ContactNo ?? ""), "contactNo");
+                    multiContent.Add(new StringContent(obj.Address ?? ""), "address");
+                    multiContent.Add(new StringContent(obj.ProfileInfo ?? ""), "profileInfo");
+                    multiContent.Add(new StringContent(obj.ZoologicalNumber ?? ""), "zoologicalNumber");
+
+                    if (obj.ProfilePic != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.ProfilePic.OpenReadStream()), "profilePic", obj.ProfilePic.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.ProfilePicPath ?? ""), "ProfilePicPath");
+                    }
+
+                    if (obj.BreederLicense != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.BreederLicense.OpenReadStream()), "breederLicense", obj.BreederLicense.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.BreederLicensePath ?? ""), "BreederLicensePath");
+                    }
+
+                    // Send the HTTP request
+                    HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                        httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
+                        return responseBody;
+                    }
+                    else
+                    {
+                        // Handle unsuccessful response
+                        // Log error message
+                        Console.WriteLine($"HTTP request failed with status code: {response.StatusCode}");
+                        // Return a meaningful response indicating failure
+                        return new { Success = false, ErrorMessage = "Failed to send request" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle the exception appropriately
+                    Console.WriteLine("Error in CustomHttp: " + ex.Message);
+                    return new { Success = false, ErrorMessage = ex.Message };
+                }
+            }
+        }
+
         public static async Task<object> CustomHttp(string BaseUrl, string Url, string content, HttpContext httpContext)
         {
-            //HttpClientHandler clientHandler = new HttpClientHandler();
-            //clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-
-            //using (var client = new HttpClient(clientHandler))
-            //{
+           
              using (var client = new HttpClient())
-                {
+             {
                     client.BaseAddress = new Uri(BaseUrl);
 
                 client.DefaultRequestHeaders

@@ -48,18 +48,6 @@ namespace WebApp.Controllers
 
         }
 
-
-
-        [HttpPost]
-        public Task<object> UpdateListing([FromForm] Listing obj)
-        {
-
-
-            return HttpClientUtility.CustomHttpListing(BaseUrl, "api/Listing/UpdateListing", obj, HttpContext);
-
-        }
-
-
         [HttpPost]
         public Task<object> GetHomePageListings()
         {

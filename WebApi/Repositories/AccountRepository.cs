@@ -23,7 +23,7 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-       
+
         public Register Authenticate(Register obj)
         {
 
@@ -32,24 +32,15 @@ namespace WebApi.Repositories
             parameters.Add("@Password", obj.Password, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Get<Register>(@"[sp_Login]", parameters);
-           
-            return data;
-        }
-
-        public Register GetProfileDetailById(int Id)
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            
-            parameters.Add("@Id", Id, DbType.String, ParameterDirection.Input);
-
-            var data = _dapper.Get<Register>(@"[sp_GetProfileDetailById]", parameters);
 
             return data;
         }
 
-        public  async Task<Register> RegisterUser(Register formData)
+
+        public async Task<Register> RegisterUser(Register formData)
         {
-            try{
+            try
+            {
                 string folder = "Profile"; // Relative path
 
                 //For Profile Picture
@@ -84,12 +75,12 @@ namespace WebApi.Repositories
                 parameters.Add("@ContactNo", formData.ContactNo, DbType.String, ParameterDirection.Input);
                 parameters.Add("@Address", formData.Address, DbType.String, ParameterDirection.Input);
                 parameters.Add("@ProfileInfo", formData.ProfileInfo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ProfilePicPath", "~/"+profileFilePath, DbType.String, ParameterDirection.Input);
+                parameters.Add("@ProfilePicPath", "~/" + profileFilePath, DbType.String, ParameterDirection.Input);
                 parameters.Add("@BreederLicensePath", "~/" + licenseFilePath, DbType.String, ParameterDirection.Input);
                 parameters.Add("@ZoologicalNumber", formData.ZoologicalNumber, DbType.String, ParameterDirection.Input);
 
                 var data = _dapper.Insert<Register>(@"[sp_userRegister]", parameters);
-                return data  ;
+                return data;
             }
             catch (Exception ex)
             {
@@ -100,62 +91,7 @@ namespace WebApi.Repositories
         }
 
 
-        public async Task<Register> UpdateProfile(Register formData)
-        {
-                 string folder = "Profile"; // Relative path
-
-                if (formData.ProfilePic != null)
-                {
-                    //For Profile Picture
-                    string profileFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.ProfilePic.FileName);
-                    string profileFilePath = Path.Combine(folder, profileFileName);
-                    string absoluteProfileFilePath = Path.Combine(_hostingEnvironment.WebRootPath, profileFilePath);
-
-                    using (var profileStream = new FileStream(absoluteProfileFilePath, FileMode.Create))
-                    {
-                        await formData.ProfilePic.CopyToAsync(profileStream);
-                    }
-
-                    formData.ProfilePicPath = profileFilePath;
-
-
-                }
-
-                if (formData.BreederLicense != null)
-                {
-                    //For Breeder License
-                    string licenseFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.BreederLicense.FileName);
-                    string licenseFilePath = Path.Combine(folder, licenseFileName);
-                    string absoluteLicenseFilePath = Path.Combine(_hostingEnvironment.WebRootPath, licenseFilePath);
-
-                    using (var licenseStream = new FileStream(absoluteLicenseFilePath, FileMode.Create))
-                    {
-                        await formData.BreederLicense.CopyToAsync(licenseStream);
-                    }
-
-                    formData.BreederLicensePath= licenseFilePath;
-                 }
-
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id",formData.UserId, DbType.Int32, ParameterDirection.Input);
-                parameters.Add("@Firstname", formData.Firstname, DbType.String, ParameterDirection.Input);
-                parameters.Add("@Lastname", formData.Lastname, DbType.String, ParameterDirection.Input);
-                parameters.Add("@Username", formData.Username, DbType.String, ParameterDirection.Input);
-                parameters.Add("@Email", formData.Email, DbType.String, ParameterDirection.Input);
-                parameters.Add("@Password", formData.Password, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ContactNo", formData.ContactNo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@Address", formData.Address, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ProfileInfo", formData.ProfileInfo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ProfilePicPath",formData.ProfilePicPath, DbType.String, ParameterDirection.Input);
-                parameters.Add("@BreederLicensePath",formData.BreederLicensePath, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ZoologicalNumber", formData.ZoologicalNumber, DbType.String, ParameterDirection.Input);
-
-                var data = _dapper.Insert<Register>(@"[sp_UpdateProfile]", parameters);
-
-                return data;
-            }
-           
-        }
+    }
 
         
     }

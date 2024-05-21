@@ -24,6 +24,7 @@ namespace ClassLibrary
         public string? Description { get; set; }
         public string? PedigreeFilePath { get; set; }
         public string? VideoPath { get; set; }
+        public string? Status { get; set; }
         public string? FeatureImagePath { get; set; }
         public string? GallaryImagesPath { get; set; }
         public IFormFile? PedigreeFile { get; set; }
@@ -34,8 +35,8 @@ namespace ClassLibrary
         public int CategoryId { get; set; }
         public int PackageId { get; set; }
         public bool? IsActive { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime? CreatedOn { get; set; }
+        public new int CreatedBy { get; set; }
+        public new DateTime? CreatedOn { get; set; }
         public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool? IsExpired { get; set; }
