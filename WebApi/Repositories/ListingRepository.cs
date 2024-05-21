@@ -194,9 +194,33 @@ namespace WebApi.Repositories
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);
             return data;
         }
-   
-        
-        public List<Listing> GetHomePageListings()
+		public class ListingResult
+		{
+			public List<Listing> Listings { get; set; }
+			public int TotalCount { get; set; }
+			public int FetchedCount { get; set; }
+		}
+
+		public ListingResult GetAllListingByFilters(ListingFilters obj)
+		{
+			DynamicParameters parameters = new DynamicParameters();
+			parameters.Add("@PageNumber", obj.PageNumber);
+			parameters.Add("@PageSize", obj.PageSize);
+
+			var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllListingByFilters]", parameters).ToList();
+			int totalCount = data.Any() ? data.First().TotalCount : 0;
+			int fetchedCount = data.Count;
+
+			return new ListingResult
+			{
+				Listings = data,
+				TotalCount = totalCount,
+				FetchedCount = fetchedCount
+			};
+		}
+
+
+		public List<Listing> GetHomePageListings()
         {
             DynamicParameters parameters = new DynamicParameters();
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetHomePageListings]", parameters);

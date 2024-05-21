@@ -15,12 +15,12 @@ function GetHomePageListings() {
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="listing-item listing-grid-item-two mb-30">
                             <div class="listing-thumbnail">
-                                <img src="${item.featureImagePath}" alt="Listing Image">
+                                <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
                             </div>
                             <div class="listing-content">
                                 <h3 class="title">
                                     <span class="status st-close">${item.categoryName}</span>
-                                    <a href="listing-details-1.html">${item.title}</a></h3>
+                                    <a href="https://localhost:7297/Listing/SingleListing">${item.title}</a></h3>
                                 <p>${item.description}</p>
                                 <div class="listing-meta">
                                     <ul>

@@ -20,6 +20,23 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        
+        public IActionResult ViewListings()
+        {
+            return View();
+        } 
+        public IActionResult SingleListing()
+        {
+            return View();
+        } 
+        public IActionResult SingleListing2()
+        {
+            return View();
+        }
+        public IActionResult NotAllowed()
+        {
+            return View();
+        }
 
         [HttpPost]
         public Task<object> AddListting([FromForm] Listing obj)
@@ -51,17 +68,18 @@ namespace WebApp.Controllers
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
         }
 
-         [HttpPost]
-        public Task<object> GetAllPackage()
-        {
-            string content = "";
+		[HttpPost]
+		public Task<object> GetAllListingByFilters([FromBody] ListingFilters obj)
+		{
+			string content = JsonConvert.SerializeObject(obj);
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllPackage", content, HttpContext);
-        }
+			return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllListingByFilters", content, HttpContext);
+		}
 
 
 
-        [HttpPost]
+
+		[HttpPost]
         public Task<object> GetAllCatType()
         {
             string content = "";

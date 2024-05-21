@@ -40,12 +40,18 @@ namespace ClassLibrary
         public DateTime? ModifiedOn { get; set; }
         public bool? IsExpired { get; set; }
         public DateTime? ExpiryDate { get; set; }
+        public int TotalCount { get; set; }
     }
 
+	public class ListingFilters
+	{
+		public int PageNumber { get; set; }
+		public int PageSize { get; set; }
+	}
 
-   
+	
 
-    public class CatTypes
+	public class CatTypes
     {
         public int Id { get; set; }
         public string? CatType { get; set; }

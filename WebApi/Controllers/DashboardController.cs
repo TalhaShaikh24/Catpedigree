@@ -34,12 +34,10 @@ namespace WebApi.Controllers
                 if (res != null)
                 {
 
-                   
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data save successfully!";
-
 
                 }
                 return response;

@@ -1,0 +1,180 @@
+﻿<div id="listing-container"></div>
+<div id="count-display"></div>
+<!--====== Start Map Section ======-->
+<section class="map-area">
+    <div class="map-box">
+        <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    </div>
+</section><!--====== End Map Section ======-->
+<!--====== Start listing Section ======-->
+<section class="listing-grid-area pb-120">
+    <form>
+        <div class="container">
+            <div class="row">
+                <div class="listing-search-form mb-120 wow fadeInUp">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <input type="text" class="form_control" placeholder="Search By Keyword" name="search" required>
+                                <i class="ti-ink-pen"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <select class="wide">
+                                    <option data-dsplay="Category">Category</option>
+                                    <option value="01">Museums</option>
+                                    <option value="02">Restaurant</option>
+                                    <option value="03">Party Center</option>
+                                    <option value="04">Fitness Zone</option>
+                                    <option value="05">Game Field</option>
+                                    <option value="06">Job & Feeds</option>
+                                    <option value="07">Shooping</option>
+                                    <option value="08">Art Gallery</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <input type="text" class="form_control" placeholder="Location" name="location" required>
+                                <i class="ti-location-pin"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <select class="wide">
+                                    <option data-dsplay="Location">Location</option>
+                                    <option value="01">Dhaka</option>
+                                    <option value="02">Delhi</option>
+                                    <option value="03">lahore</option>
+                                    <option value="04">Rome</option>
+                                    <option value="05">New york</option>
+                                    <option value="06">Pris</option>
+                                    <option value="07">Bern</option>
+                                    <option value="08">Bangkok</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <select class="wide">
+                                    <option data-dsplay="By Country">By Country</option>
+                                    <option value="01">Bangladesh</option>
+                                    <option value="02">India</option>
+                                    <option value="03">Pakistan</option>
+                                    <option value="04">Italy</option>
+                                    <option value="05">America</option>
+                                    <option value="06">London</option>
+                                    <option value="07">Swizerland</option>
+                                    <option value="08">Thailand</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <select class="wide">
+                                    <option data-dsplay="Default price">Default price</option>
+                                    <option value="01">$10-$30</option>
+                                    <option value="02">$30-$70</option>
+                                    <option value="03">$70-$100</option>
+                                    <option value="04">$100-$130</option>
+                                    <option value="05">$130-$150</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form_group">
+                                <button class="main-btn icon-btn">Search Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="listing-search-filter mb-40">
+                        <div class="row" id="appendListings">
+                        </div>
+                    </div>
+                    <div class="button text-center mt-30">
+                        <a id="load-more" onclick="loadMore()" class="main-btn icon-btn">Load More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<!--====== End listing Section ======-->
+
+<script>
+    let pageNumber = 1;
+    const pageSize = 9;
+    let varTotalCount = 0;
+    let varCurrentCount = 0;
+
+    async function loadMore() {
+
+        var obj = {
+            PageNumber: pageNumber,
+            PageSize: pageSize
+        }
+
+        const response = await fetch('/Listing/GetAllListingByFilters', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        });
+        const data = await response.json();
+
+        if (data.data) {
+            const { listings, totalCount, currentCount } = data.data;
+            varTotalCount = totalCount;
+            varCurrentCount = currentCount;
+
+
+            $.each(listings, function (index, item) {
+
+                var html = `
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="listing-item listing-grid-item-two mb-30">
+                                <div class="listing-thumbnail">
+                                        <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
+                                </div>
+                                <div class="listing-content">
+                                    <h3 class="title">
+                                        <span class="status st-close">${item.categoryName}</span>
+                                        <a href="listing-details-1.html">${item.title}</a></h3>
+                                    <p>${item.description}</p>
+                                    <div class="listing-meta">
+                                        <ul>
+                                            <li><span><i class="ti-location-pin"></i>${item.location} ,${item.state} </span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                `;
+                $('#appendListings').append(html);
+            });
+
+
+            pageNumber++;
+            updateCountDisplay();
+
+            if (varCurrentCount >= varTotalCount) {
+                document.getElementById('load-more').style.display = 'none';
+            }
+        }
+    }
+
+    function updateCountDisplay() {
+        const countDisplay = document.getElementById('count-display');
+        countDisplay.textContent = `${varCurrentCount}/${varTotalCount}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadMore();
+    });
+</script>

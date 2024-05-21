@@ -152,10 +152,51 @@ namespace WebApi.Controllers
                 response.ResponseMsg = "Internal server error!";
                 return response;
             }
-        }  
+        }
 
-        
-        [HttpPost("GetAllMyListings")]
+		[HttpPost("GetAllListingByFilters")]
+		public Response GetAllListingByFilters(ListingFilters obj)
+		{
+			Response response = new Response();
+
+			try
+			{
+				var result = _listing.GetAllListingByFilters(obj);
+
+				if (result == null || result.Listings == null || !result.Listings.Any())
+				{
+					return CustomStatusResponse.GetResponse(320);
+				}
+				else
+				{
+					response = CustomStatusResponse.GetResponse(200);
+					response.Token = null;
+					int currentCount = (obj.PageNumber - 1) * obj.PageSize + result.FetchedCount;
+					response.Data = new
+					{
+						Listings = result.Listings,
+						TotalCount = result.TotalCount,
+						CurrentCount = currentCount
+					};
+					return response;
+				}
+			}
+			catch (DbException ex)
+			{
+				response = CustomStatusResponse.GetResponse(600);
+				response.ResponseMsg = ex.Message;
+				return response;
+			}
+			catch (Exception ex)
+			{
+				response = CustomStatusResponse.GetResponse(500);
+				response.ResponseMsg = "Internal server error!";
+				return response;
+			}
+		}
+
+
+		[HttpPost("GetAllMyListings")]
         public Response GetAllMyListings()
         {
             Response response = new Response();
