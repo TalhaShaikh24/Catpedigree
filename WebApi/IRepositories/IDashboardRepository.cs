@@ -5,7 +5,7 @@ namespace WebApi.IRepositories
     public interface IDashboardRepository
     {
         dynamic GetJsonDataAsync(int userId);
-        object GetAllDropdowns();
+        object GetAllDropdowns(int Id);
         List<Listing> GetAllMyListings(int Id);
         List<Listing> GetAllListings();
         Listing GetListingDetailById(int Id);

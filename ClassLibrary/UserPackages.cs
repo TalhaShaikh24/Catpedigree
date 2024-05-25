@@ -20,6 +20,7 @@ namespace ClassLibrary
         public int? BaseListingCount { get; set; }
         public int? ExtraListingCount { get; set; }
         public bool? IsUnlimited { get; set; }
+        public int? RemainingListings { get; set; }
     }
 
     public class UserPackages : Common
@@ -32,5 +33,19 @@ namespace ClassLibrary
         public int? RemainingListings { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsExpired { get; set; }
+
+    }
+
+
+    public class VideoPackages
+    {
+
+        public int Id { get; set; }
+        public string? PackageName { get; set; }
+        public string? Description { get; set; }
+        public double? Price { get; set; }
+        public bool IsActive { get; set; }
+        public int? VideoCount { get; set; }
+
     }
 }

@@ -56,7 +56,9 @@ namespace WebApp.Controllers
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
         }
 
-		[HttpPost]
+
+
+        [HttpPost]
 		public Task<object> GetAllListingByFilters([FromBody] ListingFilters obj)
 		{
 			string content = JsonConvert.SerializeObject(obj);
@@ -82,9 +84,24 @@ namespace WebApp.Controllers
             string content = "";
 
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllCatCategory", content, HttpContext);
+        } 
+        
+        [HttpPost]
+        public Task<object> GetAllPackage()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllPackage", content, HttpContext);
         }
 
-  
+
+        [HttpPost]
+        public Task<object> GetAllDropdowns()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Listing/GetAllDropdowns", "", HttpContext);
+
+        }
 
     }
 }

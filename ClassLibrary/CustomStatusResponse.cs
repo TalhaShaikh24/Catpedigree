@@ -23,7 +23,7 @@ namespace ClassLibrary
             else if (StatusCode == 403) return new Response()
             {
                 Status = 403,
-                ResponseMsg = "You don’t have permission to this action."
+                ResponseMsg = "Sorry, video uploads are only available with a video plan. Upgrade to add videos to your listing or remove the video."
             };
             else if (StatusCode == 320) return new Response()
             {
@@ -44,6 +44,8 @@ namespace ClassLibrary
                 Status = 500,
                 ResponseMsg = "Internal server error Error"
             };
+
+
         }
 
 

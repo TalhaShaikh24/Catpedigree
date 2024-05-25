@@ -20,9 +20,11 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public object GetAllDropdowns()
+        public object GetAllDropdowns(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
 
             var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters,gr=>gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>());
 

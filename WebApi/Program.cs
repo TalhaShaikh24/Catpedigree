@@ -29,6 +29,8 @@ builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IListingRepository, ListingRepository>();
 builder.Services.AddTransient<IPackagesRepository, PackagesRepository> ();
 builder.Services.AddTransient<IDashboardRepository, DashboardRepository> ();
+builder.Services.AddTransient<IVideoPackagesRepository, VideoPackagesRepository> ();
+builder.Services.AddTransient<IBlogRepository, BlogRepository> ();
 
 var app = builder.Build();
 

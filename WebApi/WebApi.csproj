@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\UploadImages\475b2_undefined" />
+    <None Include="wwwroot\UploadImages\5de79_undefined" />
+    <None Include="wwwroot\UploadImages\6680b_undefined" />
+    <None Include="wwwroot\UploadImages\79ce4_undefined" />
+    <None Include="wwwroot\UploadImages\84e02_undefined" />
+    <None Include="wwwroot\UploadImages\a76a4_undefined" />
+    <None Include="wwwroot\UploadImages\aa021_undefined" />
+    <None Include="wwwroot\UploadImages\add8f_undefined" />
+    <None Include="wwwroot\UploadImages\b7e5a_undefined" />
+    <None Include="wwwroot\UploadImages\GettyImages-152138853-e1699230918928.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -20,9 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\UploadVideos\" />
-    <Folder Include="wwwroot\UploadImages\" />
-    <Folder Include="wwwroot\Profile\" />
+    <Folder Include="wwwroot\UploadBLogs\" />
   </ItemGroup>
 
 </Project>

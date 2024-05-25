@@ -33,6 +33,8 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+
+
         public IActionResult AddCategory()
         {
             return View();
@@ -40,6 +42,18 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         [Route("Dashboard/Profile")]
         public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [Route("Dashboard/Blog")]
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
+        [Route("Dashboard/Blogs")]
+        public IActionResult Blogs()
         {
             return View();
         }
@@ -124,6 +138,24 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllListings","", HttpContext);
         }
 
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllAdminBLogs")]
+        public Task<object> GetAllAdminBLogs()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllAdminBLogs", "", HttpContext);
+        }
+
+        [HttpPost]
+        [Route("Dashboard/AddBlog")]
+        public Task<object> AddBlog([FromForm] Blog obj)
+        {
+           
+            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Blog/AddBlog",obj,HttpContext);
+
+        }
 
     }
 }

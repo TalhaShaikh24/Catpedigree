@@ -1,0 +1,61 @@
+﻿
+<style>
+
+    .form-control {
+        height: calc(2.25rem + 7px)!important;
+    }
+
+
+</style>
+
+
+<div class="row">
+    
+    <div class="col-md-12 mb-3">
+
+        <div class="card card-primary p-0 m-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><b>Add Blog</b></h3>
+                <button class="btn btn-success" id="Btn_BlogSubmit" style="margin-left: auto;">Submit</button>
+            </div>
+            <div class="card-body p-0 m-0">
+                <div class="row p-3">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Enter Title">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Short Description</label>
+                            <input type="text" class="form-control" id="shortdescription" placeholder="Enter Short Description">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="d-block">Upload Featured Image</label>
+                            <input type="file" class="form-control" id="featuredFile">
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <textarea id="summernote"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+
+  <script src="~/dashboard/blog.js"></script>
+}

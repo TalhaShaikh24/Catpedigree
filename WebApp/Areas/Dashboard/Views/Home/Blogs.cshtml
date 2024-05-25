@@ -1,0 +1,41 @@
+﻿<style>
+.table-bordered td, .table-bordered th {
+    width: 12%;
+}
+</style>
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>Blogs</b></h3>
+
+            </div>
+            <div class="card-body">
+                <table id="TableBlogs" class="table table-bordered table-responsive" style="width:100%;">
+                    <thead>
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Short Description</th>
+                            <th>Comments</th>
+                            <th>Author</th>
+                            <th>CreatedOn</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="AppendBlogs">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/dashboard/Blog.js"></script>
+}

@@ -8,9 +8,8 @@ namespace WebApi.IRepositories
         Task<Listing> AddListing(Listing obj);
         List<Listing> GetHomePageListings();
         ListingResult GetAllListingByFilters(ListingFilters obj);
-        List<Package> GetAllPackage();
-        List<CatTypes> GetAllCatType();
-        List<Category> GetAllCatCategory();
+
+        object GetAllDropdowns(int Id);
 
     }
 

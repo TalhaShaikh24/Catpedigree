@@ -141,7 +141,7 @@ namespace WebApp.HttpMethods
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
                 if (!String.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
                     request.Headers.Add("authorization", httpContext.Session.GetString("authorization"));
-                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(content, Encoding.UTF8, "application/json");
                 HttpResponseMessage Res = await client.SendAsync(request);
                 if (Res.IsSuccessStatusCode)
                 {
@@ -255,7 +255,8 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.BreerderName ?? ""), "BreerderName");
                     multiContent.Add(new StringContent(obj.TypeOfCat.ToString() ?? ""), "TypeOfCat");
                     multiContent.Add(new StringContent(obj.Age.ToString() ?? ""), "Age");
-                    multiContent.Add(new StringContent(obj.Age.ToString() ?? ""), "PackageId");
+                    multiContent.Add(new StringContent(obj.PackageId.ToString() ?? ""), "PackageId");
+                    multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
                     multiContent.Add(new StringContent(obj.IsBreerderLicenseUpload.ToString() ?? ""), "IsBreerderLicenseUpload");
                     multiContent.Add(new StringContent(obj.ZoologicalNumber.ToString() ?? ""), "ZoologicalNumber");
                     multiContent.Add(new StringContent(obj.Description ?? ""), "Description");
@@ -309,7 +310,71 @@ namespace WebApp.HttpMethods
 
         }
 
+        public static async Task<object> CustomHttpWithoutToken(string BaseUrl, string Url, string content, HttpContext httpContext)
+        {
 
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+
+                client.DefaultRequestHeaders
+                      .Accept
+                      .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+                HttpResponseMessage Res = await client.SendAsync(request);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = Res.Content.ReadAsStringAsync().Result;
+                    return response;
+
+                }
+                else
+                    return null;
+            }
+        }
+
+        public static async Task<object> CustomHttpBlog(string baseUrl, string url, Blog obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+              
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    // Set the authorization header if it exists in the session
+                    if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                        client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                    var multiContent = new MultipartFormDataContent();
+                    multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
+                    multiContent.Add(new StringContent(obj.ShortDescription ?? ""), "ShortDescription");
+                    multiContent.Add(new StringContent(obj.Content ?? ""), "Content");
+
+
+                    if (obj.FeatureImage != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.FeatureImage.OpenReadStream()), "FeatureImage", obj.FeatureImage.FileName);
+                    }
+
+
+                    // Send the HTTP request
+                    HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                        httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
+                        return responseBody;
+                    }
+
+                    return null;
+
+                }
+                
+        }
+   
 
         public static async Task<object> CustomHttpForGetAll(string BaseUrl, string Url, string content, HttpContext httpContext)
         {

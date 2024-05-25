@@ -13,11 +13,12 @@ namespace WebApi.Controllers
     {
 
         private readonly IListingRepository _listing;
-        public ListingController(IListingRepository listing)
+        private readonly IVideoPackagesRepository _videoPackages;
+        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages)
         {
 
             _listing = listing;
-
+            _videoPackages = videoPackages;
         }
 
         [HttpPost("AddListing")]
@@ -29,6 +30,8 @@ namespace WebApi.Controllers
 
             Register claimDTO = null;
 
+            Listing res = null;
+
             try
             {
                
@@ -38,17 +41,53 @@ namespace WebApi.Controllers
 
                 obj.CreatedBy = claimDTO.UserId;
 
-                var res = await _listing.AddListing(obj);
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
+                if (obj.VideoFile != null)
+                {
+                    var result =  _videoPackages.VideoAvailablity(claimDTO.UserId);
+
+                    if(result)
+                    {
+                        res = await _listing.AddListing(obj);
+                      
+                        if (res == null) return CustomStatusResponse.GetResponse(320);
+                        
+                        else
+                        {
+                            response = CustomStatusResponse.GetResponse(200);
+                            response.Token = TokenManager.GenerateToken(claimDTO);
+                            response.ResponseMsg = "Data Save SuccessFully";
+                            response.Data = res;
+
+                            return response;
+                        }
+                    }
+                    else
+                    {
+                        response = CustomStatusResponse.GetResponse(403);
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.Data =null;
+                        return response;
+
+                    }
+
+                }
+              
                 else
                 {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Data Save SuccessFully";
-                    response.Data = res;
+                     res = await _listing.AddListing(obj);
 
-                    return response;
+                    if (res == null) return CustomStatusResponse.GetResponse(320);
+                   
+                    else
+                    {
+                        response = CustomStatusResponse.GetResponse(200);
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.ResponseMsg = "Data Save SuccessFully";
+                        response.Data = res;
+
+                        return response;
+                    }
                 }
             }
             catch (DbException ex)
@@ -67,9 +106,8 @@ namespace WebApi.Controllers
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
-        }
-
-      
+        }   
+        
         [HttpPost("GetHomePageListings")]
         public Response GetHomePageListings()
         {
@@ -148,121 +186,47 @@ namespace WebApi.Controllers
 		}
         
 
-        [HttpPost("GetAllPackage")]
-
-        public Response GetAllPackage()
+        [HttpPost("GetAllDropdowns")]
+        public Response GetAllDropdowns()
         {
+            Register claimDTO = null;
             Response response = new Response();
 
             try
             {
-                var res = _listing.GetAllPackage();
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
-                else
+                var res = _listing.GetAllDropdowns(claimDTO.UserId);
+
+                if (res != null)
                 {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
-                    response.Data = res;
 
-                    return response;
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Data save successfully!";
+
                 }
+                return response;
+
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
-
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
-
                 return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
-                response.ResponseMsg = "Internal server error!";
-                return response;
-            }
-        }
-
-        [HttpPost("GetAllCatCategory")]
-
-        public Response GetAllCatCategory()
-        {
-            Response response = new Response();
-
-            try
-            {
-                var res = _listing.GetAllCatCategory();
-
-                if (res == null) return CustomStatusResponse.GetResponse(320);
-                else
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
-                    response.Data = res;
-
-                    return response;
-                }
-            }
-            catch (DbException ex)
-            {
-
-                response = CustomStatusResponse.GetResponse(600);
-
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
-
                 return response;
             }
-            catch (Exception ex)
-            {
 
-                response = CustomStatusResponse.GetResponse(500);
-                response.ResponseMsg = "Internal server error!";
-                return response;
-            }
         }
-
-
-        [HttpPost("GetAllCatType")]
-
-        public Response GetAllCatType()
-        {
-            Response response = new Response();
-
-            try
-            {
-                var res = _listing.GetAllCatType();
-
-                if (res == null) return CustomStatusResponse.GetResponse(320);
-                else
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = null;
-                    response.Data = res;
-
-                    return response;
-                }
-            }
-            catch (DbException ex)
-            {
-
-                response = CustomStatusResponse.GetResponse(600);
-
-                response.ResponseMsg = ex.Message;
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-
-                response = CustomStatusResponse.GetResponse(500);
-                response.ResponseMsg = "Internal server error!";
-                return response;
-            }
-        }
-
 
     }
 }

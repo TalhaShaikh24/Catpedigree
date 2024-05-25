@@ -74,7 +74,7 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.GetAllDropdowns();
+                var res = _repository.GetAllDropdowns(claimDTO.UserId);
                 
                 if (res != null)
                 {
@@ -438,5 +438,6 @@ namespace WebApi.Controllers
         #endregion
 
 
+       
     }
 }

@@ -103,8 +103,6 @@ namespace WebApi.Repositories
             return data;
         }
 
-
-  
 		public class ListingResult
 		{
 			public List<Listing> Listings { get; set; }
@@ -138,29 +136,17 @@ namespace WebApi.Repositories
             return data;
         }
       
-       
-        public List<Category> GetAllCatCategory()
+        public object GetAllDropdowns(int Id)
         {
-
             DynamicParameters parameters = new DynamicParameters();
-            var data = _dapper.GetAll<Category>(@"[dbo].[sp_GetAllCategories]", parameters);
+            
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+           
+            var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters, gr => gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>());
+
             return data;
         }
 
-        public List<CatTypes> GetAllCatType()
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            var data = _dapper.GetAll<CatTypes>(@"[dbo].[sp_GetAllCatTypes]", parameters);
-            return data;
-        }
 
-        public List<Package> GetAllPackage()
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            var data = _dapper.GetAll<Package>(@"[dbo].[sp_GetAllPackage]", parameters);
-            return data;
-        }
-
-       
     }
 }
