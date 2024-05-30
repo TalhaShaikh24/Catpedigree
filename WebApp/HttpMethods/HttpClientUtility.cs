@@ -346,6 +346,7 @@ namespace WebApp.HttpMethods
                         client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
 
                     var multiContent = new MultipartFormDataContent();
+                    multiContent.Add(new StringContent(obj.BlogID.ToString()), "BlogID");
                     multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
                     multiContent.Add(new StringContent(obj.ShortDescription ?? ""), "ShortDescription");
                     multiContent.Add(new StringContent(obj.Content ?? ""), "Content");

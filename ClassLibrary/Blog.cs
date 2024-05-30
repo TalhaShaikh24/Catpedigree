@@ -33,4 +33,13 @@ namespace ClassLibrary
         public DateTime? CommentDate { get; set; }
     }
 
+    public class Reply
+    {
+        public int Id { get; set; }
+        public int CommentId { get; set; }
+        public int UserId { get; set; }
+        public string? ReplyText { get; set; }
+        public DateTime? ReplyDate { get; set; }
+    }
+
 }

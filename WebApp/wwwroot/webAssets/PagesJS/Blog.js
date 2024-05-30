@@ -17,7 +17,7 @@ function GetAllBlogs() {
                    
                     <div class="blog-post-item blog-post-item-four mb-50 wow fadeInUp">
                         <div class="post-thumbnail">
-                            <a href="javascript:void(0);"><img src="https://localhost:7280/${v.featureImagePath}" alt="Blog Image"></a>
+                            <a href="javascript:void(0);"><img class="w-100" src="https://localhost:7280/${v.featureImagePath}" alt="Blog Image"></a>
                         </div>
                         <div class="entry-content">
                             <a href="javascript:void(0);" class="cat-btn">${moment(v.createdOn).format("DD MMMM - YYYY")}</a>

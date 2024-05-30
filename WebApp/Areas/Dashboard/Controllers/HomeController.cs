@@ -32,9 +32,6 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
-
-
-
         public IActionResult AddCategory()
         {
             return View();
@@ -57,6 +54,27 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
             return View();
         }
+
+
+        [Route("Dashboard/EditBlog")]
+        public IActionResult EditBlog()
+        {
+            return View();
+        }
+
+
+        [Route("Dashboard/Comments")]
+        public IActionResult Comments()
+        {
+            return View();
+        }
+
+        [Route("Dashboard/Replies")]
+        public IActionResult Replies()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
@@ -155,7 +173,98 @@ namespace WebApp.Areas.Dashboard.Controllers
            
             return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Blog/AddBlog",obj,HttpContext);
 
+        }       
+        
+        
+        [HttpPost]
+        [Route("Dashboard/UpdateBlog")]
+        public Task<object> UpdateBlog([FromForm] Blog obj)
+        {
+           
+            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Blog/UpdateBlog", obj,HttpContext);
+
+        }       
+        
+        
+        [HttpPost]
+        [Route("Dashboard/SendReply")]
+        public Task<object> SendReply([FromBody] Reply obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/SendReply", content, HttpContext);
+
         }
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllCommentsByBlogId")]
+        public Task<object> GetAllCommentsByBlogId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllCommentsByBlogId/"+Id,"",HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/BlogEditById")]
+        public Task<object> BlogEditById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/BlogEditById/" + Id, "", HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/BlogDeleteById")]
+        public Task<object> BlogDeleteById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/BlogDeleteById/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/DeleteCommentById")]
+        public Task<object> DeleteCommentById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteCommentById/" + Id, "", HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllReplyByCommentId")]
+        public Task<object> GetAllReplyByCommentId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllReplyByCommentId/"+Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateReply")]
+        public Task<object> UpdateReply([FromBody] Reply obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/UpdateReply",content, HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/DeleteReplyId")]
+        public Task<object> DeleteReplyId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteReplyId/"+Id, "", HttpContext);
+
+        }
+
 
     }
 }

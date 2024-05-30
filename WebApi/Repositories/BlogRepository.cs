@@ -50,6 +50,35 @@ namespace WebApi.Repositories
             var data = _dapper.Get<Blog>(@"[sp_AddBlog]", parameters);
 
             return data;
+        }  
+        
+        public async Task<Blog> UpdateBlog(Blog obj)
+        {
+
+            if (obj.FeatureImage != null)
+            {
+                string FeatureImageName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImage.FileName);
+                string FeatureFilePath = Path.Combine("UploadBLogs", FeatureImageName);
+                string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
+
+                using (var stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+                {
+                    await obj.FeatureImage.CopyToAsync(stream);
+                }
+                obj.FeatureImagePath = FeatureFilePath;
+            }
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@BlogID", obj.BlogID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Title", obj.Title, DbType.String, ParameterDirection.Input);
+            parameters.Add("@ShortDescription", obj.ShortDescription, DbType.String, ParameterDirection.Input);
+            parameters.Add("@FeatureImagePath", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Content", obj.Content, DbType.String, ParameterDirection.Input);
+            parameters.Add("@ModifiedBy", obj.ModifiedBy, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Get<Blog>(@"[sp_UpdateBlog]", parameters);
+
+            return data;
         }
 
         public Comment AddComment(Comment obj)
@@ -64,11 +93,38 @@ namespace WebApi.Repositories
             return data;
         }
 
+        public int BlogDeleteById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<int>(@"[sp_BlogDeleteById]", parameters);
+            return data;
+        }  
+        
+        
+      
+
+        public int DeleteCommentById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<int>(@"[sp_DeleteCommentById]", parameters);
+            return data;
+        }
+
+        public Blog BlogEditById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<Blog>(@"[sp_BlogEditById]", parameters);
+            return data;
+        }
+
         public object GetAllBlogDetails(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id",Id, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.GetMultipleObjects(@"[sp_GetAllBlogDetails]", parameters,gr=>gr.Read<Blog>(),gr=>gr.Read<Comment>());
+            var data = _dapper.GetMultipleObjects(@"[sp_GetAllBlogDetails]", parameters,gr=>gr.Read<Blog>(),gr=>gr.Read<Comment>(), gr => gr.Read<Reply>());
             return data;
         }
 
@@ -79,8 +135,53 @@ namespace WebApi.Repositories
 
             return data;
         }
+
+        public List<Comment> GetAllCommentsByBlogId(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetAll<Comment>(@"[sp_GetAllCommentsByBlogId]", parameters);
+            return data;
+        }
+
+        public Reply SendReply(Reply obj)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@CommentId", obj.CommentId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ReplyText", obj.ReplyText, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Insert<Reply>(@"[sp_AddReply]", parameters);
+            return data;
+        }
+
+        public List<Reply> GetAllReplyByCommentId(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetAll<Reply>(@"[sp_GetAllReplyByCommentId]", parameters);
+            return data;
+        }
+
+        public Reply UpdateReply(Reply obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", obj.Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CommentId", obj.CommentId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ReplyText", obj.ReplyText, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Update<Reply>(@"[sp_UpdateReply]", parameters);
+            return data;
+        }
+
+        public int DeleteReplyId(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<int>(@"[sp_DeleteReplyId]", parameters);
+            return data;
+        }
     }
 
-        
-    }
+  }
 

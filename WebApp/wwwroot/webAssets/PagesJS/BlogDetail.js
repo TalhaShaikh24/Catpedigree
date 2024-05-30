@@ -27,7 +27,7 @@ function BlogDetails(Id) {
                 $.each(res.data.item1, function (i, v) {
                     $("#BlogDetails_Append").append(`
                         <div class="post-thumbnail">
-                            <img src="https://localhost:7280/${v.featureImagePath}" alt="Blog Image">
+                            <img class="w-100" src="https://localhost:7280/${v.featureImagePath}" alt="Blog Image">
                         </div>
                         <div class="entry-content">
                             <div class="post-meta">
@@ -42,7 +42,7 @@ function BlogDetails(Id) {
                               <h3 class="title">${v.title}</h3>
 
                               ${v.content}
-                          
+                            <div class="comments-area"></div>
                        </div>`);
 
                     $(".comments-title").text(`Comment (${v.commentsCount})`);
@@ -51,23 +51,49 @@ function BlogDetails(Id) {
 
                 $.each(res.data.item2, function (i, v) {
 
+                    debugger
                     $("#Comments_Append").append(`
-                        <li class="comment">
-                                <div class="comment-avatar">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWMDER8CUNhcQ4xBIWth31rBxkrquqpehmYg&s" alt="comment author one">
-                                </div>
-                                <div class="comment-wrap">
-                                    <div class="comment-author-content">
-                                        <span class="author-name">${v.userName}<span class="date">${moment(v.commentDate).format("DD MMMM - YYYY")}</span></span>
-                                        <p>${v.commentText}</p>
-                                     
-                                    </div>
-                                </div>
-                            </li>`);
+                    <li class="comment">
+                        <div class="comment-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWMDER8CUNhcQ4xBIWth31rBxkrquqpehmYg&amp;s" alt="comment author one">
+                        </div>
+                        <div class="comment-wrap">
+                            <div class="comment-author-content">
+                                <span class="author-name">${v.userName}<span class="date">${moment(v.commentDate).format("DD MMMM - YYYY")}</span></span>
+                                <p>${v.commentText}</p>
+                                ${(() => {
+                                            let repliesHtml = '';
+                        $.each(res.data.item3, function (i, r) {
+                            debugger
+                                                if (v.id == r.commentId && v.userId == r.userId) {
+                                                    repliesHtml += `
+                                                <div class="comment">
+                                                    <div class="comment-avatar">
+                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWMDER8CUNhcQ4xBIWth31rBxkrquqpehmYg&amp;s" alt="comment author one">
+                                                    </div>
+                                                    <div class="comment-wrap">
+                                                        <div class="comment-author-content">
+                                                            <span class="author-name d-block">Reply</span>
+                                                            <span class="author-name">By Admin<span class="date">${moment(r.replyDate).format("DD MMMM - YYYY")}</span></span>
+                                                            <p>${r.replyText}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>`;
+                                                }
+                                            });
+                                            return repliesHtml;
+                                        })()}
+                            </div>
+                        </div>
+                    </li>`);
+
                 })
 
             }
         }
+
+
+
         if (res.status == 304) {
 
             Swal.fire({

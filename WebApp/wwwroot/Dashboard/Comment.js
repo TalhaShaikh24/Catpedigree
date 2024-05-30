@@ -1,32 +1,41 @@
 ﻿$(document).ready(function () {
-    $('#summernote').summernote({
-        height:650
-    });
 
-    GetAllAdminBLogs();
+    var urlParams = new URLSearchParams(window.location.search);
+
+    var blogId = urlParams.get("Id");
+
+    if (blogId) {
+
+       GetAllComments(blogId);
+
+    }
+   
 })
 
-
-
-function GetAllAdminBLogs() {
-    postRequest('/Dashboard/GetAllAdminBLogs', null, function (res) {
+function GetAllComments(blogId) {
+    postRequest('/Dashboard/GetAllCommentsByBlogId?Id='+blogId, null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
 
-                $("#AppendBlogs").empty();
+                $("#AppendComment").empty();
                 $.each(res.data, function (i, v) {
 
                     debugger
-                    $("#AppendBlogs").append(`
+                    $("#AppendComment").append(`
                       <tr>
-                      <td><p style=" text-overflow: ellipsis; width:300px; overflow: hidden;overflow: hidden; position: relative; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">${v.title}</p></td>
-                      <td><p style=" text-overflow: ellipsis; overflow: hidden; width:500px;  overflow: hidden; position: relative; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">${v.shortDescription}</p></td>
-                      <td>${v.commentsCount}</td>
-                      <td>${v.username}</td>
+                      <td style="width: 65%;">${v.commentText}</td>
+                      <td>${v.userName}</td>
                       <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                      <td style="width: 15%!important;"><div style=" display: flex; justify-content: space-between; align-items: center;"><a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${v.blogID}"><i class="fa fa-eye"></i></a><a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${v.blogID}"><i class="fa fa-edit"></i></a> <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${v.blogID})"><i class="fa fa-trash"></i></button></div></td>
+                      <td><div style="display: flex; justify-content: space-between; align-items: center;">
+
+                      <a class="btn btn-success btn-md" href="/Dashboard/Replies?Id=${v.id}" title="View Reply"><i class="fa fa-eye"></i></a>
+
+                      <button class="btn btn-info btn-md" title="Reply" onclick="Reply(${v.id},${v.userId})"><i class="fa fa-reply"></i></button>
+
+                      <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="DeleteCommentById(${v.id})"><i class="fa fa-trash"></i></button></div></td>
+
                       </tr>`);
 
                 });
@@ -92,9 +101,22 @@ function GetAllAdminBLogs() {
     });
 }
 
+function Reply(Id,userId) {
+    $("#HDCID").val(Id);
+    $("#HDUID").val(userId);
+    $("#ReplyModal").modal("show");
+}
 
-function BlogDeleteById(Id) {
-    postRequest('/Dashboard/BlogDeleteById?Id='+Id, null, function (res) {
+function SubmitReply() {
+
+
+    var obj = {
+
+        CommentId:$("#HDCID").val(),
+        UserId:$("#HDUID").val(),
+        ReplyText:$("#ReplyText").val(),
+    }
+    postRequest('/Dashboard/SendReply',obj, function (res) {
 
         if (res.status == 200) {
 
@@ -105,9 +127,6 @@ function BlogDeleteById(Id) {
                     text: res.responseMsg,
                     icon: "success"
                 })
-
-                GetAllAdminBLogs();
-
             }
         }
         if (res.status == 304) {
@@ -171,33 +190,29 @@ function BlogDeleteById(Id) {
 
 }
 
+function DeleteCommentById(Id) {
 
-
-$("#Btn_BlogSubmit").click(function () {
-
-
-    let formData = new FormData(); 
-
-    formData.append("Title", $("#title").val());
-    formData.append("ShortDescription", $("#shortdescription").val());
-    formData.append("Content", $('#summernote').summernote("code"));
-    formData.append("FeatureImage", $("#featuredFile")[0].files[0]);
-
-    FilePostRequest('/Dashboard/AddBlog',formData, function (res) {
+    postRequest('/Dashboard/DeleteCommentById?Id='+Id,null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
 
-                debugger
-
                 Swal.fire({
                     title: "Success",
                     text: res.responseMsg,
                     icon: "success"
-                })
+                });
 
+                var urlParams = new URLSearchParams(window.location.search);
 
+                var blogId = urlParams.get("Id");
+
+                if (blogId) {
+
+                    GetAllComments(blogId);
+
+                }
             }
         }
         if (res.status == 304) {
@@ -259,5 +274,6 @@ $("#Btn_BlogSubmit").click(function () {
     });
 
 
-});
+}
+
 

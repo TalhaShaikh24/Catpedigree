@@ -1,0 +1,70 @@
+﻿
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>Replies</b></h3>
+
+            </div>
+            <div class="card-body">
+                <table id="TableReplies" class="table table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+
+                            <th>Reply</th>
+                            <th>ReplyDate</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="AppendReplies">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<div class="modal" id="UpdateReplyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Reply</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form>
+
+                    <input type="hidden" id="HDRID" />
+                    <input type="hidden" id="HDUID" />
+                    <input type="hidden" id="HDCID" />
+
+                    <textarea class="form-control" id="ReplyText" cols="5" rows="5">Reply...</textarea>
+
+
+                </form>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="UpdateReply();" data-dismiss="modal">Update Reply</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/dashboard/Replies.js"></script>
+}
