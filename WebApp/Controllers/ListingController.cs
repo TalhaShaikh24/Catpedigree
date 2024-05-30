@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using ClassLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Web;
@@ -24,11 +25,32 @@ namespace WebApp.Controllers
         public IActionResult ViewListings()
         {
             return View();
-        } 
-        public IActionResult SingleListing()
+        }
+
+
+
+
+
+      
+
+        public async Task<IActionResult> SingleListing(int listingId)
         {
+            var Token = HttpContext.Session.GetString("authorization");
+
+            string content = "";
+
+            if (Token != null)
+            {
+                var json = await GetListingDetailById(listingId);
+                ListingForView listing = JsonConvert.DeserializeObject<ListingForView>(json.ToString());
+                var model = JsonConvert.DeserializeObject<Listing>(json.ToString());
+                return View(listing);
+                // Handle data here
+            }
+
             return View();
-        } 
+        }
+
         public IActionResult SingleListing2()
         {
             return View();
@@ -66,6 +88,14 @@ namespace WebApp.Controllers
 			return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllListingByFilters", content, HttpContext);
 		}
 
+        [HttpPost]
+		public Task<object> GetSingleListing([FromBody] ListingFilters obj)
+		{
+			string content = JsonConvert.SerializeObject(obj);
+
+			return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetSingleListing", content, HttpContext);
+		}
+
 
 
 
@@ -100,6 +130,18 @@ namespace WebApp.Controllers
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Listing/GetAllDropdowns", "", HttpContext);
+
+        }
+
+
+
+        [HttpPost]
+        public async Task<object> GetListingDetailById(int Id)
+        {
+
+            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/VideoAvailablity/" + Id, "", HttpContext);
+
+            return data;
 
         }
 

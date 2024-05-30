@@ -26,7 +26,7 @@ namespace WebApi.Utility
                         using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
                         {
                             streamWriter.Write(plainText);
-                        }
+                        } 
                         array = memoryStream.ToArray();
                     }
                 }

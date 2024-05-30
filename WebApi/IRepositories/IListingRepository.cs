@@ -11,6 +11,8 @@ namespace WebApi.IRepositories
 
         object GetAllDropdowns(int Id);
 
+        Listing IsViewPedigreeAllowed(Listing obj);
+
     }
 
 }

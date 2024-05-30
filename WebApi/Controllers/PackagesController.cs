@@ -18,53 +18,46 @@ namespace WebApi.Controllers
             _repository = repository;
         }
 
+        
         [HttpPost("GetAllPackages")]
         public Response GetAllPackages()
         {
-
-
-            Register claimDTO = null;
             Response response = new Response();
 
             try
             {
-                claimDTO = TokenManager.GetValidateToken(Request);
-                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
                 var res = _repository.GetAllPackages();
-                
-                if (res != null)
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
                 {
 
-                   
                     response = CustomStatusResponse.GetResponse(200);
+
+                    response.ResponseMsg = "Blog Create Successfuly!";
                     response.Data = res;
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Data save successfully!";
-
-
+                    return response;
                 }
-                return response;
-
-
-
             }
             catch (DbException ex)
             {
                 response = CustomStatusResponse.GetResponse(600);
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
+
+
                 return response;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
+
                 return response;
             }
-
         }
-        
+
         [HttpPost("BuyPackage")]
         public Response BuyPackage([FromBody] UserPackages obj)
         {

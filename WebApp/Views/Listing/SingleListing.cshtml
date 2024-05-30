@@ -1,391 +1,610 @@
-﻿ <!--====== Start breadcrumbs Section ======-->
-<section class="page-breadcrumbs page-breadcrumbs-two bg_cover" style="background-image: url('https://t4.ftcdn.net/jpg/02/35/26/51/360_F_235265169_iZnBkQhBM1yVs6adbpB1pq2dlQVoFxLn.jpg');"></section>
+﻿@using ClassLibrary.ViewModels
+
+
+ @model ListingForView;
+
+
+<style>
+    .listingDetails-header .page-header .photo-swip-gallery-wrap {
+        display: grid;
+        grid-gap: 8px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        display: block;
+    }
+
+    .listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item:nth-child(1) img {
+        width: 100%;
+        height: 100%;
+    }
+    .listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item img {
+        height: auto;
+        max-width: 100%;
+        border-radius:8px;
+    }
+
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(2) {
+        grid-column: 3 / 4;
+        grid-row: 1;
+        display: block;
+    }
+
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(3) {
+        grid-column: 4 / 5;
+        grid-row: 1;
+        display: block;
+    }
+
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(4) {
+        grid-column: 3 / 4;
+        grid-row: 2;
+        display: block;
+    }
+
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(5) {
+        grid-column: 4 / 5;
+        grid-row: 2;
+        display: block;
+    }
+
+    .page-header .photo-swip-gallery-wrap .listing-gallery-item {
+        display: none;
+        position: relative;
+    }
+
+    .listing-details-head .listing-details-head-top {
+        gap: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+        .listing-details-head .listing-details-head-top .listing-badge {
+            gap: 10px;
+        }
+
+            .listing-details-head .listing-details-head-top .listing-badge{
+            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            }
+
+    .listing-type-badge{
+        height: 23px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 0;
+        text-align: left;
+        line-height: normal;
+        letter-spacing: 0.44px;
+        text-transform: uppercase;
+        padding: 5px 20px 5px 10px;
+        align-items: center;
+        display: inline-flex;
+        background-color: #02c5bd;
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+    }
+
+    .listing-details-head .listing-details-head-top .rtcl-listing-badge-wrap {
+        flex-flow: unset;
+    }
+
+    .rtcl .rtcl-listing-badge-wrap {
+        gap: 5px;
+        margin: 0;
+        flex-flow: column;
+        display: inline-flex;
+        align-items: flex-start;
+    }
+
+    .rtcl-listing-badge-wrap .badge.rtcl-badge-popular {
+        background-color: #ff3d41;
+    }
+
+    .rtcl-listing-badge-wrap .badge {
+        height: 23px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 0;
+        text-align: left;
+        line-height: normal;
+        letter-spacing: 0.44px;
+        text-transform: uppercase;
+        padding: 5px 20px 5px 10px;
+        align-items: center;
+        display: inline-flex;
+        background-color: #02c5bd;
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+    }
+
+    .rtcl-listing-badge-wrap .badge:before {
+        content: '';
+        font-family: "rt-petslist";
+        font-weight: normal;
+        display: inline-block;
+        margin-right: 0.3em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .listing-details-head {
+        border-radius: 10px;
+        background-color: #FFF;
+        border: 1px solid #E1E9E9;
+        padding: 20px 30px 30px 30px;
+        margin-bottom: 24px;
+        margin-top: 24px;
+    }
+
+        .listing-details-head .title-price {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .listing-details-head .title-price {
+            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .listing-details-head .rtcl-listing-title {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .listing-details-head .title-price .rtcl-price {
+            color: red;
+            font-size: 30px;
+            font-weight: 600;
+            line-height: 28px;
+            text-transform: capitalize;
+            font-family: var(--petslist-heading-font);
+        }
+
+        .listing-details-head .rtcl-listing-meta {
+            gap: 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+    .listing-details-head .rtcl-listing-meta-data {
+        margin-top: 0;
+    }
+
+    .rtcl-listing-meta-data {
+        color: grey;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 15px;
+        list-style: none;
+        margin: 5px 0 0;
+        padding: 0;
+    }
+
+    .listing-details-head .rtcl-listing-meta-data li{
+        margin-top: 0;
+    }
+
+    .rtcl .rtcl-listing-meta-data li {
+        color: #515167;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: normal;
+        margin-top: 7px;
+    }
+
+    .rtcl-listing-meta-data li {
+        color: #646464;
+        margin-bottom: 5px;
+        margin-left: 0;
+        margin-right: 10px;
+    }
+
+        .rtcl-listing-meta-data li i {
+            color: #9E9FB2;
+            margin-right: 3px;
+            font-size: 18px;
+            position: relative;
+            top: 4px;
+        }
+
+    .rtcl-single-listing-details, .listing-details-head {
+        border-radius: 10px;
+        background-color: #FFF;
+        border: 1px solid #E1E9E9;
+        padding: 20px 30px 30px 30px;
+        margin-bottom: 24px;
+    }
+
+        .rtcl-single-listing-details .rtcl-main-content-wrapper {
+            padding: 0;
+            position: relative;
+        }
+
+    .accordion-flush .accordion-item:last-child {
+        border-bottom: 0;
+    }
+
+    .rtcl-single-listing-details .accordion .accordion-item .accordion-header {
+        margin-bottom: 15px;
+    }
+
+        .rtcl-single-listing-details .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+            background-color: transparent;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .rtcl-single-listing-details .accordion .accordion-item .accordion-header .accordion-button::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 4px;
+            border-radius: 100px;
+            background-color: #02c5bd;
+            top: 54px;
+        }
+
+        .rtcl-single-listing-details .accordion .accordion-item .accordion-header .accordion-button {
+            color: #070c3e;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: capitalize;
+            line-height: normal;
+            padding: 0 0 6px 0;
+        }
+
+    .rtcl-listing-description {
+        font-size: 16px;
+    }
+
+    .rtcl p {
+        color: #7a7c93;
+    }
+
+    .rtcl-single-listing-details .custom-field-wrapper {
+        margin: 0;
+        width: 100%;
+        margin-top: 15px;
+        display: inline-block;
+    }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(odd) {
+            margin-right: 15px;
+        }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item .cfp-label {
+            width: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #515167;
+            display: inline-block;
+        }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item .cfp-label {
+            width: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #515167;
+            display: inline-block;
+        }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item .cfp-value {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 27px;
+            text-transform: capitalize;
+            color: #000 !important;
+        }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(1), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(2), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(5), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(6), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(9), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(10), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(13), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(14), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(17), .rtcl-single-listing-details .custom-field-wrapper .list-group-item:nth-child(18) {
+            background-color: #F7F7F7;
+        }
+
+        .rtcl-single-listing-details .custom-field-wrapper .list-group-item {
+            border: none;
+            width: 48%;
+            float: left;
+            border-radius: 4px;
+        }
+
+
+</style>
+
+ <!--====== Start breadcrumbs Section ======-->
+<section class=" d-none page-breadcrumbs page-breadcrumbs-two bg_cover" style="background-image: url('https://t4.ftcdn.net/jpg/02/35/26/51/360_F_235265169_iZnBkQhBM1yVs6adbpB1pq2dlQVoFxLn.jpg');"></section>
 <!--====== End breadcrumbs Section ======-->
 <!--====== Start Listing Details Section ======-->
-<section class="listing-details-section pt-120 pb-90">
+<section class="listing-details-section pt-40 pb-90">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="listing-details-wrapper listing-details-wrapper-two">
-                    <div class="listing-info-area mb-30 wow fadeInUp">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <div class="listing-info-content">
-                                    <ul class="ratings ratings-three">
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li><span><a href="#" class="d-none">(02 Reviews)</a></span></li>
-                                    </ul>
-                                    <h3 class="title">TestTitle2</h3>
-                                    <div class="listing-meta">
-                                        <ul>
-                                            <li><span><i class="ti-location-pin"></i>TestLocation ,TestState</span></li>
-                                            <li><span><i class="ti-tablet"></i><a href="tel:+922653652-05">+98 (265) 3652 - 05</a></span></li>
-                                        </ul>
-                                    </div>
+        @if (@Model.status == 200)
+        {
+            <div class="row mt-120">
+                <div class="col-12">
+                    @if (@Model.status == 200)
+                    {
+
+                    }
+                    <h2 class="title pb-40" style="font-family: 'Quicksand', sans-serif;">@Model.data.Title</h2>
+                    <div class="listingDetails-header">
+                        <div class="page-header">
+                            <div class="photo-swip-gallery-wrap items-five">
+                                <!-- Show the feature image -->
+                                <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+                                    <a class="listing-popup-btn" target="_blank" href="https://localhost:7280/@Model.data.FeatureImagePath" data-width="880" data-height="500">
+                                        <img loading="lazy" width="600" height="500" src="https://localhost:7280/@Model.data.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="button">
-                                    <a href="listing-grid.html" class="icon-btn"><i class="ti-heart"></i></a>
-                                    <a href="listing-grid.html" class="icon-btn"><i class="ti-share"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="listing-thumbnail mb-30 wow fadeInUp">
-                        <img src="https://localhost:7280/UploadImages/Egyptian_cat.jpg" alt="listing image">
-                    </div>
-                    <div class="listing-content mb-30 wow fadeInUp d-none">
-                        <h3 class="title">World's Quality Museum</h3>
-                        <p>Parturient varius elementum maecenas faucibus maecenas inceptos commodo metus vitae ac pretium magnis. Ridiculus aenean diam duis montes mattis curae dis platea cubilia fames justo nullam per incepto Accumsan mollis, semper nisl nulla per curae ante tellus cursus ut blandit eleifend ut adipiscing fringilla Sociosqu penatibus nascetur senectus, molestie sed habitant adipiscing maecenas ultrices curae sociis mi eros ultrices euismod risus cubilia eget habitasse facilisic</p>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-credit-card"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Card Payment</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-paint-bucket"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Air-conditioned</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-rss-alt"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Wireless Internet</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-trash"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Serves Alcohol</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-car"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Parking Street</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="icon-box icon-box-one">
-                                    <div class="icon">
-                                        <i class="ti-credit-card"></i>
-                                    </div>
-                                    <div class="info">
-                                        <h6>Outdoor Seating</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
-                    </div>
-                    <div class="listing-play-box mb-30 wow fadeInUp">
-                        <h4 class="title">Video</h4>
-                        <div class="play-content bg_cover text-center" style="background-image: url(assets/images/bg/video-bg-3.jpg);">
-                            <a href="https://www.youtube.com/watch?v=lJyzByVH1oQ" class="video-popup"><i class="flaticon-play-button"></i></a>
-                        </div>
-                    </div>
-                    <div class="listing-gallery-box mb-30 wow fadeInUp">
-                        <h4 class="title">Photo Gallery</h4>
-                        <div class="gallery-slider-one">
-                            <div class="gallery-item">
-                                <img src="assets/images/listing/gallery-5.jpg" alt="gallery image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="assets/images/listing/gallery-6.jpg" alt="gallery image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="assets/images/listing/gallery-7.jpg" alt="gallery image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="assets/images/listing/gallery-8.jpg" alt="gallery image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="assets/images/listing/gallery-6.jpg" alt="gallery image">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="listing-tag-box mb-30 wow fadeInUp">
-                        <h4 class="title">Popular Tag</h4>
-                        <a href="#">Delivery</a>
-                        <a href="#">Restaurant</a>
-                        <a href="#">Free Internet</a>
-                        <a href="#">Shopping</a>
-                        <a href="#">Car Parking</a>
-                    </div>
-                    <div class="listing-rating-box wow fadeInUp">
-                        <h4 class="title">Average Review (10 Reviews)</h4>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="single-average-rating">
-                                    <h5 class="title">Service</h5>
-                                    <div class="single-average-wrap d-flex align-items-center">
-                                        <div class="progress flex-grow-1">
-                                            <div class="progress-bar" style="width: 80%"></div>
+
+                                <!-- Iterate over gallery images -->
+                                @if (!string.IsNullOrWhiteSpace(@Model.data.GallaryImagesPath))
+                                {
+                                    @foreach (var imagePath in @Model.data.GallaryImagesPath.Replace(" ", "").Split(','))
+                                    {
+                                        <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
+                                            <a class="listing-popup-btn" target="_blank" href="https://localhost:7280/@imagePath" data-width="880" data-height="500">
+                                                <img loading="lazy" width="600" height="500" src="https://localhost:7280/@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                            </a>
                                         </div>
-                                        <span class="rating">4.5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-average-rating">
-                                    <h5 class="title">Quality</h5>
-                                    <div class="single-average-wrap d-flex align-items-center">
-                                        <div class="progress flex-grow-1">
-                                            <div class="progress-bar" style="width: 80%"></div>
-                                        </div>
-                                        <span class="rating">4.5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-average-rating">
-                                    <h5 class="title">Location</h5>
-                                    <div class="single-average-wrap d-flex align-items-center">
-                                        <div class="progress flex-grow-1">
-                                            <div class="progress-bar" style="width: 80%"></div>
-                                        </div>
-                                        <span class="rating">4.5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-average-rating">
-                                    <h5 class="title">Price</h5>
-                                    <div class="single-average-wrap d-flex align-items-center">
-                                        <div class="progress flex-grow-1">
-                                            <div class="progress-bar" style="width: 80%"></div>
-                                        </div>
-                                        <span class="rating">4.5</span>
-                                    </div>
-                                </div>
+                                    }
+                                }
                             </div>
                         </div>
-                    </div>
-                    <div class="listing-review-box mb-50 wow fadeInUp">
-                        <h4 class="title">Customer Review</h4>
-                        <ul class="review-list">
-                            <li class="review">
-                                <div class="thumb">
-                                    <img src="assets/images/listing/review-1.jpg" alt="review image">
-                                </div>
-                                <div class="review-content">
-                                    <h5>Moriana Steve</h5>
-                                    <span class="date">Sep 02, 2021</span>
-                                    <p>Musutrum orci montes hac at neque mollis taciti parturient vehicula interdum verra cubilia ipsum duis amet nullam sit ut ornare mattis urna. </p>
-                                    <div class="content-meta d-flex align-items-center justify-content-between">
-                                        <ul class="ratings ratings-three">
-                                            <li><span class="av-rate">4.5</span></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                        </ul>
-                                        <a href="#" class="reply"><i class="ti-share-alt"></i>Reply</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review">
-                                <div class="thumb">
-                                    <img src="assets/images/listing/review-2.jpg" alt="review image">
-                                </div>
-                                <div class="review-content">
-                                    <h5>Moriana Steve</h5>
-                                    <span class="date">Sep 02, 2021</span>
-                                    <p>Musutrum orci montes hac at neque mollis taciti parturient vehicula interdum verra cubilia ipsum duis amet nullam sit ut ornare mattis urna. </p>
-                                    <div class="content-meta d-flex align-items-center justify-content-between">
-                                        <ul class="ratings ratings-three">
-                                            <li><span class="av-rate">4.5</span></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                        </ul>
-                                        <a href="#" class="reply"><i class="ti-share-alt"></i>Reply</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review">
-                                <div class="thumb">
-                                    <img src="assets/images/listing/review-3.jpg" alt="review image">
-                                </div>
-                                <div class="review-content">
-                                    <h5>Moriana Steve</h5>
-                                    <span class="date">Sep 02, 2021</span>
-                                    <p>Musutrum orci montes hac at neque mollis taciti parturient vehicula interdum verra cubilia ipsum duis amet nullam sit ut ornare mattis urna. </p>
-                                    <div class="content-meta d-flex align-items-center justify-content-between">
-                                        <ul class="ratings ratings-three">
-                                            <li><span class="av-rate">4.5</span></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                            <li class="star"><i class="flaticon-star-1"></i></li>
-                                        </ul>
-                                        <a href="#" class="reply"><i class="ti-share-alt"></i>Reply</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="listing-review-form mb-30 wow fadeInUp">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4 class="title">Write a Review</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-rating">
-                                    <ul class="ratings">
-                                        <li><span>Rate Here:</span></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                        <li class="star"><i class="flaticon-star-1"></i></li>
-                                    </ul>
-                                    <span>(02 Reviews)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <form>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <textarea class="form_control" placeholder="Write Message" name="message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="text" class="form_control" placeholder="Your name" name="name" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="email" class="form_control" placeholder="Email here" name="email" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <div class="single-checkbox d-flex">
-                                            <input type="checkbox" id="check4" name="checkbox">
-                                            <label for="check4"><span>Save my name, email, and website in this browser for the next time i comment.</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <button class="main-btn icon-btn">Submit Review</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+
+
+
                     </div>
                 </div>
-                <div class="releted-listing-area wow fadeInUp">
-                    <h3 class="title mb-20">Similar Restaurant</h3>
-                    <div class="releted-listing-slider-one">
-                        <div class="listing-item listing-grid-item-two">
-                            <div class="listing-thumbnail">
-                                <img src="assets/images/listing/listing-grid-7.jpg" alt="Listing Image">
-                                <a href="#" class="cat-btn"><i class="flaticon-chef"></i></a>
-                                <span class="featured-btn">Featured</span>
-                                <ul class="ratings ratings-four">
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li><span><a href="#">(02 Reviews)</a></span></li>
-                                </ul>
+                <div class="col-lg-8">
+                    <div class="listing-details-wrapper listing-details-wrapper-two">
+
+                        <div class="listing-content mb-30 wow fadeInUp d-none">
+                            <h3 class="title">World's Quality Museum</h3>
+                            <p>Parturient varius elementum maecenas faucibus maecenas inceptos commodo metus vitae ac pretium magnis. Ridiculus aenean diam duis montes mattis curae dis platea cubilia fames justo nullam per incepto Accumsan mollis, semper nisl nulla per curae ante tellus cursus ut blandit eleifend ut adipiscing fringilla Sociosqu penatibus nascetur senectus, molestie sed habitant adipiscing maecenas ultrices curae sociis mi eros ultrices euismod risus cubilia eget habitasse facilisic</p>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-credit-card"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Card Payment</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-paint-bucket"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Air-conditioned</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-rss-alt"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Wireless Internet</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-trash"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Serves Alcohol</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-car"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Parking Street</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="icon-box icon-box-one">
+                                        <div class="icon">
+                                            <i class="ti-credit-card"></i>
+                                        </div>
+                                        <div class="info">
+                                            <h6>Outdoor Seating</h6>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="listing-content">
-                                <h3 class="title"><a href="listing-details-1.html">Pizza Recipe</a></h3>
-                                <p>Popular restaurant in california</p>
-                                <span class="phone-meta"><i class="ti-tablet"></i><a href="tel:+982653652-05">+98 (265) 3652 - 05</a><span class="status st-open">Open</span></span>
-                                <div class="listing-meta">
-                                    <ul>
-                                        <li><span><i class="ti-location-pin"></i>California, USA</span></li>
-                                        <li><span><i class="ti-heart"></i><a href="#">Save</a></span></li>
-                                    </ul>
+                            <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(@Model.data.VideoPath))
+                        {
+                            <div class="listing-play-box mb-30 wow fadeInUp">
+                                <h4 class="title mt-40">Video</h4>
+                                <div class="play-content bg_cover text-center" style="background-image: url('https://localhost:7280/@Model.data.FeatureImagePath');">
+                                    <a href="https://localhost:7280/@Model.data.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="listing-details-head">
+                            <div class="meta-info-box">
+                                <div class="listing-details-head-top">
+                                    <div class="listing-badge">
+                                        <span class="listing-type-badge">
+                                            @Model.data.CategoryName
+                                        </span>
+                                        <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
+                                    </div>
+                                </div>
+                                <div class="title-price">
+                                    <h2 class="rtcl-listing-title">
+                                        Aylesbury Duck
+                                    </h2>
+                                    <!-- Price -->
+                                    <div class="rtcl-price-wrap price-in-mobile">
+                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>220<span class="rtcl-price-currencySymbol">$</span></bdi></span></div>
+                                    </div>
+                                </div>
+                                <div class="meta-list">
+                                    <!-- Meta data -->
+                                    <div class="rtcl-listing-meta">
+                                        <ul class="rtcl-listing-meta-data">
+                                            <li class="author">
+                                                <i class="flaticon-add-user"></i>
+                                                by 									<a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/author/alina_petslist/">Alina Fraser</a>
+                                            </li>
+                                            <li class="rt-location">
+                                                <i class="ti-location-pin"></i>
+                                                <a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/location/virginia/richmond/">Richmond</a><span class="rtcl-delimiter">,</span> <a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/location/virginia/">Virginia</a>
+                                            </li>
+                                            <li class="rt-date-time">
+                                                <i class="ti-time"></i>
+                                                9 months ago
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="listing-item listing-grid-item-two">
-                            <div class="listing-thumbnail">
-                                <img src="assets/images/listing/listing-grid-8.jpg" alt="Listing Image">
-                                <a href="#" class="cat-btn"><i class="flaticon-dumbbell"></i></a>
-                                <ul class="ratings ratings-three">
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li><span><a href="#">(02 Reviews)</a></span></li>
-                                </ul>
-                            </div>
-                            <div class="listing-content">
-                                <h3 class="title"><a href="listing-details-1.html">Gym Ground</a></h3>
-                                <p>Popular restaurant in california</p>
-                                <span class="phone-meta"><i class="ti-tablet"></i><a href="tel:+982653652-05">+98 (265) 3652 - 05</a><span class="status st-close">close</span></span>
-                                <div class="listing-meta">
-                                    <ul>
-                                        <li><span><i class="ti-location-pin"></i>California, USA</span></li>
-                                        <li><span><i class="ti-heart"></i><a href="#">Save</a></span></li>
-                                    </ul>
+                        <div class="rtcl-single-listing-details custom-fields-box">
+                            <div class="rtcl-main-content-wrapper">
+                                <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                Details
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                            <!-- Description -->
+                                            <div class="rtcl-listing-description">
+                                                <p>When an unknown printer took a galley of type and scrambled new year make a type specimen book websites and e-commerce shops. We know how hard it is for you or your clients to gain a competitive advantage in websites and e-commerce shops.</p>
+                                            </div>
+
+
+                                            <!--  Inner Sidebar -->
+                                            <ul class="list-group custom-field-wrapper">
+
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
+                                                    <span class="cfp-label">
+                                                        <span>Name:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Red Duck
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
+                                                    <span class="cfp-label">
+                                                        <span>Color:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Yellow Red
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
+                                                    <span class="cfp-label">
+                                                        <span>Vaccination:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Yes
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
+                                                    <span class="cfp-label">
+                                                        <span>Weight:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        200g
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-food">
+                                                    <span class="cfp-label">
+                                                        <span>Food:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Brown Rice
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
+                                                    <span class="cfp-label">
+                                                        <span>Gender:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Female
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-coat-length">
+                                                    <span class="cfp-label">
+                                                        <span>Coat Length:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        Long
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Age:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        0 - 3 Month
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="listing-item listing-grid-item-two">
-                            <div class="listing-thumbnail">
-                                <img src="assets/images/listing/listing-grid-9.jpg" alt="Listing Image">
-                                <a href="#" class="cat-btn"><i class="flaticon-government"></i></a>
-                                <span class="featured-btn">Featured</span>
-                                <ul class="ratings ratings-five">
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li class="star"><i class="flaticon-star-1"></i></li>
-                                    <li><span><a href="#">(02 Reviews)</a></span></li>
-                                </ul>
-                            </div>
-                            <div class="listing-content">
-                                <h3 class="title"><a href="listing-details-1.html">City Palace</a></h3>
-                                <p>Popular restaurant in california</p>
-                                <span class="phone-meta"><i class="ti-tablet"></i><a href="tel:+982653652-05">+98 (265) 3652 - 05</a><span class="status st-open">Open</span></span>
-                                <div class="listing-meta">
-                                    <ul>
-                                        <li><span><i class="ti-location-pin"></i>California, USA</span></li>
-                                        <li><span><i class="ti-heart"></i><a href="#">Save</a></span></li>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar-widget-area">
+                        <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40">
+                            <div class="contact-info-widget-wrap">
+                                <div class="contact-map">
+                                    <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4 class="widget-title">Contact Info</h4>
+                                    <div class="info-list">
+                                        <p><i class="ti-tablet"></i><a href="tel:+98265365205">+98 (265) 3652 - 05</a></p>
+                                        <p><i class="ti-location-pin"></i>TestLocation ,TestState</p>
+                                        <p><i class="ti-email"></i><a href="mailto:contact@example.com">contact@example.com</a></p>
+                                        <p><i class="ti-world"></i><a href="www.fioxen.com">www.fioxen.com</a></p>
+                                    </div>
+                                    <ul class="social-link">
+                                        <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                        <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                                        <li><a href="#"><i class="ti-pinterest"></i></a></li>
+                                        <li><a href="#"><i class="ti-dribbble"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -393,98 +612,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="sidebar-widget-area">
-                    <div class="widget reservation-form-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title d-none">Reservation</h4>
-                        <form class="d-none">
-                            <div class="form_group">
-                                <input type="text" class="form_control" placeholder="Name" name="name" required>
-                                <i class="ti-user"></i>
-                            </div>
-                            <div class="form_group">
-                                <input type="text" class="form_control" placeholder="Phone" name="phone" required>
-                                <i class="ti-mobile"></i>
-                            </div>
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-display="Guest">Guest</option>
-                                    <option data-display="01">Guest 01</option>
-                                    <option data-display="02">Guest 02</option>
-                                    <option data-display="02">Guest 02</option>
-                                    <option data-display="02">Guest 02</option>
-                                </select>
-                            </div>
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-display="Date">Date</option>
-                                    <option data-display="01">01.11.2021</option>
-                                    <option data-display="02">01.11.2021</option>
-                                    <option data-display="03">01.11.2021</option>
-                                    <option data-display="04">01.11.2021</option>
-                                </select>
-                            </div>
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-display="Guest">Time</option>
-                                    <option data-display="01">08.00AM-10.00AM</option>
-                                    <option data-display="02">11.00AM-12.00PM</option>
-                                    <option data-display="03">01.00PM-02.00PM</option>
-                                    <option data-display="04">02.00PM-03.00PM</option>
-                                </select>
-                            </div>
-                            <div class="form_group">
-                                <button class="main-btn icon-btn">Book Now</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="widget contact-info-widget mb-30 wow fadeInUp">
-                        <div class="contact-info-widget-wrap">
-                            <div class="contact-map">
-                                <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-                                <a href="#" class="support-icon"><i class="flaticon-headphone"></i></a>
-                            </div>
-                            <div class="contact-info-content">
-                                <h4 class="widget-title">Contact Info</h4>
-                                <div class="info-list">
-                                    <p><i class="ti-tablet"></i><a href="tel:+98265365205">+98 (265) 3652 - 05</a></p>
-                                    <p><i class="ti-location-pin"></i>TestLocation ,TestState</p>
-                                    <p><i class="ti-email"></i><a href="mailto:contact@example.com">contact@example.com</a></p>
-                                    <p><i class="ti-world"></i><a href="www.fioxen.com">www.fioxen.com</a></p>
-                                </div>
-                                <ul class="social-link">
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                    <li><a href="#"><i class="ti-pinterest"></i></a></li>
-                                    <li><a href="#"><i class="ti-dribbble"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget business-hour-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Business Hour</h4>
-                        <ul class="time-info">
-                            <li><span class="day">Monday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Tuesday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Wednesday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Thursday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Friday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Saturday</span><span class="time">08:00 - 21:00</span></li>
-                            <li><span class="day">Sunday</span><span class="time st-close">Close</span></li>
-                        </ul>
-                    </div>
-                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
-                        <div class="newsletter-widget-wrap bg_cover" style="background-image: url(assets/images/newsletter-widget-1.jpg);">
-                            <i class="flaticon-email-1"></i>
-                            <h3>
-                                Subscribe Our
-                                Newsletter
-                            </h3>
-                            <button class="main-btn icon-btn">Subscribe</button>
-                        </div>
-                    </div>
-                </div>
+        }
+        
+        else{
+        <div class="row mt-140">
+            <div class="col-lg-12">
+                <h2 class="text-center mt-5">Please Login/Buy a plan to View Pedigree Listings</h2>
+            </div>
+            <div class="col-md-12 mt-20">
+                <div class="cta-content-box fadeInRight text-center">
+                        <a href="/Packages/Pricing" class="main-btn icon-btn text-center">Buy Package</a>
+                 </div>
             </div>
         </div>
+        }
+
     </div>
 </section><!--====== End Listing Details Section ======-->
+
+

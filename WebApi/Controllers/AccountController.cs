@@ -31,7 +31,7 @@ namespace WebApi.Controllers
 
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(320);
                 else
-                {
+                { 
 
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);

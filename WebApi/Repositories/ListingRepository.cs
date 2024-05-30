@@ -147,6 +147,18 @@ namespace WebApi.Repositories
             return data;
         }
 
+        public Listing IsViewPedigreeAllowed(Listing obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@UserId", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ListingId", obj.Id, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Insert<Listing>(@"[sp_IsViewPedigreeAllowed]", parameters);
+
+            return data;
+        }
+
 
     }
 }
