@@ -1,6 +1,7 @@
 ﻿var filesToUpload = [];
 var FeaturedFileUpload = [];
 var VideoFileUpload = [];
+var PedigreeFileUpload = [];
 
 $(document).ready(function () {
     GetAllDropdowns();
@@ -140,6 +141,10 @@ function GetAllMyListings() {
                                            <td>${v.email}</td>
                                            <td>${v.breerderName}</td>
                                            <td>${v.typeOfCat}</td>
+                                           <td>${v.weigth}</td>
+                                           <td>${v.color}</td>
+                                           <td>${v.price}</td>
+                                           <td>${v.isVaccinated}</td>
                                            <td>${v.zoologicalNumber}</td>
                                            <td>${v.gender}</td>
                                            <td>${v.description}</td>
@@ -239,7 +244,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 VideoFileUpload = [];
                 $("#HDID").val(res.data.id);
                 $("#PackageId").val(res.data.packageId);
-                $("#Category").val(res.data.categoryId);
+                $("#Category").val(res.data.categoryId).change();
                 $("#Title").val(res.data.title);
                 $("#Gender").val(res.data.gender);
                 $("#TypeOfCat").val(res.data.typeOfCat);
@@ -254,6 +259,45 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $('#check1').prop("Checked", !res.data.isBreerderLicenseUpload);
                 $('#check2').prop("Checked", !res.data.isBreerderLicenseUpload);
                 $("#ZoologicalNumber").prop("checked", res.data.zoologicalNumber);
+                if (res.data.isVaccinated) $('input[name="IsVaccinated"][value="1"]').prop('checked', true); else $('input[name="IsVaccinated"][value="0"]').prop('checked', true);
+                $("#Price").val(res.data.price);
+                $("#Weigth").val(res.data.weigth);
+                $("#Color").val(res.data.color);
+
+                debugger
+
+                if (res.data.pedigreeFilePath != null) {
+                    $.each(res.data.pedigreeFilePath.split(","), function (i, v) {
+
+                        debugger
+
+                        var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+
+                        var promise = new Promise(function (resolve, reject) {
+
+                            $.ajax({
+                                url: Path,
+                                type: "GET",
+                                xhrFields: {
+                                    responseType: "blob"
+                                },
+                                success: function (blob) {
+                                    debugger
+
+                                    PedigreeFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+
+
+                                    resolve();
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.error("Error fetching image:", errorThrown);
+                                    reject(errorThrown);
+                                }
+                            });
+                        });
+                        promises.push(promise);
+                    });
+                }
 
                 if (res.data.featureImagePath != null)
                 {
@@ -370,6 +414,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 Promise.all(promises).then(function () {
 
                     $("#FeaturedFile").change();
+                    $("#PedigreeFile").change();
                     GalleryView();
                 }).catch(function (error) {
                     console.error("One or more AJAX requests failed:", error);
@@ -554,6 +599,26 @@ $("#Category").change(function (e) {
 });
 
 
+
+$(document).on("change", "#PedigreeFile", function (e) {
+
+    if (e.target.files[0] != undefined) {
+        PedigreeFileUpload = [];
+        PedigreeFileUpload = e.target.files[0];
+    }
+    $("#PedigreeImageViewAppend").empty();
+    $("#PedigreeImageViewAppend").append(`
+                  <div class="col-lg-4 mb-4 pl-0">
+                      <div class="mb-4 img-thumbnail" style="width:50%!important;">
+                       <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
+                        <img src="${URL.createObjectURL(PedigreeFileUpload)}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
+                      </div>
+                 </div>
+                 </div>`);
+})
+
+
+
 $(document).on("change", "#PedigreeFile", function (e) {
     $("#PedigreeImageViewAppend").empty();
     $("#PedigreeImageViewAppend").append(`
@@ -601,6 +666,10 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
     formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
     formData.append("Description", $("#Description").val());
+    formData.append("Weigth", $("#Weigth").val());
+    formData.append("Color", $("#Color").val());
+    formData.append("IsVaccinated", $('input[name="IsVaccinated"]:checked').val());
+    formData.append("Price", $('#Price').val());
 
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 

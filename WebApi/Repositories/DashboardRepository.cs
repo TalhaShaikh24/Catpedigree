@@ -137,9 +137,14 @@ namespace WebApi.Repositories
             parameters.Add("@ZoologicalNumber", obj.ZoologicalNumber, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("@Gender", obj.Gender, DbType.String, ParameterDirection.Input);
             parameters.Add("@Description", obj.Description, DbType.String, ParameterDirection.Input);
-            parameters.Add("@VideoPath", obj.VideoPath, DbType.String, ParameterDirection.Input);
-            parameters.Add("@FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
-            parameters.Add("@GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
+            parameters.Add("Weigth", obj.Weigth, DbType.Decimal, ParameterDirection.Input);
+            parameters.Add("Price", obj.Price, DbType.Decimal, ParameterDirection.Input);
+            parameters.Add("Color", obj.Color, DbType.String, ParameterDirection.Input);
+            parameters.Add("IsVaccinated", obj.IsVaccinated, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("VideoPath", obj.VideoPath, DbType.String, ParameterDirection.Input);
+            parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
+            parameters.Add("PedigreeFilePath", obj.PedigreeFilePath, DbType.String, ParameterDirection.Input);
             parameters.Add("@Age", obj.Age, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);

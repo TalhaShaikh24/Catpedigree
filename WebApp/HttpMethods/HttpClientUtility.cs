@@ -260,6 +260,10 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.IsBreerderLicenseUpload.ToString() ?? ""), "IsBreerderLicenseUpload");
                     multiContent.Add(new StringContent(obj.ZoologicalNumber.ToString() ?? ""), "ZoologicalNumber");
                     multiContent.Add(new StringContent(obj.Description ?? ""), "Description");
+                    multiContent.Add(new StringContent(obj.Weigth.ToString() ?? ""), "Weigth");
+                    multiContent.Add(new StringContent(obj.Price.ToString() ?? ""), "Price");
+                    multiContent.Add(new StringContent(obj.Color ?? ""), "Color");
+                    multiContent.Add(new StringContent(obj.IsVaccinated.ToString() ?? ""), "IsVaccinated");
 
 
                 if (obj.GalleryImageFiles != null)
@@ -277,7 +281,7 @@ namespace WebApp.HttpMethods
                 {
 
                    
-                  multiContent.Add(new StreamContent(obj.PedigreeFile.OpenReadStream()), "GalleryImageFiles", obj.PedigreeFile.FileName);
+                  multiContent.Add(new StreamContent(obj.PedigreeFile.OpenReadStream()), "PedigreeFile", obj.PedigreeFile.FileName);
 
 
 

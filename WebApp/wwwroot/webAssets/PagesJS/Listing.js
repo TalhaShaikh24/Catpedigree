@@ -121,6 +121,10 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
     formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
     formData.append("Description", $("#Description").val());
+    formData.append("Weigth", $("#Weigth").val());
+    formData.append("Color", $("#Color").val());
+    formData.append("IsVaccinated",$('input[name="IsVaccinated"]:checked').val());
+    formData.append("Price",$('#Price').val());
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
         if (res.status == 200) {

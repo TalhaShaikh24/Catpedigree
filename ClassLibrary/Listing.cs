@@ -9,7 +9,7 @@ namespace ClassLibrary
 {
     public class Listing:Category
     {
-        public int Id { get; set; }
+        public new int Id { get; set; }
         public string? Title { get; set; }
         public string? Location { get; set; }
         public string? State { get; set; }
@@ -42,6 +42,10 @@ namespace ClassLibrary
         public bool? IsExpired { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public int TotalCount { get; set; }
+        public decimal Price { get; set; }
+        public decimal Weigth { get; set; }
+        public bool IsVaccinated { get; set; }
+        public string? Color { get; set; }
     }
 
 	public class ListingFilters
