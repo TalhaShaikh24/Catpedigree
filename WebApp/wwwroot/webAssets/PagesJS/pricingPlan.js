@@ -40,7 +40,7 @@ function getAllPackages() {
                             </ul>
                             <p class="mx-4 mb-4">${item.description}</p>
                             <div class="pricingTable-signup">
-                                <a href="javascript:void(0)"  onClick="BuyPackage(${item.packageID})">Sign Up</a>
+                                <a href="javascript:void(0)"  onClick="BuyPackage(${item.packageID})">Buy Now</a>
                             </div>
                         </div>
                     </div>

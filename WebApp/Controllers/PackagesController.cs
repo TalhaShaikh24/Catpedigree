@@ -23,7 +23,7 @@ namespace WebApp.Controllers
         public Task<object> GetAllPackages()
         {
             string content = "";
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Packages/GetAllPackages", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Packages/GetAllPackages", content, HttpContext);
         }
 
         [HttpPost]
