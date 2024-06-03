@@ -104,6 +104,9 @@ $("#Btn_Post_Listing").click(function () {
 
         formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
     }
+
+
+
     formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
     formData.append("VideoFile", $("#VideoFile")[0].files[0]);
     formData.append("CategoryId", $("#Category").val());
@@ -124,7 +127,9 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("Weigth", $("#Weigth").val());
     formData.append("Color", $("#Color").val());
     formData.append("IsVaccinated",$('input[name="IsVaccinated"]:checked').val());
-    formData.append("Price",$('#Price').val());
+    formData.append("Price", $('#Price').val());
+    formData.append("PromotionPackageId", $('#PromotionPackageId').val());
+
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
         if (res.status == 200) {
@@ -249,10 +254,11 @@ function GetAllDropdowns() {
                 $("#PackageId").empty();
                 $("#Category").empty();
                 $("#TypeOfCat").empty();
-
+                $("#PromotionPackageId").empty();
 
 
                 $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+                $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
 
@@ -267,6 +273,16 @@ function GetAllDropdowns() {
                 $.each(res.data.item1, function (i, v) {
                     $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
                 });
+
+                if (res.data.item4.length > 0) {
+                    $.each(res.data.item4, function (i, v) {
+                        $("#PromotionPackageId").append(`<option value="${v.promotionPackagesID}">${v.name}</option>`);
+                    });
+                }
+                else {
+                    $("#PromotionPackageId").append(`<option value="-1" disabled>You have no Promotion Package</option>`);
+                }
+               
 
 
                 $('select').niceSelect('update');

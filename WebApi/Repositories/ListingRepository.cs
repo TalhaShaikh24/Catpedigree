@@ -104,6 +104,7 @@ namespace WebApi.Repositories
             parameters.Add("PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("IsActive", true, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("PromotionPackageId", obj.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
             return data;
         }
@@ -147,7 +148,7 @@ namespace WebApi.Repositories
             
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
            
-            var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters, gr => gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>());
+            var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters, gr => gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>(), gr => gr.Read<PromotionPackages>());
 
             return data;
         }

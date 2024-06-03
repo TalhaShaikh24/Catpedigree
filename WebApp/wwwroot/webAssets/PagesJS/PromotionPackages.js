@@ -1,41 +1,62 @@
 ﻿$(document).ready(function () {
-    GetHomePageListings()
+    getAll()
 })
 
-function GetHomePageListings() {
-    postRequest('/Listing/GetHomePageListings', null, function (res) {
+function getAll() {
+    postRequest('/PromotionPackage/GetAllPromotionPackages', null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
 
                 $.each(res.data, function (index, item) {
-
                  
 
+                    var costs = [];
+
+                    if (item.promotionCosts.length > 0) {
+
+
+                        for (var i = 0; i < item.promotionCosts.length; i++) {
+
+                            costs.push({
+                                daysNumber: item.promotionCosts[i].daysNumber,
+                                cost: item.promotionCosts[i].cost
+                            });
+                        }
+                    }
+                    else {
+                        costs.push({
+                            daysNumber: '',
+                            cost: ''
+                        });
+
+                    }
+
+
+                    var colorClasses = ['blue', 'magenta']; // Define your color classes
+                    var colorClass = colorClasses[index % colorClasses.length]; // Cycle through the color classes
                     var html = `
-                        <div class="col-lg-4 col-md-6 col-sm-12" >
-                            <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
-                                <div class="listing-thumbnail">
-                                    <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
-                                </div>
-                                <div class="listing-content">
-                                    <h3 class="title">
-
-                                        <span class="status st-close">${item.categoryName}</span>
-                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
-                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
-                                    <div class="listing-meta">
-                                        <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                    <div class="col-md-4 col-sm-6 mb-5">
+                        <div class="pricingTable ${colorClass}">
+                            <div class="pricingTable-header">
+                                <h3 class="title">${item.name}</h3>
                             </div>
-                        </div>`;
-                    $('#appendListings').append(html);
-                });
+                            
+                            <p class="mx-4 mb-4">${item.description}</p>
+                            <h4 class="mb-4">Promotion costs:</h4>
+                             <ul class="pricing-content">
+                               ${costs.map(cost => `<li>${cost.daysNumber} days + $  ${cost.cost}</li>`).join('')}
+                            </ul>
 
+                            <div class="pricingTable-signup">
+                                <a href="javascript:void(0)"  onClick="BuypromotionPackage(${item.promotionPackagesID})">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+            `;
+                    $('#promotionContainer').append(html);
+                });
 
             }
         }
@@ -98,20 +119,24 @@ function GetHomePageListings() {
     });
 }
 
-
-
-function BuyPackage(pkgId) {
+function BuypromotionPackage(pkgId) {
 
     var obj = {
-        PackageID: Number(pkgId)
+        PromotionPackagesID: Number(pkgId),
+
+        Days:5
     }
-    postRequest('/Packages/BuyPackage', obj, function (res) {
+    postRequest('/PromotionPackage/BuyPackage', obj, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
+                Swal.fire({
+                    title: "Good job!",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
 
-               
             }
         }
         if (res.status == 304) {
@@ -172,6 +197,7 @@ function BuyPackage(pkgId) {
         }
     });
 }
+
 
 function postRequest(url, requestData, handledata) {
     $.ajax({

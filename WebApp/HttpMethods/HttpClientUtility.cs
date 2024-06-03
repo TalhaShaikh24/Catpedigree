@@ -264,6 +264,7 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.Price.ToString() ?? ""), "Price");
                     multiContent.Add(new StringContent(obj.Color ?? ""), "Color");
                     multiContent.Add(new StringContent(obj.IsVaccinated.ToString() ?? ""), "IsVaccinated");
+                    multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
 
 
                 if (obj.GalleryImageFiles != null)

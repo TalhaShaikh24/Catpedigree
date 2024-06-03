@@ -46,6 +46,10 @@ namespace ClassLibrary
         public decimal Weigth { get; set; }
         public bool IsVaccinated { get; set; }
         public string? Color { get; set; }
+
+        public int PromotionPackageId { get; set; }
+
+        public string? PropertiestoShow { get; set; }
     }
 
 	public class ListingFilters
