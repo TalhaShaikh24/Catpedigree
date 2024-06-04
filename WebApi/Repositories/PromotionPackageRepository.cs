@@ -81,7 +81,14 @@ namespace WebApi.Repositories
 
         }
 
+        public List<PromotionCost> GetPromotionCost(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@id", id, DbType.Int32, ParameterDirection.Input);
+           
+            var data = _dapper.GetAll<PromotionCost>(@"[usp_GetPromotionPackages_Cost]", parameters);
 
-
+            return data;
+        }
     }
 }

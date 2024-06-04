@@ -76,6 +76,14 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+        [Route("Dashboard/PromotionPackages")]
+        public IActionResult PromotionPackages()
+        {
+            return View();
+        }
+
+
+
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
         public Task<object> GetAllDashboard()
@@ -266,5 +274,23 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+        [HttpPost]
+        [Route("Dashboard/GetListing_ProdictionPackages")]
+        public Task<object> GetListing_ProdictionPackages()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetListing_ProdictionPackages", "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/Assgin_PromotionPackage_to_List")]
+        public Task<object> Assgin_PromotionPackage_to_List([FromBody] Listing obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/Assgin_PromotionPackage_to_List", content, HttpContext);
+
+        }
     }
 }

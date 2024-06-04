@@ -50,6 +50,9 @@ namespace ClassLibrary
         public int PromotionPackageId { get; set; }
 
         public string? PropertiestoShow { get; set; }
+
+        public string? PromotionName { get; set; }
+
     }
 
 	public class ListingFilters

@@ -33,9 +33,12 @@ function GetAllDropdowns() {
 
 
 
+                $("#PromotionPackageId").empty();
+
                 $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
+                $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
 
                 $.each(res.data.item3, function (i, v) {
                     $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
@@ -48,6 +51,9 @@ function GetAllDropdowns() {
                 $.each(res.data.item1, function (i, v) {
                     $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
                 });
+
+
+
 
                 GetAllMyListings()
 
@@ -151,6 +157,7 @@ function GetAllMyListings() {
                                            <td>${v.age}</td>
                                            <td>${v.categoryId}</td>
                                            <td>${v.packageId}</td>
+                                            <td>${v.promotionName}</td>
                                            <td>${v.isActive}</td>
                                            <td>${v.createdBy}</td>
                                            <td>${v.createdOn}</td>
@@ -263,7 +270,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Price").val(res.data.price);
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
-
                 debugger
 
                 if (res.data.pedigreeFilePath != null) {

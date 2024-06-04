@@ -7,5 +7,8 @@ namespace WebApi.IRepositories
         List<PromotionPackages> GetAllPromotionPackages();
 
         PromotionPackages BuyPromotionPackage(PromotionPackages obj);
+
+        List<PromotionCost> GetPromotionCost(int id);
+
     }
 }

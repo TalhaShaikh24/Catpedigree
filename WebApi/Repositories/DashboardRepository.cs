@@ -26,7 +26,7 @@ namespace WebApi.Repositories
 
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
 
-            var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters,gr=>gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>());
+            var data = _dapper.GetMultipleObjects("[sp_GetAllDropdowns]", parameters,gr=>gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>(), gr => gr.Read<PromotionPackages>());
 
             return data;
         }
@@ -243,6 +243,31 @@ namespace WebApi.Repositories
             DynamicParameters parameters = new DynamicParameters();
 
             var data = _dapper.GetAll<Listing>(@"[sp_GetAllListings]", parameters);
+
+            return data;
+        }
+
+        public object GetListing_ProdictionPackages(int id)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@id", id, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.GetMultipleObjects("[usp_get_Listing_and_promotionPackages]", parameters, gr => gr.Read<PromotionPackages>(), gr => gr.Read<Listing>());
+
+            return data;
+        }
+
+        public Listing Assgin_PromotionPackage_to_List(Listing listing)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@PromotionPackageId", listing.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ListId", listing.Id, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Update<Listing>(@"dbo.[usp_assgin_PromotionPackage_to_List]", parameters);
 
             return data;
         }

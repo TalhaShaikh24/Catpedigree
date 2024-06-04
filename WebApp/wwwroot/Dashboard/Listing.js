@@ -12,8 +12,6 @@ function GetAllListings() {
 
             if (res.data != null) {
 
-                debugger
-
                 $("#AppendApprovalListing").empty();
                 $.each(res.data, function (i, v) {
 
@@ -36,6 +34,8 @@ function GetAllListings() {
                                                    <td>${v.zoologicalNumber}</td>
                                                    <td>${v.categoryId}</td>
                                                    <td>${v.packageId}</td>
+
+                                            <td>${v.promotionName}</td>
                                                    <td>${v.isActive}</td>
                                                    <td>${v.status}</td>
                                                    <td>${v.createdBy}</td>

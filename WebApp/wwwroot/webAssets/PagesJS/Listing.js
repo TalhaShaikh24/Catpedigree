@@ -449,6 +449,20 @@ $(document).on('change', '#VideoFile', function (e) {
 });
 
 
+$('#showpromotionpackage').change(function () {
+    // this will contain a reference to the checkbox   
+    if (this.checked) {
+        // the checkbox is now checked
+        $("#PromotionPackagegroup").show();
+
+    } else {
+        // the checkbox is now no longer checked
+
+        $("#PromotionPackagegroup").hide();
+    }
+});
+
+
 function postRequest(url, requestData, handledata) {
     $.ajax({
         type: 'POST',

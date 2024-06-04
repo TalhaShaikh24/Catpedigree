@@ -6,6 +6,10 @@ namespace WebApi.IRepositories
     {
         dynamic GetJsonDataAsync(int userId);
         object GetAllDropdowns(int Id);
+
+        object GetListing_ProdictionPackages(int id);
+
+        public Listing Assgin_PromotionPackage_to_List(Listing listing);
         List<Listing> GetAllMyListings(int Id);
         List<Listing> GetAllListings();
         Listing GetListingDetailById(int Id);

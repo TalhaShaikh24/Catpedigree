@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿var Promotionpackageid = 0;
+
+
+$(document).ready(function () {
     getAll()
 })
 
@@ -45,13 +48,14 @@ function getAll() {
                             
                             <p class="mx-4 mb-4">${item.description}</p>
                             <h4 class="mb-4">Promotion costs:</h4>
-                             <ul class="pricing-content">
+                             <ul class="pricing-content" id="costs${item.promotionPackagesID}">
                                ${costs.map(cost => `<li>${cost.daysNumber} days + $  ${cost.cost}</li>`).join('')}
                             </ul>
 
                             <div class="pricingTable-signup">
-                                <a href="javascript:void(0)"  onClick="BuypromotionPackage(${item.promotionPackagesID})">Buy Now</a>
-                            </div>
+                                <a href="javascript:void(0)" class="buypackage" data-packageid="${item.promotionPackagesID}" >Buy Now</a>
+                           
+                                </div>
                         </div>
                     </div>
             `;
@@ -120,11 +124,21 @@ function getAll() {
 }
 
 function BuypromotionPackage(pkgId) {
+    if ($('input[name="inlineRadioOptions"]:checked').val() == undefined) {
 
+        Swal.fire({
+            title: "Error",
+            text: "Select any days Plan",
+            icon: "error"
+        });
+
+        return;
+
+    }
     var obj = {
         PromotionPackagesID: Number(pkgId),
 
-        Days:5
+        Days: parseInt($('input[name="inlineRadioOptions"]:checked').val())
     }
     postRequest('/PromotionPackage/BuyPackage', obj, function (res) {
 
@@ -136,6 +150,8 @@ function BuypromotionPackage(pkgId) {
                     text: res.responseMsg,
                     icon: "success"
                 });
+
+                clear();
 
             }
         }
@@ -196,6 +212,133 @@ function BuypromotionPackage(pkgId) {
 
         }
     });
+}
+
+
+
+$(document).on('click', '.buypackage', function () {
+
+
+    $('#exampleModalCenter').modal('show');
+
+
+     Promotionpackageid = $(this).attr('data-packageid');
+
+    $("#costslist").empty();
+
+    
+
+    GetPromotionCost(Promotionpackageid);
+
+
+
+
+
+});
+
+function GetPromotionCost(pkgId) {
+
+
+    postRequest('/PromotionPackage/GetPromotionCost/' + pkgId, null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+                debugger;
+
+
+                for (var i = 0; i < res.data.length; i++) {
+
+                    $("#costslist").append(` 
+                    <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1${res.data[i].promotionCostID}" value="${res.data[i].promotionCostID}">
+                 <label class="form-check-label" for="inlineRadio1${res.data[i].promotionCostID}">${res.data[i].daysNumber} days - $ ${res.data[i].cost}  </label>
+                    </div>
+                    <br/>
+      `);
+
+                }
+
+
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+
+
+
+
+
+$("#BuyPP").click(function () {
+
+    BuypromotionPackage(Promotionpackageid)
+
+})
+
+
+
+
+function clear() {
+
+    Promotionpackageid = 0;
+
 }
 
 

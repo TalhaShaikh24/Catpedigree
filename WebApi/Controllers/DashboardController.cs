@@ -438,6 +438,95 @@ namespace WebApi.Controllers
         #endregion
 
 
-       
+
+
+
+        [HttpPost("GetListing_ProdictionPackages")]
+        public Response GetListing_ProdictionPackages()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetListing_ProdictionPackages(claimDTO.UserId);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+        [HttpPost("Assgin_PromotionPackage_to_List")]
+        public Response Assgin_PromotionPackage_to_List([FromBody] Listing listing)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.Assgin_PromotionPackage_to_List(listing);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+
     }
 }

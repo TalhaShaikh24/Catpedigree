@@ -32,5 +32,17 @@ namespace WebApp.Controllers
             string content = JsonConvert.SerializeObject(obj);
             return HttpClientUtility.CustomHttp(BaseUrl, "api/PromotionPackage/BuyPackage", content, HttpContext);
         }
+
+
+
+        public async Task<object> GetPromotionCost(int Id)
+        {
+            string content = "";
+            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/PromotionPackage/GetPromotionCost/" + Id, content, HttpContext);
+
+            return data;
+
+        }
+
     }
 }

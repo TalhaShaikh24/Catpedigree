@@ -121,6 +121,57 @@ namespace WebApi.Controllers
 
 
 
+        [HttpPost("GetPromotionCost/{Id}")]
+        public Response GetPromotionCost(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetPromotionCost(Id);
+
+                if (res == null)
+                {
+
+
+                    response = CustomStatusResponse.GetResponse(320);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+
+                    return response;
+                }
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.ResponseMsg = "Successfuly!";
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+        }
+
 
 
     }
