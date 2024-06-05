@@ -124,7 +124,7 @@ $("#save").click(function () {
                     text: res.responseMsg,
                     icon: "success"
                 });
-
+                GetAllDropdowns();
                 var urlParams = new URLSearchParams(window.location.search);
 
                

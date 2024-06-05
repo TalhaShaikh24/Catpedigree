@@ -32,6 +32,7 @@ builder.Services.AddTransient<IDashboardRepository, DashboardRepository> ();
 builder.Services.AddTransient<IVideoPackagesRepository, VideoPackagesRepository> ();
 builder.Services.AddTransient<IBlogRepository, BlogRepository> ();
 builder.Services.AddTransient<IPromotionPackageRepository, PromotionPackageRepository> ();
+builder.Services.AddTransient<IVendorRepository, VendorRepository> ();
 
 var app = builder.Build();
 

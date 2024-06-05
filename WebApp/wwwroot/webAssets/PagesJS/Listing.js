@@ -13,7 +13,6 @@ $(document).ready(function () {
 
 $("#FeaturedFile").on('change', function (e) {
 
-    debugger
 
     let FeaturedFile = e.target.files[0];
 
@@ -91,8 +90,7 @@ const GalleryView = () => {
 
 $("#Btn_Post_Listing").click(function () {
 
-    debugger
-
+   
     let formData = new FormData();
 
     for (let i = 0; i < filesToUpload.length; i++) {
@@ -144,7 +142,7 @@ $("#Btn_Post_Listing").click(function () {
 
                 $(document).find("input").val(null);
                 $(document).find("select").val(null).niceSelect('update');
-
+                GetAllDropdowns();
             }
         }
         if (res.status == 304) {
