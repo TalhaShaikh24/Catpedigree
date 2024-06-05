@@ -495,6 +495,8 @@ namespace WebApi.Controllers
 
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
+                listing.CreatedBy = claimDTO.CreatedBy;
+
                 var res = _repository.Assgin_PromotionPackage_to_List(listing);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);

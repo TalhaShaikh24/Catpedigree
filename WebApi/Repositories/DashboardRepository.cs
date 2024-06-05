@@ -266,6 +266,7 @@ namespace WebApi.Repositories
 
             parameters.Add("@PromotionPackageId", listing.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@ListId", listing.Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", listing.CreatedBy, DbType.Int32, ParameterDirection.Input);
 
             var data = _dapper.Update<Listing>(@"dbo.[usp_assgin_PromotionPackage_to_List]", parameters);
 
