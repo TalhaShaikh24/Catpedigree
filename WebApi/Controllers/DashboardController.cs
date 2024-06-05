@@ -495,7 +495,7 @@ namespace WebApi.Controllers
 
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                listing.CreatedBy = claimDTO.CreatedBy;
+                listing.CreatedBy = (int)claimDTO.UserId;
 
                 var res = _repository.Assgin_PromotionPackage_to_List(listing);
 
@@ -522,7 +522,7 @@ namespace WebApi.Controllers
             {
 
                 response = CustomStatusResponse.GetResponse(500);
-                response.ResponseMsg = "Internal server error!";
+                response.ResponseMsg = ex.Message;
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }

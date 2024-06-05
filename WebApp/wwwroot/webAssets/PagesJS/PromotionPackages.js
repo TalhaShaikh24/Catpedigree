@@ -338,6 +338,7 @@ $("#BuyPP").click(function () {
 function clear() {
 
     Promotionpackageid = 0;
+    $('#exampleModalCenter').modal('hide');
 
 }
 
