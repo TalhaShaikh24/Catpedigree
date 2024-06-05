@@ -1,8 +1,10 @@
-﻿namespace WebApi.IRepositories
+﻿using ClassLibrary;
+
+namespace WebApi.IRepositories
 {
     public interface IVendorRepository
     {
-        object GetVednorDataAndList(int Id);
+        Vendor GetVednorDataAndList(int Id);
 
     }
 }

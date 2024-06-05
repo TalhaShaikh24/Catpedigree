@@ -17,7 +17,7 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public object GetVednorDataAndList(int Id)
+        public Vendor GetVednorDataAndList(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
 
@@ -25,7 +25,7 @@ namespace WebApi.Repositories
 
 
             
-            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserId", Id, DbType.Int32, ParameterDirection.Input);
 
             var data = _dapper.GetMultipleObjects("[usp_getVednorDetails_Listing]", parameters, gr => gr.Read<Register>(), gr => gr.Read<Listing>());
 
@@ -34,7 +34,7 @@ namespace WebApi.Repositories
             vendor.listings = data.Item2.ToList();
 
 
-            return data;
+            return vendor;
         }
     }
 }
