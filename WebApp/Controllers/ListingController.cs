@@ -75,7 +75,7 @@ namespace WebApp.Controllers
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
         }
 
 
