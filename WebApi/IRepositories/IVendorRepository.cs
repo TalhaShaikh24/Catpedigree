@@ -6,5 +6,8 @@ namespace WebApi.IRepositories
     {
         Vendor GetVednorDataAndList(int Id);
 
+
+        List<Register> GetAllVendors();
+
     }
 }

@@ -1,54 +1,42 @@
-﻿var profilepic = "#profilepic";
-var username = "#username";
-var emailid = "#emailid";
-
+﻿
 
 $(document).ready(function () {
 
 
-    var idValue = getQueryParam('id');
-    GetvendorDetails(idValue);
+    GetAllVendors();
 });
 
 
-function getQueryParam(param) {
-    var urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
 
-function GetvendorDetails(id) {
+function GetAllVendors() {
 
 
-    postRequest('/Vendor/GetVednorDataAndList/' + id, null, function (res) {
+    postRequest('/Vendor/GetAllVendors', null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
 
-                debugger;
 
-                $(emailid).text("");
-                $(username).text(res.data.vendorInfo.username);
-              
-                $(profilepic).attr("src", "https://localhost:7280/UploadImages\\" + res.data.vendorInfo.profilePicPath);
-                $.each(res.data.listings, function (index, item) {
+                $.each(res.data, function (index, item) {
+
+
 
 
                     var html = `
                         <div class="col-lg-4 col-md-6 col-sm-12" >
-                            <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
+                            <div class="listing-item listing-grid-item-two mb-30">
                                 <div class="listing-thumbnail">
-                                    <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
+                                    <img  src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">
 
-                                        <span class="status st-close">${item.categoryName}</span>
-                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
-                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                        <span class="status st-close"></span>
+                                        <a href="/Listing/SingleListing?listingId=${item.userId}">${item.username}</a></h3>
+                                 
                                     <div class="listing-meta">
                                         <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
                                     </div>
                                 </div>

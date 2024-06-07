@@ -17,6 +17,19 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
+        public List<Register> GetAllVendors()
+        {
+            
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<Register>(@"[usp_Get_All_Vendors]", parameters);
+
+
+
+            return data;
+        }
+
         public Vendor GetVednorDataAndList(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();

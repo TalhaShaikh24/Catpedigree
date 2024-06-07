@@ -19,13 +19,35 @@ namespace WebApp.Controllers
         }
 
 
+
+        public IActionResult AllVendors()
+        {
+            return View();
+        }
+
+
         public async Task<object> GetVednorDataAndList(int Id)
         {
             string content = "";
-            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/Vendor/GetVednorDataAndList/" + Id, content, HttpContext);
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Vendor/GetVednorDataAndList/" + Id, content, HttpContext);
 
             return data;
 
         }
+
+
+        public async Task<object> GetAllVendors()
+        {
+            string content = "";
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Vendor/GetAllVendors", content, HttpContext);
+
+            return data;
+
+        }
+
+
+
+
+
     }
 }
