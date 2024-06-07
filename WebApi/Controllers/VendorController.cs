@@ -24,14 +24,11 @@ namespace WebApi.Controllers
         [HttpPost("GetVednorDataAndList/{Id}")]
         public Response GetVednorDataAndList(int Id)
         {
-            Register claimDTO = null;
             Response response = new Response();
 
             try
             {
-                //claimDTO = TokenManager.GetValidateToken(Request);
-                //if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
-
+                
                 var res = _repository.GetVednorDataAndList(Id);
 
                 if (res == null)
@@ -39,8 +36,7 @@ namespace WebApi.Controllers
 
 
                     response = CustomStatusResponse.GetResponse(320);
-                 //   response.Token = TokenManager.GenerateToken(claimDTO);
-
+                 
                     return response;
                 }
 
@@ -51,7 +47,6 @@ namespace WebApi.Controllers
 
                     response.ResponseMsg = "Successfuly!";
                     response.Data = res;
-                  //  response.Token = TokenManager.GenerateToken(claimDTO);
                     return response;
                 }
             }
@@ -59,15 +54,13 @@ namespace WebApi.Controllers
             {
                 response = CustomStatusResponse.GetResponse(600);
                 response.ResponseMsg = ex.Message;
-           //     response.Token = TokenManager.GenerateToken(claimDTO);
-                return response;
+                 return response;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
-             //   response.Token = TokenManager.GenerateToken(claimDTO);
-                return response;
+                             return response;
             }
 
         }
@@ -76,23 +69,18 @@ namespace WebApi.Controllers
         [HttpPost("GetAllVendors")]
         public Response GetAllVendors()
         {
-            Register claimDTO = null;
             Response response = new Response();
 
             try
             {
-            //    claimDTO = TokenManager.GetValidateToken(Request);
-            //    if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
-
+            
                 var res = _repository.GetAllVendors();
 
                 if (res == null)
                 {
 
 
-                    //response = CustomStatusResponse.GetResponse(320);
-                    //response.Token = TokenManager.GenerateToken(claimDTO);
-
+                    
                     return response;
                 }
 
@@ -103,7 +91,6 @@ namespace WebApi.Controllers
 
                     response.ResponseMsg = "Successfuly!";
                     response.Data = res;
-                 //   response.Token = TokenManager.GenerateToken(claimDTO);
                     return response;
                 }
             }
@@ -111,14 +98,12 @@ namespace WebApi.Controllers
             {
                 response = CustomStatusResponse.GetResponse(600);
                 response.ResponseMsg = ex.Message;
-             //   response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
-               // response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
 
