@@ -116,11 +116,14 @@ namespace WebApi.Repositories
 			public int FetchedCount { get; set; }
 		}
 
-		public ListingResult GetAllListingByFilters(ListingFilters obj)
+		public ListingResult GetAllListingByFilters(Listing obj)
 		{
 			DynamicParameters parameters = new DynamicParameters();
-			parameters.Add("@PageNumber", obj.PageNumber);
+            parameters.Add("@PageNumber", obj.PageNumber);
 			parameters.Add("@PageSize", obj.PageSize);
+			parameters.Add("@Keyword", obj.Keyword);
+			parameters.Add("@CategoryId", obj.CategoryId==0?null:obj.CategoryId);
+			parameters.Add("@Location", obj.Location);
 
 			var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllListingByFilters]", parameters).ToList();
 			int totalCount = data.Any() ? data.First().TotalCount : 0;

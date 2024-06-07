@@ -107,16 +107,40 @@
 <!--====== End listing Section ======-->
 
 <script>
+    alert("Filters are under construction");
     let pageNumber = 1;
     const pageSize = 9;
     let varTotalCount = 0;
     let varCurrentCount = 0;
 
+    // Get the URL parameters
+    let urlParams = new URLSearchParams(window.location.search);
+   
+    // Extract values from parameters and assign them to variables
+    let keyword = urlParams.get('keyword');
+    let categoryId = Number(urlParams.get('categoryId'));
+    let listingLocation = urlParams.get('listingLocation');
+
     async function loadMore() {
+
+       
+
+        // Now you can use these variables as needed
+        console.log("Keyword: " + keyword);
+        console.log("Category ID: " + categoryId);
+        console.log("Location: " + listingLocation);
+
+
+
+
 
         var obj = {
             PageNumber: pageNumber,
-            PageSize: pageSize
+            PageSize: pageSize,
+            CategoryId: categoryId,
+            Keyword: keyword,
+            Location: listingLocation
+
         }
 
         const response = await fetch('/Listing/GetAllListingByFilters', {
@@ -144,9 +168,9 @@
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">
-                                        <span class="status st-close">${item.categoryName}</span>
-                                        <a href="listing-details-1.html">${item.title}</a></h3>
-                                    <p>${item.description}</p>
+                                            <span class="status st-close">${item.categoryName}</span>
+                                            <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
+                                        <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location} ,${item.state} </span></li>

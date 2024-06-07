@@ -81,7 +81,7 @@ namespace WebApp.Controllers
 
 
         [HttpPost]
-		public Task<object> GetAllListingByFilters([FromBody] ListingFilters obj)
+		public Task<object> GetAllListingByFilters([FromBody] Listing obj)
 		{
 			string content = JsonConvert.SerializeObject(obj);
 
@@ -89,7 +89,7 @@ namespace WebApp.Controllers
 		}
 
         [HttpPost]
-		public Task<object> GetSingleListing([FromBody] ListingFilters obj)
+		public Task<object> GetSingleListing([FromBody] Listing obj)
 		{
 			string content = JsonConvert.SerializeObject(obj);
 

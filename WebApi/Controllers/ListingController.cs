@@ -145,7 +145,7 @@ namespace WebApi.Controllers
         }
 
 		[HttpPost("GetAllListingByFilters")]
-		public Response GetAllListingByFilters(ListingFilters obj)
+		public Response GetAllListingByFilters([FromBody] Listing obj)
 		{
 			Response response = new Response();
 
@@ -186,7 +186,7 @@ namespace WebApi.Controllers
 		}
         
         [HttpPost("GetSingleListing")]
-		public Response GetSingleListing(ListingFilters obj)
+		public Response GetSingleListing(Listing obj)
 		{
 			Response response = new Response();
 
@@ -273,16 +273,18 @@ namespace WebApi.Controllers
 
             Listing obj = new Listing();
 
-			obj.CreatedBy = claimDTO?.UserId ?? 0;
-			obj.Id = Id;
+			
 
 
             try
             {
 
-                //claimDTO = TokenManager.GetValidateToken(Request);
+                claimDTO = TokenManager.GetValidateToken(Request);
 
                 //if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                obj.CreatedBy = claimDTO?.UserId ?? 0;
+                obj.Id = Id;
 
 
                 var res = _listing.IsViewPedigreeAllowed(obj);
@@ -290,7 +292,7 @@ namespace WebApi.Controllers
                 if (res!=null)
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                  //  response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "";
                     response.Data = res;
 

@@ -28,6 +28,14 @@ namespace WebApp.Controllers
 
 
         [HttpPost]
+        public Task<object> GetHomePageBlogs()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetHomePageBlogs", content, HttpContext);
+        }
+        
+        [HttpPost]
         public Task<object> GetAllBlogs()
         {
             string content = "";

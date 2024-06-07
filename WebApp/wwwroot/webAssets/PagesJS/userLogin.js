@@ -12,6 +12,10 @@
 
             if (res.data != null) {
 
+                localStorage.setItem("username", res.data.dataObj.username);
+                localStorage.setItem("profilePic", res.data.dataObj.profilePic);
+                localStorage.setItem("role", res.data.dataObj.roleIds);
+                //window.location.href = '/Home/Index'
                 Swal.fire({
                     title: "Good job!",
                     text: res.responseMsg,

@@ -344,7 +344,7 @@
                     {
 
                     }
-                    <h2 class="title pb-40" style="font-family: 'Quicksand', sans-serif;">@Model.data.Title</h2>
+                    <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Title</h2>
                     <div class="listingDetails-header">
                         <div class="page-header">
                             <div class="photo-swip-gallery-wrap items-five">
@@ -466,11 +466,11 @@
                                 </div>
                                 <div class="title-price">
                                     <h2 class="rtcl-listing-title">
-                                        Aylesbury Duck
+                                        @Model.data.Title
                                     </h2>
                                     <!-- Price -->
                                     <div class="rtcl-price-wrap price-in-mobile">
-                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>220<span class="rtcl-price-currencySymbol">$</span></bdi></span></div>
+                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Price</span></bdi></span></div>
                                     </div>
                                 </div>
                                 <div class="meta-list">
@@ -479,15 +479,11 @@
                                         <ul class="rtcl-listing-meta-data">
                                             <li class="author">
                                                 <i class="flaticon-add-user"></i>
-                                                by 									<a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/author/alina_petslist/">Alina Fraser</a>
+                                                by @Model.data.Username
                                             </li>
                                             <li class="rt-location">
                                                 <i class="ti-location-pin"></i>
-                                                <a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/location/virginia/richmond/">Richmond</a><span class="rtcl-delimiter">,</span> <a href="https://www.radiustheme.com/demo/wordpress/themes/petslist/location/virginia/">Virginia</a>
-                                            </li>
-                                            <li class="rt-date-time">
-                                                <i class="ti-time"></i>
-                                                9 months ago
+                                                <a href="">@Model.data.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.City</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -506,7 +502,7 @@
                                         <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
                                             <!-- Description -->
                                             <div class="rtcl-listing-description">
-                                                <p>When an unknown printer took a galley of type and scrambled new year make a type specimen book websites and e-commerce shops. We know how hard it is for you or your clients to gain a competitive advantage in websites and e-commerce shops.</p>
+                                                <p>@Model.data.Description</p>
                                             </div>
 
 
@@ -518,7 +514,7 @@
                                                         <span>Name:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        Red Duck
+                                                        @Model.data.Title
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
@@ -526,7 +522,7 @@
                                                         <span>Color:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        Yellow Red
+                                                        @Model.data.Color
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
@@ -534,7 +530,7 @@
                                                         <span>Vaccination:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        Yes
+                                                        @(Model.data.IsVaccinated ? "Yes" : "No")
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
@@ -542,15 +538,7 @@
                                                         <span>Weight:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        200g
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-food">
-                                                    <span class="cfp-label">
-                                                        <span>Food:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        Brown Rice
+                                                       @Model.data.Weigth g
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
@@ -558,15 +546,7 @@
                                                         <span>Gender:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        Female
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-coat-length">
-                                                    <span class="cfp-label">
-                                                        <span>Coat Length:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        Long
+                                                        @Model.data.Gender
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
@@ -574,7 +554,15 @@
                                                         <span>Age:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        0 - 3 Month
+                                                        @Model.data.Age
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Type of Cat:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.CatType
                                                     </span>
                                                 </li>
                                             </ul>
@@ -587,18 +575,24 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar-widget-area">
-                        <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40">
+                        <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
                             <div class="contact-info-widget-wrap">
-                                <div class="contact-map">
-                                    <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-                                </div>
-                                <div class="contact-info-content">
+                                <div class="contact-info-content pt-0">
+                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="https://localhost:7280/@Model.data.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                     <h4 class="widget-title">Contact Info</h4>
                                     <div class="info-list">
-                                        <p><i class="ti-tablet"></i><a href="tel:+98265365205">+98 (265) 3652 - 05</a></p>
-                                        <p><i class="ti-location-pin"></i>TestLocation ,TestState</p>
-                                        <p><i class="ti-email"></i><a href="mailto:contact@example.com">contact@example.com</a></p>
-                                        <p><i class="ti-world"></i><a href="www.fioxen.com">www.fioxen.com</a></p>
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Username))
+                                        {
+                                            <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Username</a></p>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.ContactNo))
+                                        {
+                                            <p><i class="ti-tablet"></i><a href="tel:@Model.data.ContactNo">@Model.data.ContactNo</a></p>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Email))
+                                        {
+                                            <p><i class="ti-email"></i><a href="mailto:@Model.data.Email">@Model.data.Email</a></p>
+                                        }
                                     </div>
                                     <ul class="social-link">
                                         <li><a href="#"><i class="ti-facebook"></i></a></li>
@@ -606,6 +600,9 @@
                                         <li><a href="#"><i class="ti-pinterest"></i></a></li>
                                         <li><a href="#"><i class="ti-dribbble"></i></a></li>
                                     </ul>
+                                </div>
+                                <div class="contact-map mt-5">
+                                    <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
                                 </div>
                             </div>
                         </div>

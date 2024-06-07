@@ -11,6 +11,7 @@ namespace ClassLibrary
     {
         public new int Id { get; set; }
         public string? Title { get; set; }
+        public string? Keyword { get; set; }
         public string? Location { get; set; }
         public string? State { get; set; }
         public string? City { get; set; }
@@ -19,6 +20,7 @@ namespace ClassLibrary
         public string? Email { get; set; }
         public string? BreerderName { get; set; }
         public int TypeOfCat { get; set; }
+        public string? CatType { get; set; }
         public bool? ZoologicalNumber { get; set; }
         public string? Gender { get; set; }
         public string? Description { get; set; }
@@ -53,13 +55,17 @@ namespace ClassLibrary
 
         public string? PromotionName { get; set; }
 
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+
+
     }
 
-	public class ListingFilters
-	{
-		public int PageNumber { get; set; }
-		public int PageSize { get; set; }
-	}
+	//public class ListingFilters
+	//{
+	//	public int PageNumber { get; set; }
+	//	public int PageSize { get; set; }
+	//}
 
 	
 
@@ -70,7 +76,7 @@ namespace ClassLibrary
     }
 
 
-    public class Category
+    public class Category:Register
     {
         public int Id { get; set; }
         public string? CategoryName { get; set; }

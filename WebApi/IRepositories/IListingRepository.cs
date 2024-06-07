@@ -7,7 +7,7 @@ namespace WebApi.IRepositories
     {
         Task<Listing> AddListing(Listing obj);
         List<Listing> GetHomePageListings();
-        ListingResult GetAllListingByFilters(ListingFilters obj);
+        ListingResult GetAllListingByFilters(Listing obj);
 
         object GetAllDropdowns(int Id);
 

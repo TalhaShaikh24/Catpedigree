@@ -128,6 +128,13 @@ namespace WebApi.Repositories
             return data;
         }
 
+        public List<Blog> GetHomePageBlogs()
+        {
+              DynamicParameters parameters = new DynamicParameters();
+              var data = _dapper.GetAll<Blog>(@"[sp_GetHomePageBlogs]", parameters);
+
+            return data;
+        }
         public List<Blog> GetAllBlogs()
         {
               DynamicParameters parameters = new DynamicParameters();
