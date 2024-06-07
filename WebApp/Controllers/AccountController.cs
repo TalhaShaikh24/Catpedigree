@@ -40,5 +40,13 @@ namespace WebApp.Controllers
                 throw;
             }
         }
+
+        public Task<object> Logout()
+        {
+
+           
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Account/Logout", "", HttpContext);
+
+        }
     }
 }

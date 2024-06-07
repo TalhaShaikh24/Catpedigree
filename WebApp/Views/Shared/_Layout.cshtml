@@ -118,7 +118,11 @@
                         <div class="col-lg-2 col-5">
                             <div class="site-branding">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
+
+                                
+
                             </div>
+                          
                         </div>
                         <div class="col-lg-7 col-2">
                             <div class="nav-menu">
@@ -134,7 +138,13 @@
                                         </li>
                                         <li class="menu-item">
                                             <a href="@Url.Action("Index","Blog")">Blogs</a>
+                                        </li> 
+                                        <li class="menu-item">
+                                            <a href="#" id="btnLogOFf">Log out</a>
+
+                                            <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
                                         </li>
+                                       
                                         <li class="nav-btn"><a href="add-listing.html" class="main-btn icon-btn">Add Listing</a></li>
                                     </ul>
                                 </nav>
@@ -147,7 +157,8 @@
                                     <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
                                     <li class="nav-toggle-btn">
                                         <div class="navbar-toggler">
-                                            <span></span><span></span><span></span>
+                                        
+                                            
                                         </div>
                                     </li>
                                 </ul>
@@ -280,14 +291,69 @@
 
     <script>
         $(document).ready(function(){
+            debugger;
             if (localStorage.getItem("username") != null){
                 $("#headerButtons").prepend(`<li class="user-btn" > <a href="/Dashboard" class="icon" > <i class="flaticon-avatar" > </i></a > </li>`);
-                
+                $("#btnLogOFf").show();
+                $("#btnLogIn").hide();
+
             }
             else{
                 $("#headerButtons").prepend(`<li class="user-btn" > <a href="/Home/Login" class="icon" > <i class="flaticon-avatar" > </i></a > </li>`);
+
+                $("#btnLogOFf").hide();
+                $("#btnLogIn").show();
             }
         })
+
+
+        $("#btnLogOFf").click(function () {
+
+
+            postRequest("Account/Logout", null, function (res) {
+
+                if (res.status == 200) {
+
+
+                    
+
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("profilePic");
+                    localStorage.removeItem("role");
+
+
+                    window.location.href = "/";
+                }
+              
+            });
+        });
+
+        function postRequest(url, requestData, handledata) {
+
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                url: url,
+                headers: {
+
+                },
+
+                data: JSON.stringify(requestData),
+                success: function (data, textstatus, xhr) {
+                    handledata(data);
+                },
+                error: function (xhr, textstatus, errorThrown) {
+                    swal({
+                        title: "Error",
+                        text: "Something Went Wrong!",
+                        icon: "error",
+                        dangerMode: true,
+                    })
+                }
+            });
+        }
+
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

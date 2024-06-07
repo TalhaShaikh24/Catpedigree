@@ -99,5 +99,45 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("Logout")]
+        public Response Logout()
+        {
+            Response response;
+            try
+            {
+
+
+                string token = Request.Headers["Authorization"];
+                if (token != null)
+                {
+                    TokenManager.RemoveToken(token);
+                }
+
+                response = CustomStatusResponse.GetResponse(200);
+                response.Data = null;
+                response.Token = null;
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = null;
+                response.ResponseMsg = ex.Message;
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = null;
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
+        }
+
     }
 }
