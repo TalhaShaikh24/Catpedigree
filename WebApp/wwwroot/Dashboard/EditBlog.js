@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
+
+
     $('#summernote').summernote({
         height:650
     });
@@ -27,7 +32,7 @@ function EditBlogById(Id) {
                 $('#HDID').val(res.data.blogID);
                 $('#title').val(res.data.title);
                 $('#shortdescription').val(res.data.shortDescription);
-                $('#featureImage').attr("src","https://localhost:7280/"+res.data.featureImagePath);
+                $('#featureImage').attr("src", baseApiUrl +res.data.featureImagePath);
                 $('#summernote').summernote("code", res.data.content);
 
             }

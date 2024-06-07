@@ -1,5 +1,8 @@
-﻿
+﻿let baseApiUrl = "";
 $(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
+
 
     GetAllDashbaord();
 

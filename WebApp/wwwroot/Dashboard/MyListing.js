@@ -2,8 +2,11 @@
 var FeaturedFileUpload = [];
 var VideoFileUpload = [];
 var PedigreeFileUpload = [];
-
+let baseApiUrl = "";
 $(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
+
     GetAllDropdowns();
     $('#Phone').intlTelInput({
         initialCountry: 'br',
@@ -277,7 +280,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
                         debugger
 
-                        var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
 
                         var promise = new Promise(function (resolve, reject) {
 
@@ -311,7 +314,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
                         debugger
 
-                        var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
 
                         var promise = new Promise(function (resolve, reject) {
 
@@ -346,7 +349,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
                         debugger
 
-                        var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
 
                         var promise = new Promise(function (resolve, reject) {
 
@@ -380,7 +383,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 {
                     $.each(res.data.gallaryImagesPath.split(","), function (i, v) {
 
-                        var Path = "https://localhost:7280/" + v.replace(/\\/g, "/");
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
 
                         var promise = new Promise(function (resolve, reject) {
 

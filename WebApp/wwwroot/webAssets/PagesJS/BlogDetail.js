@@ -1,4 +1,8 @@
-﻿$(document).ready(function () {
+﻿
+let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
 
     var urlParams = new URLSearchParams(window.location.search);
 
@@ -27,7 +31,7 @@ function BlogDetails(Id) {
                 $.each(res.data.item1, function (i, v) {
                     $("#BlogDetails_Append").append(`
                         <div class="post-thumbnail">
-                            <img class="w-100" src="https://localhost:7280/${v.featureImagePath}" alt="Blog Image">
+                            <img class="w-100" src="${baseApiUrl+v.featureImagePath}" alt="Blog Image">
                         </div>
                         <div class="entry-content">
                             <div class="post-meta">

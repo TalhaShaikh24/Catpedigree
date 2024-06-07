@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
 
     var urlParams = new URLSearchParams(window.location.search);
 

@@ -1,7 +1,9 @@
 ﻿var Promotionpackageid = 0;
 
-
+let baseApiUrl = "";
 $(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
     getAll()
 })
 

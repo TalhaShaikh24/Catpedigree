@@ -1,10 +1,10 @@
 ﻿var profilepic = "#profilepic";
 var username = "#username";
 var emailid = "#emailid";
-
-
+let baseApiUrl = "";
 $(document).ready(function () {
 
+    baseApiUrl = $("#baseApiUrl").val();
 
     var idValue = getQueryParam('id');
     GetvendorDetails(idValue);
@@ -30,7 +30,7 @@ function GetvendorDetails(id) {
                 $(emailid).text("");
                 $(username).text(res.data.vendorInfo.username);
               
-                $(profilepic).attr("src", "https://localhost:7280/UploadImages\\" + res.data.vendorInfo.profilePicPath);
+                $(profilepic).attr("src", baseApiUrl+res.data.vendorInfo.profilePicPath);
                 $.each(res.data.listings, function (index, item) {
 
 
@@ -38,7 +38,7 @@ function GetvendorDetails(id) {
                         <div class="col-lg-4 col-md-6 col-sm-12" >
                             <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
                                 <div class="listing-thumbnail">
-                                    <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
+                                    <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">

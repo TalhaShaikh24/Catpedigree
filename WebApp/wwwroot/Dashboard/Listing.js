@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
+
+
     GetAllListings();
 });
 

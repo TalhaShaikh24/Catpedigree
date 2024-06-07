@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!--====== Required meta tags ======-->
@@ -253,6 +256,8 @@
         </div>
     </footer>
 
+    <input type="hidden" id="baseApiUrl" value="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value" />
+    <input type="hidden" id="baseWebUrl" value="@Configuration.GetSection("UrlSetting").GetSection("baseWebUrl").Value" />
 
 
     <!--====== End Footer ======-->
@@ -291,7 +296,10 @@
 
     <script>
         $(document).ready(function(){
-            debugger;
+          
+           
+
+
             if (localStorage.getItem("username") != null){
                 $("#headerButtons").prepend(`<li class="user-btn" > <a href="/Dashboard" class="icon" > <i class="flaticon-avatar" > </i></a > </li>`);
                 $("#btnLogOFf").show();

@@ -1,4 +1,7 @@
-﻿ $(document).ready(function () {
+﻿let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
     $('#registerBtn').click(function () {
         var formData = new FormData();
 

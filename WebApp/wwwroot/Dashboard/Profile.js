@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿let baseApiUrl = "";
+$(document).ready(function () {
+
+    baseApiUrl = $("#baseApiUrl").val();
 
     GetProfileDetail();
 
@@ -47,11 +50,11 @@ function GetProfileDetail() {
                 debugger;
 
                 $("#AppendProfilePic").empty().append(`<div style="width:150px;height:150px;">
-                  <img src="https://localhost:7280/${res.data.profilePicPath}" id="profilePicPath" class="img-fluid img-thumbnail" data-img-url="${res.data.profilePicPath}"/>
+                  <img src="${baseApiUrl+res.data.profilePicPath}" id="profilePicPath" class="img-fluid img-thumbnail" data-img-url="${res.data.profilePicPath}"/>
                </div>`);
 
                 $("#AppendBreederLicense").empty().append(`<div style="width:150px;height:150px;">
-                  <img src="https://localhost:7280/${res.data.breederLicensePath}" id="breederLicensePath" class="img-fluid img-thumbnail" data-img-url="${res.data.breederLicensePath}"/>
+                  <img src="${baseApiUrl+res.data.breederLicensePath}" id="breederLicensePath" class="img-fluid img-thumbnail" data-img-url="${res.data.breederLicensePath}"/>
                 </div>`);
 
             }
