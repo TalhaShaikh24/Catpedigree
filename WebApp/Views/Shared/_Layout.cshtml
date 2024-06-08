@@ -1,5 +1,11 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@using Newtonsoft.Json;
+@{
+    string userJson = @Accessor.HttpContext.Request.Cookies["user"];
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,19 +142,39 @@
                                             <a href="@Url.Action("Index","Home")" class="active">Home</a>
                                         </li>
                                         <li class="menu-item"><a href="@Url.Action("ViewListings","Listing")">Explore</a></li>
+                                        <li class="menu-item"><a href="@Url.Action("AllVendors","Vendor")">Vendors</a></li>
                                         <li class="menu-item">
                                             <a href="@Url.Action("Pricing","Packages")">Pricing Plans</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="@Url.Action("Index","Blog")">Blogs</a>
-                                        </li> 
-                                        <li class="menu-item">
-                                            <a href="#" id="btnLogOFf">Log out</a>
-
-                                            <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
                                         </li>
+
+                                       @{
+                                            
+                                        if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
+                                                                       
+                                         {
+
+                                                <li class="menu-item">
+
+                                                    <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
+                                                </li>
+                            
+                                        }
+                                        else
+                                        {
+
+
+                                                <li class="menu-item">
+
+
+                                                    <a href="javascript:void(0);" id="btnLogOFf">Log out</a>
+                                                </li>
+                                        }
+                                        }
                                        
-                                        <li class="nav-btn"><a href="add-listing.html" class="main-btn icon-btn">Add Listing</a></li>
+                           
                                     </ul>
                                 </nav>
                             </div>
@@ -157,6 +183,7 @@
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
                                     
+                                    <li class="user-btn"> <a href="/Dashboard" class="icon"> <i class="flaticon-avatar"> </i></a> </li>
                                     <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
                                     <li class="nav-toggle-btn">
                                         <div class="navbar-toggler">
@@ -295,40 +322,13 @@
     <script src="~/webassets/js/sweetalert2.min.js"></script>
 
     <script>
-        $(document).ready(function(){
-          
-           
-
-
-            if (localStorage.getItem("username") != null){
-                $("#headerButtons").prepend(`<li class="user-btn" > <a href="/Dashboard" class="icon" > <i class="flaticon-avatar" > </i></a > </li>`);
-                $("#btnLogOFf").show();
-                $("#btnLogIn").hide();
-
-            }
-            else{
-                $("#headerButtons").prepend(`<li class="user-btn" > <a href="/Home/Login" class="icon" > <i class="flaticon-avatar" > </i></a > </li>`);
-
-                $("#btnLogOFf").hide();
-                $("#btnLogIn").show();
-            }
-        })
-
 
         $("#btnLogOFf").click(function () {
 
 
-            postRequest("Account/Logout", null, function (res) {
+            postRequest("/Account/Logout", null, function (res) {
 
                 if (res.status == 200) {
-
-
-                    
-
-                    localStorage.removeItem("username");
-                    localStorage.removeItem("profilePic");
-                    localStorage.removeItem("role");
-
 
                     window.location.href = "/";
                 }

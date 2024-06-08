@@ -5,111 +5,96 @@
     <div class="map-box">
         <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
     </div>
+
 </section><!--====== End Map Section ======-->
-<!--====== Start listing Section ======-->
-<section class="listing-grid-area pb-120">
-    <form>
-        <div class="container">
-            <div class="row">
-                <div class="listing-search-form mb-120 wow fadeInUp">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form_group">
-                                <input type="text" class="form_control" placeholder="Search By Keyword" name="search" required>
-                                <i class="ti-ink-pen"></i>
+<!--====== Start Listing Section ======-->
+<section class="listing-list-area pt-120 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="sidebar-widget-area">
+                    <div class="widget search-listing-widget mb-30 wow fadeInUp">
+                        <h4 class="widget-title">Filter Search</h4>
+                        <form>
+                            <div class="search-form">
+                                <div class="form_group">
+                                    <input id="keywordFilter" type="search" class="form_control" placeholder="Search keyword" name="keywordFilter" required>
+                                    <i class="ti-search"></i>
+                                </div>
+                                <div class="form_group">
+                                    <select class="wide" id="categoryFilter">
+                                        <option value="-1" selected disabled>Search By Category</option>
+                                        <option value="3">Studmales</option>
+                                        <option value="2">Relocation</option>
+                                        <option value="1">Pedigree</option>
+                                    </select>
+                                </div>
+                                <div class="form_group">
+                                    <input type="text" id="locationFilter" class="form_control" placeholder="Search By Location" name="locationFilter">
+                                    <i class="ti-location-pin"></i>
+                                </div>
+                                <div class="form_group">
+                                    <input type="text" id="stateFilter" class="form_control" placeholder="By State" name="stateFilter">
+                                </div>
+                                <div class="form_group">
+                                    <input type="text" id="cityFilter" class="form_control" placeholder="By State" name="cityFilter">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-dsplay="Category">Category</option>
-                                    <option value="01">Museums</option>
-                                    <option value="02">Restaurant</option>
-                                    <option value="03">Party Center</option>
-                                    <option value="04">Fitness Zone</option>
-                                    <option value="05">Game Field</option>
-                                    <option value="06">Job & Feeds</option>
-                                    <option value="07">Shooping</option>
-                                    <option value="08">Art Gallery</option>
-                                </select>
+                            <div class="price-range-widget">
+                                <h4 class="widget-title">Search by Price</h4>
+                                <div id="slider-range" class="mb-20"></div>
+                                <div class="price-number">
+                                    <span class="amount"><input type="text" id="amount"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form_group">
-                                <input type="text" class="form_control" placeholder="Location" name="location" required>
-                                <i class="ti-location-pin"></i>
+                                <button type="button" id="btnApplyFilters" onclick="filteringSearch()" class="main-btn icon-btn">Search Now</button>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form_group">
-                                <select class="wide">
-                                    <option data-dsplay="Location">Location</option>
-                                    <option value="01">Dhaka</option>
-                                    <option value="02">Delhi</option>
-                                    <option value="03">lahore</option>
-                                    <option value="04">Rome</option>
-                                    <option value="05">New york</option>
-                                    <option value="06">Pris</option>
-                                    <option value="07">Bern</option>
-                                    <option value="08">Bangkok</option>
-                                </select>
+                                <button type="button" onclick="window.location.href='/Listing/ViewListings'" class="main-btn btn-secondary icon-btn">Reset</button>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-dsplay="By Country">By Country</option>
-                                    <option value="01">Bangladesh</option>
-                                    <option value="02">India</option>
-                                    <option value="03">Pakistan</option>
-                                    <option value="04">Italy</option>
-                                    <option value="05">America</option>
-                                    <option value="06">London</option>
-                                    <option value="07">Swizerland</option>
-                                    <option value="08">Thailand</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form_group">
-                                <select class="wide">
-                                    <option data-dsplay="Default price">Default price</option>
-                                    <option value="01">$10-$30</option>
-                                    <option value="02">$30-$70</option>
-                                    <option value="03">$70-$100</option>
-                                    <option value="04">$100-$130</option>
-                                    <option value="05">$130-$150</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form_group">
-                                <button class="main-btn icon-btn">Search Now</button>
-                            </div>
+                        </form>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover" style="background-image: url(assets/images/newsletter-widget-1.jpg);">
+                            <i class="flaticon-email-1"></i>
+                            <h3>
+                                Subscribe Our
+                                Newsletter
+                            </h3>
+                            <button class="main-btn icon-btn">Subscribe</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="listing-search-filter mb-40">
-                        <div class="row" id="appendListings">
+            <div class="col-lg-8">
+                <div class="listing-list-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="listing-search-filter mb-40">
+                                <div class="row" id="appendListings">
+                                </div>
+                            </div>
+                            <div class="button text-center mt-30">
+                                <a id="load-more"  onclick="loadMore()" class="main-btn icon-btn">Load More</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="button text-center mt-30">
-                        <a id="load-more" onclick="loadMore()" class="main-btn icon-btn">Load More</a>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </section>
-<!--====== End listing Section ======-->
+<!--====== End Listing Section ======-->
+
+
+
 
 <script>
-    alert("Filters are under construction");
+
+    let baseApiUrl = "";
     let pageNumber = 1;
-    const pageSize = 9;
+    const pageSize = 8;
     let varTotalCount = 0;
     let varCurrentCount = 0;
 
@@ -122,16 +107,6 @@
     let listingLocation = urlParams.get('listingLocation');
 
     async function loadMore() {
-
-       
-
-        // Now you can use these variables as needed
-        console.log("Keyword: " + keyword);
-        console.log("Category ID: " + categoryId);
-        console.log("Location: " + listingLocation);
-
-
-
 
 
         var obj = {
@@ -157,14 +132,82 @@
             varTotalCount = totalCount;
             varCurrentCount = currentCount;
 
-
+            $('#appendListings').empty();
             $.each(listings, function (index, item) {
-
+                
                 var html = `
-                        <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="listing-item listing-grid-item-two mb-30">
                                 <div class="listing-thumbnail">
-                                        <img src="https://localhost:7280/${item.featureImagePath}" alt="Listing Image">
+                                            <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
+                                </div>
+                                <div class="listing-content">
+                                    <h3 class="title">
+                                            <span class="status st-close">${item.categoryName}</span>
+                                            <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
+                                        <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <div class="listing-meta">
+                                        <ul>
+                                            <li><span><i class="ti-location-pin"></i>${item.location} ,${item.state} </span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                `;
+                $('#appendListings').append(html);
+            });
+
+
+            pageNumber++;
+            updateCountDisplay();
+
+            if (varCurrentCount >= varTotalCount) {
+                document.getElementById('load-more').style.display = 'none';
+            }
+        }
+    }
+
+    async function filteringSearch() {
+
+        var sliderValues = $("#slider-range").slider("values");
+
+        var obj = {
+            PageNumber: 1,
+            PageSize: 40,
+            CategoryId: Number($("#categoryFilter").val()),
+            Keyword: $("#keywordFilter").val(),
+            Location: $("#locationFilter").val(),
+            State: $("#stateFilter").val(),
+            City: $("#cityFilter").val(),
+            PriceMin: sliderValues[0],
+            PriceMax: sliderValues[1]
+
+        }
+        debugger
+        const response = await fetch('/Listing/GetAllListingByFilters', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        });
+        const data = await response.json();
+
+        if (data.data) {
+            const { listings, totalCount, currentCount } = data.data;
+            varTotalCount = totalCount;
+            varCurrentCount = currentCount;
+
+            $('#appendListings').empty();
+
+            $.each(listings, function (index, item) {
+                
+                var html = `
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="listing-item listing-grid-item-two mb-30">
+                                <div class="listing-thumbnail">
+                                            <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">
@@ -199,6 +242,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        baseApiUrl = $("#baseApiUrl").val();
         loadMore();
     });
 </script>

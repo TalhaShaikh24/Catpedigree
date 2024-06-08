@@ -145,7 +145,7 @@ namespace WebApi.Repositories
             parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
             parameters.Add("PedigreeFilePath", obj.PedigreeFilePath, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Age", obj.Age, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Age", obj.Age, DbType.String, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@IsActive", false, DbType.Boolean, ParameterDirection.Input);

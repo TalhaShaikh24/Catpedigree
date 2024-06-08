@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Web;
 using WebApp.HttpMethods;
 
 namespace WebApp.Controllers
@@ -21,7 +22,7 @@ namespace WebApp.Controllers
             
                 string content = JsonConvert.SerializeObject(obj);
             
-                return HttpClientUtility.CustomHttp(BaseUrl, "api/Account/Authenticate", content, HttpContext);
+                return HttpClientUtility.LogInCustomHttp(BaseUrl, "api/Account/Authenticate", content, HttpContext);
             
         }
 
@@ -41,11 +42,13 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<object> Logout()
+        [HttpPost]
+        public Task<object> LogOut()
         {
 
-           
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Account/Logout", "", HttpContext);
+            string content = "";
+
+            return HttpClientUtility.LogOutCustomHttp(BaseUrl, "api/Account/Logout", content, HttpContext);
 
         }
     }

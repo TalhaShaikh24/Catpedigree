@@ -14,11 +14,7 @@ $(document).on("click", "#btnSearch", function () {
     var categoryId = Number($("#categorySelect").val());
     var location = $("#location").val().trim(); // trim to remove leading/trailing whitespaces
 
-    // Basic validation
-    if (keyword === "") {
-        alert("Please enter a keyword.");
-        return;
-    }
+  
 
     // Construct the URL
     var url = `/Listing/ViewListings?keyword=${encodeURIComponent(keyword)}&categoryId=${categoryId}&listingLocation=${encodeURIComponent(location)}`;
@@ -43,7 +39,7 @@ function GetHomePageListings() {
                         <div class="col-lg-4 col-md-6 col-sm-12" >
                             <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
                                 <div class="listing-thumbnail">
-                                    <img src=${baseApiUrl+item.featureImagePath}" alt="Listing Image">
+                                    <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">

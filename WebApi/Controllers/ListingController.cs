@@ -56,7 +56,7 @@ namespace WebApi.Controllers
                         {
                             response = CustomStatusResponse.GetResponse(200);
                             response.Token = TokenManager.GenerateToken(claimDTO);
-                            response.ResponseMsg = "Data Save SuccessFully";
+                            response.ResponseMsg = "Listing Submitted Successfuly";
                             response.Data = res;
 
                             return response;
@@ -147,11 +147,12 @@ namespace WebApi.Controllers
 		[HttpPost("GetAllListingByFilters")]
 		public Response GetAllListingByFilters([FromBody] Listing obj)
 		{
-			Response response = new Response();
+            
+            Response response = new Response();
 
 			try
 			{
-				var result = _listing.GetAllListingByFilters(obj);
+                var result = _listing.GetAllListingByFilters(obj);
 
 				if (result == null || result.Listings == null || !result.Listings.Any())
 				{
@@ -160,8 +161,8 @@ namespace WebApi.Controllers
 				else
 				{
 					response = CustomStatusResponse.GetResponse(200);
-					response.Token = null;
-					int currentCount = (obj.PageNumber - 1) * obj.PageSize + result.FetchedCount;
+                    
+                    int currentCount = (obj.PageNumber - 1) * obj.PageSize + result.FetchedCount;
 					response.Data = new
 					{
 						Listings = result.Listings,
@@ -266,65 +267,49 @@ namespace WebApi.Controllers
         [HttpPost("VideoAvailablity/{Id}")]
         public Response VideoAvailablity(int Id)
         {
-
             Response response = new Response();
-
             Register claimDTO = null;
-
             Listing obj = new Listing();
-
-			
-
 
             try
             {
-
                 claimDTO = TokenManager.GetValidateToken(Request);
-
-                //if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
                 obj.CreatedBy = claimDTO?.UserId ?? 0;
                 obj.Id = Id;
 
-
                 var res = _listing.IsViewPedigreeAllowed(obj);
 
-                if (res!=null)
+                if (res != null)
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    if (claimDTO != null)
+                    {
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                    }
                     response.ResponseMsg = "";
                     response.Data = res;
-
-                    return response;
-
                 }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
-                   // response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Please Buy the Plan";
                     response.Data = res;
-
-                    return response;
                 }
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
                 response.ResponseMsg = ex.Message;
-               // response.Token = TokenManager.GenerateToken(claimDTO);
-                return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
-                //response.Token = TokenManager.GenerateToken(claimDTO);
-                return response;
             }
+
+            return response;
         }
+
     }
 }

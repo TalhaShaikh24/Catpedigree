@@ -100,12 +100,12 @@ namespace WebApi.Controllers
 
 
         [HttpPost("Logout")]
-        public Response Logout()
+        public Response PostLogout()
         {
             Response response;
             try
             {
-
+                response = new Response();
 
                 string token = Request.Headers["Authorization"];
                 if (token != null)

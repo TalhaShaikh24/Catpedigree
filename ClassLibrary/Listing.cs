@@ -33,7 +33,7 @@ namespace ClassLibrary
         public IFormFile? FeatureImageFile { get; set; }
         public IFormFile? VideoFile { get; set; }
         public List<IFormFile>? GalleryImageFiles { get; set; }
-        public int? Age { get; set; }
+        public string? Age { get; set; }
         public int CategoryId { get; set; }
         public int PackageId { get; set; }
         public bool? IsActive { get; set; }
@@ -57,6 +57,8 @@ namespace ClassLibrary
 
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public decimal PriceMin { get; set; }
+        public decimal PriceMax { get; set; }
 
 
     }

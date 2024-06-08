@@ -2,6 +2,7 @@
 
 let baseApiUrl = "";
 $(document).ready(function () {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
 
     baseApiUrl = $("#baseApiUrl").val();
 
@@ -139,9 +140,11 @@ $("#Btn_Post_Listing").click(function () {
             if (res.data != null) {
 
                 Swal.fire({
-                    title: "Success",
+                    title: "Congrats",
                     text: res.responseMsg,
                     icon: "success"
+                }).then(() => {
+                    redirectToHome();
                 });
 
                 $(document).find("input").val(null);
@@ -215,8 +218,9 @@ $("#Category").change(function (e) {
         $("#PEDIGREE").show().append(`
                 <div class="row">
                     <div class="col-lg-12">
+                    <h4 class="title">PEDIGREE</h4>
                         <div class="form_group">
-                            <label class="d-block" style="line-height: 5px;">PEDIGREE</label>
+                            <label class="d-none" style="line-height: 5px;">PEDIGREE</label>
                             <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
                             <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
                             <div class="form_group">
@@ -464,6 +468,10 @@ $('#showpromotionpackage').change(function () {
     }
 });
 
+
+function redirectToHome() {
+    window.location.href = window.location.origin+"/Dashboard";
+}
 
 function postRequest(url, requestData, handledata) {
     $.ajax({

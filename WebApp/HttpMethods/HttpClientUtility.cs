@@ -32,15 +32,31 @@ namespace WebApp.HttpMethods
 
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
-                if (!String.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                    request.Headers.Add("authorization", httpContext.Session.GetString("authorization"));
+                //if (!String.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                //    request.Headers.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    request.Headers.Add("authorization", authorizationToken);
+                }
+
                 request.Content = new StringContent(content, Encoding.UTF8, "application/json");
                 HttpResponseMessage Res = await client.SendAsync(request);
                 if (Res.IsSuccessStatusCode)
                 {
                     var response = Res.Content.ReadAsStringAsync().Result;
                     var obj = JsonConvert.DeserializeObject<Response>(response);
-                    httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+                    //httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", obj.Token == null ? "" : obj.Token, cookieOptions);
                     return response;
 
                 }
@@ -53,15 +69,17 @@ namespace WebApp.HttpMethods
         {
             using (var client = new HttpClient())
             {
-                try
-                {
+                
                     client.BaseAddress = new Uri(baseUrl);
 
-                    // Set the authorization header if it exists in the session
-                    if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                        client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+                    // Set the authorization header if it exists in the cookies
 
-                    var multiContent = new MultipartFormDataContent();
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                var multiContent = new MultipartFormDataContent();
 
                     // Add JSON content
                     multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
@@ -99,55 +117,174 @@ namespace WebApp.HttpMethods
                     // Send the HTTP request
                     HttpResponseMessage response = await client.PostAsync(url, multiContent);
 
+
+
                     if (response.IsSuccessStatusCode)
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();
                         var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
-                        httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+
                         return responseBody;
+
                     }
                     else
-                    {
-                        // Handle unsuccessful response
-                        // Log error message
-                        Console.WriteLine($"HTTP request failed with status code: {response.StatusCode}");
-                        // Return a meaningful response indicating failure
-                        return new { Success = false, ErrorMessage = "Failed to send request" };
-                    }
+                        return null;
                 }
-                catch (Exception ex)
-                {
-                    // Log or handle the exception appropriately
-                    Console.WriteLine("Error in CustomHttp: " + ex.Message);
-                    return new { Success = false, ErrorMessage = ex.Message };
-                }
-            }
         }
 
-        public static async Task<object> CustomHttp(string BaseUrl, string Url, string content, HttpContext httpContext)
+
+        public static async Task<object> CustomHttp(string baseUrl, string url, string content, HttpContext httpContext)
         {
-           
-             using (var client = new HttpClient())
-             {
-                    client.BaseAddress = new Uri(BaseUrl);
+            using (var client = new HttpClient { BaseAddress = new Uri(baseUrl) })
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(content, Encoding.UTF8, "application/json")
+                };
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    request.Headers.Add("authorization", authorizationToken);
+                }
+
+                    var Res = await client.SendAsync(request);
+
+
+                   var response = Res.Content.ReadAsStringAsync().Result;
+
+
+                if (Res.IsSuccessStatusCode)
+                    {
+            
+                        
+                               var obj = JsonConvert.DeserializeObject<Response>(response);
+
+                   
+                                var cookieOptions = new CookieOptions
+                                {
+                                    HttpOnly = true,
+                                    Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                                    SameSite = SameSiteMode.Strict,
+                                    Expires = DateTimeOffset.UtcNow.AddDays(5)
+                                };
+
+                                httpContext.Response.Cookies.Append("authorization", obj.Token == null ? "" : obj.Token, cookieOptions);
+
+                                return response;
+                            }
+                            else
+                                return null;
+
+                   }
+
+                  
+                
+               
+            
+        }
+        public static async Task<object> LogInCustomHttp(string baseUrl, string url, string content, HttpContext httpContext)
+        {
+            using (var client = new HttpClient { BaseAddress = new Uri(baseUrl) })
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(content, Encoding.UTF8, "application/json")
+                };
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    request.Headers.Add("authorization", authorizationToken);
+                }
+
+                    var Res = await client.SendAsync(request);
+
+
+                   var response = Res.Content.ReadAsStringAsync().Result;
+
+
+                if (Res.IsSuccessStatusCode)
+                    {
+            
+                        
+                               var obj = JsonConvert.DeserializeObject<Response>(response);
+
+                   
+                                var cookieOptions = new CookieOptions
+                                {
+                                    HttpOnly = true,
+                                    Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                                    SameSite = SameSiteMode.Strict,
+                                    Expires = DateTimeOffset.UtcNow.AddDays(5)
+                                };
+
+                                httpContext.Response.Cookies.Append("authorization", obj.Token == null ? "" : obj.Token, cookieOptions);
+                                httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(obj.Data), cookieOptions);
+
+                                return response;
+                            }
+                            else
+                                return null;
+
+                   }
+
+                  
+                
+               
+            
+        }
+
+        public static async Task<object> LogOutCustomHttp(string BaseUrl, string Url, string content, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(BaseUrl);
 
                 client.DefaultRequestHeaders
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-               
-
-
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
-                if (!String.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                    request.Headers.Add("authorization", httpContext.Session.GetString("authorization"));
-                    request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    request.Headers.Add("authorization", authorizationToken);
+                }
+
+
+
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
                 HttpResponseMessage Res = await client.SendAsync(request);
+
                 if (Res.IsSuccessStatusCode)
                 {
                     var response = Res.Content.ReadAsStringAsync().Result;
-                    var obj = JsonConvert.DeserializeObject<Response>(response);
-                    httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+
+                    CookieOptions options = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true, // Ensure this is set to true in production to send the cookie only over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(-1) // Expire the cookie immediately
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", "", options);
+                    httpContext.Response.Cookies.Append("user", "", options);
+
                     return response;
 
                 }
@@ -155,6 +292,7 @@ namespace WebApp.HttpMethods
                     return null;
             }
         }
+
 
         public static async Task<object> CustomHttpIfile(string baseUrl, string url, Register obj, HttpContext httpContext)
         {
@@ -164,9 +302,13 @@ namespace WebApp.HttpMethods
                 {
                     client.BaseAddress = new Uri(baseUrl);
 
-                    // Set the authorization header if it exists in the session
-                    if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                        client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                    // Set the authorization header if it exists in the cookies
+
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
 
                     var multiContent = new MultipartFormDataContent();
 
@@ -210,7 +352,15 @@ namespace WebApp.HttpMethods
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();
                         var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
-                        httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
                         return responseBody;
                     }
                     else
@@ -238,10 +388,15 @@ namespace WebApp.HttpMethods
                 client.BaseAddress = new Uri(baseUrl);
 
                 // Set the authorization header if it exists in the session
-                if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+                //if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                //    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
 
-                    var multiContent = new MultipartFormDataContent();
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                }
+
+                var multiContent = new MultipartFormDataContent();
 
                     multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
                     multiContent.Add(new StringContent(obj.Id.ToString()??"0"), "Id");
@@ -306,7 +461,16 @@ namespace WebApp.HttpMethods
                 {
                     var response = Res.Content.ReadAsStringAsync().Result;
                     var result = JsonConvert.DeserializeObject<Response>(response);
-                    httpContext.Session.SetString("authorization", result?.Token == null ? "" : result.Token);
+                    //httpContext.Session.SetString("authorization", result?.Token == null ? "" : result.Token);
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", result?.Token == null ? "" : result?.Token, cookieOptions);
                     return response;
                 }
                 else
@@ -346,11 +510,16 @@ namespace WebApp.HttpMethods
               
                     client.BaseAddress = new Uri(baseUrl);
 
-                    // Set the authorization header if it exists in the session
-                    if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
-                        client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+                    // Set the authorization header if it exists in the Cookies
+                    //if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                    //    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
 
-                    var multiContent = new MultipartFormDataContent();
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                var multiContent = new MultipartFormDataContent();
                     multiContent.Add(new StringContent(obj.BlogID.ToString()), "BlogID");
                     multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
                     multiContent.Add(new StringContent(obj.ShortDescription ?? ""), "ShortDescription");
@@ -372,7 +541,17 @@ namespace WebApp.HttpMethods
                         var responseBody = await response.Content.ReadAsStringAsync();
                         var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
                         httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
-                        return responseBody;
+
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+                    return responseBody;
                     }
 
                     return null;
@@ -414,7 +593,16 @@ namespace WebApp.HttpMethods
                 {
                     var response = Res.Content.ReadAsStringAsync().Result;
                     var obj = JsonConvert.DeserializeObject<Response>(response);
-                    httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+                    //httpContext.Session.SetString("authorization", obj.Token == null ? "" : obj.Token);
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", obj.Token == null ? "" : obj.Token, cookieOptions);
                     return response;
 
                 }

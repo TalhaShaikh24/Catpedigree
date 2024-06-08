@@ -3,7 +3,84 @@
     ViewData["Title"] = "Index";
 }
 
+<style>
+    .rtcl-user-info-wrap {
+        color: #797f89;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        flex-direction: column;
+        border: 1px solid #E1E9E9;
+        background-color: #F6F9F9;
+        margin-right: 20px;
+        text-align: center;
+    }
 
+    .rtcl-user-info-wrap {
+       
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+        .rtcl-user-info-wrap .rtcl-user-img {
+            width: 100%;
+            max-width: 100%;
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+
+            .rtcl-user-info-wrap .rtcl-user-img img {
+                width: 100%;
+                border-radius: 12px;
+            }
+
+        .rtcl-user-info-wrap .rtcl-user-info {
+            margin-top: 15px;
+        }
+
+        .rtcl-user-info-wrap .rtcl-user-info {
+            flex: 1;
+            max-width: unset;
+        }
+
+        .rtcl-user-info-wrap .rtcl-user-info {
+            flex: 0 0 calc(100% - 270px);
+            max-width: calc(100% - 270px);
+        }
+
+            .rtcl-user-info-wrap .rtcl-user-info h3.user-name {
+                margin-bottom: 0;
+            }
+
+            .rtcl-user-info-wrap .rtcl-user-info .rtcl-user-social {
+                margin-top: 15px;
+            }
+
+        .rtcl-user-info-wrap .rtcl-user-social {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .rtcl-user-info-wrap .rtcl-user-social a {
+                display: inline-flex;
+            }
+
+    rtcl-social-profiles .rtcl-icon, .rtcl-user-social .rtcl-icon, .social-share .rtcl-icon {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        color: #515167;
+        border-radius: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #F6F9F9;
+        border: 1px solid #AFB8B8;
+        transition: all .3s ease-in-out;
+    }
+</style>
 <!--====== SweetAlert css ======-->
 <link rel="stylesheet" href="~/webassets/css/sweetalert2.css">
 
@@ -11,45 +88,53 @@
     <div class="container-fluid">
         <div class="demo">
             <div class="container">
-			
 
-<div class="row">
-
-     <div class="col-md-4">
-		<div class="rtcl-user-info-wrap">
-			<div class="rtcl-user-img">
-				<img id="profilepic" width="263" height="240"
-                     class="attachment-400x240 size-400x240" alt="" src="" >
-			</div>
-			<div class="rtcl-user-info">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="rtcl-user-info-wrap">
+                            <div class="rtcl-user-img">
+                                <img id="profilepic" loading="lazy" width="263" height="240" src="" class="attachment-400x240 size-400x240" alt="" decoding="async"  title="">
+                            </div>
+                            <div class="rtcl-user-info">
                                 <h3 class="user-name" id="username">
-					
-				               </h3>
-				<div class="rtcl-user-meta">
-					<div class="item-contact">
-						<i class="rtcl-icon rtcl-icon-envelope-open"></i>
-						<a href="#" id="emailid"></a>
-					</div>
-				</div>
-			
-			</div>
-		</div>
-     </div>
-
+                                </h3>
+                                <div class="rtcl-user-meta">
+                                    <div class="item-contact">
+                                        <i class="rtcl-icon rtcl-icon-envelope-open"></i>
+                                        <a href="javascrip:void(0);" id="emailid">alina_petslist@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="rtcl-user-social d-none">
+                                    <a target="_blank" href="https://facebook.com">
+                                        <i class="rtcl-icon rtcl-icon-facebook"></i>
+                                    </a>
+                                    <a target="_blank" href="https://twitter.com">
+                                        <i class="rtcl-icon rtcl-icon-twitter"></i>
+                                    </a>
+                                    <a target="_blank" href="https://linkedin.com">
+                                        <i class="rtcl-icon rtcl-icon-linkedin"></i>
+                                    </a>
+                                    <a target="_blank" href="https://pinterest.com">
+                                        <i class="rtcl-icon rtcl-icon-pinterest"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-lg-8">
                         <div class="listing-search-filter mb-40">
                             <div class="row" id="appendListings">
-
                             </div>
                         </div>
-                     
+
                     </div>
-</div>
-			</div>
-		</div>
-	</div>
-    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <!--====== SweetAlerts js ======-->
 <script src="~/webassets/js/sweetalert2.min.js"></script>

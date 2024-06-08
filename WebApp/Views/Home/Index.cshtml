@@ -28,24 +28,23 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-md-6">
                                                 <div class="form_group">
-                                                    <input type="text" id="keyword" class="form_control" placeholder="Search By Keyword" name="search" required>
+                                                    <input type="text" id="keyword" class="form_control" placeholder="Search By Keyword" name="search">
                                                     <i class="ti-ink-pen"></i>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-6">
                                                 <div class="form_group">
                                                     <select class="wide" id="categorySelect">
-                                                        <option value="0" selected disabled>Search By Category</option>
-                                                        <option value="1">Kitten for Sell</option>
-                                                        <option value="2">Studmales</option>
-                                                        <option value="3">Relocation</option>
-                                                        <option value="4">Pedigree</option>
+                                                        <option value="-1" selected disabled>Search By Category</option>
+                                                        <option value="3">Studmales</option>
+                                                        <option value="2">Relocation</option>
+                                                        <option value="1">Pedigree</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-6">
                                                 <div class="form_group">
-                                                    <input type="text" id="location" class="form_control" placeholder="Location" name="location" required>
+                                                    <input type="text" id="location" class="form_control" placeholder="Location" name="location" >
                                                     <i class="ti-location-pin"></i>
                                                 </div>
                                             </div>
@@ -99,13 +98,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12 d-none">
                     <div class="category-item category-item-three mb-30 wow fadeInUp">
                         <div class="icon">
                             <img src="~/webAssets/images/category/cat.png" width="90" />
                         </div>
                         <div class="info">
-                            <h4 class="title"><a href="listing-grid.html">Kittens</a></h4>
+                            <h4 class="title"><a href="javascript:void(0)">Kittens</a></h4>
                             <p>Sed perspi ciaund natus</p>
                         </div>
                     </div>
@@ -116,7 +115,7 @@
                             <img src="~/webAssets/images/category/happy.png" width="90" />
                         </div>
                         <div class="info">
-                            <h4 class="title"><a href="listing-grid.html">Studmales</a></h4>
+                            <h4 class="title"><a href="/Listing/ViewListings?categoryId=2">Studmales</a></h4>
                             <p>Sed perspi ciaund natus</p>
                         </div>
                     </div>
@@ -127,7 +126,7 @@
                             <img src="~/webAssets/images/category/smile.png" width="90" />
                         </div>
                         <div class="info">
-                            <h4 class="title"><a href="listing-grid.html">Relocation</a></h4>
+                            <h4 class="title"><a href="/Listing/ViewListings?categoryId=3">Relocation</a></h4>
                             <p>Sed perspi ciaund natus</p>
                         </div>
                     </div>
@@ -138,7 +137,7 @@
                             <img src="~/webAssets/images/category/pedigree.png" width="75" />
                         </div>
                         <div class="info">
-                            <h4 class="title"><a href="listing-grid.html">Pedigree</a></h4>
+                            <h4 class="title"><a href="/Listing/ViewListings?categoryId=1">Pedigree</a></h4>
                             <p>Sed perspi ciaund natus</p>
                         </div>
                     </div>

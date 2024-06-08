@@ -17,11 +17,21 @@ namespace WebApp.Controllers
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string tokens)
         {
-            return View();
+            var token = HttpContext.Request.Cookies["authorization"];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
-        
+
+
         public IActionResult ViewListings()
         {
             return View();
@@ -35,7 +45,7 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> SingleListing(int listingId)
         {
-            var Token = HttpContext.Session.GetString("authorization");
+            var Token = HttpContext.Request.Cookies["authorization"];
 
             string content = "";
 
@@ -48,7 +58,7 @@ namespace WebApp.Controllers
                 // Handle data here
             }
 
-            return View();
+            return RedirectToAction("Login","Home");
         }
 
         public IActionResult SingleListing2()
@@ -85,7 +95,7 @@ namespace WebApp.Controllers
 		{
 			string content = JsonConvert.SerializeObject(obj);
 
-			return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllListingByFilters", content, HttpContext);
+			return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetAllListingByFilters", content, HttpContext);
 		}
 
         [HttpPost]

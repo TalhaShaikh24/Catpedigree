@@ -1,5 +1,6 @@
 ﻿@using ClassLibrary.ViewModels
-
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 
  @model ListingForView;
 
@@ -350,8 +351,8 @@
                             <div class="photo-swip-gallery-wrap items-five">
                                 <!-- Show the feature image -->
                                 <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                    <a class="listing-popup-btn" target="_blank" href="https://localhost:7280/@Model.data.FeatureImagePath" data-width="880" data-height="500">
-                                        <img loading="lazy" width="600" height="500" src="https://localhost:7280/@Model.data.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                    <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath" data-width="880" data-height="500">
+                                        <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                     </a>
                                 </div>
 
@@ -361,8 +362,8 @@
                                     @foreach (var imagePath in @Model.data.GallaryImagesPath.Replace(" ", "").Split(','))
                                     {
                                         <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                            <a class="listing-popup-btn" target="_blank" href="https://localhost:7280/@imagePath" data-width="880" data-height="500">
-                                                <img loading="lazy" width="600" height="500" src="https://localhost:7280/@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                            <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" data-width="880" data-height="500">
+                                                <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                             </a>
                                         </div>
                                     }
@@ -448,8 +449,8 @@
                         {
                             <div class="listing-play-box mb-30 wow fadeInUp">
                                 <h4 class="title mt-40">Video</h4>
-                                <div class="play-content bg_cover text-center" style="background-image: url('https://localhost:7280/@Model.data.FeatureImagePath');">
-                                    <a href="https://localhost:7280/@Model.data.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath');">
+                                    <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
                                 </div>
                             </div>
                         }
@@ -578,7 +579,7 @@
                         <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
                             <div class="contact-info-widget-wrap">
                                 <div class="contact-info-content pt-0">
-                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="https://localhost:7280/@Model.data.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                     <h4 class="widget-title">Contact Info</h4>
                                     <div class="info-list">
                                         @if (!string.IsNullOrWhiteSpace(@Model.data.Username))

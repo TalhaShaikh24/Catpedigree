@@ -26,7 +26,7 @@ $(document).ready(function () {
         if (breederLicense) {
             formData.append('BreederLicense', breederLicense);
         }
-
+      
         $.ajax({
             url: '/Account/RegisterUser',
             type: 'POST',
@@ -34,13 +34,61 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                // Handle success response
-                console.log(response);
+                handleSuccess(response);
             },
             error: function (xhr, status, error) {
-                // Handle error
-                console.error(xhr.responseText);
+                handleError(xhr);
             }
         });
+
+        function handleSuccess(response) {
+            Swal.fire({
+                title: "Congrats!",
+                text: response.responseMsg,
+                icon: "success"
+            }).then(() => {
+                redirectToHome();
+            });
+        }
+
+        function handleError(xhr) {
+            let errorMessage = "Oops! Something went wrong.";
+            if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            }
+            Swal.fire({
+                title: "Oops!",
+                text: errorMessage,
+                icon: "error"
+            });
+        }
+
+        function redirectToHome() {
+            window.location.href = window.location.origin;
+        }
+
     });
- });
+});
+
+
+function postRequest(url, requestData, handledata) {
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json;charset=utf-8',
+        dataType: "json",
+        url: url,
+        data: JSON.stringify(requestData),
+        success: function (data, textStatus, xhr) {
+
+            handledata(data);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            Swal.fire({
+                title: "Error",
+                text: "Something Went Wrong!",
+                icon: "error",
+                dangerMode: true,
+            })
+        }
+    });
+}
