@@ -51,7 +51,7 @@ namespace WebApp.HttpMethods
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.UtcNow.AddDays(5)
                     };
@@ -126,7 +126,7 @@ namespace WebApp.HttpMethods
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
-                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                             SameSite = SameSiteMode.Strict,
                             Expires = DateTimeOffset.UtcNow.AddDays(5)
                         };
@@ -174,7 +174,7 @@ namespace WebApp.HttpMethods
                                 var cookieOptions = new CookieOptions
                                 {
                                     HttpOnly = true,
-                                    Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                                    Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                                     SameSite = SameSiteMode.Strict,
                                     Expires = DateTimeOffset.UtcNow.AddDays(5)
                                 };
@@ -225,7 +225,7 @@ namespace WebApp.HttpMethods
                                 var cookieOptions = new CookieOptions
                                 {
                                     HttpOnly = true,
-                                    Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                                    Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                                     SameSite = SameSiteMode.Strict,
                                     Expires = DateTimeOffset.UtcNow.AddDays(5)
                                 };
@@ -277,7 +277,7 @@ namespace WebApp.HttpMethods
                     CookieOptions options = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true, // Ensure this is set to true in production to send the cookie only over HTTPS
+                        Secure = false, // Ensure this is set to true in production to send the cookie only over HTTPS
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.UtcNow.AddDays(-1) // Expire the cookie immediately
                     };
@@ -355,7 +355,7 @@ namespace WebApp.HttpMethods
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
-                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                             SameSite = SameSiteMode.Strict,
                             Expires = DateTimeOffset.UtcNow.AddDays(5)
                         };
@@ -465,7 +465,7 @@ namespace WebApp.HttpMethods
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.UtcNow.AddDays(5)
                     };
@@ -545,7 +545,7 @@ namespace WebApp.HttpMethods
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
-                            Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                             SameSite = SameSiteMode.Strict,
                             Expires = DateTimeOffset.UtcNow.AddDays(5)
                         };
@@ -597,7 +597,7 @@ namespace WebApp.HttpMethods
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true, // Should be true in production to ensure cookies are sent over HTTPS
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.UtcNow.AddDays(5)
                     };
