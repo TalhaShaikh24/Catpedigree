@@ -13,6 +13,22 @@ namespace WebApi.IRepositories
 
         Listing IsViewPedigreeAllowed(Listing obj);
 
+
+        List<Package> CheckListingShowValidation(int userId);
+
+
+
+        int SelectPackageListingShowValidation(Listing obj);
+
+
+
+        Category getCategoryByListingId(int id);
+
+
+
+
+
+
     }
 
 }

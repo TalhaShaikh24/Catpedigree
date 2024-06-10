@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Utility;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers
 {
@@ -113,8 +114,12 @@ namespace WebApi.Controllers
         {
             Response response = new Response();
 
+       
+
             try
             {
+
+
                 var res = _listing.GetHomePageListings();
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
@@ -125,6 +130,8 @@ namespace WebApi.Controllers
                     response.Data = res;
                     return response;
                 }
+
+
             }
             catch (DbException ex)
             {
@@ -190,10 +197,12 @@ namespace WebApi.Controllers
 		public Response GetSingleListing(Listing obj)
 		{
 			Response response = new Response();
+            
 
-			try
-			{
 
+            try
+            {
+                
                 var res = _listing.GetHomePageListings();
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
@@ -204,6 +213,8 @@ namespace WebApi.Controllers
                     response.Data = res;
                     return response;
                 }
+
+
             }
 			catch (DbException ex)
 			{
@@ -278,6 +289,55 @@ namespace WebApi.Controllers
                 obj.CreatedBy = claimDTO?.UserId ?? 0;
                 obj.Id = Id;
 
+                      
+
+
+                if (claimDTO!=null)
+                {
+
+                          
+
+                    if (claimDTO.RoleIds.Contains("Vendor"))
+                    {
+
+
+                         Category category=   _listing.getCategoryByListingId(Id);
+
+                        if (category.CategoryName== "Pedigree")
+                        {
+                            var data = _listing.CheckListingShowValidation(obj.CreatedBy);
+
+                            if (data.Count > 0)
+                            {
+                                response.Token = TokenManager.GenerateToken(claimDTO);
+                                response.Status = 115;
+
+                                response.Data = new
+                                {
+
+                                    Listing = new Listing(),
+                                    Package = data
+
+
+
+                                };
+
+                                return response;
+                            }
+
+                        }
+
+
+
+
+
+
+
+                    }
+                }
+
+
+
                 var res = _listing.IsViewPedigreeAllowed(obj);
 
                 if (res != null)
@@ -288,13 +348,30 @@ namespace WebApi.Controllers
                         response.Token = TokenManager.GenerateToken(claimDTO);
                     }
                     response.ResponseMsg = "";
-                    response.Data = res;
+                    response.Data = new
+                    {
+
+                        Listing = res,
+                        Package = new List<Package>()
+
+
+
+                    };
+
                 }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.ResponseMsg = "Please Buy the Plan";
-                    response.Data = res;
+                    response.Data = new
+                    {
+
+                        Listing = new Listing(),
+                        Package = new List<Package>()
+
+
+
+                    };
                 }
             }
             catch (DbException ex)
@@ -310,6 +387,59 @@ namespace WebApi.Controllers
 
             return response;
         }
+
+
+
+
+        [HttpPost("SelectPackageListingShowValidation/{Id}")]
+        public Response SelectPackageListingShowValidation(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+            Listing listing = new Listing();
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                listing.PackageId = Id;
+                listing.UserId = claimDTO.UserId;
+                listing.CreatedBy = claimDTO.UserId;
+
+
+                var res = _listing.SelectPackageListingShowValidation(listing);
+
+
+
+                if (res>0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Data save successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
 
     }
 }

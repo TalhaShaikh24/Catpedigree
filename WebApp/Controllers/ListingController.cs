@@ -45,20 +45,54 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> SingleListing(int listingId)
         {
-            var Token = HttpContext.Request.Cookies["authorization"];
-
+            
             string content = "";
 
-            if (Token != null)
+            var json = await GetListingDetailById(listingId);
+
+          
+
+            ListingForView listing = JsonConvert.DeserializeObject<ListingForView>(json.ToString());
+
+            var model = JsonConvert.DeserializeObject<Listing>(json.ToString());
+
+
+            if (listing.data.Listing != null&& listing.data.Listing.CategoryName!=null)
             {
-                var json = await GetListingDetailById(listingId);
-                ListingForView listing = JsonConvert.DeserializeObject<ListingForView>(json.ToString());
-                var model = JsonConvert.DeserializeObject<Listing>(json.ToString());
-                return View(listing);
-                // Handle data here
+
+
+                if (listing.data.Listing.CategoryName.ToLower() == "Pedigree".ToLower())
+                {
+                    var Token = HttpContext.Request.Cookies["authorization"];
+
+                    if (Token == null)
+                    {
+
+
+                        return RedirectToAction("Login", "Home");
+
+                    }
+                    else
+                    {
+                        return View(listing);
+
+                    }
+
+                }
+                else
+                {
+                    return View(listing);
+
+                }
+
             }
 
-            return RedirectToAction("Login","Home");
+            else
+            {
+                return View(listing);
+
+
+            }
         }
 
         public IActionResult SingleListing2()
@@ -154,6 +188,19 @@ namespace WebApp.Controllers
             return data;
 
         }
+
+
+        [HttpPost]
+        public async Task<object> SelectPackageListingShowValidation(int Id)
+        {
+
+            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/SelectPackageListingShowValidation/" + Id, "", HttpContext);
+
+            return data;
+
+        }
+
+
 
     }
 }
