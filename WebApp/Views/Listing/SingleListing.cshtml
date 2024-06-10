@@ -337,29 +337,30 @@
 <!--====== Start Listing Details Section ======-->
 <section class="listing-details-section pt-40 pb-90">
     <div class="container">
-        @if (@Model.status == 200)
+        @if (@Model.status == 200 && @Model.data.Listing != null)
         {
             <div class="row mt-120">
-                <div class="col-12">
-                    @if (@Model.status == 200)
-                    {
+                @if (@Model.data.Listing != null)
+                {
 
-                    }
-                    <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Title</h2>
+                }
+                <div class="col-12">
+                  
+                    <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Listing.Title</h2>
                     <div class="listingDetails-header">
                         <div class="page-header">
                             <div class="photo-swip-gallery-wrap items-five">
                                 <!-- Show the feature image -->
                                 <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                    <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath" data-width="880" data-height="500">
-                                        <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                    <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" data-width="880" data-height="500">
+                                        <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                     </a>
                                 </div>
 
                                 <!-- Iterate over gallery images -->
-                                @if (!string.IsNullOrWhiteSpace(@Model.data.GallaryImagesPath))
+                                @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.GallaryImagesPath))
                                 {
-                                    @foreach (var imagePath in @Model.data.GallaryImagesPath.Replace(" ", "").Split(','))
+                                    @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
                                     {
                                         <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
                                             <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" data-width="880" data-height="500">
@@ -445,12 +446,12 @@
                             </div>
                             <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
                         </div>
-                        @if (!string.IsNullOrWhiteSpace(@Model.data.VideoPath))
+                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
                         {
                             <div class="listing-play-box mb-30 wow fadeInUp">
                                 <h4 class="title mt-40">Video</h4>
-                                <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.FeatureImagePath');">
-                                    <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath');">
+                                    <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
                                 </div>
                             </div>
                         }
@@ -460,18 +461,18 @@
                                 <div class="listing-details-head-top">
                                     <div class="listing-badge">
                                         <span class="listing-type-badge">
-                                            @Model.data.CategoryName
+                                            @Model.data.Listing.CategoryName
                                         </span>
                                         <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
                                     </div>
                                 </div>
                                 <div class="title-price">
                                     <h2 class="rtcl-listing-title">
-                                        @Model.data.Title
+                                        @Model.data.Listing.Title
                                     </h2>
                                     <!-- Price -->
                                     <div class="rtcl-price-wrap price-in-mobile">
-                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Price</span></bdi></span></div>
+                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Listing.Price</span></bdi></span></div>
                                     </div>
                                 </div>
                                 <div class="meta-list">
@@ -480,11 +481,11 @@
                                         <ul class="rtcl-listing-meta-data">
                                             <li class="author">
                                                 <i class="flaticon-add-user"></i>
-                                                by @Model.data.Username
+                                                by @Model.data.Listing.Username
                                             </li>
                                             <li class="rt-location">
                                                 <i class="ti-location-pin"></i>
-                                                <a href="">@Model.data.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.City</a>
+                                                <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -503,7 +504,7 @@
                                         <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
                                             <!-- Description -->
                                             <div class="rtcl-listing-description">
-                                                <p>@Model.data.Description</p>
+                                                <p>@Model.data.Listing.Description</p>
                                             </div>
 
 
@@ -515,7 +516,7 @@
                                                         <span>Name:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Title
+                                                        @Model.data.Listing.Title
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
@@ -523,7 +524,7 @@
                                                         <span>Color:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Color
+                                                        @Model.data.Listing.Color
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
@@ -531,7 +532,7 @@
                                                         <span>Vaccination:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @(Model.data.IsVaccinated ? "Yes" : "No")
+                                                        @(Model.data.Listing.IsVaccinated ? "Yes" : "No")
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
@@ -539,7 +540,7 @@
                                                         <span>Weight:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                       @Model.data.Weigth g
+                                                       @Model.data.Listing.Weigth g
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
@@ -547,7 +548,7 @@
                                                         <span>Gender:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Gender
+                                                        @Model.data.Listing.Gender
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
@@ -555,7 +556,7 @@
                                                         <span>Age:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Age
+                                                        @Model.data.Listing.Age
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
@@ -563,7 +564,7 @@
                                                         <span>Type of Cat:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.CatType
+                                                        @Model.data.Listing.CatType
                                                     </span>
                                                 </li>
                                             </ul>
@@ -579,20 +580,20 @@
                         <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
                             <div class="contact-info-widget-wrap">
                                 <div class="contact-info-content pt-0">
-                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                     <h4 class="widget-title">Contact Info</h4>
                                     <div class="info-list">
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Username))
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Username))
                                         {
-                                            <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Username</a></p>
+                                            <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.Username</a></p>
                                         }
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.ContactNo))
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.ContactNo))
                                         {
-                                            <p><i class="ti-tablet"></i><a href="tel:@Model.data.ContactNo">@Model.data.ContactNo</a></p>
+                                            <p><i class="ti-tablet"></i><a href="tel:@Model.data.Listing.ContactNo">@Model.data.Listing.ContactNo</a></p>
                                         }
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Email))
+                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Email))
                                         {
-                                            <p><i class="ti-email"></i><a href="mailto:@Model.data.Email">@Model.data.Email</a></p>
+                                            <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
                                         }
                                     </div>
                                     <ul class="social-link">
@@ -611,7 +612,33 @@
                 </div>
             </div>
         }
-        
+
+        else if (@Model.data.Package != null)
+        {
+            <div class="row mt-140">
+                <div class="col-lg-12">
+                    <h2 class="text-center mt-5">Select your package from which remaining listing will be Deducted</h2>
+                </div>
+                <div class="col-md-12 mt-20">
+                   
+
+                    @foreach (var item in Model.data.Package)
+                    {
+                   
+                            <div class="single-checkbox d-flex">
+                            <input type="radio" class="selectpackage" id="showpromotionpackage_@item.PackageID" data-id="@item.PackageID" name="showpromotionpackage" value="@item.PackageID">
+                            <label for="showpromotionpackage_@item.PackageID" class="mb-5"><strong style=" color: #ff344f; font-size: 18px; ">@item.Name</strong></label>
+                            </div>
+                        
+
+                    }
+
+                </div>
+
+                <button type="button" class="btn btn-primary"  id="choosepackage">Select package</button>
+            </div>
+        }
+
         else{
         <div class="row mt-140">
             <div class="col-lg-12">
@@ -629,3 +656,6 @@
 </section><!--====== End Listing Details Section ======-->
 
 
+<script src="~/webassets/js/sweetalert2.min.js"></script>
+
+<script src="~/webassets/pagesjs/SingleListing.js"></script>

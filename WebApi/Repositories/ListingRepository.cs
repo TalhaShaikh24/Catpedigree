@@ -141,6 +141,7 @@ namespace WebApi.Repositories
 		public List<Listing> GetHomePageListings()
         {
             DynamicParameters parameters = new DynamicParameters();
+
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetHomePageListings]", parameters);
             return data;
         }
@@ -168,6 +169,39 @@ namespace WebApi.Repositories
             return data;
         }
 
+        public List<Package> CheckListingShowValidation(int userId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
 
+            parameters.Add("@UserID", userId, DbType.Int32, ParameterDirection.Input);
+     
+            var data = _dapper.GetAll<Package>(@"[sp_CheckListingShowValidation]", parameters);
+
+            return data;
+        }
+
+        public int SelectPackageListingShowValidation(Listing obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@UserID", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PackageID", obj.PackageId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            
+            var data = _dapper.Insert<int>(@"[sp_AddListingShowValidation]", parameters);
+
+            return data;
+        }
+
+        public Category getCategoryByListingId(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@ListId", id, DbType.Int32, ParameterDirection.Input);
+            
+            var data = _dapper.Get<Category>(@"[sp_getcategorynamebyListingId]", parameters);
+
+            return data;
+        }
     }
 }

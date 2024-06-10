@@ -183,8 +183,20 @@
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
                                     
-                                    <li class="user-btn"> <a href="/Dashboard" class="icon"> <i class="flaticon-avatar"> </i></a> </li>
-                                    <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
+                                         
+                                        @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
+                                       {
+                                            <li class="user-btn"> <a href="/Dashboard" class="icon"> <i class="flaticon-avatar"> </i></a> </li>
+                                               <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
+                                   
+
+                                       }
+                                      else{
+                                    <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
+
+
+                                    }
+
                                     <li class="nav-toggle-btn">
                                         <div class="navbar-toggler">
                                         
