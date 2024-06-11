@@ -78,8 +78,9 @@ namespace WebApi.Controllers
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
 
-                    response.ResponseMsg = "Package Purchased Successfuly!";
-                    
+                    response.ResponseMsg = "Package purchased successfully! Thank you for your order!";
+
+
                     response.Token = TokenManager.GenerateToken(claimDTO);
 
 

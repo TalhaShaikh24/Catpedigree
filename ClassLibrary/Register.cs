@@ -26,6 +26,7 @@ namespace ClassLibrary
         public string? ProfilePicPath { get; set; }
         public string? BreederLicensePath { get; set; }
         public string? ZoologicalNumber { get; set; }
+        public int? RoleId { get; set; }
     }
 
 }

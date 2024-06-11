@@ -31,7 +31,13 @@
     <link rel="stylesheet" href="~/webassets/css/sweetalert2.css">
 </head>
 <body>
-
+    <!--====== Start Preloader ======-->
+    <div class="preloader" style="display:none">
+        <div class="loader">
+            <img src="~/webassets/images/loader.png" alt="loader">
+        </div>
+    </div>
+    <!--====== End Preloader ======-->
     <!--====== Start Add Listing Section ======-->
     <section class="fioxen-add-listing pt-120 pb-120">
         <div class="container">
@@ -39,8 +45,21 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
-                            <h4 class="title">General Information</h4>
+                            <h4 class="title">Registration</h4>
                             <div class="row">
+                                <div class="col-md-12">
+                                    <h6>Choose Registration Type</h6>
+                                    <div class="form_group mt-3 mb-4 d-flex ">
+                                        <div class="single-checkbox d-flex mb-2 mx-2">
+                                            <input type="radio" id="vendor" name="userType" value="2">
+                                            <label for="vendor"><span>Vendor</span></label>
+                                        </div>
+                                        <div class="single-checkbox d-flex mb-2 mx-2">
+                                            <input type="radio" id="businessAdvertiser" name="userType" value="3">
+                                            <label for="businessAdvertiser"><span>Business Advertiser</span></label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
@@ -89,7 +108,7 @@
                                         <textarea class="form-control" id="profileInfo" name="profileInfo"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="zoologicalNumberField" style="display:none;">
                                     <div class="form-group">
                                         <label for="zoologicalNumber">Zoological Number</label>
                                         <input type="text" class="form-control" id="zoologicalNumber" name="zoologicalNumber">
@@ -101,13 +120,12 @@
                                         <input type="file" class="form-control-file" id="profilePic" name="profilePic">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="breederLicenseField">
                                     <div class="form-group">
                                         <label for="breederLicense">Breeder License</label>
                                         <input type="file" class="form-control-file" id="breederLicense" name="breederLicense">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="button text-center">
@@ -127,9 +145,8 @@
     <!--====== SweetAlerts js ======-->
     <script src="~/webassets/js/sweetalert2.min.js"></script>
 
-    
 
-    <script src="~/webassets/pagesjs/userregistration.js"></script>
+	<script src="~/webassets/pagesjs/userregistration.js"></script>
 </body>
 </html>
 

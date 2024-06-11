@@ -171,53 +171,99 @@
                                 </p>
                             </a>
                         </li>
+                        @{
+                            if (userinfo.RoleIds.Contains("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            My Listings
+                                        </p>
+                                    </a>
+                                </li>
 
-                          <li class="nav-item">
-                            <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                <i class="nav-icon fas fa-list"></i>
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
+                                        <i class="nav-icon fas fa-thumbs-up"></i>
+                                        <p>
+                                            Listing Approvals
+                                        </p>
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Add Blog
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Blogs
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            Promotion Packages
+                                        </p>
+                                    </a>
+                                </li>
+                            }  
+                            
+                            else if (userinfo.RoleIds.Contains("Vendor"))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            My Listings
+                                        </p>
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            Promotion Packages
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                            else if (userinfo.RoleIds.Contains("Business Advertiser"))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            Advertisement
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item">
+                            <a id="btnLogOFf" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
-                                    My Listings
+                                    Logout
                                 </p>
                             </a>
                         </li>
-
-
-                        <li class="nav-item">
-                            <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
-                                <i class="nav-icon fas fa-thumbs-up"></i>
-                                <p>
-                                    Listing Approvals
-                                </p>
-                            </a>
-                        </li>  
-                        
-                        
-                        <li class="nav-item">
-                            <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    Add Blog
-                                </p>
-                            </a>
-                        </li>
-                           
-                        <li class="nav-item">
-                            <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    Blogs
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Promotion Packages
-                                </p>
-                            </a>
-                        </li>
+                       
                         
  
                     </ul>
@@ -308,6 +354,49 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/dist/js/pages/dashboard.js"></script> *@
     <script src="~/Dashboard/HttpPostRequest.js"></script>
+
+    <script>
+
+        $("#btnLogOFf").click(function () {
+
+
+            postRequest("/Account/Logout", null, function (res) {
+
+                if (res.status == 200) {
+
+                    window.location.href = "/";
+                }
+
+            });
+        });
+
+        function postRequest(url, requestData, handledata) {
+
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                url: url,
+                headers: {
+
+                },
+
+                data: JSON.stringify(requestData),
+                success: function (data, textstatus, xhr) {
+                    handledata(data);
+                },
+                error: function (xhr, textstatus, errorThrown) {
+                    swal({
+                        title: "Error",
+                        text: "Something Went Wrong!",
+                        icon: "error",
+                        dangerMode: true,
+                    })
+                }
+            });
+        }
+
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -82,6 +82,12 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        [Route("Dashboard/Advertisement")]
+        public IActionResult Advertisement()
+        {
+            return View();
+        }
+
 
 
         [HttpPost]

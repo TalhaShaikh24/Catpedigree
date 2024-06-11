@@ -322,6 +322,9 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.Address ?? ""), "address");
                     multiContent.Add(new StringContent(obj.ProfileInfo ?? ""), "profileInfo");
                     multiContent.Add(new StringContent(obj.ZoologicalNumber ?? ""), "zoologicalNumber");
+                    multiContent.Add(new StringContent(obj.RoleId.ToString() ?? null), "roleid");
+
+
 
                     if (obj.ProfilePic != null)
                     {

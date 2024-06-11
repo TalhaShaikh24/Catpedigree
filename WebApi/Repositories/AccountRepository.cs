@@ -43,26 +43,33 @@ namespace WebApi.Repositories
             {
                 string folder = "Profile"; // Relative path
 
-                //For Profile Picture
-                string profileFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.ProfilePic.FileName);
-                string profileFilePath = Path.Combine(folder, profileFileName);
-                string absoluteProfileFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, folder);
-                string absoluteProfileFilePath = Path.Combine(_hostingEnvironment.WebRootPath, profileFilePath);
+                string profileFilePath = null;
+                string licenseFilePath = null;
 
-                using (var profileStream = new FileStream(absoluteProfileFilePath, FileMode.Create))
+                // For Profile Picture
+                if (formData.ProfilePic != null)
                 {
-                    await formData.ProfilePic.CopyToAsync(profileStream);
+                    string profileFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.ProfilePic.FileName);
+                    profileFilePath = Path.Combine(folder, profileFileName);
+                    string absoluteProfileFilePath = Path.Combine(_hostingEnvironment.WebRootPath, profileFilePath);
+
+                    using (var profileStream = new FileStream(absoluteProfileFilePath, FileMode.Create))
+                    {
+                        await formData.ProfilePic.CopyToAsync(profileStream);
+                    }
                 }
 
-                //For Breeder License
-                string licenseFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.BreederLicense.FileName);
-                string licenseFilePath = Path.Combine(folder, licenseFileName);
-                string absoluteLicenseFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, folder);
-                string absoluteLicenseFilePath = Path.Combine(_hostingEnvironment.WebRootPath, licenseFilePath);
-
-                using (var licenseStream = new FileStream(absoluteLicenseFilePath, FileMode.Create))
+                // For Breeder License
+                if (formData.BreederLicense != null)
                 {
-                    await formData.BreederLicense.CopyToAsync(licenseStream);
+                    string licenseFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(formData.BreederLicense.FileName);
+                    licenseFilePath = Path.Combine(folder, licenseFileName);
+                    string absoluteLicenseFilePath = Path.Combine(_hostingEnvironment.WebRootPath, licenseFilePath);
+
+                    using (var licenseStream = new FileStream(absoluteLicenseFilePath, FileMode.Create))
+                    {
+                        await formData.BreederLicense.CopyToAsync(licenseStream);
+                    }
                 }
 
                 DynamicParameters parameters = new DynamicParameters();
@@ -75,9 +82,10 @@ namespace WebApi.Repositories
                 parameters.Add("@ContactNo", formData.ContactNo, DbType.String, ParameterDirection.Input);
                 parameters.Add("@Address", formData.Address, DbType.String, ParameterDirection.Input);
                 parameters.Add("@ProfileInfo", formData.ProfileInfo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@ProfilePicPath", "~/" + profileFilePath, DbType.String, ParameterDirection.Input);
-                parameters.Add("@BreederLicensePath", "~/" + licenseFilePath, DbType.String, ParameterDirection.Input);
+                parameters.Add("@ProfilePicPath", profileFilePath != null ? "~/" + profileFilePath : null, DbType.String, ParameterDirection.Input);
+                parameters.Add("@BreederLicensePath", licenseFilePath != null ? "~/" + licenseFilePath : null, DbType.String, ParameterDirection.Input);
                 parameters.Add("@ZoologicalNumber", formData.ZoologicalNumber, DbType.String, ParameterDirection.Input);
+                parameters.Add("@RoleId", formData.RoleId, DbType.Int32, ParameterDirection.Input);
 
                 var data = _dapper.Insert<Register>(@"[sp_userRegister]", parameters);
                 return data;
@@ -91,8 +99,9 @@ namespace WebApi.Repositories
         }
 
 
+
     }
 
-        
-    }
+
+}
 

@@ -116,21 +116,28 @@ function getAllPackages() {
 
 
 function BuyPackage(pkgId) {
-
+    $(".preloader").show()
     var obj = {
         PackageID: Number(pkgId)
     }
     postRequest('/Packages/BuyPackage', obj, function (res) {
 
         if (res.status == 200) {
-
+            $(".preloader").hide()
             if (res.data != null) {
 
-               
+                Swal.fire({
+                    title: "Congrats",
+                    text: res.responseMsg,
+                    icon: "success"
+                }).then(() => {
+                    redirectToHome();
+                });
+
             }
         }
         if (res.status == 304) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -138,7 +145,7 @@ function BuyPackage(pkgId) {
             })
         }
         if (res.status == 305) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -146,7 +153,7 @@ function BuyPackage(pkgId) {
             })
         }
         if (res.status == 401) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -154,14 +161,14 @@ function BuyPackage(pkgId) {
             })
         }
         if (res.status == 403) {
-
+            $(".preloader").hide()
             Swal.fire(res.responseMsg, {
                 icon: "error",
                 title: "Error"
             });
         }
         if (res.status == 320) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -169,7 +176,7 @@ function BuyPackage(pkgId) {
             })
         }
         if (res.status == 500) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -177,7 +184,7 @@ function BuyPackage(pkgId) {
             })
         }
         if (res.status == 600) {
-
+            $(".preloader").hide()
             Swal.fire({
                 title: "Warning",
                 text: res.responseMsg,
@@ -188,6 +195,9 @@ function BuyPackage(pkgId) {
     });
 }
 
+function redirectToHome() {
+    window.location.href = window.location.origin + "/Dashboard";
+}
 function postRequest(url, requestData, handledata) {
     $.ajax({
         type: 'POST',

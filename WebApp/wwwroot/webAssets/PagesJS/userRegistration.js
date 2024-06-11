@@ -2,7 +2,12 @@
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
+
+    $("#vendor").prop("checked", true);
     $('#registerBtn').click(function () {
+
+        $(".preloader").show();
+
         var formData = new FormData();
 
         formData.append('Firstname', $('#firstname').val());
@@ -14,6 +19,7 @@ $(document).ready(function () {
         formData.append('Address', $('#address').val());
         formData.append('ProfileInfo', $('#profileInfo').val());
         formData.append('ZoologicalNumber', $('#zoologicalNumber').val());
+        formData.append('RoleId', Number($("input[type=radio][name=userType]:checked").val()));
 
         // Append ProfilePic if exists
         var profilePic = $("#profilePic")[0].files[0];
@@ -42,6 +48,7 @@ $(document).ready(function () {
         });
 
         function handleSuccess(response) {
+            $(".preloader").hide()
             Swal.fire({
                 title: "Congrats!",
                 text: response.responseMsg,
@@ -52,6 +59,7 @@ $(document).ready(function () {
         }
 
         function handleError(xhr) {
+            $(".preloader").hide()
             let errorMessage = "Oops! Something went wrong.";
             if (xhr.responseText) {
                 errorMessage = xhr.responseText;
@@ -69,6 +77,17 @@ $(document).ready(function () {
 
     });
 });
+
+$(document).on("change", "input[type=radio][name=userType]", function () {
+    if ($(this).val() === '2') {
+        $("#zoologicalNumberField").show();
+        $("#breederLicenseField").show();
+    } else {
+        $("#zoologicalNumberField").hide();
+        $("#breederLicenseField").hide();
+    }
+});
+
 
 
 function postRequest(url, requestData, handledata) {

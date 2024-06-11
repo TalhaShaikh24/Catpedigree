@@ -1,5 +1,5 @@
 ﻿$("#Btn_Authentication").click(function () {
-
+    $(".preloader").show()
 
     let data = {
         Email: $("#usernameEmail").val(),
@@ -16,21 +16,26 @@
             case 401:
             case 320:
             case 500:
+                $(".preloader").hide()
                 handleError(res.responseMsg, "error");
                 break;
             case 403:
+                $(".preloader").hide()
                 handleError(res.responseMsg, "error", "Error");
                 break;
             case 600:
+                $(".preloader").hide()
                 handleError(res.responseMsg, "warning", "Warning");
                 break;
             default:
+                $(".preloader").hide()
                 handleError("Unexpected error occurred", "error");
                 break;
         }
     });
 
     function handleSuccess(res) {
+        $(".preloader").hide()
         if (res.data != null) {
             localStorage.setItem("username", res.data.dataObj.username);
             localStorage.setItem("profilePic", res.data.dataObj.profilePic);
