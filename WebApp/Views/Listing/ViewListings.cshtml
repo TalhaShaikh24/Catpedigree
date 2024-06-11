@@ -24,9 +24,10 @@
                                 <div class="form_group">
                                     <select class="wide" id="categoryFilter">
                                         <option value="-1" selected disabled>Search By Category</option>
-                                        <option value="3">Studmales</option>
-                                        <option value="2">Relocation</option>
                                         <option value="1">Pedigree</option>
+                                        <option value="2">Studmales</option>
+                                        <option value="3">Relocation</option>
+                                        <option value="4">Kittens For Sell</option>
                                     </select>
                                 </div>
                                 <div class="form_group">
@@ -76,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="button text-center mt-30">
-                                <a id="load-more"  onclick="loadMore()" class="main-btn icon-btn">Load More</a>
+                                <a id="load-more" style="display:none"  onclick="loadMore()" class="main-btn icon-btn">Load More</a>
                             </div>
                         </div>
                     </div>
@@ -156,6 +157,7 @@
                         </div>
                 `;
                 $('#appendListings').append(html);
+                $("#load-more").show();
             });
 
 
@@ -165,6 +167,9 @@
             if (varCurrentCount >= varTotalCount) {
                 document.getElementById('load-more').style.display = 'none';
             }
+        }
+        else {
+            $('#appendListings').append(`<h4>No Listing found..</h4>`);
         }
     }
 
@@ -224,6 +229,7 @@
                         </div>
                 `;
                 $('#appendListings').append(html);
+                $("#load-more").show();
             });
 
 
@@ -233,6 +239,9 @@
             if (varCurrentCount >= varTotalCount) {
                 document.getElementById('load-more').style.display = 'none';
             }
+        }
+        else{
+            $('#appendListings').append(`<h4>No Listing found..</h4>`);
         }
     }
 
