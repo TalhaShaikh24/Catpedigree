@@ -14,7 +14,7 @@ namespace WebApi.IRepositories
         Listing IsViewPedigreeAllowed(Listing obj);
 
 
-        List<Package> CheckListingShowValidation(int userId);
+        List<Package> CheckListingShowValidation(int userId, int id);
 
 
 

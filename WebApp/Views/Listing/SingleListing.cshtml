@@ -328,6 +328,43 @@
             border-radius: 4px;
         }
 
+    .center-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .flex-button {
+        flex: 1;
+        margin: 0 10px;
+    }
+        /* Dynamic button colors */
+        .flex-button:nth-child(1) {
+            background-color: #676767;
+            color: #fff;
+        }
+
+        .flex-button:nth-child(2) {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .flex-button:nth-child(3) {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .flex-button:nth-child(4) {
+            background-color: #28a745;
+            color: #fff;
+        }
 
 </style>
 
@@ -337,383 +374,365 @@
 <!--====== Start Listing Details Section ======-->
 <section class="listing-details-section pt-40 pb-90">
     <div class="container">
-        @if (@Model.status == 200 && @Model.data.Listing != null)
+        @if(@Model.data != null)
         {
-            <div class="row mt-120">
-                @if (@Model.data.Listing != null)
-                {
+            @if (@Model.status == 200 && @Model.data.Listing != null)
+            {
+                <div class="row mt-120">
+                    @if (@Model.data.Listing != null)
+                    {
 
-                }
-                <div class="col-12">
-                  
-                    <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Listing.Title</h2>
-                    <div class="listingDetails-header">
-                        <div class="page-header">
-                            <div class="photo-swip-gallery-wrap items-five">
-                                <!-- Show the feature image -->
-                                <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                    <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" data-width="880" data-height="500">
-                                        <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
-                                    </a>
-                                </div>
+                    }
+                    <div class="col-12">
 
-                                <!-- Iterate over gallery images -->
-                                @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.GallaryImagesPath))
-                                {
-                                    @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
+                        <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Listing.Title</h2>
+                        <div class="listingDetails-header">
+                            <div class="page-header">
+                                <div class="photo-swip-gallery-wrap items-five">
+                                    <!-- Show the feature image -->
+                                    <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+                                        <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" data-width="880" data-height="500">
+                                            <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                        </a>
+                                    </div>
+
+                                    <!-- Iterate over gallery images -->
+                                    @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.GallaryImagesPath))
                                     {
-                                        <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                            <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" data-width="880" data-height="500">
-                                                <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
-                                            </a>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="listing-details-wrapper listing-details-wrapper-two">
-
-                        <div class="listing-content mb-30 wow fadeInUp d-none">
-                            <h3 class="title">World's Quality Museum</h3>
-                            <p>Parturient varius elementum maecenas faucibus maecenas inceptos commodo metus vitae ac pretium magnis. Ridiculus aenean diam duis montes mattis curae dis platea cubilia fames justo nullam per incepto Accumsan mollis, semper nisl nulla per curae ante tellus cursus ut blandit eleifend ut adipiscing fringilla Sociosqu penatibus nascetur senectus, molestie sed habitant adipiscing maecenas ultrices curae sociis mi eros ultrices euismod risus cubilia eget habitasse facilisic</p>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-credit-card"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Card Payment</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-paint-bucket"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Air-conditioned</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-rss-alt"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Wireless Internet</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-trash"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Serves Alcohol</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-car"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Parking Street</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="icon-box icon-box-one">
-                                        <div class="icon">
-                                            <i class="ti-credit-card"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h6>Outdoor Seating</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
-                        </div>
-                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
-                        {
-                            <div class="listing-play-box mb-30 wow fadeInUp">
-                                <h4 class="title mt-40">Video</h4>
-                                <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath');">
-                                    <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                </div>
-                            </div>
-                        }
-
-                        <div class="listing-details-head">
-                            <div class="meta-info-box">
-                                <div class="listing-details-head-top">
-                                    <div class="listing-badge">
-                                        <span class="listing-type-badge">
-                                            @Model.data.Listing.CategoryName
-                                        </span>
-                                        <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
-                                    </div>
-                                </div>
-                                <div class="title-price">
-                                    <h2 class="rtcl-listing-title">
-                                        @Model.data.Listing.Title
-                                    </h2>
-                                    <!-- Price -->
-                                    <div class="rtcl-price-wrap price-in-mobile">
-                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Listing.Price</span></bdi></span></div>
-                                    </div>
-                                </div>
-                                <div class="meta-list">
-                                    <!-- Meta data -->
-                                    <div class="rtcl-listing-meta">
-                                        <ul class="rtcl-listing-meta-data">
-                                            <li class="author">
-                                                <i class="flaticon-add-user"></i>
-                                                by @Model.data.Listing.Username
-                                            </li>
-                                            <li class="rt-location">
-                                                <i class="ti-location-pin"></i>
-                                                <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rtcl-single-listing-details custom-fields-box">
-                            <div class="rtcl-main-content-wrapper">
-                                <div class="accordion accordion-flush" id="petslist-content-accordion">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Details
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
-                                            <!-- Description -->
-                                            <div class="rtcl-listing-description">
-                                                <p>@Model.data.Listing.Description</p>
+                                        @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
+                                        {
+                                            <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
+                                                <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" data-width="880" data-height="500">
+                                                    <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                                </a>
                                             </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
 
 
-                                            <!--  Inner Sidebar -->
-                                            <ul class="list-group custom-field-wrapper">
 
-                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
-                                                    <span class="cfp-label">
-                                                        <span>Name:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.Title
-                                                    </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="listing-details-wrapper listing-details-wrapper-two">
+
+                            <div class="listing-content mb-30 wow fadeInUp d-none">
+                                <h3 class="title">World's Quality Museum</h3>
+                                <p>Parturient varius elementum maecenas faucibus maecenas inceptos commodo metus vitae ac pretium magnis. Ridiculus aenean diam duis montes mattis curae dis platea cubilia fames justo nullam per incepto Accumsan mollis, semper nisl nulla per curae ante tellus cursus ut blandit eleifend ut adipiscing fringilla Sociosqu penatibus nascetur senectus, molestie sed habitant adipiscing maecenas ultrices curae sociis mi eros ultrices euismod risus cubilia eget habitasse facilisic</p>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-credit-card"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Card Payment</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-paint-bucket"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Air-conditioned</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-rss-alt"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Wireless Internet</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-trash"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Serves Alcohol</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-car"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Parking Street</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="icon-box icon-box-one">
+                                            <div class="icon">
+                                                <i class="ti-credit-card"></i>
+                                            </div>
+                                            <div class="info">
+                                                <h6>Outdoor Seating</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
+                            {
+                                <div class="listing-play-box mb-30 wow fadeInUp">
+                                    <h4 class="title mt-40">Video</h4>
+                                    <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath');">
+                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="listing-details-head">
+                                <div class="meta-info-box">
+                                    <div class="listing-details-head-top">
+                                        <div class="listing-badge">
+                                            <span class="listing-type-badge">
+                                                @Model.data.Listing.CategoryName
+                                            </span>
+                                            <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="title-price">
+                                        <h2 class="rtcl-listing-title">
+                                            @Model.data.Listing.Title
+                                        </h2>
+                                        <!-- Price -->
+                                        <div class="rtcl-price-wrap price-in-mobile">
+                                            <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Listing.Price</span></bdi></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="meta-list">
+                                        <!-- Meta data -->
+                                        <div class="rtcl-listing-meta">
+                                            <ul class="rtcl-listing-meta-data">
+                                                <li class="author">
+                                                    <i class="flaticon-add-user"></i>
+                                                    by @Model.data.Listing.Username
                                                 </li>
-                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
-                                                    <span class="cfp-label">
-                                                        <span>Color:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.Color
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
-                                                    <span class="cfp-label">
-                                                        <span>Vaccination:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @(Model.data.Listing.IsVaccinated ? "Yes" : "No")
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
-                                                    <span class="cfp-label">
-                                                        <span>Weight:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                       @Model.data.Listing.Weigth g
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
-                                                    <span class="cfp-label">
-                                                        <span>Gender:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.Gender
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                    <span class="cfp-label">
-                                                        <span>Age:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.Age
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                    <span class="cfp-label">
-                                                        <span>Type of Cat:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.CatType
-                                                    </span>
+                                                <li class="rt-location">
+                                                    <i class="ti-location-pin"></i>
+                                                    <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="rtcl-single-listing-details custom-fields-box">
+                                <div class="rtcl-main-content-wrapper">
+                                    <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    Details
+                                                </button>
+                                            </h2>
+                                            <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                                <!-- Description -->
+                                                <div class="rtcl-listing-description">
+                                                    <p>@Model.data.Listing.Description</p>
+                                                </div>
+
+
+                                                <!--  Inner Sidebar -->
+                                                <ul class="list-group custom-field-wrapper">
+
+                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
+                                                        <span class="cfp-label">
+                                                            <span>Name:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.Title
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
+                                                        <span class="cfp-label">
+                                                            <span>Color:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.Color
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
+                                                        <span class="cfp-label">
+                                                            <span>Vaccination:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @(Model.data.Listing.IsVaccinated ? "Yes" : "No")
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
+                                                        <span class="cfp-label">
+                                                            <span>Weight:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.Weigth g
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
+                                                        <span class="cfp-label">
+                                                            <span>Gender:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.Gender
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                        <span class="cfp-label">
+                                                            <span>Age:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.Age
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                        <span class="cfp-label">
+                                                            <span>Type of Cat:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.CatType
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar-widget-area">
+                            <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
+                                <div class="contact-info-widget-wrap">
+                                    <div class="contact-info-content pt-0">
+                                        <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                        <h4 class="widget-title">Contact Info</h4>
+                                        <div class="info-list">
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Username))
+                                            {
+                                                <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.Username</a></p>
+                                            }
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.ContactNo))
+                                            {
+                                                <p><i class="ti-tablet"></i><a href="tel:@Model.data.Listing.ContactNo">@Model.data.Listing.ContactNo</a></p>
+                                            }
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Email))
+                                            {
+                                                <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
+                                            }
+                                        </div>
+                                        <ul class="social-link">
+                                            <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                            <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                                            <li><a href="#"><i class="ti-pinterest"></i></a></li>
+                                            <li><a href="#"><i class="ti-dribbble"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="contact-map mt-5">
+                                        <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="sidebar-widget-area">
-                        <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
-                            <div class="contact-info-widget-wrap">
-                                <div class="contact-info-content pt-0">
-                                    <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
-                                    <h4 class="widget-title">Contact Info</h4>
-                                    <div class="info-list">
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Username))
+            }
+
+            else if (@Model.data.Package != null)
+            {
+
+                <div class="container">
+                    <div class="row center-card">
+                        <div class="col-md-6">
+                            <div class="card text-center shadow">
+                                <div class="card-header">
+                                    <h3> Choose Your Plan</h3>
+                                </div>
+                                <div class="card-body py-5">
+                                    <div class="button-group">
+                                        @foreach (var item in Model.data.Package)
                                         {
-                                            <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.Username</a></p>
-                                        }
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.ContactNo))
-                                        {
-                                            <p><i class="ti-tablet"></i><a href="tel:@Model.data.Listing.ContactNo">@Model.data.Listing.ContactNo</a></p>
-                                        }
-                                        @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Email))
-                                        {
-                                            <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
+                                            <button type="button" class="btn flex-button btnChoosePkg" data-id="@item.PackageID">@item.Name</button>
+
+
                                         }
                                     </div>
-                                    <ul class="social-link">
-                                        <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                        <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                        <li><a href="#"><i class="ti-pinterest"></i></a></li>
-                                        <li><a href="#"><i class="ti-dribbble"></i></a></li>
-                                    </ul>
                                 </div>
-                                <div class="contact-map mt-5">
-                                    <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                                <div class="card-footer">
+                                    <p class="card-text">Choose a package to view pedigree listings. Once selected, you'll be able to see pedigree listings for the next 60 days. Note that this will deduct one listing from your chosen package.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row mt-140 d-none">
+                    <div class="col-lg-12">
+                        <h2 class="text-center mt-5">Select your package from which remaining listing will be Deducted</h2>
+                    </div>
+                    <div class="col-md-12 mt-20">
+
+
+                        @foreach (var item in Model.data.Package)
+                        {
+
+                            <div class="single-checkbox d-flex">
+                                <input type="radio" class="selectpackage" id="showpromotionpackage_@item.PackageID" data-id="@item.PackageID" name="showpromotionpackage" value="@item.PackageID">
+                                <label for="showpromotionpackage_@item.PackageID" class="mb-5"><strong style=" color: #ff344f; font-size: 18px; ">@item.Name</strong></label>
+                            </div>
+
+
+                        }
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="choosepackage">Select package</button>
+                </div>
+            }
+
+            else
+            {
+                <div class="row mt-140">
+                    <div class="col-lg-12">
+                        <h2 class="text-center mt-5">Please Login/Buy a plan to View Pedigree Listings</h2>
+                    </div>
+                    <div class="col-md-12 mt-20">
+                        <div class="cta-content-box fadeInRight text-center">
+                            <a href="/Packages/Pricing" class="main-btn icon-btn text-center">Buy Package</a>
+                        </div>
+                    </div>
+                </div>
+            }
         }
 
-        else if (@Model.data.Package != null)
+        else
         {
-            <style>
-                .center-card {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                }
-
-                .button-group {
-                    display: flex;
-                    justify-content: space-around;
-                    width: 100%;
-                }
-
-                .flex-button {
-                    flex: 1;
-                    margin: 0 10px;
-                }
-                    /* Dynamic button colors */
-                    .flex-button:nth-child(1) {
-                        background-color: #676767;
-                        color: #fff;
-                    }
-
-                    .flex-button:nth-child(2) {
-                        background-color: #dc3545;
-                        color: #fff;
-                    }
-
-                    .flex-button:nth-child(3) {
-                        background-color: #ffc107;
-                        color: #fff;
-                    }
-
-                    .flex-button:nth-child(4) {
-                        background-color: #28a745;
-                        color: #fff;
-                    }
-            </style>
-            <div class="container">
-                <div class="row center-card">
-                    <div class="col-md-6">
-                        <div class="card text-center shadow">
-                            <div class="card-header">
-                                <h3> Choose Your Plan</h3>
-                            </div>
-                            <div class="card-body py-5">
-                                <div class="button-group">
-                                    @foreach (var item in Model.data.Package)
-                                    {
-                                        <button type="button" class="btn flex-button btnChoosePkg" data-id="@item.PackageID">@item.Name</button>
-                                      
-
-                                    }
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <p class="card-text">Choose a package to view pedigree listings. Once selected, you'll be able to see pedigree listings for the next 60 days. Note that this will deduct one listing from your chosen package.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-140 d-none">
+            <div class="row mt-140">
                 <div class="col-lg-12">
-                    <h2 class="text-center mt-5">Select your package from which remaining listing will be Deducted</h2>
+                    <h2 class="text-center mt-5">Please Login/Buy a plan to View Pedigree Listings</h2>
                 </div>
                 <div class="col-md-12 mt-20">
-                   
-
-                    @foreach (var item in Model.data.Package)
-                    {
-                   
-                            <div class="single-checkbox d-flex">
-                            <input type="radio" class="selectpackage" id="showpromotionpackage_@item.PackageID" data-id="@item.PackageID" name="showpromotionpackage" value="@item.PackageID">
-                            <label for="showpromotionpackage_@item.PackageID" class="mb-5"><strong style=" color: #ff344f; font-size: 18px; ">@item.Name</strong></label>
-                            </div>
-                        
-
-                    }
-
-                </div>
-
-                <button type="button" class="btn btn-primary"  id="choosepackage">Select package</button>
-            </div>
-        }
-
-        else{
-        <div class="row mt-140">
-            <div class="col-lg-12">
-                <h2 class="text-center mt-5">Please Login/Buy a plan to View Pedigree Listings</h2>
-            </div>
-            <div class="col-md-12 mt-20">
-                <div class="cta-content-box fadeInRight text-center">
+                    <div class="cta-content-box fadeInRight text-center">
                         <a href="/Packages/Pricing" class="main-btn icon-btn text-center">Buy Package</a>
-                 </div>
+                    </div>
+                </div>
             </div>
-        </div>
         }
+
+      
 
     </div>
 </section><!--====== End Listing Details Section ======-->

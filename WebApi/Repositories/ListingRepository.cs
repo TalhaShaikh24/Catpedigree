@@ -169,11 +169,12 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public List<Package> CheckListingShowValidation(int userId)
+        public List<Package> CheckListingShowValidation(int userId, int id)
         {
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@UserID", userId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ListingID", id, DbType.Int32, ParameterDirection.Input);
      
             var data = _dapper.GetAll<Package>(@"[sp_CheckListingShowValidation]", parameters);
 

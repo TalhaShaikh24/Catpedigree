@@ -305,7 +305,7 @@ namespace WebApi.Controllers
 
                         if (category.CategoryName== "Pedigree")
                         {
-                            var data = _listing.CheckListingShowValidation(obj.CreatedBy);
+                            var data = _listing.CheckListingShowValidation(obj.CreatedBy,Id);
 
                             if (data.Count > 0)
                             {
@@ -363,6 +363,8 @@ namespace WebApi.Controllers
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.ResponseMsg = "Please Buy the Plan";
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = new
                     {
 

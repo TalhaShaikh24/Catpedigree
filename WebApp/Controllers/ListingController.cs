@@ -57,19 +57,28 @@ namespace WebApp.Controllers
             var model = JsonConvert.DeserializeObject<Listing>(json.ToString());
 
 
-            if (listing.data.Listing != null&& listing.data.Listing.CategoryName!=null)
+            if (listing.data!=null)
             {
-
-
-                if (listing.data.Listing.CategoryName.ToLower() == "Pedigree".ToLower())
+                if (listing.data.Listing != null && listing.data.Listing.CategoryName != null)
                 {
-                    var Token = HttpContext.Request.Cookies["authorization"];
 
-                    if (Token == null)
+
+                    if (listing.data.Listing.CategoryName.ToLower() == "Pedigree".ToLower())
                     {
+                        var Token = HttpContext.Request.Cookies["authorization"];
+
+                        if (Token == null)
+                        {
 
 
-                        return RedirectToAction("Login", "Home");
+                            return RedirectToAction("Login", "Home");
+
+                        }
+                        else
+                        {
+                            return View(listing);
+
+                        }
 
                     }
                     else
@@ -79,20 +88,22 @@ namespace WebApp.Controllers
                     }
 
                 }
+
                 else
                 {
                     return View(listing);
 
+
                 }
-
             }
-
             else
             {
                 return View(listing);
 
 
             }
+
+
         }
 
         public IActionResult SingleListing2()
