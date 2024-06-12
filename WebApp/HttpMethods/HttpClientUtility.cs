@@ -481,6 +481,60 @@ namespace WebApp.HttpMethods
             }
 
         }
+        public static async Task<object> CustomHttpUtilizeAdvertisementPackage(string baseUrl, string url, UtilizePurchasedAdvertisementPackage obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                // Set the authorization header if it exists in the session
+                //if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                //    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                }
+
+                var multiContent = new MultipartFormDataContent();
+                    multiContent.Add(new StringContent(obj.UserAdvertisementPackageID.ToString()??"0"), "UserAdvertisementPackageID");
+
+
+
+                if (obj.AddFile != null)
+                {
+
+                   
+                  multiContent.Add(new StreamContent(obj.AddFile.OpenReadStream()), "AddFile", obj.AddFile.FileName);
+
+
+
+                }
+
+       
+                HttpResponseMessage Res = await client.PostAsync(url, multiContent);
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = Res.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<Response>(response);
+                    //httpContext.Session.SetString("authorization", result?.Token == null ? "" : result.Token);
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", result?.Token == null ? "" : result?.Token, cookieOptions);
+                    return response;
+                }
+                else
+                    return null;
+            }
+
+        }
 
         public static async Task<object> CustomHttpWithoutToken(string BaseUrl, string Url, string content, HttpContext httpContext)
         {

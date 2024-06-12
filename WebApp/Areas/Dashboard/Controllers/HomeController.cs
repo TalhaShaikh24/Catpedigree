@@ -32,6 +32,14 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+
+
+        [Route("Dashboard/AdvertisementApprovals")]
+        public IActionResult AdvertisementApprovals()
+        {
+            return View();
+        }
+
         public IActionResult AddCategory()
         {
             return View();
@@ -87,6 +95,14 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
             return View();
         }
+
+        [HttpGet("Dashboard/Advertisementpackages")]
+        public IActionResult Advertisementpackages()
+        {
+            return View();
+        }
+
+
 
 
 
@@ -163,6 +179,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
         [HttpPost]
+        [Route("Dashboard/UserAdvertisementStatus")]
+        public Task<object> UserAdvertisementStatus(int Id, string Status)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/UpdateUserAdvertisementStatus?Id=" + Id + "&Status=" + Status, "", HttpContext);
+        }
+
+
+        [HttpPost]
         [Route("Dashboard/GetAllListings")]
         public Task<object> GetAllListings()
         {
@@ -170,6 +195,13 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllListings","", HttpContext);
         }
 
+        [HttpPost]
+        [Route("Dashboard/GetallUserAdvertisementForApprovals")]
+        public Task<object> GetallUserAdvertisementForApprovals()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetallUserAdvertisementForApprovals", "", HttpContext);
+        }
 
 
         [HttpPost]
@@ -298,5 +330,48 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/Assgin_PromotionPackage_to_List", content, HttpContext);
 
         }
+
+        [HttpPost]
+        [Route("Dashboard/GetAdvertisementPackage")]
+        public Task<object> GetAdvertisementPackage()
+        {
+            var content = "";
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/BuyAdvertisementPackage")]
+        public Task<object> BuyAdvertisementPackage([FromBody] UserAdvertisementPackage userAdvertisementPackage)
+        {
+            var content = JsonConvert.SerializeObject(userAdvertisementPackage);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/BuyAdvertisementPackage", content, HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/UserAdvertisementPackages")]
+        public Task<object> UserAdvertisementPackages()
+        {
+            var content = "";
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/UserAdvertisementPackages", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UtilizePurchasedAdvertisementPackage")]
+        public Task<object> UtilizePurchasedAdvertisementPackage([FromForm] UtilizePurchasedAdvertisementPackage obj)
+        {;
+
+            return HttpClientUtility.CustomHttpUtilizeAdvertisementPackage(BaseUrl, "api/Advertisement/UtilizePurchasedAdvertisementPackage", obj, HttpContext);
+
+        }
+
+
     }
 }

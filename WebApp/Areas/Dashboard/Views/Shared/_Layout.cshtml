@@ -1,8 +1,11 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accessor
 @using Newtonsoft.Json;
 @using Newtonsoft.Json.Linq;
 @using ClassLibrary
+
 @functions {
     public string IsMenuItemActive(string controller, string action)
     {
@@ -194,6 +197,16 @@
                                 </li>
 
 
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("advertisementApprovals","Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
+                                        <i class="nav-icon fas fa-thumbs-up"></i>
+                                        <p>
+                                            Advertise Approvals
+                                        </p>
+                                    </a>
+                                </li>
+
                                 <li class="nav-item">
                                     <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
                                         <i class="nav-icon fas fa-book"></i>
@@ -250,6 +263,15 @@
                                         <i class="nav-icon fas fa-list"></i>
                                         <p>
                                             Advertisement
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            Advertisement Packages
                                         </p>
                                     </a>
                                 </li>
@@ -311,7 +333,10 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
- 
+    <input type="hidden" id="baseApiUrl" value="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value" />
+    <input type="hidden" id="baseWebUrl" value="@Configuration.GetSection("UrlSetting").GetSection("baseWebUrl").Value" />
+
+
     <!-- jQuery UI 1.11.4 -->
     <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

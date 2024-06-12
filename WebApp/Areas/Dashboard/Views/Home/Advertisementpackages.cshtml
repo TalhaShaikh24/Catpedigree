@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Advertisementpackages";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/webassets/css/pricingplan.css" rel="stylesheet" />
+
+
+
+<!--====== SweetAlert css ======-->
+<link rel="stylesheet" href="~/webassets/css/sweetalert2.css">
+
+<!--Modal-->
+<!-- Button trigger modal -->
+@* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button>
+ *@
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Choose Package</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group row">
+
+
+                    <div class="col-sm-10" id="costslist">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="BuyPP" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="fioxen-add-listing pt-120 pb-120 mt-60">
+    <div class="container-fluid">
+        <div class="demo">
+            <div class="container">
+                <div class="row text-center justify-content-center">
+                    <h2 class="white text-center mb-5">Advertisement Plans</h2>
+                </div>
+
+                <div class="row" id="AdvertisementpackagesContainer">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== SweetAlerts js ======-->
+
+@section Scripts {
+
+
+    <script src="~/webassets/js/sweetalert2.min.js"></script>
+    <script src="~/dashboard/Advertisementpackages.js"></script>
+}

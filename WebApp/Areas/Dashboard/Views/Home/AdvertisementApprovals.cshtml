@@ -1,0 +1,48 @@
+﻿
+
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>Listings</b></h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="TableApprovalListing" class="table table-bordered table-responsive" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                            <th>No. Of Advertisement</th>
+                        
+                            <th>Status</th>
+                            <th>User</th>
+                            <th>CreatedOn</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="AppendApprovalListing">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/dashboard/AdvertisementGridList.js"></script>
+}
+
+
+
