@@ -50,8 +50,8 @@ $(document).ready(function () {
         function handleSuccess(response) {
             $(".preloader").hide()
             Swal.fire({
-                title: "Congrats!",
-                text: response.responseMsg,
+                title: "Success!",
+                text: "Congratulations! Your registration was successful.",
                 icon: "success"
             }).then(() => {
                 redirectToHome();

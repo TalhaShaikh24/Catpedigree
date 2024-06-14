@@ -1,37 +1,4 @@
-/*-----------------------------------------------------------------------------------
 
-    Template Name: Fioxen - Directory & Listings HTML Template
-    Template URI: site.com
-    Description: Fioxen - Directory & Listings HTML Template
-    Author: WebTend 
-    Author URI: https://webtend.net/
-    Version: 1.0
-
------------------------------------------------------------------------------------
-
-##### CSS INDEX  ######
-
-    01. Theme default css
-    02. Header css
-    03. Hero css
-    04. Category CSS
-    05. Features css
-    06. Elements css
-    07. Listing css
-    08. Place css
-    09. Products css
-    10. Testimonial css
-    11. Team css
-    12. Blog css
-    13. Widget css
-    14. Footer css
-    15. Contact css
-
-
------------------------------------------------------------------------------------*/
-/*=========================
-    1. Start COMMON css 
-==========================*/
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Quicksand:wght@300;400;500;600;700&display=swap");
 html {
   font-size: 100%; }
@@ -455,6 +422,7 @@ button {
     left: 0;
     width: 100%;
     z-index: 999;
+    padding-bottom:18px;
 }
 
 /* Header Navigation */
@@ -813,7 +781,7 @@ button {
       @media (max-width: 991px) {
         .header-area .header-navigation .header-right-nav ul li a span {
           display: none; } }
-  .header-area .header-navigation .header-right-nav ul li .icon {
+.header-area .header-navigation .header-right-nav ul li .icon {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -823,19 +791,24 @@ button {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    width: 55px;
-    height: 55px;
+    /*width: 55px;
+    height: 55px;*/
+    width: 40px;
+    height: 40px;
     background-color: #ffd74e;
     color: #0d0d0d;
-    border-radius: 50%; }
-    @media (max-width: 991px) {
+    border-radius: 50%;
+}
+    @media (max-width: 991px) { 
       .header-area .header-navigation .header-right-nav ul li .icon {
         width: 40px;
         height: 40px; } }
-  .header-area .header-navigation .header-right-nav ul li .main-btn {
-    padding: 14px 36px;
+.header-area .header-navigation .header-right-nav ul li .main-btn {
+    /*padding: 14px 36px;*/
+    padding: 8px 22px;
     border-radius: 28px;
-    color: #fff; }
+    color: #fff;
+}
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
       .header-area .header-navigation .header-right-nav ul li .main-btn {
         padding: 14px 22px; } }

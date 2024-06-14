@@ -18,6 +18,16 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
+        public List<PaidAdvertisementsForView> GetHomeAdvertisments(int Id)
+        {
+            PaidAdvertisementsForView paidAdvertisements = new PaidAdvertisementsForView();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@AdvertismentId", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetAllAdvertismentsByAdvertismentId]", parameters);
+            return data;
+        }
+
         public UserAdvertisementPackage BuyAdvertisementPackage(UserAdvertisementPackage obj )
         {
             DynamicParameters parameters = new DynamicParameters();

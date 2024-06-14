@@ -51,7 +51,7 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.advertisementPackageType}</p>
                             <h4 class="mb-4">Costs:</h4>
                              <ul class="pricing-content" id="costs${item.advertisementPackageID}">
-                               <li>${item.numberOfAdvertisement} Number of Advertisement + $  ${item.advertisementPackageCost}</li>
+                               <li>${item.numberOfAdvertisement} Number of Advertisement + £  ${item.advertisementPackageCost}</li>
                             </ul>
 
                             <div class="pricingTable-signup">

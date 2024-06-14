@@ -5,6 +5,7 @@ $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
     GetHomePageListings();
     GetHomePageBlogs();
+    GetHomeAdvertisments();
 })
 
 
@@ -39,7 +40,9 @@ function GetHomePageListings() {
                         <div class="col-lg-4 col-md-6 col-sm-12" >
                             <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
                                 <div class="listing-thumbnail">
-                                    <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
+                                   <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}
+                                      <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                   </a>
                                 </div>
                                 <div class="listing-content">
                                     <h3 class="title">
@@ -134,7 +137,7 @@ function GetHomePageBlogs() {
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="blog-post-item blog-post-item-three mb-40 wow fadeInUp">
                                 <div class="post-thumbnail">
-                                    <a href="blog-details.html"><img src="${baseApiUrl+item.featureImagePath}" alt="Blog Image"></a>
+                                    <a href="/Blog/BlogDetails?Id=${item.blogID}"><img src="${baseApiUrl+item.featureImagePath}" alt="Blog Image"></a>
                                     <div class="post-date"><a href="#">${moment(item.createdOn).format("DD")}<span>${moment(item.createdOn).format("MMMM")}</span></a></div>
                                 </div>
                                 <div class="entry-content">
@@ -218,7 +221,81 @@ function GetHomePageBlogs() {
     });
 }
 
+function GetHomeAdvertisments() {
 
+    postRequest('/Advertisement/GetHomeAdvertisments/' + 1, null, function (res) {
+
+        if (res.status === 200 && res.data && res.data.length > 0) {
+            res.data.forEach(function (item, index) {
+                var html = `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img class="d-block w-100" src="${baseApiUrl + item.paidAdvertisments}" alt="${item.alt}">
+            </div>`;
+                $('#carouselExampleIndicators .carousel-inner').append(html);
+            });
+        }
+        else {
+            $("#advertisemnetSection").hide();
+        }
+
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
 
 function BuyPackage(pkgId) {
 

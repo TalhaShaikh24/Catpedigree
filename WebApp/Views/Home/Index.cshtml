@@ -8,7 +8,36 @@
         width: 370px;
         height: 250px;
     }
+
+    .carousel-item{
+        height:700px;
+        object-fit:cover;
+    }
+
+    .cta-wrapper-one {
+        position: relative;
+        overflow: hidden;
+        width: 1920px;
+        height: 800px;
+        background-size: cover;
+    }
+
+    .bg-fade {
+        animation: fade 8s infinite;
+    }
+
+    @@keyframes fade {
+        0%, 100% {
+            opacity: 0;
+        }
+        10%, 90% {
+            opacity: 1;
+        }
+    }
+
 </style>
+
+
 
 <!--====== Start Hero Section ======-->
 <section class="hero-area">
@@ -84,6 +113,38 @@
     </div>
 </section>
 <!--====== End Place Section ======-->
+
+
+<!--====== Advertisement Section ======-->
+<section class="cta-area" id="advertisemnetSection">
+    <div class="row justify-content-center pt-5">
+        <div class="col-lg-6">
+            <div class="section-title text-center mb-60 wow fadeInUp">
+                <span class="sub-title">Advertisements</span>
+                <h2><span class="line">Advertisement</span> Banners</h2>
+            </div>
+        </div>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+           
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-image:url('/webassets/images/left-arrow.png'); width: 45px; height: 45px;"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style="background-image:url('/webassets/images/right-arrow.png'); width: 45px; height: 45px;"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
+<!--====== End Advertisement Section ======-->
 
 
 <!--====== Start category Section ======-->
@@ -168,10 +229,9 @@
                             <i class="flaticon-map"></i>
                         </div>
                         <div class="content">
-                            <h4>Find Your Places</h4>
+                            <h4>Submission Protocol</h4>
                             <p>
-                                Amet consectetur adipiscing elitsed
-                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                                Users submit cat listings via an intuitive interface, providing essential details and photos for a seamless process.
                             </p>
                         </div>
                     </div>
@@ -182,10 +242,9 @@
                             <i class="flaticon-star"></i>
                         </div>
                         <div class="content">
-                            <h4>Customer Reviews</h4>
+                            <h4>Approval Process</h4>
                             <p>
-                                Amet consectetur adipiscing elitsed
-                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                                Our team meticulously reviews each submission to verify accuracy and ensure compliance before publication.
                             </p>
                         </div>
                     </div>
@@ -196,10 +255,9 @@
                             <i class="flaticon-calendar"></i>
                         </div>
                         <div class="content">
-                            <h4>Find Your Places</h4>
+                            <h4>Listing Publication</h4>
                             <p>
-                                Amet consectetur adipiscing elitsed
-                                do eiusmod tempor incididunt ut labore et dolore magna aliqua suspe
+                                Approved listings are promptly published, connecting cats with potential adopters or loving homes.
                             </p>
                         </div>
                     </div>
@@ -252,4 +310,5 @@
         </div>
     </div>
 </section>
+
 <script src="~/webassets/pagesjs/Home.js"></script>

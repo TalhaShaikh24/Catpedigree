@@ -47,6 +47,12 @@
     <script src="~/webassets/js/vendor/jquery-3.6.0.min.js"></script>
 
     <style>
+        .footerAdverts{
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            display: none; /* Hide all images initially */
+        }
         .nice-select .list {
             max-height: 300px;
             overflow-y: scroll;
@@ -96,7 +102,125 @@
     </div>
     <!--====== End Preloader ======-->
     <!--====== Start Header Section ======-->
-    <header class="header-area header-area-three transparent-header">
+    <header class="header-area header-area-three transparent-header d-none">
+        <div class="header-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="top-social">
+                            <ul class="social-link">
+                                <li><span>Follow us:</span></li>
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                                <li><a href="#"><i class="ti-pinterest"></i></a></li>
+                                <li><a href="#"><i class="ti-dribbble"></i></a></li>
+                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="top-content text-center">
+                            <p>We Have Special Offers Every <a href="index.html">Find your offer</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="top-right">
+                            <ul class="d-flex">
+                                <li><a href="index.html"><i class="ti-search"></i><span>Search here</span></a></li>
+                                <li><a href="index.html"><i class="ti-heart"></i><span>Wishlist</span></a></li>
+                                <li><a href="index.html"><i class="ti-shopping-cart"></i><span>Cart</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-navigation breakpoint-on">
+            <div class="container">
+                <div class="primary-menu">
+                    <div class="row align-items-center">
+                        <div class="col-lg-2 col-5">
+                            <div class="site-branding">
+                                <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-2">
+                            <div class="nav-menu">
+                                <div class="navbar-close"><i class="ti-close"></i></div>
+                                <nav class="main-menu">
+                                    <ul>
+                                        <li class="menu-item has-children">
+                                            <a href="index.html" class="active">Home</a>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item"><a href="index.html">Home One</a></li>
+                                                <li class="menu-item"><a href="index-2.html">Home Two</a></li>
+                                                <li class="menu-item"><a href="index-3.html">Home Three</a></li>
+                                            </ul>
+                                            <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                        </li>
+                                        <li class="menu-item"><a href="about.html">About us</a></li>
+                                        <li class="menu-item has-children">
+                                            <a href="#">Listings</a>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item"><a href="listing-list.html">Listing List</a></li>
+                                                <li class="menu-item"><a href="listing-grid.html">Listing Grid</a></li>
+                                                <li class="menu-item"><a href="listing-map.html">Listing Map Grid</a></li>
+                                                <li class="menu-item"><a href="listing-details-1.html">Listing Details One</a></li>
+                                                <li class="menu-item"><a href="listing-details-2.html">Listing Details Two</a></li>
+                                            </ul>
+                                            <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                        </li>
+                                        <li class="menu-item has-children">
+                                            <a href="#">Pages</a>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item"><a href="add-listing.html">Add Listing</a></li>
+                                                <li class="menu-item has-children">
+                                                    <a href="#">Products</a>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="products.html">Our Products</a></li>
+                                                        <li><a href="product-details.html">Products Details</a></li>
+
+                                                    </ul>
+                                                    <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                                </li>
+                                                <li class="menu-item"><a href="how-work.html">How Work</a></li>
+                                                <li class="menu-item"><a href="pricing.html">Pricing</a></li>
+                                            </ul>
+                                            <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                        </li>
+                                        <li class="menu-item has-children">
+                                            <a href="#">Article</a>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item"><a href="blog.html">Our Blog</a></li>
+                                                <li class="menu-item"><a href="blog-details.html">Blog details</a></li>
+                                            </ul>
+                                            <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                        </li>
+                                        <li class="menu-item"><a href="contact.html">Contact</a></li>
+                                        <li class="nav-btn"><a href="add-listing.html" class="main-btn icon-btn">Add Listing</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-5">
+                            <div class="header-right-nav">
+                                <ul class="d-flex align-items-center">
+                                    <li class="user-btn"><a href="index.html" class="icon"><i class="flaticon-avatar"></i></a></li>
+                                    <li class="hero-nav-btn"><a href="add-listing.html" class="main-btn icon-btn">Add Listing</a></li>
+                                    <li class="nav-toggle-btn">
+                                        <div class="navbar-toggler">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <header class="header-area header-area-three transparent-header ">
         <div class="header-top">
             <div class="container-fluid">
                 <div class="row">
@@ -127,9 +251,6 @@
                         <div class="col-lg-2 col-5">
                             <div class="site-branding">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
-
-                                
-
                             </div>
                           
                         </div>
@@ -156,24 +277,34 @@
                                                                        
                                          {
 
-                                                <li class="menu-item">
+                                                            <li class="menu-item">
 
-                                                    <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
-                                                </li>
+                                                                <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
+                                                            </li>
                             
                                         }
                                         else
                                         {
 
 
-                                                <li class="menu-item">
+                                                            <li class="menu-item">
 
 
-                                                    <a href="javascript:void(0);" id="btnLogOFf">Log out</a>
-                                                </li>
+                                                                <a href="javascript:void(0);" id="btnLogOFf">Log out</a>
+                                                            </li>
                                         }
                                         }
-                                       
+                                        @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
+                                        {
+                                            <li class="nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
+                                            <li class="nav-btn"><a href="/Dashboard" class="main-btn icon-btn">Dashboard</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
+
+                                        }
+                                        
                            
                                     </ul>
                                 </nav>
@@ -198,9 +329,8 @@
                                     }
 
                                     <li class="nav-toggle-btn">
-                                        <div class="navbar-toggler">
-                                        
-                                            
+                                        <div class="navbar-toggler"> 
+                                            <span></span><span></span><span></span>
                                         </div>
                                     </li>
                                 </ul>
@@ -261,7 +391,13 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="widget newsletter-widget mb-40 wow fadeInUp" data-wow-delay="40ms">
+                                <h4 class="widget-title">Advertisement</h4>
+                                    <div id="appendFooterAdverts">
+                                        
+                                    </div>
+                            </div>
                             <div class="widget newsletter-widget mb-40 wow fadeInUp" data-wow-delay="40ms">
                                 <h4 class="widget-title">Who We Are</h4>
                                 <p>
@@ -334,6 +470,115 @@
     <script src="~/webassets/js/sweetalert2.min.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            GetFooterAdvertisments();
+        })
+
+        function GetFooterAdvertisments() {
+
+            postRequest('/Advertisement/GetHomeAdvertisments/' + 3, null, function (res) {
+
+                if (res.status == 200) {
+
+                    if (res.data != null) {
+                        if (res.data.length == 1) {
+                           
+                           
+                            $.each(res.data, function (index, item) {
+                                var html = `<img class="footerAdverts" src="${baseApiUrl + item.paidAdvertisments}" alt="${item.alt}"/>`
+                                $('#appendFooterAdverts').append(html);
+                            });
+                            $(".footerAdverts").show();
+                        }
+                        else if (res.data.length > 1) {
+                            $.each(res.data, function (index, item) {
+                                var html = `<img class="footerAdverts" src="${baseApiUrl + item.paidAdvertisments}" alt="${item.alt}"/>`
+                                $('#appendFooterAdverts').append(html);
+                            });
+
+                            var $images = $('.footerAdverts'); // Get all images
+                            var index = 0; // Initialize index
+
+                            // Show the first image initially
+                            $images.eq(index).show();
+
+                            // Function to rotate images
+                            function rotateImages() {
+                                // Hide the current image
+                                $images.eq(index).hide();
+
+                                // Increment index or reset to 0 if it exceeds the number of images
+                                index = (index + 1) % $images.length;
+
+                                // Show the next image
+                                $images.eq(index).show();
+                            }
+
+                            // Set interval to rotate images every X seconds
+                            setInterval(rotateImages, 800);
+                           
+                        }
+                    }
+                }
+                if (res.status == 304) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 305) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 401) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 403) {
+
+                    Swal.fire(res.responseMsg, {
+                        icon: "error",
+                        title: "Error"
+                    });
+                }
+                if (res.status == 320) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 500) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 600) {
+
+                    Swal.fire({
+                        title: "Warning",
+                        text: res.responseMsg,
+                        icon: "warning"
+                    })
+
+                }
+            });
+        }
 
         $("#btnLogOFf").click(function () {
 

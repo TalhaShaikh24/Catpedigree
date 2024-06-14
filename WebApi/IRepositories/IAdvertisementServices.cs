@@ -4,11 +4,13 @@ namespace WebApi.IRepositories
 {
     public interface IAdvertisementServices
     {
-        List<AdvertisementPackage> GetAdvertisementPackage();
 
+        List<PaidAdvertisementsForView>  GetHomeAdvertisments(int Id);
+        List<AdvertisementPackage> GetAdvertisementPackage();
 
         UserAdvertisementPackage BuyAdvertisementPackage(UserAdvertisementPackage obj);
 
+        
         AdvertisementPackageAndUserPackages userAdvertisementPackages(int UserID);
 
         List<UserAdvertisementPackage> GetallUserAdvertisementForApprovals();

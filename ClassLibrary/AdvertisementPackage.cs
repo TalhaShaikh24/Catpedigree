@@ -61,5 +61,11 @@ namespace ClassLibrary
         public List<UserAdvertisementPackage> dropdown { get; set; }
         public List<UserAdvertisementPackage> userAdvertisementPackages { get; set; }
 
+    } 
+    
+    public class PaidAdvertisementsForView
+    {
+        public string? PaidAdvertisments { get; set; }
+
     }
 }
