@@ -1,0 +1,110 @@
+﻿
+<link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/watermarkjs/dist/watermark.min.js"></script>
+
+
+<section class="products-area pt-160 pb-120">
+    <div class="container">
+        <div class="products-filter mb-30">
+            <div class="row justify-content-center pt-5">
+                <div class="col-lg-6">
+                    <div class="section-title text-center mb-60 wow fadeInUp">
+                        <span class="sub-title">Gallery</span>
+                        <h2><span class="line">A Digital</span> Showcase</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row gallery justify-content-between align-items-center">
+                
+            </div>
+                
+        </div>
+    </div>
+</section>
+
+<style>
+
+    .thumb {
+        margin-bottom: 15px;
+    }
+
+        .thumb:last-child {
+            margin-bottom: 0;
+        }
+
+        .thumb
+        figure img {
+            -webkit-filter: grayscale(5%);
+            filter: grayscale(50%);
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        }
+
+        .thumb
+        figure:hover img {
+            -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+        }
+
+    .Watermarkbutton {
+        position: absolute;
+        bottom: 25px;
+        right: 15px;
+        display: none;
+        opacity: 0.6;
+        transition: 0.3s;
+    }
+
+    .thumb:hover > .Watermarkbutton {
+        display: block;
+        opacity: 1
+    }
+
+    .img-thumbnail {
+        max-width: 100% !important;
+        height: 320px;
+        object-fit: cover;
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .CheckBoxSelection {
+        position: absolute;
+        right: 22px;
+        z-index: 1;
+        top: 10px;
+    }
+
+    input[type="checkbox"] {
+        transform: scale(2);
+    }
+
+    .SelectAll {
+        display: flex;
+        align-items: center;
+    }
+
+</style>
+
+<section class="pt-120 pb-120">
+    <div class="container">
+
+        <div class="row gallery">
+        </div>
+    </div>
+  
+
+
+</section>
+
+
+
+
+@section Scripts {
+	<script src="~/webassets/pagesjs/gallery.js"></script>
+}
+
+
