@@ -40,6 +40,15 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+
+        [Route("Dashboard/Gallary")]
+        public IActionResult Gallary()
+        {
+            return View();
+        }
+
+
+
         public IActionResult AddCategory()
         {
             return View();
@@ -105,6 +114,34 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
 
+        [HttpPost]
+        [Route("Dashboard/GetAllGallary")]
+        public Task<object> GetAllGallary()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllGallery", "", HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/replaceFile")]
+        public Task<object> replaceFile(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttpreplaceFileDashboard(BaseUrl, "api/Dashboard/replaceFile", file, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UploadNewGallery")]
+        public Task<object> UploadNewGallery(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttSingleFileDashboard(BaseUrl, "api/Dashboard/UploadNewGallery", file, HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
@@ -133,6 +170,16 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllMyListings", "", HttpContext);
 
         }
+
+        [HttpPost]
+        [Route("Dashboard/UploadSelectedGalleryPath/{Path}")]
+        public Task<object> UploadSelectedGalleryPath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UploadSelectedGalleryPath/"+Path, "", HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetListingDetailById/{Id}")]

@@ -272,6 +272,14 @@ namespace WebApi.Repositories
 
             return data;
         }
+
+        public bool UploadSelectedGalleryPath(string Path)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Path", Path, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Get<bool>(@"[dbo].[sp_UploadSelectedGalleryPath]", parameters);
+            return data;
+        }
     }
 
 

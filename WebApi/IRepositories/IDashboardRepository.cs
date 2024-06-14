@@ -22,5 +22,7 @@ namespace WebApi.IRepositories
 
         Register GetProfileDetailById(int Id);
 
+        bool UploadSelectedGalleryPath(string Path);
+
     }
 }

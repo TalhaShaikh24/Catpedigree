@@ -11,9 +11,11 @@ builder.Services.AddSession(options =>
      options.Cookie.IsEssential = true;
  });
 
+builder.Configuration.AddJsonFile("appsettings.json");
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-  builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 var app = builder.Build();
 
