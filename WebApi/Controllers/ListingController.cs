@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Utility;
@@ -12,14 +13,16 @@ namespace WebApi.Controllers
     [ApiController]
     public class ListingController : ControllerBase
     {
-
+        private string BaseUrl = "";
         private readonly IListingRepository _listing;
         private readonly IVideoPackagesRepository _videoPackages;
-        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages)
+        private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
+        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages, IConfiguration configuration)
         {
 
             _listing = listing;
             _videoPackages = videoPackages;
+            BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
         }
 
         [HttpPost("AddListing")]
@@ -443,5 +446,58 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("GetAllGallery")]
+        public Response GetAllGallery()
+        {
+
+            Response response = new Response();
+            try
+            {
+
+
+
+                if (!Directory.Exists(_imagesPath))
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.ResponseMsg = "Image directory not found.";
+                    response.Data = null;
+                    return response;
+                }
+
+                var images = Directory.GetFiles(_imagesPath)
+                   .Select(filePath => new Gallery
+                   {
+                       Id = Path.GetFileNameWithoutExtension(filePath).GetHashCode(),
+                       FileName = Path.GetFileName(filePath),
+                       FilePath = $"{BaseUrl}UploadImages/{Path.GetFileName(filePath)}?v={DateTime.UtcNow.Ticks}"
+                   })
+                   .OrderByDescending(g => g.FilePath)
+                   .ToList();
+
+                if (images == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = images;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
+        }
     }
 }
