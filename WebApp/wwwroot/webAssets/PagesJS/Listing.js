@@ -386,7 +386,8 @@ $(document).on('change', '#VideoFile', function (e) {
                         console.log(result);  // Debugging: log the result to the console
                         if (result.isConfirmed) {
                             debugger;  // Debugger statement to pause execution for inspection
-                            window.location.href = "/VideoPackages/VideoPlans";
+                            window.open("/VideoPackages/VideoPlans", "_blank");
+
                         }
                     });
 

@@ -109,7 +109,22 @@ function BuyPackage(Id) {
 
             if (res.data != null) {
 
-               
+
+                Swal.fire({
+                    title: "Congratulations!",
+                    text: "You have successfuly buy a Video Package",
+                    icon: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    allowOutsideClick: false,  // Disable outside click
+                    allowEscapeKey: true,
+                }).then((result) => {
+                    console.log(result);  // Debugging: log the result to the console
+                    if (result.isConfirmed) {
+                        window.close();
+
+                    }
+                });
             }
         }
         if (res.status == 304) {
@@ -154,9 +169,9 @@ function BuyPackage(Id) {
         if (res.status == 500) {
 
             Swal.fire({
-                title: "Error",
+                title: "Info",
                 text: res.responseMsg,
-                icon: "error"
+                icon: "info"
             })
         }
         if (res.status == 600) {

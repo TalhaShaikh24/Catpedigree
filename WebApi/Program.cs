@@ -13,13 +13,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowSpecificOrigin",
+        options.AddPolicy("AllowAll",
             builder =>
             {
-                builder.WithOrigins("https://localhost:7297")
+                builder.AllowAnyOrigin()
                        .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
+                       .AllowAnyHeader();
             });
     });
 
@@ -44,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthorization();
