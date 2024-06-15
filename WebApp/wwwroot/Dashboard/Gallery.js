@@ -29,6 +29,7 @@ $("#UploadWaterMark").change(function () {
 
     var img = new Image();
     img.src = WaterMarkURL;
+   // img.crossOrigin = "Anonymous";
 
     img.onload = function () {
         var width = img.naturalWidth;
@@ -44,12 +45,17 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
 
     Promise.all([
         loadImage(mainImageSrc),
-        loadImage(watermarkImageSrc)
+        loadImageWatermark(watermarkImageSrc)
     ]).then(function (images) {
+        debugger;
         var mainImage = images[0];
         var watermarkImage = images[1];
 
+        
+    //    mainImage.crossOrigin = "Anonymous";
+
         var canvas = document.createElement('canvas');
+      
         var ctx = canvas.getContext('2d');
 
         canvas.width = mainImage.width;
@@ -58,7 +64,8 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.drawImage(mainImage, 0, 0);
-
+       // ctx.crossOrigin = true;
+         
         var watermarkWidth = parseInt($('#watermarkWidth').val()) || watermarkImage.width;
         var aspectRatio = watermarkImage.width / watermarkImage.height;
         var watermarkHeight = watermarkWidth / aspectRatio;
@@ -340,17 +347,47 @@ $(document).on("click", "#ShowModalWatermark", function () {
 })
 
 
-function loadImage(src) {
+function loadImageWatermark(src) {
+    debugger;
     return new Promise(function (resolve, reject) {
-        var img = new Image();
-        img.crossOrigin = "anonymous";
+        const img = new Image();
+      
         img.onload = function () {
             resolve(img);
         };
-        img.onerror = function () {
-            reject(new Error('Failed to load image: ' + src));
+        img.onerror = function (error) {
+            reject(new Error('Failed to load image: ' + src + " " + error));
         };
+
+
+
         img.src = src;
+
+
+    });
+}
+
+function loadImage(src) {
+    
+    return new Promise(function (resolve, reject) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+     
+        img.onload = function () {
+            resolve(img);
+        };
+        img.onerror = function (error) {
+            reject(new Error('Failed to load image: ' + src + " " + error));
+        };
+
+
+        let oldUrl = src;
+        let newUrl = oldUrl.replace(/\/UploadImages\//, '/api/images/').replace(/v=\d+/, 'v=638540547168663316');
+      
+     
+        img.src = newUrl;
+
+
     });
 }
 
