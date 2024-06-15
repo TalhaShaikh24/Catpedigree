@@ -211,6 +211,13 @@ namespace WebApp.Controllers
 
         }
 
+        [HttpPost]
+        public Task<object> GetAllGallary()
+        {
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetAllGallery", "", HttpContext);
+
+        }
 
 
     }
