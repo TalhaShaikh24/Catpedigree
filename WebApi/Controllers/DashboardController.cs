@@ -560,14 +560,16 @@ namespace WebApi.Controllers
                 }
 
                 var images = Directory.GetFiles(_imagesPath)
-                   .Select(filePath => new Gallery
-                   {
-                       Id = Path.GetFileNameWithoutExtension(filePath).GetHashCode(),
-                       FileName = Path.GetFileName(filePath),
-                       FilePath = $"{BaseUrl}UploadImages/{Path.GetFileName(filePath)}?v={DateTime.UtcNow.Ticks}"
-                   })
-                   .OrderByDescending(g => g.FilePath)
-                   .ToList();
+                .Select(filePath => new FileInfo(filePath))
+                .OrderByDescending(fileInfo => fileInfo.LastWriteTime)
+                .Select(fileInfo => new Gallery
+                {
+                    Id = Path.GetFileNameWithoutExtension(fileInfo.Name).GetHashCode(),
+                    FileName = fileInfo.Name,
+                    FilePath = $"{BaseUrl}UploadImages/{fileInfo.Name}?v={DateTime.UtcNow.Ticks}"
+                })
+                .ToList();
+
 
                 if (images == null) return CustomStatusResponse.GetResponse(320);
                 else

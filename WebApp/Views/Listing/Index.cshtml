@@ -46,7 +46,7 @@
                                 <div class="col-lg-6">
                                     <div class="form_group">
                                         <label>Pakages</label>
-                                        <select class="wide" id="PackageId">
+                                        <select class="wide" id="PackageId" required>
                                         </select>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                 <div class="col-lg-6">
                                     <div class="form_group">
                                         <label>Category</label>
-                                        <select class="wide" id="Category">
+                                        <select class="wide" id="Category" required>
                                         </select>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                 <div class="col-lg-6">
                                     <div class="form_group">
                                         <label>Gender</label>
-                                        <select class="wide" id="Gender">
+                                        <select class="wide" id="Gender" required>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
 
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form_group">
+                                    <div class="form_group" required>
                                         <label>TYPE OF CAT</label>
                                         <select class="wide" id="TypeOfCat">
                                         </select>
@@ -89,10 +89,10 @@
                                 <div class="col-lg-4">
                                     <div class="form_group">
                                         <label>AGE</label>
-                                        <select class="wide" id="Age">
-                                            <option value="-1" disabled selected>Select Age</option>
-                                            <option value="1 Months">3 Months</option>
-                                            <option value="2 Months">3 Months</option>
+                                        <select class="wide" id="Age" required>
+                                            <option value="-1" selected  disabled >Select Age</option>
+                                            <option value="1 Months">1 Month</option>
+                                            <option value="2 Months">2 Months</option>
                                             <option value="3 Months">3 Months</option>
                                             <option value="4 Months">4 Months</option>
                                             <option value="5 Months">5 Months</option>
@@ -128,18 +128,18 @@
 
                                 <div class="col-lg-4">
                                     <div class="form_group">
-                                        <label>Price</label>
+                                        <label>Price (In Euro)</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="Price" placeholder="Price" name="name" required value="90.78">
+                                            <input type="number" class="form_control" id="Price" placeholder="Price" name="name" required value="90.78">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 d-none">
                                     <div class="form_group">
                                         <label>Weight (G)</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="Weigth" placeholder="Weigth" name="name" required value="90.78">
+                                            <input type="text" class="form_control" id="Weigth" placeholder="Weigth" name="name" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="form_group">
-                                        <label class="d-block">DESCRIPTION</label>
+                                        <label class="d-block">DESCRIPTION (Optional) </label>
 
                                         <div class="form_group">
                                             <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value="Test Description"></textarea>
@@ -373,35 +373,96 @@
 </section>
 
 
-
+<style>
+    .invalid {
+        border: 2px solid red;
+    }
+</style>
 
 @section Scripts {
 
-    <script>
-        let currentStep = 1;
-        const totalSteps = 4;
 
-        function showStep(step) {
-            document.querySelectorAll('.step-form').forEach((el) => el.classList.remove('active'));
-            document.getElementById(`step-${step}`).classList.add('active');
-        }
 
-        function nextStep() {
-            $("html, body").animate({ scrollTop: 0 }, "slow");
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function showStep(step) {
+        document.querySelectorAll('.step-form').forEach((el) => el.classList.remove('active'));
+        document.getElementById(`step-${step}`).classList.add('active');
+    }
+
+    function nextStep() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        if (validateStep(currentStep)) {
             if (currentStep < totalSteps) {
                 currentStep++;
                 showStep(currentStep);
             }
         }
+    }
 
-        function prevStep() {
-            $("html, body").animate({ scrollTop: 0 }, "slow");
-            if (currentStep > 1) {
-                currentStep--;
-                showStep(currentStep);
-            }
+    function prevStep() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
         }
-    </script>
+    }
+
+    function validateStep(step) {
+        let isValid = true;
+        const stepForm = document.getElementById(`step-${step}`);
+        const requiredFields = stepForm.querySelectorAll('[required]');
+
+        clearValidation(requiredFields);
+
+        requiredFields.forEach(field => {
+            if (field.type === 'checkbox' && !field.checked) {
+                isValid = false;
+                field.classList.add('invalid');
+            } else if (field.type === 'radio') {
+                const radioGroup = stepForm.querySelectorAll(`input[name="${field.name}"]:checked`);
+                if (radioGroup.length === 0) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                }
+            } else if (field.type === 'file' && field.files.length === 0) {
+                isValid = false;
+                field.classList.add('invalid');
+            } else if (field.tagName === 'SELECT' && (field.value === '' || field.value === '-1')) {
+                isValid = false;
+                field.classList.add('invalid');
+    
+                // Find the closest div with class 'nice-select' and apply border
+                const niceSelectDiv = field.nextElementSibling; // Assuming the nice-select div is the next sibling
+                if (niceSelectDiv && niceSelectDiv.classList.contains('nice-select')) {
+                    niceSelectDiv.style.border = '1px solid red'; // Example border style
+                }
+            }
+             else if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('invalid');
+            } else if (field.id === 'Email' && !validateEmail(field.value)) {
+                isValid = false;
+                field.classList.add('invalid');
+            }
+        });
+
+        return isValid;
+    }
+
+    function validateEmail(email) {
+        const re = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        return re.test(email.toLowerCase());
+    }
+
+    function clearValidation(elements) {
+        elements.forEach((el) => el.classList.remove('invalid'));
+    }
+</script>
+
+
 
     <script src="~/webAssets/PagesJS/Listing.js"></script>
 }

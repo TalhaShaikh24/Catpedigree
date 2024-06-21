@@ -29,6 +29,12 @@ button:focus {
   text-decoration: none;
   outline: none; }
 
+::placeholder {
+    font-weight: 100 !important;
+    font-size: 15px !important;
+    color: #aeaeae !important;
+}
+
 i,
 span,
 a {
@@ -119,6 +125,12 @@ ul.social-link li {
 
 .form_group {
   position: relative; }
+
+    .form_group label {
+        font-weight: bolder;
+        color: #333;
+        font-family: "Quicksand", sans-serif;
+    }
 
 .form_control {
   width: 100%;

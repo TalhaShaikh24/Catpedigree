@@ -30,7 +30,7 @@ function GetAllAdminBLogs() {
                       <td>${v.commentsCount}</td>
                       <td>${v.username}</td>
                       <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                      <td style="width: 15%!important;"><div style=" display: flex; justify-content: space-between; align-items: center;"><a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${v.blogID}"><i class="fa fa-eye"></i></a><a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${v.blogID}"><i class="fa fa-edit"></i></a> <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${v.blogID})"><i class="fa fa-trash"></i></button></div></td>
+                      <td style="width: 15%!important;"><div style=" display: flex; justify-content: space-between; align-items: center;"><a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${v.blogID}"><i class="fa fa-comment"></i></a><a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${v.blogID}"><i class="fa fa-edit"></i></a> <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${v.blogID})"><i class="fa fa-trash"></i></button></div></td>
                       </tr>`);
 
                 });
@@ -111,6 +111,7 @@ function BlogDeleteById(Id) {
                 })
 
                 GetAllAdminBLogs();
+                window.location.reload();
 
             }
         }
