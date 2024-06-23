@@ -33,7 +33,7 @@ namespace ClassLibrary
         public int DaysNumber { get; set; }
 
 
-        public float Cost { get; set; }
+        public decimal Cost { get; set; }
 
 
 

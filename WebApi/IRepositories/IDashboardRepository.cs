@@ -24,5 +24,8 @@ namespace WebApi.IRepositories
 
         bool UploadSelectedGalleryPath(string Path);
 
+
+        List<string> GetAllPedigreeGallary();
+        List<string> GetAllBreederLicense();
     }
 }

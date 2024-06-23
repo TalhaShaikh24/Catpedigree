@@ -76,6 +76,8 @@
     <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/css/intlTelInput.css">
     <script src="~/plugins/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <style>
         .intl-tel-input {
@@ -234,15 +236,45 @@
                                     </a>
                                 </li>
 
+                             
+
+
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
-                                        <i class="nav-icon fas fa-list"></i>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
                                         <p>
                                             Gallery
+                                            <i class="fas fa-angle-left right"></i>
                                         </p>
                                     </a>
+                                    <ul class="nav nav-treeview" style="display: none;">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Gallary","Dashboard")" class="nav-link">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                    Gallery
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                    Pedigree Gallery
+                                                </p>
+                                            </a>
+                                        </li>    <li class="nav-item">
+                                            <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                    BreederLicense Gallery
+                                                </p>
+                                            </a>
+                                        </li>
+                                  
+                                    
+                                    </ul>
                                 </li>
-
                             }  
                             
                             else if (userinfo.RoleIds.Contains("Vendor"))

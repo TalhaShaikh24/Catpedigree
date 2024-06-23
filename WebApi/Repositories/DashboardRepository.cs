@@ -280,6 +280,22 @@ namespace WebApi.Repositories
             var data = _dapper.Get<bool>(@"[dbo].[sp_UploadSelectedGalleryPath]", parameters);
             return data;
         }
+
+        public List<string> GetAllPedigreeGallary()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+          
+            var data = _dapper.GetAll<string>(@"[dbo].[sp_GetAllPedigreeGallary]", parameters);
+            return data;
+        }
+
+        public List<string> GetAllBreederLicense()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<string>(@"[dbo].[sp_GetAllBreederLicenseGallary]", parameters);
+            return data;
+        }
     }
 
 

@@ -51,7 +51,7 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.description}</p>
                             <h4 class="mb-4">Promotion costs:</h4>
                              <ul class="pricing-content" id="costs${item.promotionPackagesID}">
-                               ${costs.map(cost => `<li>${cost.daysNumber} days + $  ${cost.cost}</li>`).join('')}
+                               ${costs.map(cost => `<li>${cost.daysNumber} days + €  ${cost.cost}</li>`).join('')}
                             </ul>
 
                             <div class="pricingTable-signup">

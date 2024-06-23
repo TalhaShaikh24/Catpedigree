@@ -111,15 +111,46 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        [HttpGet("Dashboard/PedigreeGallery")]
+        public IActionResult PedigreeGallery()
+        {
+            return View();
+        }
+
+        
+        [HttpGet("Dashboard/BreederLicense")]
+        public IActionResult BreederLicense()
+        {
+            return View();
+        }
 
 
 
+
+        [HttpPost]
+        [Route("Dashboard/GetPedigreeGallery")]
+        public Task<object> GetPedigreeGallery()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/PedigreeGallery", "", HttpContext);
+
+        }
+        
         [HttpPost]
         [Route("Dashboard/GetAllGallary")]
         public Task<object> GetAllGallary()
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllGallery", "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllBreederLicense")]
+        public Task<object> GetAllBreederLicense()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllBreederLicense", "", HttpContext);
 
         }
 

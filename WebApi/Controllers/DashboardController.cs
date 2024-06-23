@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.Common;
+using System.IO;
 using WebApi.IRepositories;
 using WebApi.Utility;
 
@@ -599,6 +600,143 @@ namespace WebApi.Controllers
                 return response;
             }
         }
+
+
+
+
+        [HttpPost("PedigreeGallery")]
+        public Response PedigreeGallery()
+        {
+
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+
+                var res = _repository.GetAllPedigreeGallary();
+
+
+                List<Gallery> galleries = new List<Gallery>();
+
+
+                foreach (var item in res)
+                {
+                    string fileName = Path.GetFileName(item);
+                    galleries.Add(new Gallery
+                    {
+
+
+                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                        FileName = fileName,
+                        FilePath = $"{BaseUrl}UploadImages/{fileName}?v={DateTime.UtcNow.Ticks}"
+                    });
+
+
+
+                }
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+        [HttpPost("GetAllBreederLicense")]
+        public Response GetAllBreederLicense()
+        {
+
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+
+                var res = _repository.GetAllBreederLicense();
+
+
+                List<Gallery> galleries = new List<Gallery>();
+
+
+                foreach (var item in res)
+                {
+                    string fileName = Path.GetFileName(item);
+                    galleries.Add(new Gallery
+                    {
+
+
+                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                        FileName = fileName,
+                        FilePath = $"{BaseUrl}Profile/{fileName}?v={DateTime.UtcNow.Ticks}"
+                    });
+
+
+
+                }
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
 
 
         [HttpPost("replaceFile")]
