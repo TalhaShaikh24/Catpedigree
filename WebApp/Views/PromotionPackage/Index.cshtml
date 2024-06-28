@@ -42,6 +42,73 @@
 
 
 
+
+<!--Payment Modal-->
+
+<div class="modal" id="paymentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="card-body" style="height: 350px">
+                    <div class="form-group">
+                        <label for="cc-number" class="control-label">CARD NUMBER</label>
+                        <input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cc-exp" class="control-label">CARD EXPIRY</label>
+                                <input id="cc-exp" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="&bull;&bull; / &bull;&bull;" required>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cc-cvc" class="control-label">CARD CVC</label>
+                                <input id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="&bull;&bull;&bull;&bull;" required>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="numeric" class="control-label">CARD HOLDER NAME</label>
+                        <input type="text" class="input-lg form-control">
+                    </div>
+
+                    <div class="form-group">
+
+                        <button type="button" id="makepayment" class="btn btn-success btn-lg form-control" style="font-size: .8rem;">MAKE PAYMENT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <section class="fioxen-add-listing pt-120 pb-120 mt-60">
     <div class="container-fluid">
         <div class="demo">
@@ -57,5 +124,7 @@
     </div>
 </section>
 <!--====== SweetAlerts js ======-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
 <script src="~/webassets/js/sweetalert2.min.js"></script>
 <script src="~/webassets/pagesjs/PromotionPackages.js"></script>

@@ -1,3 +1,7 @@
+using ClassLibrary;
+using Microsoft.Extensions.DependencyInjection;
+using Stripe;
+using System.Configuration;
 using WebApi.DBManager;
 using WebApi.IRepositories;
 using WebApi.Repositories;
@@ -20,8 +24,7 @@ builder.Services.AddCors(options =>
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             });
-    });
-
+    }); 
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IDapper, Dapperr>();
@@ -34,8 +37,17 @@ builder.Services.AddTransient<IBlogRepository, BlogRepository> ();
 builder.Services.AddTransient<IPromotionPackageRepository, PromotionPackageRepository> ();
 builder.Services.AddTransient<IVendorRepository, VendorRepository> ();
 builder.Services.AddTransient<IAdvertisementServices  ,   AdvertisementServices> ();
-
+builder.Services.AddTransient<IMolliePaymentService  , MolliePaymentService> ();
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.AddTransient<IStripeServices, StripeServices>();
 var app = builder.Build();
+
+
+
+// Configure Stripe API key
+var stripeSettings = app.Configuration.GetSection("Stripe").Get<StripeSettings>();
+StripeConfiguration.ApiKey = stripeSettings.SecretKey;
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

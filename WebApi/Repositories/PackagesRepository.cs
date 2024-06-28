@@ -39,6 +39,7 @@ namespace WebApi.Repositories
             parameters.Add("@IsActive", true, DbType.String, ParameterDirection.Input);
             parameters.Add("@IsExpired", false, DbType.String, ParameterDirection.Input);
             parameters.Add("@CreatedBy", obj.UserID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", obj.stripeSubscriptionId, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Get<UserPackages>(@"[sp_BuyPackage]", parameters);
 

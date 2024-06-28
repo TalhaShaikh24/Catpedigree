@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using WebApi.IRepositories;
+using WebApi.Repositories;
 using WebApi.Utility;
 
 namespace WebApi.Controllers
@@ -13,9 +14,23 @@ namespace WebApi.Controllers
     {
         private readonly IAdvertisementServices _repository;
 
-        public AdvertisementController(IAdvertisementServices repository)
+        private readonly IAccountRepository _accountRepository;
+
+        private readonly IStripeServices _stripeServices;
+        
+        
+        private readonly string _PriceID15 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID30 = "price_1PWPlVKR3yBF1l8f71BYts44";
+        private readonly string _PriceID50 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+
+        public AdvertisementController(IAdvertisementServices repository, IAccountRepository accountRepository, IStripeServices stripeServices)
         {
             _repository = repository;
+            _accountRepository = accountRepository;
+
+            _stripeServices = stripeServices;
         }
 
 
@@ -105,11 +120,11 @@ namespace WebApi.Controllers
 
 
         [HttpPost("BuyAdvertisementPackage")]
-        public Response BuyAdvertisementPackage([FromBody] UserAdvertisementPackage obj)
+        public async Task<Response> BuyAdvertisementPackage([FromBody] UserAdvertisementPackage obj)
         {
             Register claimDTO = null;
             Response response = new Response();
-
+            string priceId = string.Empty;
             try
             {
                 claimDTO = TokenManager.GetValidateToken(Request);
@@ -117,6 +132,48 @@ namespace WebApi.Controllers
 
                 obj.UserId = claimDTO.UserId;
                 obj.CreatedBy = claimDTO.UserId;
+                int p = _accountRepository.checkPackagesValidations(claimDTO.UserId, obj.AdvertisementPackageID, "Advertisement");
+                if (p > 0)
+                {
+
+                    if (p == 15)
+                    {
+
+                        priceId = _PriceID15;
+
+                    }
+
+                    else if (p == 30)
+                    {
+                        priceId = _PriceID30;
+
+                    }
+
+                    else if (p == 50)
+                    {
+                        priceId = _PriceID50;
+
+                    }
+                    else if (p == 75)
+                    {
+                        priceId = _PriceID75;
+
+                    }
+
+                    else
+                    {
+                        priceId = _PriceID100;
+
+                    }
+
+
+                    var customerRespinse = await _stripeServices.CreateSubscriptionAsync(claimDTO.Email, obj.CardNumber,
+                    obj.expireMonth, obj.expireYear, obj.cvc, priceId);
+
+
+                    obj.stripeSubscriptionId = customerRespinse;
+
+                }
 
 
                 var res = _repository.BuyAdvertisementPackage(obj);

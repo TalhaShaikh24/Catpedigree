@@ -32,5 +32,31 @@ namespace WebApp.Controllers
             string content = JsonConvert.SerializeObject(obj);
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Packages/BuyPackage", content, HttpContext);
         }
+
+
+
+        [HttpGet("BuyPackage1/{userid}/{packageid}")]
+        public Task<object> BuyPackage1(int userid, int packageid)
+        {
+            UserPackages userPackages = new UserPackages();
+
+            userPackages.PackageID = packageid;
+            userPackages.UserID = userid;
+
+
+
+
+            string content = JsonConvert.SerializeObject(userPackages);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Packages/BuyPackage", content, HttpContext);
+        }
+
+
+
+        [HttpPost]
+        public Task<object> Payment([FromBody] UserPackages obj)
+        {
+           string content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Packages/Payment", content, HttpContext);
+        }
     }
 }

@@ -16,12 +16,13 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public int BuyPackage(int Id,int UserId)
+        public int BuyPackage(int Id,int UserId,string? stripeSubscriptionId)
         {
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@UserId",UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", stripeSubscriptionId, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Insert<int>(@"[sp_BuyVideoPackages]", parameters);
 

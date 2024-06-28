@@ -36,6 +36,17 @@ namespace WebApi.Repositories
             return data;
         }
 
+        public int checkPackagesValidations(int userrid, int? packageId, string PackageType)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserID", userrid, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PackageID", packageId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PackageType", PackageType, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<int>(@"[sp_checkPackagesValidations]", parameters);
+
+            return data;
+        }
 
         public async Task<Register> RegisterUser(Register formData)
         {

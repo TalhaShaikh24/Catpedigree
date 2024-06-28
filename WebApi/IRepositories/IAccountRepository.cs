@@ -12,6 +12,9 @@ namespace WebApi.IRepositories
     {
         Register Authenticate(Register obj);
         Task<Register> RegisterUser(Register obj);
- 
+
+        int checkPackagesValidations(int userrid , int? packageId, string PackageType);
+
+
     }
 }

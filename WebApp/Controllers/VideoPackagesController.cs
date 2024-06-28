@@ -28,10 +28,10 @@ namespace WebApp.Controllers
            
         
         [HttpPost]
-        public Task<object> BuyPackage(int Id)
+        public Task<object> BuyPackage([FromBody] VideoPackage obj)
         {
-            string content = "";
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/VideoPackages/BuyPackage/"+Id, content, HttpContext);
+            string content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/VideoPackages/BuyPackage", content, HttpContext);
         }
 
         [HttpPost]
