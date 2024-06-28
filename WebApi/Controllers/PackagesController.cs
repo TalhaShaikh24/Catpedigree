@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using WebApi.IRepositories;
+using WebApi.Repositories;
 using WebApi.Utility;
 
 namespace WebApi.Controllers
@@ -12,13 +13,30 @@ namespace WebApi.Controllers
     public class PackagesController : ControllerBase
     {
         private readonly IPackagesRepository _repository;
+        private readonly IStripeServices _stripeServices;
+        private readonly IAccountRepository _accountRepository;
+        private readonly string _PriceID15 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID30 = "price_1PWPlVKR3yBF1l8f71BYts44";
+        private readonly string _PriceID50 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
 
-        public PackagesController(IPackagesRepository repository)
+
+
+
+        private string webUrl = "";
+        public PackagesController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration,IAccountRepository accountRepository) 
         {
             _repository = repository;
+            _stripeServices = stripeServices;
+            webUrl = configuration.GetSection("UrlSetting").GetSection("baseWebUrl").Value ?? "";
+            _accountRepository = accountRepository;
+
         }
 
         
+
+
         [HttpPost("GetAllPackages")]
         public Response GetAllPackages()
         {
@@ -59,17 +77,69 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("BuyPackage")]
-        public Response BuyPackage([FromBody] UserPackages obj)
+        public async Task<Response> BuyPackage([FromBody] UserPackages obj)
         {
 
             Register claimDTO = null;
             Response response = new Response();
+            string priceId = string.Empty;
+
 
             try
             {
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
                 obj.UserID = claimDTO.UserId;
+
+
+                int p = _accountRepository.checkPackagesValidations(claimDTO.UserId, obj.PackageID, "Listing");
+
+
+                if (p>0)
+                {
+
+                    if (p==15)
+                    {
+
+                        priceId = _PriceID15;
+
+                    }
+
+                    else if (p == 30)
+                    {
+                        priceId = _PriceID30;
+
+                    }
+                    
+                    else if (p == 50)
+                    {
+                        priceId = _PriceID50;
+
+                    }
+                    else if (p == 75)
+                    {
+                        priceId = _PriceID75;
+
+                    }
+
+                    else 
+                    {
+                        priceId = _PriceID100;
+
+                    }
+
+
+                    var customerRespinse = await _stripeServices.CreateSubscriptionAsync(claimDTO.Email, obj.CardNumber,
+                    obj.expireMonth, obj.expireYear, obj.cvc, priceId);
+
+
+                    obj.stripeSubscriptionId = customerRespinse;
+
+                }
+
+
+
+
 
                 var res = _repository.BuyPackage(obj);
                 
@@ -106,5 +176,11 @@ namespace WebApi.Controllers
             }
 
         }
+
+
+
+
+    
+
     }
 }

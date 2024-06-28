@@ -1,4 +1,26 @@
-﻿var AdvertisementPackageID = 0;
+﻿
+$(function ($) {
+    $('[data-numeric]').payment('restrictNumeric');
+    $('.cc-number').payment('formatCardNumber');
+    $('.cc-exp').payment('formatCardExpiry');
+    $('.cc-cvc').payment('formatCardCVC');
+    $.fn.toggleInputError = function (erred) {
+        this.parent('.form-group').toggleClass('has-error', erred);
+        return this;
+    };
+    $('form').submit(function (e) {
+        e.preventDefault();
+        var cardType = $.payment.cardType($('.cc-number').val());
+        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
+        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
+        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
+        $('.cc-brand').text(cardType);
+        $('.validation').removeClass('text-danger text-success');
+        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+    });
+});
+
+var AdvertisementPackageID = 0;
 
 let baseApiUrl = "";
 $(document).ready(function () {
@@ -125,6 +147,11 @@ function getAll() {
     });
 }
 
+
+
+
+
+
 function BuypromotionPackage(pkgId) {
     //if ($('input[name="inlineRadioOptions"]:checked').val() == undefined) {
 
@@ -224,21 +251,111 @@ $(document).on('click', '.buypackage', function () {
     //$('#exampleModalCenter').modal('show');
 
 
+    $("#paymentModal").modal('show');
+
+
     AdvertisementPackageID = $(this).attr('data-packageid');
 
-    BuypromotionPackage(AdvertisementPackageID)
-
-    //$("#costslist").empty();
-
-
-
- //   GetPromotionCost(Promotionpackageid);
-
+ 
+        
 
 
 
 
 });
+
+
+$("#makepayment").click(function () {
+
+    var expireDate = $('#cc-exp').val();
+    // Parse the expire date
+    var expireMonth = '';
+    var expireYear = '';
+    var parts = expireDate.split('/');
+    var obj = {
+        AdvertisementPackageID: Number(AdvertisementPackageID),
+      
+        CardNumber: $("#cc-number").val(),
+        expireMonth: parseInt(parts[0]),
+        expireYear: parseInt(parts[1]),
+        cvc: $("#cc-cvc").val(),
+    
+    }
+    postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+                Swal.fire({
+                    title: "Good job!",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+                clear();
+
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+});
+
 
 function GetPromotionCost(pkgId) {
 
@@ -342,6 +459,8 @@ function GetPromotionCost(pkgId) {
 function clear() {
 
     AdvertisementPackageID = 0;
+
+    $("#paymentModal").modal('hide');
   //  $('#exampleModalCenter').modal('hide');
 
 }

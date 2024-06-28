@@ -1,5 +1,30 @@
 ﻿
+$(function ($) {
+    $('[data-numeric]').payment('restrictNumeric');
+    $('.cc-number').payment('formatCardNumber');
+    $('.cc-exp').payment('formatCardExpiry');
+    $('.cc-cvc').payment('formatCardCVC');
+    $.fn.toggleInputError = function (erred) {
+        this.parent('.form-group').toggleClass('has-error', erred);
+        return this;
+    };
+    $('form').submit(function (e) {
+        e.preventDefault();
+        var cardType = $.payment.cardType($('.cc-number').val());
+        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
+        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
+        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
+        $('.cc-brand').text(cardType);
+        $('.validation').removeClass('text-danger text-success');
+        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+    });
+});
+
+
+
 let baseApiUrl = "";
+
+let packageID = 0;
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
@@ -44,7 +69,7 @@ function getAllPackages() {
                             </ul>
                             <p class="mx-4 mb-4">${item.description}</p>
                             <div class="pricingTable-signup">
-                                <a href="javascript:void(0)"  onClick="BuyPackage(${item.packageID})">Buy Now</a>
+                                <a href="javascript:void(0)"  onClick="Payment(${item.packageID})">Buy Now</a>
                             </div>
                         </div>
                     </div>
@@ -114,17 +139,42 @@ function getAllPackages() {
 }
 
 
+function Payment(pkgId) {
+    packageID = Number(pkgId);
 
-function BuyPackage(pkgId) {
-    $(".preloader").show()
+    $("#paymentModal").modal('show');
+
+
+}
+
+
+$("#makepayment").click(function () {
+
+    $(".preloader").show();
+
+    var expireDate = $('#cc-exp').val();
+    // Parse the expire date
+    var expireMonth = '';
+    var expireYear = '';
+    var parts = expireDate.split('/');
+
     var obj = {
-        PackageID: Number(pkgId)
+        PackageID: Number(packageID),
+        CardNumber: $("#cc-number").val(),
+        expireMonth: parseInt(parts[0]),
+        expireYear: parseInt(parts[1]),
+        cvc: $("#cc-cvc").val(),
+
+
     }
     postRequest('/Packages/BuyPackage', obj, function (res) {
 
         if (res.status == 200) {
             $(".preloader").hide()
             if (res.data != null) {
+
+
+                packageID = 0;
 
                 Swal.fire({
                     title: "Congrats",
@@ -193,6 +243,10 @@ function BuyPackage(pkgId) {
 
         }
     });
+})
+
+function BuyPackage(pkgId) {
+  
 }
 
 function redirectToHome() {

@@ -34,6 +34,18 @@ namespace ClassLibrary
         public bool? IsActive { get; set; }
         public bool? IsExpired { get; set; }
 
+        public string? CardNumber { get; set; }
+        public int? expireMonth { get; set; }
+        public int? expireYear { get; set; }
+
+        public  string? cvc { get; set; }
+
+        public string? stripeSubscriptionId { get; set; }
+
+
+
+
+
     }
 
 

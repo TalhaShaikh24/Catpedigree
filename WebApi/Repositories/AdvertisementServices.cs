@@ -34,6 +34,7 @@ namespace WebApi.Repositories
             parameters.Add("@UserID", obj.UserId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@AdvertisementPackageID", obj.AdvertisementPackageID, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", obj.stripeSubscriptionId, DbType.String, ParameterDirection.Input);
             var data = _dapper.Get<UserAdvertisementPackage>(@"[dbo].[sp_BuyAdvertisementPackage]", parameters);
             return data;
         }

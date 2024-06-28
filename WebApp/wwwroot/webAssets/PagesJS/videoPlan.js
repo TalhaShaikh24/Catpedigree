@@ -1,4 +1,30 @@
-﻿let baseApiUrl = "";
+﻿
+$(function ($) {
+    $('[data-numeric]').payment('restrictNumeric');
+    $('.cc-number').payment('formatCardNumber');
+    $('.cc-exp').payment('formatCardExpiry');
+    $('.cc-cvc').payment('formatCardCVC');
+    $.fn.toggleInputError = function (erred) {
+        this.parent('.form-group').toggleClass('has-error', erred);
+        return this;
+    };
+    $('form').submit(function (e) {
+        e.preventDefault();
+        var cardType = $.payment.cardType($('.cc-number').val());
+        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
+        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
+        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
+        $('.cc-brand').text(cardType);
+        $('.validation').removeClass('text-danger text-success');
+        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+    });
+});
+
+
+let baseApiUrl = "";
+
+
+let packageID = 0;
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
@@ -30,7 +56,7 @@ function GetAllVideoPackages() {
                             </div>
                             <p class="mx-4 mb-4">${item.description}</p>
                             <div class="pricingTable-signup">
-                                <a href="javascript:void(0)"  onClick="BuyPackage(${item.id})">Buy Now</a>
+                                <a href="javascript:void(0)"  onClick="Payment(${item.id})">Buy Now</a>
                             </div>
                         </div>
                     </div>`;
@@ -99,16 +125,47 @@ function GetAllVideoPackages() {
     });
 }
 
+function Payment(pkgId) {
+    packageID = Number(pkgId);
+
+    $("#paymentModal").modal('show');
 
 
-function BuyPackage(Id) {
+}
 
-    postRequest('/VideoPackages/BuyPackage/'+Id, null, function (res) {
+$("#makepayment").click(function () {
 
+  //  $(".preloader").show();
+
+    var expireDate = $('#cc-exp').val();
+    // Parse the expire date
+    var expireMonth = '';
+    var expireYear = '';
+    var parts = expireDate.split('/');
+
+    var obj = {
+        PackageID: Number(packageID),
+        CardNumber: $("#cc-number").val(),
+        expireMonth: parseInt(parts[0]),
+        expireYear: parseInt(parts[1]),
+        cvc: $("#cc-cvc").val(),
+
+
+    }
+    debugger;
+    postRequest('/VideoPackages/BuyPackage', obj, function (res) {
+        
         if (res.status == 200) {
 
             if (res.data != null) {
 
+                packageID = 0;
+
+
+
+                $("#paymentModal").modal('hide');
+
+          //      $(".preloader").hide();
 
                 Swal.fire({
                     title: "Congratulations!",
@@ -184,7 +241,9 @@ function BuyPackage(Id) {
 
         }
     });
-}
+})
+
+
 
 function postRequest(url, requestData, handledata) {
     $.ajax({
