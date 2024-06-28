@@ -132,8 +132,13 @@ function GetAllMyListings() {
 
             if (res.data != null) {
 
+                $("#AppendMyListings").empty();
 
+                if ($.fn.DataTable.isDataTable('#TableMyListings')) {
+                    $('#TableMyListings').DataTable().destroy();
+                }
                 debugger
+         
 
                 $.each(res.data, function (i, v) {
 
@@ -164,11 +169,12 @@ function GetAllMyListings() {
                                            <td>${v.isActive}</td>
                                            <td>${v.createdBy}</td>
                                            <td>${v.createdOn}</td>
-                                           <td><button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info" data-id="${v.id}"><i class="fa fa-edit"></i></button></td>
+                                           <td><button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info mr-2" data-id="${v.id}"><i class="fa fa-edit"></i></button>|<button id="btn_Listing_Delete" type="button" class="btn btn-xs btn-danger ml-2" data-id="${v.id}"><i class="fa fa-trash"></i></button></td>
                                         </tr>`);
 
                 });
 
+              
                 $('#TableMyListings').DataTable();
 
             }
@@ -236,7 +242,80 @@ function GetAllMyListings() {
 
 
 
+$(document).on("click", "#btn_Listing_Delete", function (e) {
 
+    postRequest('/Dashboard/DeleteListingById?Id=' + Number(e.currentTarget.dataset.id), null, function (res) {
+
+        if (res.status == 200) {
+
+            Swal.fire({
+                title: "Success",
+                text: res.responseMsg,
+                icon: "success"
+            })
+                GetAllMyListings();
+              
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+
+})
 $(document).on("click", "#btn_Listing_Edit", function (e) {
 
   postRequest('/Dashboard/GetListingDetailById/'+ Number(e.currentTarget.dataset.id), null, function (res) {

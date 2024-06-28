@@ -389,6 +389,17 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+        
+
+        [HttpPost]
+        [Route("Dashboard/DeleteListingById")]
+        public Task<object> DeleteListingById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteListingById/" + Id, "", HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetListing_ProdictionPackages")]

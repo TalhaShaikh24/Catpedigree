@@ -902,5 +902,48 @@ namespace WebApi.Controllers
 
         }
 
+
+        [HttpPost("DeleteListingById/{Id}")]
+        public Response DeleteListingById(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.DeleteListingById(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Reecord Deleted successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
     }
 }
