@@ -43,10 +43,21 @@
 
     <link href="~/webassets/css/sweetalert2.css" rel="stylesheet" />
 
+    <!-- Include Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* Style for the translation dropdown */
+        .goog-te-menu-value {
+            padding: 0 !important;
+        }
+    </style>
+
     <!--====== Jquery js ======-->
     <script src="~/webassets/js/vendor/jquery-3.6.0.min.js"></script>
 
     <style>
+
         .footerAdverts{
             width: 400px;
             height: 400px;
@@ -225,17 +236,16 @@
                         <div class="top-social">
                             <ul class="social-link">
                                 <li><span>Follow us:</span></li>
-                                <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                <li><a href="#"><i class="ti-pinterest"></i></a></li>
-                                <li><a href="#"><i class="ti-dribbble"></i></a></li>
-                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                <li><a href="https://www.facebook.com/catpedigreeworld"><i class="ti-facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/catpedigreeworld?utm_source=qr&igsh=MW9vNGx1ZzV3cXFreA=="><i class="ti-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="top-content text-center">
-                            <p>We Have Special Offers <a href="index.html">Tagline</a></p>
+                            <p>
+                                Choose Language <a id="google_translate_element" href="javascript.void(0)"></a> <!-- Google Translate dropdown element -->
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -467,10 +477,71 @@
     <script src="~/webassets/js/main.js"></script>
     <script src="~/webassets/js/sweetalert2.min.js"></script>
 
+    <script type="text/javascript">
+        // Function to initialize Google Translate Element
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,it,ja,ko,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Function to save selected language in local storage
+        function saveLanguagePreference(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Function to apply saved language preference
+        function applySavedLanguage() {
+            var lang = localStorage.getItem('preferredLanguage');
+            if (lang) {
+                var translateFrame = document.querySelector('iframe.goog-te-banner-frame');
+                if (translateFrame) {
+                    var translateDoc = translateFrame.contentDocument || translateFrame.contentWindow.document;
+                    var langButtons = translateDoc.querySelectorAll('button[lang]');
+                    for (var i = 0; i < langButtons.length; i++) {
+                        if (langButtons[i].getAttribute('lang') === lang) {
+                            langButtons[i].click();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initialize Google Translate
+        function initializeGoogleTranslate() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+            // Apply saved language preference after Google Translate loads
+            script.onload = function () {
+                setTimeout(applySavedLanguage, 1000); // Delay to ensure translate frame is loaded
+            };
+        }
+
+        // Save language selection on change
+        document.addEventListener('click', function (event) {
+            if (event.target.tagName === 'A' && event.target.classList.contains('goog-te-menu2-item')) {
+                var lang = event.target.getAttribute('lang');
+                saveLanguagePreference(lang);
+            }
+        });
+
+        // Initialize on page load
+        window.onload = initializeGoogleTranslate;
+    </script>
     <script>
 
         $(document).ready(function () {
             GetFooterAdvertisments();
+
+        
+               
+ 
         })
 
         function GetFooterAdvertisments() {
