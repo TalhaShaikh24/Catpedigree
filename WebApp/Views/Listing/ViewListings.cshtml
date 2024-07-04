@@ -25,9 +25,9 @@
                                     <select class="wide" id="categoryFilter">
                                         <option value="-1" selected disabled>Search By Category</option>
                                         <option value="1">Pedigree</option>
-                                        <option value="2">Studmales</option>
+                                        <option value="2">Stud</option>
                                         <option value="3">Relocation</option>
-                                        <option value="4">Kittens For Sell</option>
+                                        <option value="4">Kittens To Sell</option>
                                     </select>
                                 </div>
                                 <div class="form_group">
@@ -133,7 +133,7 @@
             varTotalCount = totalCount;
             varCurrentCount = currentCount;
 
-            $('#appendListings').empty();
+            // $('#appendListings').empty();
             $.each(listings, function (index, item) {
                 
                 var html = `
@@ -145,7 +145,7 @@
                                 <div class="listing-content">
                                     <h3 class="title">
                                             <span class="status st-close">${item.categoryName}</span>
-                                            <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
+                                            <a class="card-category" href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
                                         <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>

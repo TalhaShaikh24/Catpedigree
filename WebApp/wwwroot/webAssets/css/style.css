@@ -428,7 +428,7 @@ button {
 ==========================*/
 /* Transparent Header */
 .transparent-header {
-    position: absolute;
+    /*position: absolute;*/
     background-color: #4d4f5f;
     top: 0;
     left: 0;
@@ -1150,7 +1150,7 @@ button {
 .hero-wrapper-three {
   position: relative;
   z-index: 1;
-  padding: 302px 0 185px; }
+  padding: 185px 0 185px; }
   .hero-wrapper-three:after {
     position: absolute;
     top: 0;
@@ -2474,8 +2474,13 @@ h3.title {
         .listing-grid-one .listing-content .listing-meta ul span i {
           margin-right: 10px; }
 
+.listing-content a.card-category{
+    text-transform:capitalize;
+}
+
 .listing-slider-two .slick-list {
-  padding-bottom: 40px; }
+    padding-bottom: 40px;
+}
 
 .listing-slider-two .listing-grid-item-two {
   margin-left: 15px;
