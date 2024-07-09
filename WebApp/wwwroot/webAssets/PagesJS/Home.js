@@ -5,7 +5,7 @@ $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
     GetHomePageListings();
     GetHomePageBlogs();
-    GetHomeAdvertisments();
+   // GetHomeAdvertisments();
 })
 
 

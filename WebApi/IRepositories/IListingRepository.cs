@@ -23,6 +23,7 @@ namespace WebApi.IRepositories
 
 
         Category getCategoryByListingId(int id);
+        List<Category> GetAllCategoriesByPackageId(int pkgId);
 
 
 

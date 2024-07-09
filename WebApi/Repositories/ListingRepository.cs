@@ -204,5 +204,15 @@ namespace WebApi.Repositories
 
             return data;
         }
+        public List<Category> GetAllCategoriesByPackageId(int pkgId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@PackageId", pkgId, DbType.Int32, ParameterDirection.Input);
+            
+            var data = _dapper.GetAll<Category>(@"[sp_GetAllCategoriesByPackageId]", parameters);
+
+            return data;
+        }
     }
 }

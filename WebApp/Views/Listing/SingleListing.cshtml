@@ -4,6 +4,14 @@
 
  @model ListingForView;
 
+<!-- Fancybox CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+<!-- jQuery (required by Fancybox) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Fancybox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <style>
     .listingDetails-header .page-header .photo-swip-gallery-wrap {
@@ -378,7 +386,7 @@
         {
             @if (@Model.status == 200 && @Model.data.Listing != null)
             {
-                <div class="row mt-120">
+                <div class="row mt-20">
                     @if (@Model.data.Listing != null)
                     {
 
@@ -391,7 +399,7 @@
                                 <div class="photo-swip-gallery-wrap items-five">
                                     <!-- Show the feature image -->
                                     <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                        <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" data-width="880" data-height="500">
+                                        <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
                                             <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                         </a>
                                     </div>
@@ -402,13 +410,14 @@
                                         @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
                                         {
                                             <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                                <a class="listing-popup-btn" target="_blank" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" data-width="880" data-height="500">
+                                                <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath">
                                                     <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                                 </a>
                                             </div>
                                         }
                                     }
                                 </div>
+
                             </div>
 
 
@@ -416,121 +425,97 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="listing-details-wrapper listing-details-wrapper-two">
 
-                            <div class="listing-content mb-30 wow fadeInUp d-none">
-                                <h3 class="title">World's Quality Museum</h3>
-                                <p>Parturient varius elementum maecenas faucibus maecenas inceptos commodo metus vitae ac pretium magnis. Ridiculus aenean diam duis montes mattis curae dis platea cubilia fames justo nullam per incepto Accumsan mollis, semper nisl nulla per curae ante tellus cursus ut blandit eleifend ut adipiscing fringilla Sociosqu penatibus nascetur senectus, molestie sed habitant adipiscing maecenas ultrices curae sociis mi eros ultrices euismod risus cubilia eget habitasse facilisic</p>
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-credit-card"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Card Payment</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-paint-bucket"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Air-conditioned</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-rss-alt"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Wireless Internet</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-trash"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Serves Alcohol</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-car"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Parking Street</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="icon-box icon-box-one">
-                                            <div class="icon">
-                                                <i class="ti-credit-card"></i>
-                                            </div>
-                                            <div class="info">
-                                                <h6>Outdoor Seating</h6>
-                                            </div>
-                                        </div>
+                        @* Listing Title & Price *@
+                        <div class="listing-details-head">
+                            <div class="meta-info-box">
+                                <div class="listing-details-head-top">
+                                    <div class="listing-badge">
+                                        <span class="listing-type-badge">
+                                            @Model.data.Listing.CategoryName
+                                        </span>
+                                        <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
                                     </div>
                                 </div>
-                                <p>Cras vivamus dui cubilia placerat netus lorem vivamus inceptos sollicitudin non inceptos mi dui vulputate donec sed etiam turpis varius a porta natoque nullam tincidunt in nec cubilia hac netus and class pharetra Commodo convallis pharetra tortor facilisis dapibus maecenas nunc nascetur arcu quam vel non varius egestas fusce aced molestie adipiscing curae ante tellus cursus ut blandit</p>
+                                <div class="title-price">
+                                    <h2 class="rtcl-listing-title">
+                                        @Model.data.Listing.Title
+                                    </h2>
+                                    <!-- Price -->
+                                    <div class="rtcl-price-wrap price-in-mobile">
+                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Listing.Price</span></bdi></span></div>
+                                    </div>
+                                </div>
+                                <div class="meta-list">
+                                    <!-- Meta data -->
+                                    <div class="rtcl-listing-meta">
+                                        <ul class="rtcl-listing-meta-data">
+                                            <li class="author">
+                                                <i class="flaticon-add-user"></i>
+                                                by @Model.data.Listing.Username
+                                            </li>
+                                            <li class="rt-location">
+                                                <i class="ti-location-pin"></i>
+                                                <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+
+                       
+                        <div class="listing-details-wrapper listing-details-wrapper-two">
+
+                            @* Listing Video *@
                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
                             {
-                                <div class="listing-play-box mb-30 wow fadeInUp">
-                                    <h4 class="title mt-40">Video</h4>
-                                    <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath');">
-                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                <div class="rtcl-single-listing-details video-box">
+                                    <div class="rtcl-main-content-wrapper">
+                                        <div class="accordion accordion-flush" id="petslist-map-accordion">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingTwo">
+                                                    <button class="accordion-button mb-20" type="button">
+                                                        Video
+                                                    </button>
+                                                </h2>
+                                                <div class="listing-play-box mb-30 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                                                    <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
+                                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             }
 
-                            <div class="listing-details-head">
-                                <div class="meta-info-box">
-                                    <div class="listing-details-head-top">
-                                        <div class="listing-badge">
-                                            <span class="listing-type-badge">
-                                                @Model.data.Listing.CategoryName
-                                            </span>
-                                            <div class="rtcl-listing-badge-wrap d-none"><span class="badge rtcl-badge-popular popular-badge badge-success">Popular</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="title-price">
-                                        <h2 class="rtcl-listing-title">
-                                            @Model.data.Listing.Title
-                                        </h2>
-                                        <!-- Price -->
-                                        <div class="rtcl-price-wrap price-in-mobile">
-                                            <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi>£<span class="rtcl-price-currencySymbol">@Model.data.Listing.Price</span></bdi></span></div>
-                                        </div>
-                                    </div>
-                                    <div class="meta-list">
-                                        <!-- Meta data -->
-                                        <div class="rtcl-listing-meta">
-                                            <ul class="rtcl-listing-meta-data">
-                                                <li class="author">
-                                                    <i class="flaticon-add-user"></i>
-                                                    by @Model.data.Listing.Username
-                                                </li>
-                                                <li class="rt-location">
-                                                    <i class="ti-location-pin"></i>
-                                                    <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
-                                                </li>
-                                            </ul>
+                            @* Listing Pedigree *@
+                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.PedigreeFilePath))
+                            {
+                                <div class="rtcl-single-listing-details video-box">
+                                    <div class="rtcl-main-content-wrapper">
+                                        <div class="accordion accordion-flush" id="petslist-map-accordion">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingTwo">
+                                                    <button class="accordion-button mb-20" type="button">
+                                                        Pedigree
+                                                    </button>
+                                                </h2>
+                                                <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
+                                                    <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.PedigreeFilePath">
+                                                        <img loading="lazy" height="500" style="object-fit:cover;" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.PedigreeFilePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+
+
+                            @* Listing Details *@
                             <div class="rtcl-single-listing-details custom-fields-box">
                                 <div class="rtcl-main-content-wrapper">
                                     <div class="accordion accordion-flush" id="petslist-content-accordion">
@@ -612,11 +597,16 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                           
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="sidebar-widget-area">
-                            <div class="widget contact-info-widget mb-30 wow fadeInUp mt-40" style="margin-top:28px">
+                            
+                            <div class="widget contact-info-widget mb-30 wow fadeInUp" style="margin-top:28px">
+                               
                                 <div class="contact-info-widget-wrap">
                                     <div class="contact-info-content pt-0">
                                         <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
@@ -635,7 +625,7 @@
                                                 <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
                                             }
                                         </div>
-                                        <ul class="social-link">
+                                        <ul class="social-link d-none">
                                             <li><a href="#"><i class="ti-facebook"></i></a></li>
                                             <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
                                             <li><a href="#"><i class="ti-pinterest"></i></a></li>

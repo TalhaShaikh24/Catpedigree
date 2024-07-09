@@ -135,6 +135,7 @@ namespace WebApi.Repositories
 
             return data;
         }
+      
         public List<Blog> GetAllBlogs()
         {
               DynamicParameters parameters = new DynamicParameters();

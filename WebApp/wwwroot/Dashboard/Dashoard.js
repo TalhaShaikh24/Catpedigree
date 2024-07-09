@@ -26,12 +26,12 @@ function GetAllDashbaord() {
                 $("#AppendMyPackages").empty();
 
                 for (let i = 1; i <= JSON.parse(res.data).length - 1; i++) {
-
+                    debugger
                     $("#AppendMyPackages").append(`
                         <tr>
                                 <td>${JSON.parse(res.data)[i].Name}</td>
-                                <td>${JSON.parse(res.data)[i].AllowedListings}</td>
-                                <td>${JSON.parse(res.data)[i].RemainingListings}</td>
+                                <td>${JSON.parse(res.data)[i].AllowedListings == 999 ? "UNLIMITED" : JSON.parse(res.data)[i].AllowedListings}</td>
+                                <td>${JSON.parse(res.data)[i].RemainingListings == 999 ? "UNLIMITED" : JSON.parse(res.data)[i].RemainingListings}</td>
                         </tr>`);
                 }
 

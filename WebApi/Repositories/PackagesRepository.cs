@@ -25,7 +25,7 @@ namespace WebApi.Repositories
 
             return data;
         }
-        public UserPackages BuyPackage(UserPackages obj)
+        public  UserPackages BuyPackage(UserPackages obj)
         {
 
             DynamicParameters parameters = new DynamicParameters();

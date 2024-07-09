@@ -39,9 +39,15 @@ namespace WebApp.Controllers
 
 
 
+        [HttpPost]
+        public Task<object> GetAllCategoriesByPackageId(int pkgId)
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllCategoriesByPackageId/" + pkgId, content, HttpContext);
+        }
 
 
-      
 
         public async Task<IActionResult> SingleListing(int listingId)
         {

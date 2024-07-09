@@ -43,6 +43,93 @@ namespace WebApp.Controllers
             return View();
         }
 
+        public IActionResult CatMediation()
+        {
+            return View();
+        }
+        public IActionResult BreederMediation()
+        {
+            return View();
+        }
+        public IActionResult We_are_almost_Live()
+        {
+            return View();
+        }
+        public IActionResult Coaching()
+        {
+            return View();
+        }
+        public IActionResult Banners()
+        {
+            return View();
+        }
+        public IActionResult HouseRules()
+        {
+            return View();
+        }
+        public IActionResult PoisonousPlants()
+        {
+            return View();
+        }
+        public IActionResult Breeds()
+        {
+            return View();
+        }
+        public IActionResult Others()
+        {
+            return View();
+        }
+        public IActionResult Shows()
+        {
+            return View();
+        }
+        public IActionResult PedigreeService()
+        {
+            return View();
+        }
+        public IActionResult Studs()
+        {
+            return View();
+        }
+        public IActionResult Video()
+        {
+            return View();
+        }
+        public IActionResult WhatDoWeDo()
+        {
+            return View();
+        }
+        public IActionResult Relocation()
+        {
+            return View();
+        }
+        public IActionResult WhyDidWeStart()
+        {
+            return View();
+        }
+        public IActionResult WhatToCheckFor()
+        {
+            return View();
+        }
+        public IActionResult FelineHealth()
+        {
+            return View();
+        }
+        public IActionResult CostOfPedigreeCat()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        public IActionResult PackageDeals()
+        {
+            return View();
+        }
+        
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

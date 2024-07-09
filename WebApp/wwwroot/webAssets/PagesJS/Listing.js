@@ -143,13 +143,14 @@ $("#Btn_Post_Listing").click(function () {
                     title: "Congrats",
                     text: res.responseMsg,
                     icon: "success"
-                }).then(() => {
-                    redirectToHome();
-                });
+                })
+                //    .then(() => {
+                //    redirectToHome();
+                //});
 
-                $(document).find("input").val(null);
-                $(document).find("select").val(null).niceSelect('update');
-                GetAllDropdowns();
+                //$(document).find("input").val(null);
+                //$(document).find("select").val(null).niceSelect('update');
+                //GetAllDropdowns();
             }
         }
         if (res.status == 304) {
@@ -213,6 +214,12 @@ $("#Btn_Post_Listing").click(function () {
 })
 
 
+$("#PackageId").change(function () {
+
+    var pkgId = Number($(this).val());
+    GetAllCategoriesByPackageId(pkgId);
+  
+});
 $("#Category").change(function (e) {
     if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
         $("#PEDIGREE").show().append(`
@@ -265,20 +272,20 @@ function GetAllDropdowns() {
 
                 $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
-                $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+                
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
 
                 $.each(res.data.item3, function (i, v) {
-                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}-(${v.remainingListings})</option>`);
+                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}-(${v.remainingListings == 999 ? "Unlimited" : v.remainingListings})</option>`);
                 });
 
                 $.each(res.data.item2, function (i, v) {
                     $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
                 });
 
-                $.each(res.data.item1, function (i, v) {
-                    $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
-                });
+                //$.each(res.data.item1, function (i, v) {
+                //    $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+                //});
 
                 if (res.data.item4.length > 0) {
                     $.each(res.data.item4, function (i, v) {
@@ -356,6 +363,9 @@ function GetAllDropdowns() {
 
 
 }
+
+
+
 
 $(document).on('change', '#VideoFile', function (e) {
     postRequest('/VideoPackages/VideoAvailablity', null, function (res) {
@@ -469,6 +479,80 @@ $('#showpromotionpackage').change(function () {
     }
 });
 
+
+
+function GetAllCategoriesByPackageId(pkgId) {
+    postRequest('/Listing/GetAllCategoriesByPackageId?pkgId=' + pkgId, null, function (res) {
+
+        if (res.status == 200 && res.data!=null) {
+            $("#Category").empty();
+            $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+            $.each(res.data, function (i, v) {
+                $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+            });
+
+            $("#Category").niceSelect('update');
+
+
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
 
 function redirectToHome() {
     window.location.href = window.location.origin+"/Dashboard";

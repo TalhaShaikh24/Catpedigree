@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Server;
+using System.Data;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Utility;
@@ -13,10 +14,12 @@ namespace WebApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _repository;
+        private readonly IPackagesRepository _repositoryPkg;
 
-        public AccountController(IAccountRepository repository)
+        public AccountController(IAccountRepository repository, IPackagesRepository repositoryPkg)
         {
             _repository = repository;
+            _repositoryPkg = repositoryPkg;
         }
 
         [HttpPost("Authenticate")]
@@ -64,38 +67,52 @@ namespace WebApi.Controllers
 
             try
             {
-
                 var res = await _repository.RegisterUser(formData);
-                response = CustomStatusResponse.GetResponse(200);
-                response.Token = null;
+
                 if (res != null)
                 {
+                    // Create a new user package
+                    UserPackages userPkg = new UserPackages
+                    {
+                        UserID = res.UserId,
+                        PackageID = 1,
+                        SubscriptionDate = DateTime.Now,
+                        ExpiryDate = DateTime.Now.AddDays(365), // Calculate expiry date by adding 365 days
+                        RemainingListings = 999,
+                        IsActive = true,
+                        IsExpired = false
+                    };
 
+                    // Buy the package
+                    var respKG = _repositoryPkg.BuyPackage(userPkg);
+
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
                     response.Data = res;
-                    response.ResponseMsg = "Data save successfully!";
-
-
+                    response.ResponseMsg = "You have registered successfully!";
                 }
-                return response;
-
-
-
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = null;
+                    response.ResponseMsg = "Failed to register user."; // Handle the case where res is null
+                }
             }
             catch (DbException ex)
             {
                 response = CustomStatusResponse.GetResponse(600);
                 response.Token = null;
                 response.ResponseMsg = ex.Message;
-                return response;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.Token = null;
                 response.ResponseMsg = ex.Message;
-                return response;
             }
 
+            return response;
         }
 
 

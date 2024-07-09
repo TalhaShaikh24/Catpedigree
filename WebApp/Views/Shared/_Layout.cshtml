@@ -252,55 +252,86 @@
             </div>
         </div>
         <div class="header-navigation">
-            <div class="container">
+            <div class="container-fuild" style="margin: 0px 50px;">
                 <div class="primary-menu">
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-5">
                             <div class="site-branding">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                             </div>
-                          
                         </div>
-                        <div class="col-lg-7 col-2">
+                        <div class="col-lg-8 col-2">
                             <div class="nav-menu">
                                 <div class="navbar-close"><i class="ti-close"></i></div>
                                 <nav class="main-menu">
                                     <ul>
-                                        
-                                        <li class="menu-item"><a href="@Url.Action("ViewListings","Listing")">Explore</a></li>
-                                        <li class="menu-item"><a href="@Url.Action("AllVendors","Vendor")">Vendors</a></li>
+                                        <li class="menu-item"><a href="@Url.Action("Index","Home")">Home</a></li>
                                         <li class="menu-item">
-                                            <a href="@Url.Action("Pricing","Packages")">Pricing Plans</a>
+                                            <a href="">Breeders</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="">Pedigree Info</a></li>
+                                                <li><a href="@Url.Action("PedigreeService","Home")">Pedigree Service</a></li>
+                                                <li class="menu-item has-children">
+                                                    <a href="">Advertising</a>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="@Url.Action("Banners","Home")">Banners</a></li>
+                                                        <li><a href="">Kittens for Sale</a></li>
+                                                        <li><a href="@Url.Action("Video","Home")">Videos</a></li>
+                                                        <li><a href="@Url.Action("Others","Home")">Other</a></li>
+                                                    </ul>
+                                                    <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                                </li>
+                                                <li><a href="#">Studs</a></li>
+                                                <li><a href="@Url.Action("Coaching","Home")">Coaching</a></li>
+                                                <li><a href="@Url.Action("BreederMediation","Home")">Mediation</a></li>
+                                                <li><a href="@Url.Action("HouseRules", "Home")">House Rules</a></li>
+                                                <li><a href="@Url.Action("PackageDeals","Home")">Package Deals</a></li>
+                                            </ul>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="@Url.Action("Index","Blog")">Blogs</a>
+                                            <a href="">Cats & Kittens for Sale</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="">Kittens</a></li>
+                                                <li><a href="">Re-homing</a></li>
+                                                <li><a href="">Breeders List</a></li>
+                                                <li><a href="@Url.Action("CatMediation","Home")">Mediation</a></li>
+                                            </ul>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="@Url.Action("Gallery","Home")">Gallery</a>
+                                            <a href="">General Information</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
+                                                <li><a href="@Url.Action("CostOfPedigreeCat","Home")">Costs of a Pedigree Cat</a></li>
+                                                <li><a href="@Url.Action("WhatToCheckFor","Home")">What to Check for</a></li>
+                                                <li><a href="@Url.Action("FelineHealth","Home")">Feline Health</a></li>
+                                                <li><a href="">Feline Care</a></li>
+                                                <li><a href="">Feline Food</a></li>
+                                                <li><a href="@Url.Action("PoisonousPlants", "Home")">Poisonous Plants</a></li>
+                                                <li><a href="@Url.Action("Shows","Home")">Shows</a></li>
+                                                <li><a href="">Useful Links</a></li>
+                                            </ul>
                                         </li>
-
-                                       @{
-                                            
-                                        if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
-                                                                       
-                                         {
-
-                                                            <li class="menu-item">
-
-                                                                <a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a>
-                                                            </li>
-                            
-                                        }
-                                        else
-                                        {
-
-
-                                                            <li class="menu-item">
-
-
-                                                                <a href="javascript:void(0);" id="btnLogOFf">Log out</a>
-                                                            </li>
-                                        }
+                                        <li class="menu-item"><a href="@Url.Action("Index","Blog")">Blog</a></li>
+                                        <li class="menu-item"><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
+                                        <li class="menu-item">
+                                            <a href="@Url.Action("Contact","Home")">Contact</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="">Breeders FAQ</a></li>
+                                                <li><a href="">General FAQ</a></li>
+                                                <li><a href="">Who Are We</a></li>
+                                                <li><a href="@Url.Action("WhatDoWeDo","Home")">What Do We Do</a></li>
+                                                <li><a href="@Url.Action("WhyDidWeStart","Home")">Why Did We Start</a></li>
+                                            </ul>
+                                        </li>
+                                        @{
+                                            if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
+                                            {
+                                                <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
+                                            }
                                         }
                                         @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
                                         {
@@ -310,34 +341,25 @@
                                         else
                                         {
                                             <li class="nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
-
                                         }
-                                        
-                           
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-5">
+                        <div class="col-lg-2 col-5">
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
-                                    
-                                         
-                                        @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
-                                       {
-                                            <li class="user-btn"> <a href="/Dashboard" class="icon"> <i class="flaticon-avatar"> </i></a> </li>
-                                               <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
-                                   
-
-                                       }
-                                      else{
-                                    <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
-
-
+                                    @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
+                                    {
+                                        <li class="user-btn"><a href="/Dashboard" class="icon"><i class="flaticon-avatar"></i></a></li>
+                                        <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
                                     }
-
+                                    else
+                                    {
+                                        <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
+                                    }
                                     <li class="nav-toggle-btn">
-                                        <div class="navbar-toggler"> 
+                                        <div class="navbar-toggler">
                                             <span></span><span></span><span></span>
                                         </div>
                                     </li>
@@ -346,6 +368,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>

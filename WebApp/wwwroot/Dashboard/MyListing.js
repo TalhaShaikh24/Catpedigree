@@ -175,7 +175,9 @@ function GetAllMyListings() {
                 });
 
               
-                $('#TableMyListings').DataTable();
+                $('#TableMyListings').DataTable({
+                    "order": [[0, "desc"]]
+                });
 
             }
         }

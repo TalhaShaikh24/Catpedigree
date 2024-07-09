@@ -55,7 +55,9 @@ function GetAllListings() {
 
                 });
 
-                $('#TableApprovalListing').DataTable();
+                $('#TableApprovalListing').DataTable({
+                    "order": [[0, "desc"]]
+                });
 
 
             }
