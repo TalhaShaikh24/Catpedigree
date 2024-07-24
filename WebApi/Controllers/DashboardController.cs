@@ -114,7 +114,51 @@ namespace WebApi.Controllers
         }
 
 
+
         #region Account Controller Profiles Methods
+
+        [HttpPost("GetAllUsers")]
+        public Response GetAllUsers()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllUsers();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Users retrived successfuly";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
 
         [HttpPost("GetProfileDetailById")]
         public Response GetProfileDetailById()
@@ -212,7 +256,6 @@ namespace WebApi.Controllers
         }
 
         #endregion
-
 
 
         #region Listing Controller Listing Medthods
@@ -373,7 +416,7 @@ namespace WebApi.Controllers
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Data Update SuccessFully";
+                    response.ResponseMsg = "Listing Updated SuccessFully";
                     response.Data = res;
 
                     return response;
@@ -419,7 +462,7 @@ namespace WebApi.Controllers
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Data Update SuccessFully";
+                    response.ResponseMsg = Status == "Approve" ? "Listing has been approved" : Status == "Pending" ? "Listing added in pending" : "Listing has been rejected";
                     response.Data = res;
 
                     return response;
@@ -702,6 +745,72 @@ namespace WebApi.Controllers
                         Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
                         FileName = fileName,
                         FilePath = $"{BaseUrl}Profile/{fileName}?v={DateTime.UtcNow.Ticks}"
+                    });
+
+
+
+                }
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+        [HttpPost("GetAllVideosGallery")]
+        public Response GetAllVideosGallery()
+        {
+
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+
+                var res = _repository.GetAllVideosGallery();
+
+
+                List<Gallery> galleries = new List<Gallery>();
+
+
+                foreach (var item in res)
+                {
+                    string fileName = Path.GetFileName(item);
+                    galleries.Add(new Gallery
+                    {
+
+
+                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                        FileName = fileName,
+                        FilePath = $"{BaseUrl}UploadVideos/{fileName}?v={DateTime.UtcNow.Ticks}"
                     });
 
 

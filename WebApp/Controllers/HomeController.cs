@@ -24,6 +24,10 @@ namespace WebApp.Controllers
         public IActionResult Login()
         {
             return View();
+        } 
+        public IActionResult ForgotPassword()
+        {
+            return View();
         }
         public IActionResult UserRegistration()
         {
@@ -124,6 +128,18 @@ namespace WebApp.Controllers
             return View();
         }
         public IActionResult PackageDeals()
+        {
+            return View();
+        }
+        public IActionResult FelineFood()
+        {
+            return View();
+        }
+        public IActionResult PedigreeInfo()
+        {
+            return View();
+        }
+        public IActionResult Kittens()
         {
             return View();
         }

@@ -29,5 +29,7 @@ namespace WebApi.IRepositories
 
         List<string> GetAllPedigreeGallary();
         List<string> GetAllBreederLicense();
+        List<string> GetAllVideosGallery();
+        List<Register> GetAllUsers();
     }
 }

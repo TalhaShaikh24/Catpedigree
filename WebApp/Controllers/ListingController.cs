@@ -138,6 +138,22 @@ namespace WebApp.Controllers
 
             return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
         }
+        
+        [HttpPost]
+        public Task<object> GetTopPageListings()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetTopPageListings", content, HttpContext);
+        }
+
+        [HttpPost]
+        public Task<object> GetVetRimmedPageListings()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetVetRimmedPageListings", content, HttpContext);
+        }
 
 
 
@@ -165,7 +181,7 @@ namespace WebApp.Controllers
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/GetAllCatType", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetAllCatType", content, HttpContext);
         }
 
 

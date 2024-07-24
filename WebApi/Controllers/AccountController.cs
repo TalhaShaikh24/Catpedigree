@@ -22,6 +22,7 @@ namespace WebApi.Controllers
             _repositoryPkg = repositoryPkg;
         }
 
+       
         [HttpPost("Authenticate")]
         public Response Authenticate([FromBody] Register obj)
         {
@@ -154,6 +155,88 @@ namespace WebApi.Controllers
                 response.ResponseMsg = "Internal server error!";
                 return response;
             }
+        }
+
+        [HttpPost("ForgotPassword")]
+        public  Response ForgotPassword([FromBody] ForgotPassword obj)
+        {
+            Response response = new Response();
+
+            try
+            {
+                var res =  _repository.ForgotPassword(obj);
+
+                if (res != null)
+                {
+                   
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+                    response.ResponseMsg = "The verification code has been send to your email.";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = null;
+                    response.ResponseMsg = "Failed to forget password."; // Handle the case where res is null
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = null;
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = null;
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+        
+        [HttpPost("ResetPassword")]
+        public  Response ResetPassword([FromBody] ForgotPassword obj)
+        {
+            Response response = new Response();
+
+            try
+            {
+                var res =  _repository.ResetPassword(obj);
+
+                if (res != null)
+                {
+                   
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+                    response.ResponseMsg = "The password has been changed successfully!";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = null;
+                    response.ResponseMsg = "Failed to change password."; // Handle the case where res is null
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = null;
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = null;
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
         }
 
     }

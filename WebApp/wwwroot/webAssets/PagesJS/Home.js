@@ -4,8 +4,9 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
     GetHomePageListings();
-    GetHomePageBlogs();
-   // GetHomeAdvertisments();
+    GetTopPageListings();
+    GetVetRimmedPageListings();
+    // GetHomeAdvertisments();
 })
 
 
@@ -15,7 +16,7 @@ $(document).on("click", "#btnSearch", function () {
     var categoryId = Number($("#categorySelect").val());
     var location = $("#location").val().trim(); // trim to remove leading/trailing whitespaces
 
-  
+
 
     // Construct the URL
     var url = `/Listing/ViewListings?keyword=${encodeURIComponent(keyword)}&categoryId=${categoryId}&listingLocation=${encodeURIComponent(location)}`;
@@ -25,30 +26,225 @@ $(document).on("click", "#btnSearch", function () {
 });
 
 
+function GetTopPageListings() {
+    postRequest('/Listing/GetTopPageListings', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data.length > 0) {
+
+                $.each(res.data, function (index, item) {
+
+                    var html = `
+                        <div class="col-lg-3 col-md-6 col-sm-12" >
+                            <div class="listing-item listing-grid-item-two mb-30  ${item.promotionName}">
+                                <div class="listing-thumbnail">
+                                   <a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
+                                      <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                   </a>
+                                </div>
+                                <div class="listing-content">
+                                    <div class="title d-flex justify-content-between align-items-center mb-10">
+                                        <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
+                                         <h4 class="status  price">€ ${item.price}</h4>
+                                    </div>
+                                    <h3 class="title">
+                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
+                                    </h3>
+                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <div class="listing-meta">
+                                        <ul>
+                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    $('#appendTopListings').append(html);
+                });
+                $("#sectionTopListings").show();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+function GetVetRimmedPageListings() {
+    postRequest('/Listing/GetVetRimmedPageListings', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data.length > 0) {
+
+                $.each(res.data, function (index, item) {
+
+                    var html = `
+                        <div class="col-lg-3 col-md-6 col-sm-12" >
+                            <div class="listing-item listing-grid-item-two mb-30  ${item.promotionName}">
+                                <div class="listing-thumbnail">
+                                   <a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
+                                      <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                   </a>
+                                </div>
+                                <div class="listing-content">
+                                    <div class="title d-flex justify-content-between align-items-center mb-10">
+                                        <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
+                                         <h4 class="status  price">€ ${item.price}</h4>
+                                    </div>
+                                    <h3 class="title">
+                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
+                                    </h3>
+                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <div class="listing-meta">
+                                        <ul>
+                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    $('#appendVetandRimmedListings').append(html);
+                });
+                $("#sectionVetRimmedListings").show();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
 function GetHomePageListings() {
     postRequest('/Listing/GetHomePageListings', null, function (res) {
 
         if (res.status == 200) {
 
-            if (res.data != null) {
+            if (res.data.length > 0) {
 
                 $.each(res.data, function (index, item) {
 
-                 
-
                     var html = `
-                        <div class="col-lg-4 col-md-6 col-sm-12" >
-                            <div class="listing-item listing-grid-item-two mb-30" style="border: ${item.propertiestoShow};">
+                        <div class="col-lg-3 col-md-6 col-sm-12" >
+                            <div class="listing-item listing-grid-item-two mb-30  ${item.promotionName}">
                                 <div class="listing-thumbnail">
-                                   <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}
+                                   <a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
                                       <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
                                    </a>
                                 </div>
                                 <div class="listing-content">
+                                    <div class="title d-flex justify-content-between align-items-center mb-10">
+                                        <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
+                                         <h4 class="status  price">€ ${item.price}</h4>
+                                    </div>
                                     <h3 class="title">
-
-                                        <span class="status st-close">${item.categoryName}</span>
-                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
+                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
+                                    </h3>
                                     <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
@@ -61,7 +257,7 @@ function GetHomePageListings() {
                     $('#appendListings').append(html);
                 });
 
-
+                GetHomePageBlogs();
             }
         }
         if (res.status == 304) {
@@ -129,7 +325,7 @@ function GetHomePageBlogs() {
 
         if (res.status == 200) {
 
-            if (res.data != null) {
+            if (res.data.length > 0) {
 
                 $.each(res.data, function (index, item) {
 
@@ -137,7 +333,7 @@ function GetHomePageBlogs() {
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="blog-post-item blog-post-item-three mb-40 wow fadeInUp">
                                 <div class="post-thumbnail">
-                                    <a href="/Blog/BlogDetails?Id=${item.blogID}"><img src="${baseApiUrl+item.featureImagePath}" alt="Blog Image"></a>
+                                    <a href="/Blog/BlogDetails?Id=${item.blogID}"><img src="${baseApiUrl + item.featureImagePath}" alt="Blog Image"></a>
                                     <div class="post-date"><a href="#">${moment(item.createdOn).format("DD")}<span>${moment(item.createdOn).format("MMMM")}</span></a></div>
                                 </div>
                                 <div class="entry-content">
@@ -147,6 +343,9 @@ function GetHomePageBlogs() {
                                             ${item.title}
                                         </a>
                                     </h3>
+                                    <div class="post-shortDesc mb-10">
+                                    <p>${item.shortDescription}</p>
+                                    </div>
                                     <div class="post-meta">
                                         <ul>
                                             <li><span><i class="ti-comments-smiley"></i><a href="javascript:void(0)">${item.commentsCount} Comments</a></span></li>
@@ -306,9 +505,9 @@ function BuyPackage(pkgId) {
 
         if (res.status == 200) {
 
-            if (res.data != null) {
+            if (res.data.length > 0) {
 
-               
+
             }
         }
         if (res.status == 304) {

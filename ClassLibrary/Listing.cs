@@ -15,6 +15,7 @@ namespace ClassLibrary
         public string? Location { get; set; }
         public string? State { get; set; }
         public string? City { get; set; }
+        public string? ZipCode { get; set; }
         public bool? IsBreerderLicenseUpload { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
@@ -45,8 +46,10 @@ namespace ClassLibrary
         public DateTime? ExpiryDate { get; set; }
         public int TotalCount { get; set; }
         public decimal Price { get; set; }
-        public decimal Weigth { get; set; }
+        public decimal Weigth { get; set; } = 0;
         public bool IsVaccinated { get; set; }
+        public bool IsCastration { get; set; }
+        public bool IsSterilization { get; set; }
         public string? Color { get; set; }
 
         public int PromotionPackageId { get; set; }

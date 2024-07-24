@@ -8,11 +8,19 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-   
+
+    public class ForgotPassword
+    {
+        public int Id { get; set; }
+        public string? Email { get; set; }
+        public string? VerificationCode { get; set; }
+        public string? Password { get; set; }
+    }
     public class Register: Common
     {
         public int UserId { get; set; }
         public string? RoleIds { get; set; }
+        public string? Roles { get; set; }
         public string? Firstname { get; set; }
         public string? Lastname { get; set; }
         public string? Username { get; set; }

@@ -112,26 +112,28 @@ $("#Btn_Post_Listing").click(function () {
 
     formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
     formData.append("VideoFile", $("#VideoFile")[0].files[0]);
-    formData.append("CategoryId", $("#Category").val());
+    formData.append("CategoryId", Number($("#Category").val()));
     formData.append("Title", $("#Title").val());
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());
-    formData.append("PackageId", $("#PackageId").val());
+    formData.append("ZipCode", $("#ZipCode").val());
+    formData.append("PackageId", Number($("#PackageId").val()));
     formData.append("Gender", $("#Gender").val());
     formData.append("Phone", $("#Phone").val());
     formData.append("Email", $("#Email").val());
     formData.append("BreerderName", $("#BreerderName").val());
-    formData.append("TypeOfCat", $("#TypeOfCat").val());
+    formData.append("TypeOfCat", Number($("#TypeOfCat").val()));
     formData.append("Age", $("#Age").val());
-    formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
-    formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
+    formData.append("IsBreerderLicenseUpload", Boolean($('input[type=radio][name=IsBreerderLicenseUpload]:checked').val()));
+    formData.append("ZoologicalNumber", Boolean($("#ZoologicalNumber").val()));
     formData.append("Description", $("#Description").val());
-    formData.append("Weigth", $("#Weigth").val());
     formData.append("Color", $("#Color").val());
-    formData.append("IsVaccinated",$('input[name="IsVaccinated"]:checked').val());
+    formData.append("IsVaccinated",0);
+    formData.append("IsCastration", Boolean($('input[name="IsCastration"]:checked').val()));
+    formData.append("IsSterilization", Boolean($('input[name="IsSterilization"]:checked').val()));
     formData.append("Price", $('#Price').val());
-    formData.append("PromotionPackageId", $('#PromotionPackageId').val());
+    formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
 
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
@@ -363,8 +365,6 @@ function GetAllDropdowns() {
 
 
 }
-
-
 
 
 $(document).on('change', '#VideoFile', function (e) {
@@ -600,4 +600,81 @@ function FilePostRequest(url, requestData, handledata) {
             })
         }
     });
+}
+
+
+
+
+function showStep(step) {
+    document.querySelectorAll('.step-form').forEach((el) => el.classList.remove('active'));
+    document.getElementById(`step-${step}`).classList.add('active');
+}
+
+function nextStep() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    if (validateStep(currentStep)) {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    }
+}
+
+function prevStep() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+    }
+}
+
+function validateStep(step) {
+    let isValid = true;
+    const stepForm = document.getElementById(`step-${step}`);
+    const requiredFields = stepForm.querySelectorAll('[required]');
+
+    clearValidation(requiredFields);
+
+    requiredFields.forEach(field => {
+        if (field.type === 'checkbox' && !field.checked) {
+            isValid = false;
+            field.classList.add('invalid');
+        } else if (field.type === 'radio') {
+            const radioGroup = stepForm.querySelectorAll(`input[name="${field.name}"]:checked`);
+            if (radioGroup.length === 0) {
+                isValid = false;
+                field.classList.add('invalid');
+            }
+        } else if (field.type === 'file' && field.files.length === 0) {
+            isValid = false;
+            field.classList.add('invalid');
+        } else if (field.tagName === 'SELECT' && (field.value === '' || field.value === '-1')) {
+            isValid = false;
+            field.classList.add('invalid');
+
+            // Find the closest div with class 'nice-select' and apply border
+            const niceSelectDiv = field.nextElementSibling; // Assuming the nice-select div is the next sibling
+            if (niceSelectDiv && niceSelectDiv.classList.contains('nice-select')) {
+                niceSelectDiv.style.border = '1px solid red'; // Example border style
+            }
+        }
+        else if (field.value.trim() === '') {
+            isValid = false;
+            field.classList.add('invalid');
+        } else if (field.id === 'Email' && !validateEmail(field.value)) {
+            isValid = false;
+            field.classList.add('invalid');
+        }
+    });
+
+    return isValid;
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+    return re.test(email.toLowerCase());
+}
+
+function clearValidation(elements) {
+    elements.forEach((el) => el.classList.remove('invalid'));
 }

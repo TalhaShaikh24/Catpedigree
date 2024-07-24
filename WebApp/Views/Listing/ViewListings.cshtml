@@ -31,6 +31,11 @@
                                     </select>
                                 </div>
                                 <div class="form_group">
+                                    <select class="wide" id="breedFilter" placeholder="Search By breed" name="breedFilter">
+                                        <option id="appendCatTypes" value="-1" selected disabled>Search By Breed (Cat Type)</option>
+                                    </select>
+                                </div>
+                                <div class="form_group">
                                     <input type="text" id="locationFilter" class="form_control" placeholder="Search By Location" name="locationFilter">
                                     <i class="ti-location-pin"></i>
                                 </div>
@@ -38,7 +43,7 @@
                                     <input type="text" id="stateFilter" class="form_control" placeholder="By State" name="stateFilter">
                                 </div>
                                 <div class="form_group">
-                                    <input type="text" id="cityFilter" class="form_control" placeholder="By State" name="cityFilter">
+                                    <input type="text" id="cityFilter" class="form_control" placeholder="By City" name="cityFilter">
                                 </div>
                             </div>
                             <div class="price-range-widget">
@@ -60,10 +65,9 @@
                         <div class="newsletter-widget-wrap bg_cover" style="background-image: url(assets/images/newsletter-widget-1.jpg);">
                             <i class="flaticon-email-1"></i>
                             <h3>
-                                Subscribe Our
-                                Newsletter
+                                Place Your Ad Here
                             </h3>
-                            <button class="main-btn icon-btn">Subscribe</button>
+                            <a href="/PromotionPackage/" class="main-btn icon-btn">Place Ad</a>
                         </div>
                     </div>
                 </div>
@@ -90,168 +94,4 @@
 
 
 
-
-<script>
-
-    let baseApiUrl = "";
-    let pageNumber = 1;
-    const pageSize = 8;
-    let varTotalCount = 0;
-    let varCurrentCount = 0;
-
-    // Get the URL parameters
-    let urlParams = new URLSearchParams(window.location.search);
-   
-    // Extract values from parameters and assign them to variables
-    let keyword = urlParams.get('keyword');
-    let categoryId = Number(urlParams.get('categoryId'));
-    let listingLocation = urlParams.get('listingLocation');
-
-    async function loadMore() {
-
-
-        var obj = {
-            PageNumber: pageNumber,
-            PageSize: pageSize,
-            CategoryId: categoryId,
-            Keyword: keyword,
-            Location: listingLocation
-
-        }
-
-        const response = await fetch('/Listing/GetAllListingByFilters', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        });
-        const data = await response.json();
-
-        if (data.data) {
-            const { listings, totalCount, currentCount } = data.data;
-            varTotalCount = totalCount;
-            varCurrentCount = currentCount;
-
-            // $('#appendListings').empty();
-            $.each(listings, function (index, item) {
-                
-                var html = `
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="listing-item listing-grid-item-two mb-30">
-                                <div class="listing-thumbnail">
-                                            <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
-                                </div>
-                                <div class="listing-content">
-                                    <h3 class="title">
-                                            <span class="status st-close">${item.categoryName}</span>
-                                            <a class="card-category" href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
-                                        <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
-                                    <div class="listing-meta">
-                                        <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location} ,${item.state} </span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                `;
-                $('#appendListings').append(html);
-                $("#load-more").show();
-            });
-
-
-            pageNumber++;
-            updateCountDisplay();
-
-            if (varCurrentCount >= varTotalCount) {
-                document.getElementById('load-more').style.display = 'none';
-            }
-        }
-        else {
-            $('#appendListings').append(`<h4>No Listing found..</h4>`);
-        }
-    }
-
-    async function filteringSearch() {
-
-        var sliderValues = $("#slider-range").slider("values");
-
-        var obj = {
-            PageNumber: 1,
-            PageSize: 40,
-            CategoryId: Number($("#categoryFilter").val()),
-            Keyword: $("#keywordFilter").val(),
-            Location: $("#locationFilter").val(),
-            State: $("#stateFilter").val(),
-            City: $("#cityFilter").val(),
-            PriceMin: sliderValues[0],
-            PriceMax: sliderValues[1]
-
-        }
-        debugger
-        const response = await fetch('/Listing/GetAllListingByFilters', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        });
-        const data = await response.json();
-
-        if (data.data) {
-            const { listings, totalCount, currentCount } = data.data;
-            varTotalCount = totalCount;
-            varCurrentCount = currentCount;
-
-            $('#appendListings').empty();
-
-            $.each(listings, function (index, item) {
-                
-                var html = `
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="listing-item listing-grid-item-two mb-30">
-                                <div class="listing-thumbnail">
-                                            <img src="${baseApiUrl+item.featureImagePath}" alt="Listing Image">
-                                </div>
-                                <div class="listing-content">
-                                    <h3 class="title">
-                                            <span class="status st-close">${item.categoryName}</span>
-                                            <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a></h3>
-                                        <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
-                                    <div class="listing-meta">
-                                        <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location} ,${item.state} </span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                `;
-                $('#appendListings').append(html);
-                $("#load-more").show();
-            });
-
-
-            pageNumber++;
-            updateCountDisplay();
-
-            if (varCurrentCount >= varTotalCount) {
-                document.getElementById('load-more').style.display = 'none';
-            }
-        }
-        else{
-            $('#appendListings').append(`<h4>No Listing found..</h4>`);
-        }
-    }
-
-    function updateCountDisplay() {
-        const countDisplay = document.getElementById('count-display');
-        countDisplay.textContent = `${varCurrentCount}/${varTotalCount}`;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        baseApiUrl = $("#baseApiUrl").val();
-        loadMore();
-    });
-</script>
+<script src="~/webassets/pagesjs/viewlistings.js"></script>

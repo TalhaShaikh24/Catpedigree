@@ -3,14 +3,97 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
+    $('#blogTags').select2({
+        tags: true
+    });
+
     $('#summernote').summernote({
         height:650
     });
 
+
+    GetAllBlogCategories();
     GetAllAdminBLogs();
 })
 
 
+function GetAllBlogCategories() {
+    postRequest('/Dashboard/GetAllBlogCategories', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+                $("#AppendCategories").empty();
+                $.each(res.data, function (i, v) {
+
+                    debugger
+                    $("#blogCategory").append(`
+                      <option value="${v.id}">${v.categoryName}</option>
+                      `);
+
+                });
+
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
 
 function GetAllAdminBLogs() {
     postRequest('/Dashboard/GetAllAdminBLogs', null, function (res) {
@@ -185,6 +268,8 @@ $("#Btn_BlogSubmit").click(function () {
 
     formData.append("Title", $("#title").val());
     formData.append("ShortDescription", $("#shortdescription").val());
+    formData.append("BlogCategoryId", $("#blogCategory").val());
+    formData.append("Tags", String($("#blogTags").val()));
     formData.append("Content", $('#summernote').summernote("code"));
     formData.append("FeatureImage", $("#featuredFile")[0].files[0]);
 

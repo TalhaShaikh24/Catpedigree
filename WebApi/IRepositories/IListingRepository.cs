@@ -7,6 +7,8 @@ namespace WebApi.IRepositories
     {
         Task<Listing> AddListing(Listing obj);
         List<Listing> GetHomePageListings();
+        List<Listing> GetTopPageListings();
+        List<Listing> GetVetRimmedPageListings();
         ListingResult GetAllListingByFilters(Listing obj);
 
         object GetAllDropdowns(int Id);
@@ -15,6 +17,7 @@ namespace WebApi.IRepositories
 
 
         List<Package> CheckListingShowValidation(int userId, int id);
+        List<CatTypes> GetAllCatType();
 
 
 

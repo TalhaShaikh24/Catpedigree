@@ -26,10 +26,21 @@
         display: block;
     }
 
-    .listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item:nth-child(1) img {
-        width: 100%;
-        height: 100%;
+    .listing-gallery-item:nth-child(1)  {
+        height: 450px !important;
     }
+     .listing-gallery-item:nth-child(1) img {
+        height: 450px !important;
+        object-fit: cover;
+    }
+
+    
+
+    .listing-gallery-item img {
+        height: 225px !important;
+        object-fit: cover;
+    }
+
     .listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item img {
         height: auto;
         max-width: 100%;
@@ -391,18 +402,37 @@
                     {
 
                     }
+                    
                     <div class="col-12">
 
                         <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Listing.Title</h2>
                         <div class="listingDetails-header">
                             <div class="page-header">
                                 <div class="photo-swip-gallery-wrap items-five">
-                                    <!-- Show the feature image -->
-                                    <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                        <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
-                                            <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
-                                        </a>
-                                    </div>
+                                    @{
+                                        if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
+                                        {
+                                            <!-- Show the Video if Available With Feature Image Thumbnail-->
+
+                                            <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+
+                                                <div class="listing-play-box wow fadeInUp" style="height:100%; visibility: visible; animation-name: fadeInUp;">
+                                                    <div class="play-content bg_cover text-center" style="border-radius:8px; background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
+                                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else{
+                                            <!-- Show the feature image -->
+                                        <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+                                            <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
+                                                <img loading="lazy" width="600" height="500" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                            </a>
+                                        </div>
+                                        }
+                                    }
+                                    
 
                                     <!-- Iterate over gallery images -->
                                     @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.GallaryImagesPath))
@@ -425,6 +455,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
+
 
                         @* Listing Title & Price *@
                         <div class="listing-details-head">
@@ -471,7 +502,7 @@
                             @* Listing Video *@
                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
                             {
-                                <div class="rtcl-single-listing-details video-box">
+                                <div class="rtcl-single-listing-details video-box d-none">
                                     <div class="rtcl-main-content-wrapper">
                                         <div class="accordion accordion-flush" id="petslist-map-accordion">
                                             <div class="accordion-item">
@@ -551,20 +582,20 @@
                                                             @Model.data.Listing.Color
                                                         </span>
                                                     </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-vaccination">
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-isCastration">
                                                         <span class="cfp-label">
-                                                            <span>Vaccination:</span>
+                                                            <span>Castration:</span>
                                                         </span>
                                                         <span class="cfp-value">
-                                                            @(Model.data.Listing.IsVaccinated ? "Yes" : "No")
+                                                            @(Model.data.Listing.IsCastration ? "Yes" : "No")
                                                         </span>
                                                     </li>
                                                     <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
                                                         <span class="cfp-label">
-                                                            <span>Weight:</span>
+                                                            <span>Sterilization:</span>
                                                         </span>
                                                         <span class="cfp-value">
-                                                            @Model.data.Listing.Weigth g
+                                                            @(Model.data.Listing.IsSterilization ? "Yes" : "No")
                                                         </span>
                                                     </li>
                                                     <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">

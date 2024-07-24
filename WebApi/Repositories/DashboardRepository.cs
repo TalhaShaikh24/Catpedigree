@@ -296,12 +296,27 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<string>(@"[dbo].[sp_GetAllBreederLicenseGallary]", parameters);
             return data;
         }
+        public List<string> GetAllVideosGallery()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<string>(@"[dbo].[sp_GetAllVideosGallery]", parameters);
+            return data;
+        }
 
         public int DeleteListingById(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Get<int>(@"[dbo].[sp_DeleteListingById]", parameters);
+            return data;
+        }
+
+        public List<Register> GetAllUsers()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Register>(@"[sp_GetAllUsers]", parameters);
+
             return data;
         }
     }

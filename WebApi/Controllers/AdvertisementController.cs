@@ -29,7 +29,6 @@ namespace WebApi.Controllers
         {
             _repository = repository;
             _accountRepository = accountRepository;
-
             _stripeServices = stripeServices;
         }
 
@@ -73,8 +72,6 @@ namespace WebApi.Controllers
         }
 
 
-
-
         [HttpPost("GetAdvertisementPackage")]
         public Response GetAdvertisementPackage()
         {
@@ -115,8 +112,6 @@ namespace WebApi.Controllers
                 return response;
             }
         }
-
-
 
 
         [HttpPost("BuyAdvertisementPackage")]
@@ -207,9 +202,6 @@ namespace WebApi.Controllers
         }
 
 
-
-
-
         [HttpPost("UserAdvertisementPackages")]
         public Response UserAdvertisementPackages()
         {
@@ -251,7 +243,6 @@ namespace WebApi.Controllers
                 return response;
             }
         }
-
 
 
         [HttpPost("GetallUserAdvertisementForApprovals")]
@@ -342,7 +333,6 @@ namespace WebApi.Controllers
 
 
         [HttpPost("UtilizePurchasedAdvertisementPackage")]
-
         public async Task<Response> UtilizePurchasedAdvertisementPackage([FromForm] UtilizePurchasedAdvertisementPackage obj)
         {
 

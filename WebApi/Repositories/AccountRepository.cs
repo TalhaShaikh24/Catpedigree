@@ -23,7 +23,7 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-
+        
         public Register Authenticate(Register obj)
         {
 
@@ -33,6 +33,26 @@ namespace WebApi.Repositories
 
             var data = _dapper.Get<Register>(@"[sp_Login]", parameters);
 
+            return data;
+        }
+
+        public  ForgotPassword ForgotPassword(ForgotPassword obj)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Email", obj.Email, DbType.String, ParameterDirection.Input);
+
+            var data =  _dapper.Get<ForgotPassword>(@"[sp_ForgotPassword]", parameters);
+
+            return data;
+        }
+        public  ForgotPassword ResetPassword(ForgotPassword obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Email", obj.Email, DbType.String, ParameterDirection.Input);
+            parameters.Add("@VerifyCode", obj.VerificationCode, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Password", obj.Password, DbType.String, ParameterDirection.Input);
+            var data =  _dapper.Get<ForgotPassword>(@"[sp_ResetPassword]", parameters);
             return data;
         }
 
@@ -108,7 +128,6 @@ namespace WebApi.Repositories
                 throw; // Rethrow the exception to notify the caller about the error
             }
         }
-
 
 
     }

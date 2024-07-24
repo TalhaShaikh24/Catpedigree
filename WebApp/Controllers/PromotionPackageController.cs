@@ -22,7 +22,7 @@ namespace WebApp.Controllers
         public Task<object> GetAllPromotionPackages()
         {
             string content = "";
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/PromotionPackage/GetAllPromotionPackages", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/PromotionPackage/GetAllPromotionPackages", content, HttpContext);
         }
 
 

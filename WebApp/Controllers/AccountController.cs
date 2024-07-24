@@ -15,7 +15,7 @@ namespace WebApp.Controllers
             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
 
         }
-
+       
         [HttpPost]
         public Task<object> Authenticate([FromBody] Register obj)
         {
@@ -34,6 +34,37 @@ namespace WebApp.Controllers
             try
             {
                 return HttpClientUtility.CustomHttpIfile(BaseUrl, "api/Account/RegisterUser", obj, HttpContext);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
+        [HttpPost]
+        public Task<object> ForgotPassword([FromBody] ForgotPassword obj)
+        {
+
+            string content = JsonConvert.SerializeObject(obj);
+            try
+            {
+                return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Account/ForgotPassword", content, HttpContext);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public Task<object> ResetPassword([FromBody] ForgotPassword obj)
+        {
+
+            string content = JsonConvert.SerializeObject(obj);
+            try
+            {
+                return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Account/ResetPassword", content, HttpContext);
             }
             catch (Exception)
             {

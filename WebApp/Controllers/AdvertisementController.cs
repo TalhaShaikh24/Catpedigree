@@ -6,6 +6,13 @@ namespace WebApp.Controllers
     public class AdvertisementController : Controller
     {
         private string BaseUrl = "";
+
+        public IActionResult AdvertisementPackages()
+        {
+            return View();
+        }
+
+
         public AdvertisementController(IConfiguration configuration)
         {
             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
@@ -20,5 +27,14 @@ namespace WebApp.Controllers
             return data;
 
         }
-    }
+
+		
+		public Task<object> GetAdvertisementPackage()
+		{
+			var content = "";
+
+			return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
+
+		}
+	}
 }

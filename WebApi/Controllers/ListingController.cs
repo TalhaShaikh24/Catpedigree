@@ -154,6 +154,89 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost("GetTopPageListings")]
+        public Response GetTopPageListings()
+        {
+            Response response = new Response();
+
+       
+
+            try
+            {
+
+
+                var res = _listing.GetTopPageListings();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+                    return response;
+                }
+
+
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
+        }
+        [HttpPost("GetVetRimmedPageListings")]
+        public Response GetVetRimmedPageListings()
+        {
+            Response response = new Response();
+
+       
+
+            try
+            {
+
+
+                var res = _listing.GetVetRimmedPageListings();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = null;
+                    response.Data = res;
+                    return response;
+                }
+
+
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                return response;
+            }
+        }
+
 		[HttpPost("GetAllCategoriesByPackageId/{pkgId}")]
         public Response GetAllCategoriesByPackageId(int pkgId)
         {
@@ -314,6 +397,43 @@ namespace WebApi.Controllers
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+         [HttpPost("GetAllCatType")]
+        public Response GetAllCatType()
+        {
+            
+            Response response = new Response();
+
+            try
+            {
+                
+                var res = _listing.GetAllCatType();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.ResponseMsg = "Data fetched successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
                 return response;
             }

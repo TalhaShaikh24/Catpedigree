@@ -95,6 +95,8 @@ namespace WebApi.Repositories
             parameters.Add("Price", obj.Price, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("Color", obj.Color, DbType.String, ParameterDirection.Input);
             parameters.Add("IsVaccinated", obj.IsVaccinated, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("IsCastration", obj.IsCastration, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("IsSterilization", obj.IsSterilization, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("VideoPath", obj.VideoPath, DbType.String, ParameterDirection.Input);
             parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
@@ -102,7 +104,7 @@ namespace WebApi.Repositories
             parameters.Add("@Age", obj.Age, DbType.String, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("IsActive", true, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("IsActive", false, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PromotionPackageId", obj.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
@@ -121,9 +123,13 @@ namespace WebApi.Repositories
 			DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@PageNumber", obj.PageNumber);
 			parameters.Add("@PageSize", obj.PageSize);
-			parameters.Add("@Keyword", obj.Keyword);
+			parameters.Add("@Keyword", obj.Keyword == "" ? null : obj.Keyword);
 			parameters.Add("@CategoryId", obj.CategoryId==0?null:obj.CategoryId);
-			parameters.Add("@Location", obj.Location);
+			parameters.Add("@Location", obj.Location == "" ? null : obj.Location);
+			parameters.Add("@State", obj.State == "" ? null : obj.State);
+			parameters.Add("@City", obj.City == "" ? null : obj.City);
+			parameters.Add("@ZipCode", obj.ZipCode == "" ? null : obj.ZipCode);
+			parameters.Add("@TypeOfCat", obj.TypeOfCat == 0 ? null : obj.TypeOfCat);
 
 			var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllListingByFilters]", parameters).ToList();
 			int totalCount = data.Any() ? data.First().TotalCount : 0;
@@ -143,6 +149,27 @@ namespace WebApi.Repositories
             DynamicParameters parameters = new DynamicParameters();
 
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetHomePageListings]", parameters);
+            return data;
+        }
+		public List<Listing> GetTopPageListings()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetTopHomePageListings]", parameters);
+            return data;
+        }
+		public List<Listing> GetVetRimmedPageListings()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetVetandRimmedHomePageListings]", parameters);
+            return data;
+        }
+		public List<CatTypes> GetAllCatType()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<CatTypes>(@"[dbo].[sp_GetAllCatType]", parameters);
             return data;
         }
       

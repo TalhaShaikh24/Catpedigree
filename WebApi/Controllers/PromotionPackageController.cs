@@ -36,13 +36,13 @@ namespace WebApi.Controllers
         [HttpPost("GetAllPromotionPackages")]
         public Response GetAllPromotionPackages()
         {
-            Register claimDTO = null;
+           
             Response response = new Response();
 
             try
             {
-                claimDTO = TokenManager.GetValidateToken(Request);
-                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                
+                
                
                 var res = _repository.GetAllPromotionPackages();
 
@@ -50,8 +50,6 @@ namespace WebApi.Controllers
 
 
                     response = CustomStatusResponse.GetResponse(320);
-                           response.Token = TokenManager.GenerateToken(claimDTO);
-
                     return response;
                 }
 
@@ -59,10 +57,8 @@ namespace WebApi.Controllers
                 {
 
                     response = CustomStatusResponse.GetResponse(200);
-
                     response.ResponseMsg = "Successfuly!";
                     response.Data = res;
-                    response.Token = TokenManager.GenerateToken(claimDTO);
                     return response;
                 }
             }
@@ -70,14 +66,12 @@ namespace WebApi.Controllers
             {
                 response = CustomStatusResponse.GetResponse(600);
                 response.ResponseMsg = ex.Message;
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = ex.Message;
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
 

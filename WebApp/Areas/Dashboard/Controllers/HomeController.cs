@@ -20,6 +20,14 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+		
+		[Route("Dashboard/Users")]
+        public IActionResult Users()
+        {
+            return View();
+        }
+
+        
         [Route("Dashboard/MyListing")]
         public IActionResult MyListing()
         {
@@ -62,6 +70,12 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         [Route("Dashboard/Blog")]
         public IActionResult Blog()
+        {
+            return View();
+        }
+        
+        [Route("Dashboard/BlogCategories")]
+        public IActionResult BlogCategories()
         {
             return View();
         }
@@ -123,6 +137,12 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
             return View();
         }
+        
+        [HttpGet("Dashboard/VideoGallery")]
+        public IActionResult VideoGallery()
+        {
+            return View();
+        }
 
 
 
@@ -151,6 +171,15 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllBreederLicense", "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllVideosGallery")]
+        public Task<object> GetAllVideosGallery()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllVideosGallery", "", HttpContext);
 
         }
 
@@ -289,6 +318,24 @@ namespace WebApp.Areas.Dashboard.Controllers
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllAdminBLogs", "", HttpContext);
         }
+
+		[HttpPost]
+		[Route("Dashboard/GetAllBlogCategories")]
+		public Task<object> GetAllBlogCategories()
+		{
+
+			return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllBlogCategories", "", HttpContext);
+		}
+
+
+		[HttpPost]
+        [Route("Dashboard/AddBlogCategory")]
+        public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
+
+        }       
 
         [HttpPost]
         [Route("Dashboard/AddBlog")]
@@ -458,6 +505,17 @@ namespace WebApp.Areas.Dashboard.Controllers
         {;
 
             return HttpClientUtility.CustomHttpUtilizeAdvertisementPackage(BaseUrl, "api/Advertisement/UtilizePurchasedAdvertisementPackage", obj, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllUsers")]
+        public Task<object> GetAllUsers()
+        {
+
+            string content = "";
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllUsers", content, HttpContext);
 
         }
 

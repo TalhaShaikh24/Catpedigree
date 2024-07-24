@@ -5,6 +5,19 @@
         height: calc(2.25rem + 7px) !important;
     }
 
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #ef314c;
+        border: 1px solid #ef314c;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: white;
+    }
+
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border: solid #ced4da 1px;
+        outline: 0;
+    }
 </style>
 
 
@@ -26,11 +39,23 @@
                             <input type="text" class="form-control" id="title" placeholder="Enter Title">
                         </div>
                     </div>
-
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" id="blogCategory" placeholder="Select Category"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Short Description</label>
                             <input type="text" class="form-control" id="shortdescription" placeholder="Enter Short Description">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <select class="form-control" id="blogTags" placeholder="Enter Tags" multiple></select>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,27 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
+		public List<BlogCategories> GetAllBlogCategories()
+		{
+			DynamicParameters parameters = new DynamicParameters();
+			var data = _dapper.GetAll<BlogCategories>(@"[sp_GetAllBlogCategories]", parameters);
 
+			return data;
+		}
+		public async Task<BlogCategories> AddBlogCategory(BlogCategories obj)
+        {
+
+          
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@CategoryName", obj.CategoryName, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Description", obj.Description, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CreatedOn", DateTime.Now, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<BlogCategories>(@"[sp_AddBlogCategory]", parameters);
+
+            return data;
+        }  
         public async Task<Blog> AddBlog(Blog obj)
         {
 
@@ -45,6 +65,8 @@ namespace WebApi.Repositories
             parameters.Add("@ShortDescription", obj.ShortDescription, DbType.String, ParameterDirection.Input);
             parameters.Add("@FeatureImagePath", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("@Content", obj.Content, DbType.String, ParameterDirection.Input);
+            parameters.Add("@BlogCategoryId", obj.BlogCategoryId, DbType.Int64, ParameterDirection.Input);
+            parameters.Add("@Tags", obj.Tags, DbType.String, ParameterDirection.Input);
             parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Get<Blog>(@"[sp_AddBlog]", parameters);
@@ -74,6 +96,8 @@ namespace WebApi.Repositories
             parameters.Add("@ShortDescription", obj.ShortDescription, DbType.String, ParameterDirection.Input);
             parameters.Add("@FeatureImagePath", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("@Content", obj.Content, DbType.String, ParameterDirection.Input);
+            parameters.Add("@BlogCategoryId", obj.BlogCategoryId, DbType.Int64, ParameterDirection.Input);
+            parameters.Add("@Tags", obj.Tags, DbType.String, ParameterDirection.Input);
             parameters.Add("@ModifiedBy", obj.ModifiedBy, DbType.Int32, ParameterDirection.Input);
 
             var data = _dapper.Get<Blog>(@"[sp_UpdateBlog]", parameters);
@@ -136,6 +160,8 @@ namespace WebApi.Repositories
             return data;
         }
       
+       
+        
         public List<Blog> GetAllBlogs()
         {
               DynamicParameters parameters = new DynamicParameters();

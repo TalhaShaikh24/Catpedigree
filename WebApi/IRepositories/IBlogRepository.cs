@@ -10,9 +10,11 @@ namespace WebApi.IRepositories
 {
     public interface IBlogRepository
     {
+        Task<BlogCategories> AddBlogCategory(BlogCategories obj);
         Task<Blog> AddBlog(Blog obj);
         Task<Blog> UpdateBlog(Blog obj);
         List<Blog> GetHomePageBlogs();
+        List<BlogCategories> GetAllBlogCategories();
         List<Blog> GetAllBlogs();
         object GetAllBlogDetails(int Id);
         List<Comment> GetAllCommentsByBlogId(int Id);

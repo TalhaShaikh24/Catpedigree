@@ -660,6 +660,35 @@ namespace WebApp.HttpMethods
                     return null;
             }
         }
+        public static async Task<object> CustomHttpWithoutTokenBool(string BaseUrl, string Url, bool content, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Convert bool content to JSON string
+                string jsonContent = JsonConvert.SerializeObject(content);
+
+                // Create request with JSON content
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Send request and get response
+                HttpResponseMessage Res = await client.SendAsync(request);
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = await Res.Content.ReadAsStringAsync();
+                    return response;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
 
         public static async Task<object> CustomHttpBlog(string baseUrl, string url, Blog obj, HttpContext httpContext)
         {
