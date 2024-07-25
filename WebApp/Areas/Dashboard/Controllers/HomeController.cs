@@ -328,14 +328,14 @@ namespace WebApp.Areas.Dashboard.Controllers
 		}
 
 
-		[HttpPost]
-        [Route("Dashboard/AddBlogCategory")]
-        public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
-        {
-            var content = JsonConvert.SerializeObject(obj);
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
+		//[HttpPost]
+  //      [Route("Dashboard/AddBlogCategory")]
+  //      public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
+  //      {
+  //          var content = JsonConvert.SerializeObject(obj);
+  //          return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
 
-        }       
+  //      }       
 
         [HttpPost]
         [Route("Dashboard/AddBlog")]

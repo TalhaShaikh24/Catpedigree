@@ -502,28 +502,30 @@ namespace WebApp.HttpMethods
 
                 var multiContent = new MultipartFormDataContent();
 
-                    multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
-                    multiContent.Add(new StringContent(obj.Id.ToString()??"0"), "Id");
-                    multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
-                    multiContent.Add(new StringContent(obj.Location ?? ""), "Location");
-                    multiContent.Add(new StringContent(obj.State ?? ""), "State");
-                    multiContent.Add(new StringContent(obj.City ?? ""), "City");
-                    multiContent.Add(new StringContent(obj.Gender ?? ""), "Gender");
-                    multiContent.Add(new StringContent(obj.Phone ?? ""), "Phone");
-                    multiContent.Add(new StringContent(obj.Email ?? ""), "Email");
-                    multiContent.Add(new StringContent(obj.BreerderName ?? ""), "BreerderName");
-                    multiContent.Add(new StringContent(obj.TypeOfCat.ToString() ?? ""), "TypeOfCat");
-                    multiContent.Add(new StringContent(obj.Age.ToString() ?? ""), "Age");
-                    multiContent.Add(new StringContent(obj.PackageId.ToString() ?? ""), "PackageId");
-                    multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
-                    multiContent.Add(new StringContent(obj.IsBreerderLicenseUpload.ToString() ?? ""), "IsBreerderLicenseUpload");
-                    multiContent.Add(new StringContent(obj.ZoologicalNumber.ToString() ?? ""), "ZoologicalNumber");
-                    multiContent.Add(new StringContent(obj.Description ?? ""), "Description");
-                    multiContent.Add(new StringContent(obj.Weigth.ToString() ?? ""), "Weigth");
-                    multiContent.Add(new StringContent(obj.Price.ToString() ?? ""), "Price");
-                    multiContent.Add(new StringContent(obj.Color ?? ""), "Color");
-                    multiContent.Add(new StringContent(obj.IsVaccinated.ToString() ?? ""), "IsVaccinated");
-                    multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
+                multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
+                multiContent.Add(new StringContent(obj.Id.ToString() ?? "0"), "Id");
+                multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
+                multiContent.Add(new StringContent(obj.Location ?? ""), "Location");
+                multiContent.Add(new StringContent(obj.State ?? ""), "State");
+                multiContent.Add(new StringContent(obj.City ?? ""), "City");
+                multiContent.Add(new StringContent(obj.Gender ?? ""), "Gender");
+                multiContent.Add(new StringContent(obj.Phone ?? ""), "Phone");
+                multiContent.Add(new StringContent(obj.Email ?? ""), "Email");
+                multiContent.Add(new StringContent(obj.BreerderName ?? ""), "BreerderName");
+                multiContent.Add(new StringContent(obj.TypeOfCat.ToString() ?? ""), "TypeOfCat");
+                multiContent.Add(new StringContent(obj.Age.ToString() ?? ""), "Age");
+                multiContent.Add(new StringContent(obj.PackageId.ToString() ?? ""), "PackageId");
+                multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
+                multiContent.Add(new StringContent(obj.IsBreerderLicenseUpload.ToString() ?? ""), "IsBreerderLicenseUpload");
+                multiContent.Add(new StringContent(obj.ZoologicalNumber.ToString() ?? ""), "ZoologicalNumber");
+                multiContent.Add(new StringContent(obj.Description ?? ""), "Description");
+                multiContent.Add(new StringContent(obj.Weigth.ToString() ?? ""), "Weigth");
+                multiContent.Add(new StringContent(obj.Price.ToString() ?? ""), "Price");
+                multiContent.Add(new StringContent(obj.Color ?? ""), "Color");
+                multiContent.Add(new StringContent(obj.IsVaccinated.ToString()), "IsVaccinated");
+                multiContent.Add(new StringContent(obj.IsCastration.ToString()), "IsCastration");
+                multiContent.Add(new StringContent(obj.IsSterilization.ToString()), "IsSterilization");
+                multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
 
 
                 if (obj.GalleryImageFiles != null)

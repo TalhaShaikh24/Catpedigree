@@ -18,11 +18,11 @@ namespace ClassLibrary
         public string? ZipCode { get; set; }
         public bool? IsBreerderLicenseUpload { get; set; }
         public string? Phone { get; set; }
-        public string? Email { get; set; }
+        public new string? Email { get; set; }
         public string? BreerderName { get; set; }
         public int TypeOfCat { get; set; }
         public string? CatType { get; set; }
-        public bool? ZoologicalNumber { get; set; }
+        public new bool? ZoologicalNumber { get; set; }
         public string? Gender { get; set; }
         public string? Description { get; set; }
         public string? PedigreeFilePath { get; set; }
@@ -40,8 +40,8 @@ namespace ClassLibrary
         public bool? IsActive { get; set; }
         public new int CreatedBy { get; set; }
         public new DateTime? CreatedOn { get; set; }
-        public int ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public new int? ModifiedBy { get; set; }
+        public new DateTime? ModifiedOn { get; set; }
         public bool? IsExpired { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public int TotalCount { get; set; }
@@ -80,13 +80,12 @@ namespace ClassLibrary
         public string? CatType { get; set; }
     }
 
-
     public class Category:Register
     {
         public int Id { get; set; }
         public string? CategoryName { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public int? CreatedBy { get; set; }
+        public new DateTime? CreatedOn { get; set; }
+        public new int? CreatedBy { get; set; }
     }
 
 

@@ -93,129 +93,6 @@ const GalleryView = () => {
 };
 
 
-$("#Btn_Post_Listing").click(function () {
-
-   
-    let formData = new FormData();
-
-    for (let i = 0; i < filesToUpload.length; i++) {
-
-        formData.append("GalleryImageFiles", filesToUpload[i].file);
-    }
-
-    if ($('body').find('#PedigreeFile').length > 0) {
-
-        formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
-    }
-
-
-
-    formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
-    formData.append("VideoFile", $("#VideoFile")[0].files[0]);
-    formData.append("CategoryId", Number($("#Category").val()));
-    formData.append("Title", $("#Title").val());
-    formData.append("Location", $("#Location").val());
-    formData.append("State", $("#State").val());
-    formData.append("City", $("#City").val());
-    formData.append("ZipCode", $("#ZipCode").val());
-    formData.append("PackageId", Number($("#PackageId").val()));
-    formData.append("Gender", $("#Gender").val());
-    formData.append("Phone", $("#Phone").val());
-    formData.append("Email", $("#Email").val());
-    formData.append("BreerderName", $("#BreerderName").val());
-    formData.append("TypeOfCat", Number($("#TypeOfCat").val()));
-    formData.append("Age", $("#Age").val());
-    formData.append("IsBreerderLicenseUpload", Boolean($('input[type=radio][name=IsBreerderLicenseUpload]:checked').val()));
-    formData.append("ZoologicalNumber", Boolean($("#ZoologicalNumber").val()));
-    formData.append("Description", $("#Description").val());
-    formData.append("Color", $("#Color").val());
-    formData.append("IsVaccinated",0);
-    formData.append("IsCastration", Boolean($('input[name="IsCastration"]:checked').val()));
-    formData.append("IsSterilization", Boolean($('input[name="IsSterilization"]:checked').val()));
-    formData.append("Price", $('#Price').val());
-    formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
-
-    FilePostRequest('/Listing/AddListting', formData, function (res) {
-
-        if (res.status == 200) {
-
-            if (res.data != null) {
-
-                Swal.fire({
-                    title: "Congrats",
-                    text: res.responseMsg,
-                    icon: "success"
-                })
-                //    .then(() => {
-                //    redirectToHome();
-                //});
-
-                //$(document).find("input").val(null);
-                //$(document).find("select").val(null).niceSelect('update');
-                //GetAllDropdowns();
-            }
-        }
-        if (res.status == 304) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
-    });
-
-})
-
-
 $("#PackageId").change(function () {
 
     var pkgId = Number($(this).val());
@@ -557,6 +434,131 @@ function GetAllCategoriesByPackageId(pkgId) {
 function redirectToHome() {
     window.location.href = window.location.origin+"/Dashboard";
 }
+
+$("#Btn_Post_Listing").click(function () {
+
+    debugger
+
+    let formData = new FormData();
+
+    for (let i = 0; i < filesToUpload.length; i++) {
+
+        formData.append("GalleryImageFiles", filesToUpload[i].file);
+    }
+
+    if ($('body').find('#PedigreeFile').length > 0) {
+
+        formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
+    }
+
+
+
+    formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
+    formData.append("VideoFile", $("#VideoFile")[0].files[0]);
+    formData.append("CategoryId", Number($("#Category").val()));
+    formData.append("Title", $("#Title").val());
+    formData.append("Location", $("#Location").val());
+    formData.append("State", $("#State").val());
+    formData.append("City", $("#City").val());
+    formData.append("ZipCode", $("#ZipCode").val());
+    formData.append("PackageId", Number($("#PackageId").val()));
+    formData.append("Gender", $("#Gender").val());
+    formData.append("Phone", $("#Phone").val());
+    formData.append("Email", $("#Email").val());
+    formData.append("BreerderName", $("#BreerderName").val());
+    formData.append("TypeOfCat", Number($("#TypeOfCat").val()));
+    formData.append("Age", $("#Age").val());
+    formData.append("IsBreerderLicenseUpload",$('input[type=radio][name=IsBreerderLicenseUpload]:checked').val() == 'true' ? true : false);
+    formData.append("ZoologicalNumber",$('input[type=checkbox][id=ZoologicalNumber]:checked').val() == 'true' ? true : false);
+    formData.append("Description", $("#Description").val());
+    formData.append("Color", $("#Color").val());
+    formData.append("IsVaccinated", 0);
+    formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
+    formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
+    formData.append("Price", $('#Price').val());
+    formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
+
+    FilePostRequest('/Listing/AddListting', formData, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+                Swal.fire({
+                    title: "Congrats",
+                    text: res.responseMsg,
+                    icon: "success"
+                })
+                //    .then(() => {
+                //    redirectToHome();
+                //});
+
+                //$(document).find("input").val(null);
+                //$(document).find("select").val(null).niceSelect('update');
+                //GetAllDropdowns();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+})
+
+
 
 function postRequest(url, requestData, handledata) {
     $.ajax({
