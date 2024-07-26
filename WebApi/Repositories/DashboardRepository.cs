@@ -137,10 +137,10 @@ namespace WebApi.Repositories
             parameters.Add("@ZoologicalNumber", obj.ZoologicalNumber, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("@Gender", obj.Gender, DbType.String, ParameterDirection.Input);
             parameters.Add("@Description", obj.Description, DbType.String, ParameterDirection.Input);
-            parameters.Add("Weigth", obj.Weigth, DbType.Decimal, ParameterDirection.Input);
+           // parameters.Add("Weigth", obj.Weigth, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("Price", obj.Price, DbType.Decimal, ParameterDirection.Input);
-            parameters.Add("Color", obj.Color, DbType.String, ParameterDirection.Input);
-            parameters.Add("IsVaccinated", obj.IsVaccinated, DbType.Boolean, ParameterDirection.Input);
+           // parameters.Add("Color", obj.Color, DbType.String, ParameterDirection.Input);
+           parameters.Add("IsVaccinated", obj.IsVaccinated, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("VideoPath", obj.VideoPath, DbType.String, ParameterDirection.Input);
             parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
@@ -150,6 +150,13 @@ namespace WebApi.Repositories
             parameters.Add("@PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@IsActive", false, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("@ModifiedBy", obj.ModifiedBy, DbType.Int32, ParameterDirection.Input);
+            
+            parameters.Add("IsCastration", obj.IsCastration, DbType.Boolean, ParameterDirection.Input);
+
+            parameters.Add("IsSterilization", obj.IsSterilization, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("CatteryName", obj.CatteryName, DbType.String, ParameterDirection.Input);
+
+
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);
             return data;
         }

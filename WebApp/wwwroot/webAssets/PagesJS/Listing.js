@@ -477,6 +477,7 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
     formData.append("Price", $('#Price').val());
     formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
+    formData.append("CatteryName", $('#CatteryName').val());
 
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 

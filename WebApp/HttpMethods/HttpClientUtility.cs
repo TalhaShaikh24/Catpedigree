@@ -526,6 +526,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.IsCastration.ToString()), "IsCastration");
                 multiContent.Add(new StringContent(obj.IsSterilization.ToString()), "IsSterilization");
                 multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
+                multiContent.Add(new StringContent(obj.CatteryName ?? ""), "CatteryName");
 
 
                 if (obj.GalleryImageFiles != null)

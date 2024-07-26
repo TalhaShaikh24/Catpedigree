@@ -166,6 +166,7 @@ function GetAllMyListings() {
                                            <td>${v.categoryId}</td>
                                            <td>${v.packageId}</td>
                                             <td>${v.promotionName}</td>
+                                            <td>${v.catteryName}</td>
                                            <td>${v.isActive}</td>
                                            <td>${v.createdBy}</td>
                                            <td>${v.createdOn}</td>
@@ -354,12 +355,17 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Price").val(res.data.price);
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
+
+
+                //update code changes 
+                if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
+                if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
+
+                $("#CatteryName").val(res.data.catteryName);
                 debugger
 
                 if (res.data.pedigreeFilePath != null) {
                     $.each(res.data.pedigreeFilePath.split(","), function (i, v) {
-
-                        debugger
 
                         var Path = baseApiUrl + v.replace(/\\/g, "/");
 
@@ -756,10 +762,15 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
     formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
     formData.append("Description", $("#Description").val());
-    formData.append("Weigth", $("#Weigth").val());
-    formData.append("Color", $("#Color").val());
-    formData.append("IsVaccinated", $('input[name="IsVaccinated"]:checked').val());
+  //  formData.append("Weigth", $("#Weigth").val());
+  //  formData.append("Color", $("#Color").val());
+  //  formData.append("IsVaccinated", $('input[name="IsVaccinated"]:checked').val());
     formData.append("Price", $('#Price').val());
+
+    //update code changes 
+    formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
+    formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
+    formData.append("CatteryName", $('#CatteryName').val());
 
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 

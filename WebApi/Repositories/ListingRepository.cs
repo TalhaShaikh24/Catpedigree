@@ -107,6 +107,7 @@ namespace WebApi.Repositories
             parameters.Add("IsActive", false, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PromotionPackageId", obj.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("CatteryName", obj.CatteryName, DbType.String, ParameterDirection.Input);
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
             return data;
         }
