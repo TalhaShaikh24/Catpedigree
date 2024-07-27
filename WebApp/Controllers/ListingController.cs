@@ -2,6 +2,7 @@
 using ClassLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Web;
 using WebApp.HttpMethods;
 
@@ -17,12 +18,30 @@ namespace WebApp.Controllers
 
         }
 
-        public IActionResult Index(string tokens)
+        public async Task<IActionResult> Index(string tokens)
         {
             var token = HttpContext.Request.Cookies["authorization"];
 
             if (!string.IsNullOrEmpty(token))
             {
+
+                var data = await HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Listing/GetAllDropdowns", "", HttpContext);
+
+                if (data != null && data is string jsonString && !string.IsNullOrWhiteSpace(jsonString))
+                {
+                    // Assuming 'data' is a JSON string, deserialize it to a response object.
+                    JObject jsonObject = JObject.Parse(jsonString);
+
+                    // Extract the 'item3' from the 'data' object
+                    var items = jsonObject["data"]["item3"] as JArray;
+                    // Check if item3 has any data
+                    if (items.Count<1)
+                    {
+                        // Redirect to another view if item3 contains data
+                        return RedirectToAction("Pricing", "Packages");
+                    }
+                }
+
                 return View();
             }
             else
@@ -30,7 +49,6 @@ namespace WebApp.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-
 
         public IActionResult ViewListings()
         {

@@ -97,7 +97,7 @@ $("#PackageId").change(function () {
 
     var pkgId = Number($(this).val());
     GetAllCategoriesByPackageId(pkgId);
-  
+
 });
 $("#Category").change(function (e) {
     if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
@@ -151,7 +151,7 @@ function GetAllDropdowns() {
 
                 $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
-                
+
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
 
                 $.each(res.data.item3, function (i, v) {
@@ -165,7 +165,7 @@ function GetAllDropdowns() {
                 //$.each(res.data.item1, function (i, v) {
                 //    $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
                 //});
-
+                debugger;
                 if (res.data.item4.length > 0) {
                     $.each(res.data.item4, function (i, v) {
                         $("#PromotionPackageId").append(`<option value="${v.promotionPackagesID}">${v.name}</option>`);
@@ -174,10 +174,11 @@ function GetAllDropdowns() {
                 else {
                     $("#PromotionPackageId").append(`<option value="-1" disabled>You have no Promotion Package</option>`);
                 }
-               
 
 
-                $('select').niceSelect('update');
+
+                $('select').niceSelect('destroy');
+                $('select').niceSelect();
 
 
             }
@@ -251,13 +252,11 @@ $(document).on('change', '#VideoFile', function (e) {
 
             if (res.data != null) {
 
-                if (res.data)
-                {
+                if (res.data) {
 
 
                 }
-                else
-                {
+                else {
 
                     e.target.value = null;
 
@@ -361,7 +360,7 @@ $('#showpromotionpackage').change(function () {
 function GetAllCategoriesByPackageId(pkgId) {
     postRequest('/Listing/GetAllCategoriesByPackageId?pkgId=' + pkgId, null, function (res) {
 
-        if (res.status == 200 && res.data!=null) {
+        if (res.status == 200 && res.data != null) {
             $("#Category").empty();
             $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
             $.each(res.data, function (i, v) {
@@ -432,7 +431,7 @@ function GetAllCategoriesByPackageId(pkgId) {
 }
 
 function redirectToHome() {
-    window.location.href = window.location.origin+"/Dashboard";
+    window.location.href = window.location.origin + "/Dashboard";
 }
 
 $("#Btn_Post_Listing").click(function () {
@@ -468,8 +467,8 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("BreerderName", $("#BreerderName").val());
     formData.append("TypeOfCat", Number($("#TypeOfCat").val()));
     formData.append("Age", $("#Age").val());
-    formData.append("IsBreerderLicenseUpload",$('input[type=radio][name=IsBreerderLicenseUpload]:checked').val() == 'true' ? true : false);
-    formData.append("ZoologicalNumber",$('input[type=checkbox][id=ZoologicalNumber]:checked').val() == 'true' ? true : false);
+    formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val() == 'true' ? true : false);
+    formData.append("ZoologicalNumber", $('input[type=checkbox][id=ZoologicalNumber]:checked').val() == 'true' ? true : false);
     formData.append("Description", $("#Description").val());
     formData.append("Color", $("#Color").val());
     formData.append("IsVaccinated", 0);

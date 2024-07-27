@@ -3155,7 +3155,7 @@ h3.title {
   margin-bottom: 35px; }
 
  .listing-play-box .play-content {
-  padding: 160px 0;
+  /*padding: 160px 0;*/
   position: relative;
   z-index: 1; }
   .listing-play-box .play-content:after {

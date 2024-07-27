@@ -16,7 +16,7 @@ function GetAllListings() {
         if (res.status == 200) {
 
             if (res.data != null) {
-
+                $('#TableApprovalListing').DataTable().destroy();
                 $("#AppendApprovalListing").empty();
                 $.each(res.data, function (i, v) {
 
@@ -39,16 +39,15 @@ function GetAllListings() {
                                                    <td>${v.zoologicalNumber}</td>
                                                    <td>${v.categoryId}</td>
                                                    <td>${v.packageId}</td>
-
-                                            <td>${v.promotionName}</td>
+                                                   <td>${v.promotionName}</td>
                                                    <td>${v.isActive}</td>
                                                    <td>${v.status}</td>
                                                    <td>${v.createdBy}</td>
                                                    <td>${v.createdOn}</td>
-                                                           <td style=" width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
-                                                                <button type="button" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve" class="btn btn-success btn-xs p-2"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                                                    <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="UpdateListingStatus(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                                                                 <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateListingStatus(${v.id}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
+                                                   <td style=" width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
+                                                    <button type="button" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve" class="btn btn-success btn-xs p-2"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="UpdateListingStatus(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateListingStatus(${v.id}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
                                                     </td>
 
                                                 </tr>`);
@@ -59,9 +58,9 @@ function GetAllListings() {
                     "order": [[0, "desc"]]
                 });
 
-
             }
         }
+
         if (res.status == 304) {
 
             Swal.fire({
@@ -127,7 +126,6 @@ function GetAllListings() {
 
 function UpdateListingStatus(id, status) {
 
-    debugger
     FilePostRequest(`/Dashboard/UpdateListingStatus?Id=${id}&Status=${status}`, null, function (res) {
 
         if (res.status == 200) {
@@ -197,7 +195,6 @@ function UpdateListingStatus(id, status) {
                 text: res.responseMsg,
                 icon: "warning"
             })
-
         }
     });
 

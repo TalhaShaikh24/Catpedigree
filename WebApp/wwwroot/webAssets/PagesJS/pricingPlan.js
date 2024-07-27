@@ -181,7 +181,7 @@ $("#makepayment").click(function () {
                     text: res.responseMsg,
                     icon: "success"
                 }).then(() => {
-                    redirectToHome();
+                    redirectToAddListing();
                 });
 
             }
@@ -249,8 +249,8 @@ function BuyPackage(pkgId) {
   
 }
 
-function redirectToHome() {
-    window.location.href = window.location.origin + "/Dashboard";
+function redirectToAddListing() {
+    window.location.href = window.location.origin + "/Listing";
 }
 function postRequest(url, requestData, handledata) {
     $.ajax({
