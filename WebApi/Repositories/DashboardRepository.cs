@@ -3,6 +3,7 @@ using Dapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Data;
+using System.Reflection;
 using System.Xml;
 using WebApi.DBManager;
 using WebApi.IRepositories;
@@ -323,6 +324,35 @@ namespace WebApi.Repositories
         {
             DynamicParameters parameters = new DynamicParameters();
             var data = _dapper.GetAll<Register>(@"[sp_GetAllUsers]", parameters);
+
+            return data;
+        }
+
+        public List<CouponCodes> GetCouponCodes()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<CouponCodes>(@"[sp_GetAllCouponsCodes]", parameters);
+
+            return data;
+        }
+
+        public int ActiveDeactiveCouponCode(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@CouponID", id, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Update<int>(@"[Sp_ActiveDeactiveCouponCode]", parameters);
+
+            return data;
+        }
+
+        public int IsExpireCoupens(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@CouponID", id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Update<int>(@"[sp_IsExpireCoupens]", parameters);
 
             return data;
         }

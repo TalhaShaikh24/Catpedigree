@@ -278,8 +278,7 @@ $("#makepayment").click(function () {
         CardNumber: $("#cc-number").val(),
         expireMonth: parseInt(parts[0]),
         expireYear: parseInt(parts[1]),
-        cvc: $("#cc-cvc").val(),
-    
+        cvc: $("#cc-cvc").val()
     }
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 

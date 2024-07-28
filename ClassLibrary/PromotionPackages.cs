@@ -30,6 +30,7 @@ namespace ClassLibrary
         public string? cvc { get; set; }
 
         public string? stripeSubscriptionId { get; set; }
+
     }
 
     public class PromotionCost:Common {

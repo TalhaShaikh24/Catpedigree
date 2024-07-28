@@ -317,6 +317,37 @@
                                         </li>
                                     </ul>
                                 </li>
+
+
+
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            Coupons Codes
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                     Code Lists
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                    Generate Codes
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             }  
                             
                             else if (userinfo.RoleIds.Contains("Vendor"))

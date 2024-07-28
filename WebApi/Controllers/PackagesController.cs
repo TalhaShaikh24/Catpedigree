@@ -130,7 +130,7 @@ namespace WebApi.Controllers
 
 
                     var customerRespinse = await _stripeServices.CreateSubscriptionAsync(claimDTO.Email, obj.CardNumber,
-                    obj.expireMonth, obj.expireYear, obj.cvc, priceId);
+                    obj.expireMonth, obj.expireYear, obj.cvc, priceId, obj.CouponCode);
 
 
                     obj.stripeSubscriptionId = customerRespinse;
