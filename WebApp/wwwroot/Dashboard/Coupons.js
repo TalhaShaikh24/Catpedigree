@@ -8,12 +8,29 @@ $(document).ready(function () {
     GetAllDropdowns();
 
     $('#CouponCodePertentage').on('input', function () {
+     
+
         this.value = this.value.replace(/[^0-9]/g, '');
-   
+
+        var value = $(this).val();
+        
+        if (value >= 5 && value <=  100) {
+
+
+            $('#message').text('');
+        } else {
+
+            $('#message').text('Number Should Be B/W 5 to 100!').css('color', 'red');
+        }
+
+
+
+
     });
 
 
-   
+
+
     
 })
 
@@ -112,85 +129,95 @@ function GetAllDropdowns() {
 
 $("#save").click(function () {
 
-    var obj = {
+    var value = $("#CouponCodePertentage").val();
 
-        DiscountPercentage: Number($("#CouponCodePertentage").val()),
-        UserId: $("#UserId").val(),
-   
+    if (value >= 5 && value <= 100) {
+        var obj = {
 
-    }
-    postRequest('/Dashboard/AddCouponsCodes', obj, function (res) {
+            DiscountPercentage: Number($("#CouponCodePertentage").val()),
+            UserId: $("#UserId").val(),
+            CouponCode: "",
+            UserName:""
 
-        if (res.status == 200) {
 
-            if (res.data != null) {
+        }
+        postRequest('/Dashboard/AddCouponsCodes', obj, function (res) {
+
+            if (res.status == 200) {
+
+                if (res.data != null) {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: res.responseMsg,
+                        icon: "success"
+                    });
+
+
+
+                }
+            }
+            if (res.status == 304) {
+
                 Swal.fire({
-                    title: "Good job!",
+                    title: "Error",
                     text: res.responseMsg,
-                    icon: "success"
-                });
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
 
-             
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
 
             }
-        }
-        if (res.status == 304) {
+        });
+    } else {
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
-    });
+        $('#message').text('Number Should Be B/W 5 to 100!').css('color', 'red');
+    }
+   
 
 });
 
