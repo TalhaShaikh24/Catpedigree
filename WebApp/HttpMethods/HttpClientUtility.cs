@@ -92,7 +92,11 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.ProfileInfo ?? ""), "profileInfo");
                     multiContent.Add(new StringContent(obj.ZoologicalNumber ?? ""), "zoologicalNumber");
 
-                    if (obj.ProfilePic != null)
+                multiContent.Add(new StringContent(obj.Country ?? ""), "country");
+                multiContent.Add(new StringContent(obj.City ?? ""), "city");
+                multiContent.Add(new StringContent(obj.Province ?? ""), "province");
+
+                if (obj.ProfilePic != null)
                     {
 
                         multiContent.Add(new StreamContent(obj.ProfilePic.OpenReadStream()), "profilePic", obj.ProfilePic.FileName);
@@ -424,6 +428,10 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.ProfileInfo ?? ""), "profileInfo");
                     multiContent.Add(new StringContent(obj.ZoologicalNumber ?? ""), "zoologicalNumber");
                     multiContent.Add(new StringContent(obj.RoleId.ToString() ?? null), "roleid");
+
+                    multiContent.Add(new StringContent(obj.Country ?? ""), "country");
+                    multiContent.Add(new StringContent(obj.City ?? ""), "city");
+                    multiContent.Add(new StringContent(obj.Province ?? ""), "province");
 
 
 

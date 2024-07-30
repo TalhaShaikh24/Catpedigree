@@ -45,16 +45,30 @@ $(document).on('click', '.Featured-remove-button', function () {
 });
 
 $("#Gallery_Files").on('change', function (e) {
+
+       
+
     for (let i = 0; i < e.target.files.length; i++) {
         let myFile = e.target.files[i];
         let myFileID = "FID" + (1000 + Math.random() * 9000).toFixed(0);
+        if (filesToUpload.length < 6) {
 
-        filesToUpload.push({
-            file: myFile,
-            size: myFile.size,
-            FID: myFileID,
-            name: myFile.name
-        });
+
+            filesToUpload.push({
+                file: myFile,
+                size: myFile.size,
+                FID: myFileID,
+                name: myFile.name
+            });
+        }
+        else {
+
+            Swal.fire({
+                title: "Error",
+                text: "Only 6 Files Can be Uploaded",
+                icon: "error"
+            })
+        }
     }
     GalleryView();
     e.target.value = null;

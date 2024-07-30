@@ -213,6 +213,13 @@ namespace WebApi.Repositories
             parameters.Add("@BreederLicensePath", formData.BreederLicensePath, DbType.String, ParameterDirection.Input);
             parameters.Add("@ZoologicalNumber", formData.ZoologicalNumber, DbType.String, ParameterDirection.Input);
 
+
+
+            parameters.Add("@Country", formData.Country, DbType.String, ParameterDirection.Input);
+            parameters.Add("@City", formData.City, DbType.String, ParameterDirection.Input);
+            parameters.Add("@province", formData.Province, DbType.String, ParameterDirection.Input);
+
+
             var data = _dapper.Insert<Register>(@"[sp_UpdateProfile]", parameters);
 
             return data;

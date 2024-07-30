@@ -1,4 +1,7 @@
 ﻿let baseApiUrl = "";
+
+let autocomplete;
+let dropdown;
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
@@ -20,6 +23,9 @@ $(document).ready(function () {
         formData.append('ProfileInfo', $('#profileInfo').val());
         formData.append('ZoologicalNumber', $('#zoologicalNumber').val());
         formData.append('RoleId', Number($("input[type=radio][name=userType]:checked").val()));
+        formData.append('Country', $('#country').val());
+        formData.append('City', $('#city').val());
+        formData.append('Province', $('#province').val());
 
         // Append ProfilePic if exists
         var profilePic = $("#profilePic")[0].files[0];
@@ -76,7 +82,61 @@ $(document).ready(function () {
         }
 
     });
+
+
+    initAutocomplete();
+    onPlaceChanged();
+
 });
+
+
+
+function initAutocomplete() {
+    const input = document.getElementById('address');
+    debugger;
+    autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Set up the dropdown element
+    dropdown = document.getElementById('places-dropdown');
+
+    // Listen for place selection
+    autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+function onPlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+    }
+
+    const addressComponents = place.address_components;
+    let city = "";
+    let state = "";
+    let country = "";
+
+    for (const component of addressComponents) {
+        const types = component.types;
+        if (types.includes("locality")) {
+            city = component.long_name;
+        }
+        if (types.includes("administrative_area_level_1")) {
+            state = component.short_name;
+        }
+        if (types.includes("country")) {
+            country = component.long_name;
+        }
+    }
+
+    // Log city, state, and country
+
+    $("#country").val(country);
+    $("#province").val(state);
+    $("#city").val(city);
+
+
+}
+
 
 $(document).on("change", "input[type=radio][name=userType]", function () {
     if ($(this).val() === '2') {
