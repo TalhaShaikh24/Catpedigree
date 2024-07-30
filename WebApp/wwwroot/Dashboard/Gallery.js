@@ -576,3 +576,97 @@ $("#btn-saveGallery").click(function () {
     }
 
 });
+
+$("#btn-deleteGallery").click(function () {
+    debugger;
+    var checkedValues = [];
+    $(".CheckBoxSelection input[type='checkbox']:checked").each(function () {
+        checkedValues.push($(this).val());
+    });
+
+    if (checkedValues.length > 0) {
+        postRequest("/Dashboard/DeleteSelectedGalleryPath/" + checkedValues.join(", "), null, function (res) {
+
+            if (res.status == 200) {
+
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+                GetAllGellary();
+
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+
+        });
+
+    }
+    else {
+
+        Swal.fire({
+            title: "Warning",
+            text: "Please Select Gallery Images",
+            icon: "warning"
+        })
+
+    }
+
+});

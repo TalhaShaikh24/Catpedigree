@@ -1015,6 +1015,75 @@ namespace WebApi.Controllers
         }
 
 
+
+        [HttpPost("DeleteSelectedGalleryPath/{Path}")]
+        public Response DeleteSelectedGalleryPath(string Path)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                string[] filepaths = Path.Split(',');
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.DeleteSelectedGalleryPath(Path);
+
+                if (res)
+                {
+
+                    foreach (var item in filepaths)
+                    {
+                        string filePath = System.IO.Path.Combine("UploadImages", item.TrimStart());
+
+                        string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, filePath);
+                     
+
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+
+            
+
+
+                    }
+
+
+
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Gallery Deleted successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
         [HttpPost("DeleteListingById/{Id}")]
         public Response DeleteListingById(int Id)
         {

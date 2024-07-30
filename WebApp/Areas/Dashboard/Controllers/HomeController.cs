@@ -219,6 +219,11 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+
+
+
+
+
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
         public Task<object> GetAllDashboard()
@@ -253,6 +258,17 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UploadSelectedGalleryPath/"+Path, "", HttpContext);
+
+        }
+
+
+
+        [HttpPost]
+        [Route("Dashboard/DeleteSelectedGalleryPath/{Path}")]
+        public Task<object> DeleteSelectedGalleryPath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedGalleryPath/" + Path, "", HttpContext);
 
         }
 

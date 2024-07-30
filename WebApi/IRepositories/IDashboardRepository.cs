@@ -37,5 +37,7 @@ namespace WebApi.IRepositories
         int ActiveDeactiveCouponCode(int id);
         int IsExpireCoupens(int id);
 
+        public bool DeleteSelectedGalleryPath(string Path);
+
     }
 }

@@ -289,6 +289,15 @@ namespace WebApi.Repositories
             return data;
         }
 
+
+        public bool DeleteSelectedGalleryPath(string Path)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Path", Path, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Get<bool>(@"[dbo].[sp_DeleteSelectedGalleryPath]", parameters);
+            return data;
+        }
+
         public List<string> GetAllPedigreeGallary()
         {
             DynamicParameters parameters = new DynamicParameters();
