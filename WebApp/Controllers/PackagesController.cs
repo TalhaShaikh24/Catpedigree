@@ -19,11 +19,17 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public Task<object> GetAllPackages()
+        [HttpPost("Packages/GetAllPackages/{currency}")]
+        public Task<object> GetAllPackages(string currency)
         {
+            if (currency == null)
+            {
+                currency = "EUR";
+            }
+
+
             string content = "";
-            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Packages/GetAllPackages", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Packages/GetAllPackages/" + currency, content, HttpContext);
         }
 
         [HttpPost]

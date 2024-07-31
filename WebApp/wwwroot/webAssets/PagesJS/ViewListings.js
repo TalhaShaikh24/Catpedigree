@@ -17,6 +17,7 @@ let categoryId = Number(urlParams.get('categoryId'));
 let listingLocation = urlParams.get('listingLocation');
 
 async function loadMore() {
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 
 
     var obj = {
@@ -24,9 +25,12 @@ async function loadMore() {
         PageSize: pageSize,
         CategoryId: categoryId,
         Keyword: keyword,
-        Location: listingLocation
-
+        Location: listingLocation,
+        Currency: curr
     }
+
+
+    
 
     const response = await fetch('/Listing/GetAllListingByFilters', {
         method: 'POST',
@@ -90,6 +94,8 @@ async function loadMore() {
 async function filteringSearch() {
 
     var sliderValues = $("#slider-range").slider("values");
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
 
     var obj = {
         PageNumber: 1,
@@ -101,7 +107,8 @@ async function filteringSearch() {
         City: $("#cityFilter").val(),
         TypeOfCat: Number($("#breedFilter").val()),
         PriceMin: sliderValues[0],
-        PriceMax: sliderValues[1]
+        PriceMax: sliderValues[1],
+        Currency: curr
 
     }
     debugger

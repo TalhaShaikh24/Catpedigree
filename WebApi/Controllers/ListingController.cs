@@ -1,7 +1,9 @@
 ﻿using ClassLibrary;
+using Google.Type;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Mollie.Api.Models;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Utility;
@@ -16,13 +18,17 @@ namespace WebApi.Controllers
         private string BaseUrl = "";
         private readonly IListingRepository _listing;
         private readonly IVideoPackagesRepository _videoPackages;
+
+        private readonly ICurrencyConverterService _currencyConverterService;
         private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
-        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages, IConfiguration configuration)
+        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages, ICurrencyConverterService currencyConverterService, IConfiguration configuration)
         {
 
             _listing = listing;
             _videoPackages = videoPackages;
-            BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
+            _currencyConverterService = currencyConverterService;   
+           BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
+           
         }
 
         [HttpPost("AddListing")]
@@ -112,8 +118,8 @@ namespace WebApi.Controllers
             }
         }   
         
-        [HttpPost("GetHomePageListings")]
-        public Response GetHomePageListings()
+        [HttpPost("GetHomePageListings/{currency}")]
+        public async Task<Response> GetHomePageListings(string currency)
         {
             Response response = new Response();
 
@@ -124,6 +130,21 @@ namespace WebApi.Controllers
 
 
                 var res = _listing.GetHomePageListings();
+                if (res.Count>0)
+                {
+                    decimal rate = await  _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                    foreach (var (item, index)  in res.Select((item, index) => (item, index)))
+                    {
+
+                        res[index].Price = Math.Round((item.Price * rate), 2);
+
+
+                    }
+
+                }
+
+
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
@@ -282,7 +303,7 @@ namespace WebApi.Controllers
         }
 
 		[HttpPost("GetAllListingByFilters")]
-		public Response GetAllListingByFilters([FromBody] Listing obj)
+		public async Task<Response> GetAllListingByFilters([FromBody] Listing obj)
 		{
             
             Response response = new Response();
@@ -300,6 +321,22 @@ namespace WebApi.Controllers
 					response = CustomStatusResponse.GetResponse(200);
                     
                     int currentCount = (obj.PageNumber - 1) * obj.PageSize + result.FetchedCount;
+
+                    if (result.Listings.Count>0)
+                    {
+
+                        decimal rate = await _currencyConverterService.GetExchangeRate("EUR", obj.Currency);
+
+                        foreach (var (item, index) in result.Listings.Select((item, index) => (item, index)))
+                        {
+
+                            result.Listings[index].Price = Math.Round((item.Price * rate), 2);
+
+
+                        }
+
+                    }
+
 					response.Data = new
 					{
 						Listings = result.Listings,
@@ -557,6 +594,116 @@ namespace WebApi.Controllers
             return response;
         }
 
+        [HttpPost("VideoAvailablity/{Id}/{currency}")]
+        public async Task<Response> VideoAvailablity(int Id, string currency)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            Listing obj = new Listing();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                obj.CreatedBy = claimDTO?.UserId ?? 0;
+                obj.Id = Id;
+
+                // Additional logic here, if needed, using the currency parameter
+
+                if (claimDTO != null)
+                {
+                    if (claimDTO.RoleIds.Contains("Vendor"))
+                    {
+                        Category category = _listing.getCategoryByListingId(Id);
+
+                        if (category.CategoryName == "Pedigree")
+                        {
+                            var data = _listing.CheckListingShowValidation(obj.CreatedBy, Id);
+
+                            if (data.Count > 0)
+                            {
+
+                                decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                                foreach (var (item, index) in data.Select((item, index) => (item, index)))
+                                {
+
+                                    data[index].Price = Math.Round((decimal)(item.Price * rate), 2);
+
+
+                                }
+
+                                response.Token = TokenManager.GenerateToken(claimDTO);
+                                response.Status = 115;
+
+                                response.Data = new
+                                {
+                                    Listing = new Listing(),
+                                    Package = data,
+                                    Currency = currency // Include currency in the response
+                                };
+
+                                return response;
+                            }
+                        }
+                    }
+                }
+
+                var res = _listing.IsViewPedigreeAllowed(obj);
+
+                if (res != null)
+                {
+
+                    decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                 
+
+                     res.Price = Math.Round((decimal)(res.Price * rate), 2);
+
+
+                   
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    if (claimDTO != null)
+                    {
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                    }
+                    response.ResponseMsg = "";
+                    response.Data = new
+                    {
+                        Listing = res,
+                        Package = new List<Package>(),
+                        Currency = currency // Include currency in the response
+                    };
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.ResponseMsg = "Please Buy the Plan";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = new
+                    {
+                        Listing = new Listing(),
+                        Package = new List<Package>(),
+                        Currency = currency // Include currency in the response
+                    };
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+
+
 
 
 
@@ -633,7 +780,7 @@ namespace WebApi.Controllers
                    {
                        Id = Path.GetFileNameWithoutExtension(filePath).GetHashCode(),
                        FileName = Path.GetFileName(filePath),
-                       FilePath = $"{BaseUrl}UploadImages/{Path.GetFileName(filePath)}?v={DateTime.UtcNow.Ticks}"
+                       FilePath = $"{BaseUrl}UploadImages/{Path.GetFileName(filePath)}?v={System.DateTime.UtcNow.Ticks}"
                    })
                    .OrderByDescending(g => g.FilePath)
                    .ToList();

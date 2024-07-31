@@ -19,10 +19,18 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public Task<object> GetAllPromotionPackages()
+
+        [HttpPost("PromotionPackage/GetAllPromotionPackages/{currency}")]
+        public Task<object> GetAllPromotionPackages(string currency)
         {
+
+            if (currency == null)
+            {
+                currency = "EUR";
+            }
+
             string content = "";
-            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/PromotionPackage/GetAllPromotionPackages", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/PromotionPackage/GetAllPromotionPackages/"+ currency, content, HttpContext);
         }
 
 
@@ -35,10 +43,16 @@ namespace WebApp.Controllers
 
 
 
-        public async Task<object> GetPromotionCost(int Id)
+        [HttpPost]
+        public async Task<object> GetPromotionCost([FromBody] PromotionsCostCur obj)
         {
-            string content = "";
-            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/PromotionPackage/GetPromotionCost/" + Id, content, HttpContext);
+
+
+            string content = JsonConvert.SerializeObject(obj); ;
+
+           
+
+            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/PromotionPackage/GetPromotionCost", content, HttpContext);
 
             return data;
 

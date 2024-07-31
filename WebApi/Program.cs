@@ -1,4 +1,5 @@
 using ClassLibrary;
+using Google.Api;
 using Microsoft.Extensions.DependencyInjection;
 using Stripe;
 using System.Configuration;
@@ -27,6 +28,10 @@ builder.Services.AddCors(options =>
     }); 
 
 builder.Services.AddSwaggerGen();
+
+// Register HttpClient
+builder.Services.AddHttpClient();
+
 builder.Services.AddTransient<IDapper, Dapperr>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IListingRepository, ListingRepository>();
@@ -40,6 +45,11 @@ builder.Services.AddTransient<IAdvertisementServices  ,   AdvertisementServices>
 builder.Services.AddTransient<IMolliePaymentService  , MolliePaymentService> ();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddTransient<IStripeServices, StripeServices>();
+
+builder.Services.Configure<ExchangeRateApiSettings>(builder.Configuration.GetSection("ExchangeRateApi"));
+builder.Services.AddTransient<ICurrencyConverterService, CurrencyConverterService>();
+
+
 var app = builder.Build();
 
 

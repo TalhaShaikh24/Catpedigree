@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mollie.Api.Models;
 using Stripe;
 using System.Data.Common;
 using WebApi.IRepositories;
@@ -21,20 +22,23 @@ namespace WebApi.Controllers
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
 
+        private readonly ICurrencyConverterService _currencyConverterService;
 
 
 
-        public PromotionPackageController(IPromotionPackageRepository repository, IStripeServices stripeServices, IAccountRepository accountRepository)
+        public PromotionPackageController(IPromotionPackageRepository repository, IStripeServices stripeServices, IAccountRepository accountRepository, ICurrencyConverterService currencyConverterService)
         {
             _repository = repository;
             _stripeServices = stripeServices;
             
             _accountRepository = accountRepository;
+
+            _currencyConverterService = currencyConverterService;
         }
 
 
-        [HttpPost("GetAllPromotionPackages")]
-        public Response GetAllPromotionPackages()
+        [HttpPost("GetAllPromotionPackages/{currency}")]
+        public async Task<Response> GetAllPromotionPackages(string currency)
         {
            
             Response response = new Response();
@@ -45,6 +49,20 @@ namespace WebApi.Controllers
                 
                
                 var res = _repository.GetAllPromotionPackages();
+                if (res.Count>0)
+                {
+                    decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                    for (int i = 0; i < res.Count; i++)
+                    {
+                        for (int j = 0; j < res[i].promotionCosts.Count; j++)
+                        {
+                            res[i].promotionCosts[j].Cost= Math.Round((decimal)(res[i].promotionCosts[j].Cost * rate), 2);
+                        }
+
+                    }
+                    
+                }
 
                 if (res == null) {
 
@@ -180,8 +198,8 @@ namespace WebApi.Controllers
 
 
 
-        [HttpPost("GetPromotionCost/{Id}")]
-        public Response GetPromotionCost(int Id)
+        [HttpPost("GetPromotionCost")]
+        public  async Task<Response> GetPromotionCost([FromBody] PromotionsCostCur obj)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -191,7 +209,24 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.GetPromotionCost(Id);
+
+
+                var res = _repository.GetPromotionCost(obj.Id);
+
+
+
+                if (res.Count>0)
+                {
+                    decimal rate = await _currencyConverterService.GetExchangeRate("EUR", obj.currency);
+                    foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                    {
+
+                        res[index].Cost = Math.Round((decimal)(item.Cost * rate), 2);
+
+
+                    }
+                }
+
 
                 if (res == null)
                 {

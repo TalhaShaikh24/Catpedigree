@@ -31,7 +31,11 @@ $(document).ready(function () {
 })
 
 function getAll() {
-    postRequest('/PromotionPackage/GetAllPromotionPackages', null, function (res) {
+
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+    debugger;
+    postRequest('/PromotionPackage/GetAllPromotionPackages/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
@@ -177,8 +181,14 @@ $(document).on('click', '.buypackage', function () {
 function GetPromotionCost(pkgId) {
 
 
-    postRequest('/PromotionPackage/GetPromotionCost/' + pkgId, null, function (res) {
+    var obj = {
 
+        Id:pkgId,
+        currency:localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+    }
+
+    postRequest('/PromotionPackage/GetPromotionCost', obj, function (res) {
+        debugger;
         if (res.status == 200) {
 
             if (res.data != null) {

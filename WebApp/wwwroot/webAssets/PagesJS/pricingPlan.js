@@ -32,7 +32,11 @@ $(document).ready(function () {
 })
 
 function getAllPackages() {
-    postRequest('/Packages/GetAllPackages', null, function (res) {
+
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    postRequest('/Packages/GetAllPackages/' + curr, null, function (res) {
 
         if (res.status == 200) {
 

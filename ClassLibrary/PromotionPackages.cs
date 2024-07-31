@@ -47,4 +47,12 @@ namespace ClassLibrary
 
     }
 
+    public class PromotionsCostCur
+    {
+
+        public int Id { get; set; }
+
+        public string? currency { get; set; }
+    }
+
 }
