@@ -258,102 +258,202 @@ function GetAllDropdowns() {
 
 }
 
-
 $(document).on('change', '#VideoFile', function (e) {
-    postRequest('/VideoPackages/VideoAvailablity', null, function (res) {
+    var file = e.target.files[0];
+    var maxSizeMB = 5;
+    var maxDuration = 30; // Max duration in seconds
 
-        if (res.status == 200) {
-
-            if (res.data != null) {
-
-                if (res.data) {
-
-
-                }
-                else {
-
-                    e.target.value = null;
-
-                    Swal.fire({
-                        title: "Warning!",
-                        text: res.responseMsg,
-                        icon: "warning",
-                        showCancelButton: false,
-                        confirmButtonColor: "#3085d6",
-                        allowOutsideClick: false,  // Disable outside click
-                        allowEscapeKey: true,
-                    }).then((result) => {
-                        console.log(result);  // Debugging: log the result to the console
-                        if (result.isConfirmed) {
-                            debugger;  // Debugger statement to pause execution for inspection
-                            window.open("/VideoPackages/VideoPlans", "_blank");
-
-                        }
-                    });
-
-                }
-
-            }
-        }
-        if (res.status == 304) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
+    if (file) {
+        // Check file size
+        var fileSizeMB = file.size / (1024 * 1024); // Convert size to MB
+        if (fileSizeMB > maxSizeMB) {
             Swal.fire({
                 title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
+                text: "The file size is too large. Maximum allowed size is " + maxSizeMB + " MB.",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+            });
+            e.target.value = null;
+            return;
         }
-    });
 
+        // Check if the file type can be played
+        var video = document.createElement('video');
+        var canPlay = video.canPlayType(file.type);
+        if (canPlay === '') {
+            Swal.fire({
+                title: "Error",
+                text: "Cannot play this video type.",
+                icon: "error"
+            });
+            e.target.value = null;
+            return;
+        }
+
+        var url = URL.createObjectURL(file);
+        video.preload = 'metadata';
+        video.src = url;
+
+        video.onloadedmetadata = function () {
+            URL.revokeObjectURL(video.src);
+            var duration = video.duration;
+            debugger;
+            if (duration > maxDuration) {
+                Swal.fire({
+                    title: "Warning",
+                    text: "The video is too long. Maximum allowed duration is " + maxDuration + " seconds.",
+                    icon: "warning",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                });
+                e.target.value = null;
+            } else {
+                // Proceed with your existing postRequest call if the video duration is valid
+                postRequest('/VideoPackages/VideoAvailablity', null, function (res) {
+                    if (res.status == 200) {
+                        if (res.data != null) {
+                            if (res.data) {
+                                // Video is available
+                            } else {
+                                e.target.value = null;
+
+                                Swal.fire({
+                                    title: "Warning!",
+                                    text: res.responseMsg,
+                                    icon: "warning",
+                                    showCancelButton: false,
+                                    confirmButtonColor: "#3085d6",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: true,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.open("/VideoPackages/VideoPlans", "_blank");
+                                    }
+                                });
+                            }
+                        }
+                    } else if ([304, 305, 401, 403, 320, 500, 600].includes(res.status)) {
+                        Swal.fire({
+                            title: res.status == 403 ? "Error" : "Warning",
+                            text: res.responseMsg,
+                            icon: res.status == 403 ? "error" : "warning"
+                        });
+                    }
+                });
+            }
+        };
+
+        video.onerror = function () {
+            Swal.fire({
+                title: "Error",
+                text: "There was an error loading the video.",
+                icon: "error"
+            });
+            e.target.value = null;
+        };
+    }
 });
+
+//$(document).on('change', '#VideoFile', function (e) {
+//    postRequest('/VideoPackages/VideoAvailablity', null, function (res) {
+
+//        if (res.status == 200) {
+
+//            if (res.data != null) {
+
+//                if (res.data) {
+
+
+//                }
+//                else {
+
+//                    e.target.value = null;
+
+//                    Swal.fire({
+//                        title: "Warning!",
+//                        text: res.responseMsg,
+//                        icon: "warning",
+//                        showCancelButton: false,
+//                        confirmButtonColor: "#3085d6",
+//                        allowOutsideClick: false,  // Disable outside click
+//                        allowEscapeKey: true,
+//                    }).then((result) => {
+//                        console.log(result);  // Debugging: log the result to the console
+//                        if (result.isConfirmed) {
+//                            debugger;  // Debugger statement to pause execution for inspection
+//                            window.open("/VideoPackages/VideoPlans", "_blank");
+
+//                        }
+//                    });
+
+//                }
+
+//            }
+//        }
+//        if (res.status == 304) {
+
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: "error"
+//            })
+//        }
+//        if (res.status == 305) {
+
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: "error"
+//            })
+//        }
+//        if (res.status == 401) {
+
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: "error"
+//            })
+//        }
+//        if (res.status == 403) {
+
+//            Swal.fire(res.responseMsg, {
+//                icon: "error",
+//                title: "Error"
+//            });
+//        }
+//        if (res.status == 320) {
+
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: "error"
+//            })
+//        }
+//        if (res.status == 500) {
+
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: "error"
+//            })
+//        }
+//        if (res.status == 600) {
+
+//            Swal.fire({
+//                title: "Warning",
+//                text: res.responseMsg,
+//                icon: "warning"
+//            })
+
+//        }
+//    });
+
+//});
 
 
 $('#showpromotionpackage').change(function () {
