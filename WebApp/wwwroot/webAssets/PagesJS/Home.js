@@ -46,7 +46,7 @@ function GetTopPageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price"  data-price="${item.price}">${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -143,7 +143,7 @@ function GetVetRimmedPageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price" data-price="${item.price}> ${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -244,7 +244,7 @@ function GetHomePageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price" data-price="${item.price}" >${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a  onclick="SingleListing(${item.id})" >${item.title}</a>
@@ -363,6 +363,8 @@ function GetHomePageBlogs() {
                 });
 
 
+                var selectedCurrency = localStorage.getItem('cur');
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {

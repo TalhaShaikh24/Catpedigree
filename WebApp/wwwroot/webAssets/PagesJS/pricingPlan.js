@@ -60,7 +60,7 @@ function getAllPackages() {
                                 <h3 class="title">${item.name}</h3>
                             </div>
                             <div class="price-value">
-                                <span class="amount">€${item.price.toFixed(2)}</span>
+                                <span class="amount price" data-price='${item.price.toFixed(2)}'>${item.price.toFixed(2)}</span>
                             </div>
                             <h4 class="mb-4">Key Features:</h4>
                             <ul class="pricing-content">
@@ -81,6 +81,10 @@ function getAllPackages() {
                     $('#pricingContainer').append(html);
                 });
 
+
+
+                var selectedCurrency = localStorage.getItem('cur');
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {

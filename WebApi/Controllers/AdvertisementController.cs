@@ -17,19 +17,21 @@ namespace WebApi.Controllers
         private readonly IAccountRepository _accountRepository;
 
         private readonly IStripeServices _stripeServices;
-        
-        
+
+        private readonly ICurrencyConverterService _currencyConverterService;
+
         private readonly string _PriceID15 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID30 = "price_1PWPlVKR3yBF1l8f71BYts44";
         private readonly string _PriceID50 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
 
-        public AdvertisementController(IAdvertisementServices repository, IAccountRepository accountRepository, IStripeServices stripeServices)
+        public AdvertisementController(IAdvertisementServices repository, IAccountRepository accountRepository, IStripeServices stripeServices, ICurrencyConverterService currencyConverterService)
         {
             _repository = repository;
             _accountRepository = accountRepository;
             _stripeServices = stripeServices;
+            _currencyConverterService = currencyConverterService;
         }
 
 
@@ -72,8 +74,8 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpPost("GetAdvertisementPackage")]
-        public Response GetAdvertisementPackage()
+        [HttpPost("GetAdvertisementPackage/{currency}")]
+        public async Task<Response> GetAdvertisementPackage(string currency)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -87,6 +89,22 @@ namespace WebApi.Controllers
 
                 if (res != null)
                 {
+
+                    if (res.Count>0)
+                    {
+                        decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                        foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                        {
+
+                            res[index].AdvertisementPackageCost = Math.Round(item.AdvertisementPackageCost * rate,2);
+
+
+                        }
+
+
+
+                    }
 
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;

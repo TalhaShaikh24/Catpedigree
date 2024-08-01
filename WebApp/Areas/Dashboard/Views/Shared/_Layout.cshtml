@@ -509,6 +509,65 @@
 
     <script>
 
+        var currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£"
+            // Add more mappings as needed
+        };
+
+
+
+        // Function to update price symbols
+        function updatePrices(selectedCurrency) {
+            debugger;
+
+
+            var symbol = currencySymbols[selectedCurrency == null ? 'EUR' : selectedCurrency];
+            $('.price').each(function () {
+                var priceValue = $(this).attr('data-price');
+
+                if (priceValue == undefined) {
+
+
+                    $(this).text(symbol);
+                }
+                else {
+
+
+                    $(this).text(symbol + priceValue);
+                }
+
+            });
+        }
+
+        function SinglePriceListing(selectedCurrency) {
+            debugger;
+            var symbol = currencySymbols[selectedCurrency == null ? 'EUR' : selectedCurrency];
+            $('.price').each(function () {
+
+                var span = $(this).find('.rtcl-price-currencySymbol');
+                // Get the price value
+                var priceValue = span.data('price');
+
+                if (priceValue == undefined) {
+
+                        
+                    $(this).text(symbol);
+                }
+                else {
+
+
+                    // Update the bdi content
+                    $(this).html(symbol + '<span class="rtcl-price-currencySymbol" data-price="' + priceValue + '">' + priceValue + '</span>');
+
+                }
+
+              
+            });
+        }
+
+
         $("#btnLogOFf").click(function () {
 
 

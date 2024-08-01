@@ -19,11 +19,16 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public Task<object> GetAllVideoPackages()
+        [HttpPost("VideoPackages/GetAllVideoPackages/{currency}")]
+        public Task<object> GetAllVideoPackages(string currency)
         {
+            if (currency == null)
+            {
+                currency = "EUR";
+            }
+
             string content = "";
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/VideoPackages/GetAllVideoPackages", content, HttpContext);
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/VideoPackages/GetAllVideoPackages" + currency, content, HttpContext);
         }
            
         

@@ -427,11 +427,11 @@
                                         @{
                                             if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
                                             {
-                                                <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
+                                                    <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
                                             }
                                             else
                                             {
-                                                <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
+                                                    <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
                                             }
                                         }
                                         @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
@@ -694,8 +694,56 @@
     <script>
 
 
-        
-             
+        var currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£"
+            // Add more mappings as needed
+        };
+
+
+
+        // Function to update price symbols
+        function updatePrices(selectedCurrency) {
+            debugger;
+
+
+            var symbol = currencySymbols[selectedCurrency == null?'EUR':selectedCurrency];
+            $('.price').each(function () {
+                var priceValue = $(this).attr('data-price');
+
+                if (priceValue == undefined){
+
+                    
+                $(this).text(symbol);
+                }
+                else {
+
+
+                    $(this).text(symbol + priceValue);
+                }
+
+            });
+        }
+
+        function SinglePriceListing(selectedCurrency) {
+     
+           
+            var symbol = currencySymbols[selectedCurrency == null?'EUR':selectedCurrency];
+            $('.pricesingle').each(function () {
+
+                var span = $(this).find('.rtcl-price-currencySymbol');
+                // Get the price value
+                var priceValue = span.data('price');
+
+                
+                // Update the bdi content
+                $(this).html(symbol + '<span class="rtcl-price-currencySymbol" data-price="' + priceValue + '">' + priceValue + '</span>');
+
+            });
+        }
+
+
         $(document).ready(function () {
 
             GetFooterAdvertisments();
@@ -706,7 +754,10 @@
             $("#currency").val(localStorage.getItem('cur'))
 
             $("#currency").niceSelect('destroy')
-            $("#currency").niceSelect()
+            $("#currency").niceSelect();
+
+        
+
         })
 
         function GetFooterAdvertisments() {
@@ -877,6 +928,11 @@
 
         $("#currency").change(function(){
 
+
+
+            var newCurrencySymbol = "€"; // For example, changing to Euro
+
+
             var newCurrency = $(this).val();
             localStorage.setItem('cur', newCurrency);
             var params = getQueryParams();
@@ -894,6 +950,9 @@
                 history.replaceState(null, '', newUrl);
             }
             window.location.reload();
+
+          
+
 
 
 

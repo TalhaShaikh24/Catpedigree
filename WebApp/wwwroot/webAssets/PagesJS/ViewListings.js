@@ -60,7 +60,7 @@ async function loadMore() {
                                     <div class="listing-content">
                                         <div class="title d-flex justify-content-between align-items-center mb-10">
                                             <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                             <h4 class="status  price">€ ${item.price}</h4>
+                                             <h4 class="status  price" data-price="${item.price}"> ${item.price}</h4>
                                         </div>
                                         <h3 class="title">
                                             <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -78,6 +78,11 @@ async function loadMore() {
             $("#load-more").show();
         });
 
+
+
+
+        var selectedCurrency = localStorage.getItem('cur');
+        updatePrices(selectedCurrency);
 
         pageNumber++;
         updateCountDisplay();
@@ -141,7 +146,7 @@ async function filteringSearch() {
                      <div class="listing-content">
                          <div class="title d-flex justify-content-between align-items-center mb-10">
                              <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                              <h4 class="status  price">€ ${item.price}</h4>
+                              <h4 class="status   price" data-price="${item.price}"> ${item.price}</h4>
                          </div>
                          <h3 class="title">
                              <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -159,6 +164,11 @@ async function filteringSearch() {
             $("#load-more").show();
         });
 
+
+        
+
+        var selectedCurrency = localStorage.getItem('cur');
+        updatePrices(selectedCurrency);
 
         pageNumber++;
         updateCountDisplay();
@@ -194,7 +204,6 @@ function GetAllCatType() {
 
                 $.each(res.data, function (i, v) {
 
-                    debugger
                     $("#appendCatTypes").after(`
                       <option value="${v.id}">${v.catType}</option>
                       `);

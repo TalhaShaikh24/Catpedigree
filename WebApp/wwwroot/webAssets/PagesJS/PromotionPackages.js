@@ -78,7 +78,7 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.description}</p>
                             <h4 class="mb-4">Promotion costs:</h4>
                              <ul class="pricing-content" id="costs${item.promotionPackagesID}">
-                               ${costs.map(cost => `<li>${cost.daysNumber} days + €  ${cost.cost}</li>`).join('')}
+                               ${costs.map(cost => `<li>${cost.daysNumber} days +  <span class='price'></span>  ${cost.cost}</li>`).join('')}
                             </ul>
 
                             <div class="pricingTable-signup">
@@ -91,6 +91,9 @@ function getAll() {
                     $('#promotionContainer').append(html);
                 });
 
+
+                var selectedCurrency = localStorage.getItem('cur');
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -201,7 +204,7 @@ function GetPromotionCost(pkgId) {
                     $("#costslist").append(` 
                     <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1${res.data[i].promotionCostID}" value="${res.data[i].promotionCostID}">
-                 <label class="form-check-label" for="inlineRadio1${res.data[i].promotionCostID}">${res.data[i].daysNumber} days - $ ${res.data[i].cost}  </label>
+                 <label class="form-check-label" for="inlineRadio1${res.data[i].promotionCostID}">${res.data[i].daysNumber} days - <span class="price"></span> ${res.data[i].cost}  </label>
                     </div>
                     <br/>
       `);
@@ -210,6 +213,11 @@ function GetPromotionCost(pkgId) {
 
 
             }
+
+
+
+            var selectedCurrency = localStorage.getItem('cur');
+            updatePrices(selectedCurrency);
         }
         if (res.status == 304) {
 

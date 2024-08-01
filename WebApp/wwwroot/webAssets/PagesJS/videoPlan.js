@@ -33,13 +33,15 @@ $(document).ready(function () {
 })
 
 function GetAllVideoPackages() {
-    postRequest('/VideoPackages/GetAllVideoPackages', null, function (res) {
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    postRequest('/VideoPackages/GetAllVideoPackages/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
 
-                debugger
 
                 $.each(res.data, function (index, item) {
                     
@@ -52,7 +54,7 @@ function GetAllVideoPackages() {
                                 <h3 class="title">${item.packageName}</h3>
                             </div>
                             <div class="price-value">
-                                <span class="amount">€${item.price.toFixed(2)}</span>
+                                <span class="amount price" data-price='${item.price.toFixed(2)}'>${item.price.toFixed(2)}</span>
                             </div>
                             <p class="mx-4 mb-4">${item.description}</p>
                             <div class="pricingTable-signup">
@@ -64,6 +66,8 @@ function GetAllVideoPackages() {
                     $('#pricingContainer').append(html);
                 });
 
+                var selectedCurrency = localStorage.getItem('cur');
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {

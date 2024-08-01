@@ -500,12 +500,17 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        [Route("Dashboard/GetAdvertisementPackage")]
-        public Task<object> GetAdvertisementPackage()
+        [Route("Dashboard/GetAdvertisementPackage/{currency}")]
+        public Task<object> GetAdvertisementPackage(string currency)
         {
+            if (currency==null)
+            {
+                currency = "EUR";
+
+            }
             var content = "";
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage/"+ currency, content, HttpContext);
 
         }
 

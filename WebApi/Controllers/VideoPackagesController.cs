@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using WebApi.IRepositories;
+using WebApi.Repositories;
 using WebApi.Utility;
 
 namespace WebApi.Controllers
@@ -17,23 +18,29 @@ namespace WebApi.Controllers
 
         private readonly IStripeServices _stripeServices;
 
+        private readonly ICurrencyConverterService _currencyConverterService;
+
+
         private readonly string _PriceID15 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID30 = "price_1PWPlVKR3yBF1l8f71BYts44";
         private readonly string _PriceID50 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
       
-        public VideoPackagesController(IVideoPackagesRepository repository, IAccountRepository accountRepository, IStripeServices stripeServices)
+        public VideoPackagesController(IVideoPackagesRepository repository, IAccountRepository accountRepository, IStripeServices stripeServices, ICurrencyConverterService currencyConverterService)
         {
             _repository = repository;
             _accountRepository = accountRepository;
 
             _stripeServices = stripeServices;
-          
+
+            _currencyConverterService = currencyConverterService;
+
+
         }
 
-        [HttpPost("GetAllVideoPackages")]
-        public Response GetAllVideoPackages()
+        [HttpPost("GetAllVideoPackages/{currency}")]
+        public async  Task<Response> GetAllVideoPackages(string currency)
         {
 
             Register claimDTO = null;
@@ -48,7 +55,21 @@ namespace WebApi.Controllers
                 if (res != null)
                 {
 
-                   
+                    if (res.Count>0)
+                    {
+                        decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                        foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                        {
+
+                            res[index].Price = (double?)((decimal) item.Price * rate);
+
+
+                        }
+
+                    }
+
+
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
