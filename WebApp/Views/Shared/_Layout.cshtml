@@ -797,7 +797,13 @@
             // Initialize currency and select options
             GetFooterAdvertisments();
 
-            const storedCurrency = localStorage.getItem('cur');
+            let storedCurrency = localStorage.getItem('cur');
+
+            if (storedCurrency==null){
+                localStorage.setItem('cur','EUR');
+               storedCurrency =  localStorage.getItem('cur');
+            }
+
             $("#currency").val(storedCurrency);
             $("#currency").niceSelect('destroy');
             $("#currency").niceSelect();
