@@ -31,5 +31,13 @@ namespace WebApi.IRepositories
         List<string> GetAllBreederLicense();
         List<string> GetAllVideosGallery();
         List<Register> GetAllUsers();
+
+        List<CouponCodes> GetCouponCodes();
+
+        int ActiveDeactiveCouponCode(int id);
+        int IsExpireCoupens(int id);
+
+        public bool DeleteSelectedGalleryPath(string Path);
+
     }
 }

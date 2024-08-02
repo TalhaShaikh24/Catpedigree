@@ -30,6 +30,7 @@ namespace ClassLibrary
         public string? cvc { get; set; }
 
         public string? stripeSubscriptionId { get; set; }
+
     }
 
     public class PromotionCost:Common {
@@ -44,6 +45,14 @@ namespace ClassLibrary
 
 
 
+    }
+
+    public class PromotionsCostCur
+    {
+
+        public int Id { get; set; }
+
+        public string? currency { get; set; }
     }
 
 }

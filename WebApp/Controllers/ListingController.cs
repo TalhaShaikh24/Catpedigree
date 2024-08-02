@@ -67,12 +67,12 @@ namespace WebApp.Controllers
 
 
 
-        public async Task<IActionResult> SingleListing(int listingId)
+        public async Task<IActionResult> SingleListing(int listingId,string currency)
         {
             
             string content = "";
 
-            var json = await GetListingDetailById(listingId);
+            var json = await GetListingDetailById(listingId,currency);
 
           
 
@@ -149,12 +149,19 @@ namespace WebApp.Controllers
 
         }
 
-        [HttpPost]
-        public Task<object> GetHomePageListings()
+        [HttpPost("Listing/GetHomePageListings/{currency}")]
+        public Task<object> GetHomePageListings(string currency)
         {
+
+            if (currency==null)
+            {
+                currency = "EUR";
+            }
+
+
             string content = "";
 
-            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetHomePageListings", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetHomePageListings/" + currency, content, HttpContext);
         }
         
         [HttpPost]
@@ -235,6 +242,15 @@ namespace WebApp.Controllers
         {
 
             var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/VideoAvailablity/" + Id, "", HttpContext);
+
+            return data;
+
+        }
+         [HttpPost]
+        public async Task<object> GetListingDetailById(int Id,string currency)
+        {
+
+            var data = await HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/VideoAvailablity/"+Id+"/"+currency+"" , "", HttpContext);
 
             return data;
 

@@ -1,4 +1,12 @@
-﻿$(".btnChoosePkg").click(function () {
+﻿
+$(document).ready(function () {
+
+    var selectedCurrency = localStorage.getItem('cur')
+    debugger;
+    SinglePriceListing(selectedCurrency);
+})
+
+$(".btnChoosePkg").click(function () {
     var packageId = $(this).data("id");
 
     Swal.fire({

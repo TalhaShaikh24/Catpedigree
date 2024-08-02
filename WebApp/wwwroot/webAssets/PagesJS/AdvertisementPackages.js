@@ -279,7 +279,6 @@ $("#makepayment").click(function () {
         expireMonth: parseInt(parts[0]),
         expireYear: parseInt(parts[1]),
         cvc: $("#cc-cvc").val(),
-    
     }
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 

@@ -46,7 +46,7 @@ function GetTopPageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price"  data-price="${item.price}">${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -143,7 +143,7 @@ function GetVetRimmedPageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price" data-price="${item.price}> ${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -221,7 +221,11 @@ function GetVetRimmedPageListings() {
     });
 }
 function GetHomePageListings() {
-    postRequest('/Listing/GetHomePageListings', null, function (res) {
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+  
+
+    postRequest('/Listing/GetHomePageListings/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
@@ -240,10 +244,10 @@ function GetHomePageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price">€ ${item.price}</h4>
+                                         <h4 class="status  price" data-price="${item.price}" >${item.price}</h4>
                                     </div>
                                     <h3 class="title">
-                                        <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
+                                        <a  onclick="SingleListing(${item.id})" >${item.title}</a>
                                     </h3>
                                     <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                                     <div class="listing-meta">
@@ -359,6 +363,8 @@ function GetHomePageBlogs() {
                 });
 
 
+                var selectedCurrency = localStorage.getItem('cur');
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -494,6 +500,16 @@ function GetHomeAdvertisments() {
 
         }
     });
+}
+
+
+function SingleListing(ListId) {
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    window.location.href = `/Listing/SingleListing?listingId=${ListId}&currency=${curr}`;
+
+
+
 }
 
 function BuyPackage(pkgId) {

@@ -64,6 +64,9 @@ namespace ClassLibrary
         public decimal PriceMax { get; set; }
 
         public string? CatteryName { get; set; }
+
+
+        public string? Currency { get; set; }
     }
 
 	//public class ListingFilters

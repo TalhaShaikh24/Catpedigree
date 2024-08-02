@@ -147,7 +147,7 @@
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                    
                             <div class="image">
-                                <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@userinfo.ProfilePicPath.Replace("~","")" class="img-circle elevation-2" alt="User Image">
                             </div>
                             <div class="info">
                               <a href="javascript:void(0);" class="d-block">@userinfo.Username</a>
@@ -317,6 +317,37 @@
                                         </li>
                                     </ul>
                                 </li>
+
+
+
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            Coupons Codes
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                     Code Lists
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>
+                                                    Generate Codes
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             }  
                             
                             else if (userinfo.RoleIds.Contains("Vendor"))
@@ -478,6 +509,65 @@
 
     <script>
 
+        var currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£"
+            // Add more mappings as needed
+        };
+
+
+
+        // Function to update price symbols
+        function updatePrices(selectedCurrency) {
+            debugger;
+
+
+            var symbol = currencySymbols[selectedCurrency == null ? 'EUR' : selectedCurrency];
+            $('.price').each(function () {
+                var priceValue = $(this).attr('data-price');
+
+                if (priceValue == undefined) {
+
+
+                    $(this).text(symbol);
+                }
+                else {
+
+
+                    $(this).text(symbol + priceValue);
+                }
+
+            });
+        }
+
+        function SinglePriceListing(selectedCurrency) {
+            debugger;
+            var symbol = currencySymbols[selectedCurrency == null ? 'EUR' : selectedCurrency];
+            $('.price').each(function () {
+
+                var span = $(this).find('.rtcl-price-currencySymbol');
+                // Get the price value
+                var priceValue = span.data('price');
+
+                if (priceValue == undefined) {
+
+                        
+                    $(this).text(symbol);
+                }
+                else {
+
+
+                    // Update the bdi content
+                    $(this).html(symbol + '<span class="rtcl-price-currencySymbol" data-price="' + priceValue + '">' + priceValue + '</span>');
+
+                }
+
+              
+            });
+        }
+
+
         $("#btnLogOFf").click(function () {
 
 
@@ -518,6 +608,8 @@
         }
 
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz7rPf5wTgxQt0ZxMl4gNuxtO5Rd5H1Sk&amp;v=weekly&amp;libraries=places&amp;callback=initMap" id="script-loader" async="" data-state="ready"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

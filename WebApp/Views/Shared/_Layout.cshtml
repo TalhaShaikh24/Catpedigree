@@ -58,7 +58,7 @@
 
     <!--====== Jquery js ======-->
     <script src="~/webassets/js/vendor/jquery-3.6.0.min.js"></script>
-
+  
     <style>
 
         /* Start Cookie CSS */
@@ -208,6 +208,9 @@
                                 <li><a href="https://www.instagram.com/catpedigreeworld?utm_source=qr&igsh=MW9vNGx1ZzV3cXFreA=="><i class="ti-instagram"></i></a></li>
                             </ul>
                         </div>
+
+                    
+
                     </div>
                     <div class="col-md-4">
                         <div class="top-content text-center">
@@ -325,7 +328,12 @@
                                 <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                                 <li><a href="#"><i class="fab fa-tiktok"></i></a></li>
                             </ul>
+                        
+
                         </div>
+
+                    
+                   
                     </div>
                     <div class="col-md-4">
                         <div class="top-content text-center">
@@ -334,6 +342,17 @@
                             </p>
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                       <select id="currency">
+
+                            <option value="EUR">EUR</option>
+
+                            <option value="USD">USD</option>
+
+                        </select>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -383,7 +402,7 @@
                                             </ul>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="">Cats & Kittens for Sale</a>
+                                            <a href="">Cats & Kittens to Sale</a>
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("Kittens","Home")">Kittens</a></li>
                                                 <li><a href="@Url.Action("Relocation","Home")">Relocation</a></li>
@@ -420,11 +439,11 @@
                                         @{
                                             if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
                                             {
-                                                <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
+                                                    <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
                                             }
                                             else
                                             {
-                                                <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
+                                                    <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
                                             }
                                         }
                                         @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
@@ -686,9 +705,71 @@
 
     <script>
 
+
+        var currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£"
+            // Add more mappings as needed
+        };
+
+
+
+        // Function to update price symbols
+        function updatePrices(selectedCurrency) {
+            debugger;
+
+
+            var symbol = currencySymbols[selectedCurrency == null?'EUR':selectedCurrency];
+            $('.price').each(function () {
+                var priceValue = $(this).attr('data-price');
+
+                if (priceValue == undefined){
+
+                    
+                $(this).text(symbol);
+                }
+                else {
+
+
+                    $(this).text(symbol + priceValue);
+                }
+
+            });
+        }
+
+        function SinglePriceListing(selectedCurrency) {
+     
+           
+            var symbol = currencySymbols[selectedCurrency == null?'EUR':selectedCurrency];
+            $('.pricesingle').each(function () {
+
+                var span = $(this).find('.rtcl-price-currencySymbol');
+                // Get the price value
+                var priceValue = span.data('price');
+
+                
+                // Update the bdi content
+                $(this).html(symbol + '<span class="rtcl-price-currencySymbol" data-price="' + priceValue + '">' + priceValue + '</span>');
+
+            });
+        }
+
+
         $(document).ready(function () {
 
             GetFooterAdvertisments();
+
+
+
+
+            $("#currency").val(localStorage.getItem('cur'))
+
+            $("#currency").niceSelect('destroy')
+            $("#currency").niceSelect();
+
+        
+
         })
 
         function GetFooterAdvertisments() {
@@ -835,6 +916,59 @@
                 }
             });
         }
+
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var regex = /([^&=]+)=([^&]*)/g;
+            var m;
+            while (m = regex.exec(queryString)) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+            return params;
+        }
+
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        $("#currency").change(function(){
+
+
+
+            var newCurrencySymbol = "€"; // For example, changing to Euro
+
+
+            var newCurrency = $(this).val();
+            localStorage.setItem('cur', newCurrency);
+            var params = getQueryParams();
+
+            if (params.hasOwnProperty('currency')) {
+                // Change the value of the "currency" parameter
+                params['currency'] = newCurrency;
+
+                // Update the URL with the new "currency" value
+                var newUrl = updateQueryStringParameter(window.location.href, 'currency', params['currency']);
+                history.replaceState(null, '', newUrl);
+            } else {
+                // Add the "currency" parameter if it does not exist
+                var newUrl = window.location.href + (window.location.search ? '&' : '?') + 'currency=' + newCurrency;
+                history.replaceState(null, '', newUrl);
+            }
+            window.location.reload();
+
+          
+
+
+
+
+        })
 
     </script>
 

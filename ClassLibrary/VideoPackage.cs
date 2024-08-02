@@ -18,9 +18,5 @@ namespace ClassLibrary
 
         public string? stripeSubscriptionId { get; set; }
 
-
-
-
-
     }
 }

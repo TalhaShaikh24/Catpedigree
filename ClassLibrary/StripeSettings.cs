@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,4 +12,11 @@ namespace ClassLibrary
         public string? PublishableKey { get; set; }
         public string? SecretKey { get; set; }
     }
+
+    public class ExchangeRateApiSettings
+    {
+        public string? ApiKey { get; set; }
+        public string? ApiUrl { get; set; }
+    }
+   
 }

@@ -16,15 +16,18 @@ namespace WebApi.Controllers
         private string BaseUrl = "";
         private readonly IDashboardRepository _repository;
 
+        private readonly IStripeServices _stripeServices;
+
         private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
 
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices)
         {
             _repository = repository;
             _hostingEnvironment = hostingEnvironment;
 
             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
+            _stripeServices = stripeServices;   
         }
 
         [HttpPost("GetAllDashboard")]
@@ -1012,6 +1015,75 @@ namespace WebApi.Controllers
         }
 
 
+
+        [HttpPost("DeleteSelectedGalleryPath/{Path}")]
+        public Response DeleteSelectedGalleryPath(string Path)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                string[] filepaths = Path.Split(',');
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.DeleteSelectedGalleryPath(Path);
+
+                if (res)
+                {
+
+                    foreach (var item in filepaths)
+                    {
+                        string filePath = System.IO.Path.Combine("UploadImages", item.TrimStart());
+
+                        string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, filePath);
+                     
+
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+
+            
+
+
+                    }
+
+
+
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Gallery Deleted successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
         [HttpPost("DeleteListingById/{Id}")]
         public Response DeleteListingById(int Id)
         {
@@ -1053,6 +1125,192 @@ namespace WebApi.Controllers
             }
 
         }
+
+
+
+        #region  CouponsCodes
+
+
+        [HttpPost("AddCouponsCodes")]
+        public Response AddCouponsCodes([FromBody] CouponCodes obj)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _stripeServices.AddCouponsCodes(obj);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "CouponCode  generated successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
+
+        [HttpPost("GetCouponCodes")]
+        public Response GetCouponCodes()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetCouponCodes();
+
+           
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "CouponCode  generated successfully!";
+
+                
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
+
+        [HttpPost("ActiveDeactiveCode/{Id}")]
+        public Response ActiveDeactiveCode(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.ActiveDeactiveCouponCode(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Code Status Changed successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
+        [HttpPost("IsExpireCoupens/{Id}")]
+        public Response IsExpireCoupens(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.IsExpireCoupens(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Code Status Changed successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        #endregion
+
+
+
 
     }
 }

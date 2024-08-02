@@ -30,7 +30,12 @@ $(document).ready(function () {
 })
 
 function getAll() {
-    postRequest('/Dashboard/GetAdvertisementPackage', null, function (res) {
+
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    debugger;
+    postRequest('/Dashboard/GetAdvertisementPackage/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
@@ -73,7 +78,7 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.advertisementPackageType}</p>
                             <h4 class="mb-4">Costs:</h4>
                              <ul class="pricing-content" id="costs${item.advertisementPackageID}">
-                               <li>${item.numberOfAdvertisement} Number of Advertisement + £  ${item.advertisementPackageCost}</li>
+                               <li>${item.numberOfAdvertisement} Number of Advertisement + <span class="price"></span>  ${item.advertisementPackageCost}</li>
                             </ul>
 
                             <div class="pricingTable-signup">
@@ -86,6 +91,9 @@ function getAll() {
                     $('#AdvertisementpackagesContainer').append(html);
                 });
 
+                debugger;
+                var selectedCurrency = localStorage.getItem('cur');
+                SinglePriceListing(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -278,8 +286,7 @@ $("#makepayment").click(function () {
         CardNumber: $("#cc-number").val(),
         expireMonth: parseInt(parts[0]),
         expireYear: parseInt(parts[1]),
-        cvc: $("#cc-cvc").val(),
-    
+        cvc: $("#cc-cvc").val()
     }
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 

@@ -145,6 +145,22 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+        [HttpGet("Dashboard/Coupons")]
+        public IActionResult Coupons()
+        {
+            return View();
+        }
+
+
+        [HttpGet("Dashboard/CouponsList")]
+        public IActionResult CouponsList()
+        {
+            return View();
+        }
+
+
+
+
 
 
         [HttpPost]
@@ -203,6 +219,11 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+
+
+
+
+
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
         public Task<object> GetAllDashboard()
@@ -237,6 +258,17 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UploadSelectedGalleryPath/"+Path, "", HttpContext);
+
+        }
+
+
+
+        [HttpPost]
+        [Route("Dashboard/DeleteSelectedGalleryPath/{Path}")]
+        public Task<object> DeleteSelectedGalleryPath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedGalleryPath/" + Path, "", HttpContext);
 
         }
 
@@ -468,12 +500,17 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        [Route("Dashboard/GetAdvertisementPackage")]
-        public Task<object> GetAdvertisementPackage()
+        [Route("Dashboard/GetAdvertisementPackage/{currency}")]
+        public Task<object> GetAdvertisementPackage(string currency)
         {
+            if (currency==null)
+            {
+                currency = "EUR";
+
+            }
             var content = "";
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage/"+ currency, content, HttpContext);
 
         }
 
@@ -519,6 +556,39 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+        [HttpPost("Dashboard/AddCouponsCodes")]
+        public Task<object> AddCouponsCodes([FromBody] CouponCodes obj)
+        {
+            string content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AddCouponsCodes", content, HttpContext);
+        }
 
+
+        [HttpPost("Dashboard/GetCouponCodes")]
+        public Task<object> GetCouponCodes()
+        {
+            string content = "";
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetCouponCodes", content, HttpContext);
+        }
+
+
+
+        
+        [HttpPost]
+        [Route("Dashboard/IsExpireCoupens")]
+        public Task<object> IsExpireCoupens(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/IsExpireCoupens/" + Id, "", HttpContext);
+
+        } 
+        [HttpPost]
+        [Route("Dashboard/ActiveDeactiveCode")]
+        public Task<object> ActiveDeactiveCode(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/ActiveDeactiveCode/" + Id, "", HttpContext);
+
+        }
     }
 }

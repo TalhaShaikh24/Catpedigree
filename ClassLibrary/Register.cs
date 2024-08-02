@@ -35,6 +35,12 @@ namespace ClassLibrary
         public string? BreederLicensePath { get; set; }
         public string? ZoologicalNumber { get; set; }
         public int? RoleId { get; set; }
+
+
+        public string? Country { get; set; }
+        public string? City { get; set; }
+        public string? Province { get; set; }
+
     }
 
 }

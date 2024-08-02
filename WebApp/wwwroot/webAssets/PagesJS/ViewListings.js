@@ -17,6 +17,7 @@ let categoryId = Number(urlParams.get('categoryId'));
 let listingLocation = urlParams.get('listingLocation');
 
 async function loadMore() {
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 
 
     var obj = {
@@ -24,9 +25,12 @@ async function loadMore() {
         PageSize: pageSize,
         CategoryId: categoryId,
         Keyword: keyword,
-        Location: listingLocation
-
+        Location: listingLocation,
+        Currency: curr
     }
+
+
+    
 
     const response = await fetch('/Listing/GetAllListingByFilters', {
         method: 'POST',
@@ -56,7 +60,7 @@ async function loadMore() {
                                     <div class="listing-content">
                                         <div class="title d-flex justify-content-between align-items-center mb-10">
                                             <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                             <h4 class="status  price">€ ${item.price}</h4>
+                                             <h4 class="status  price" data-price="${item.price}"> ${item.price}</h4>
                                         </div>
                                         <h3 class="title">
                                             <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -75,6 +79,11 @@ async function loadMore() {
         });
 
 
+
+
+        var selectedCurrency = localStorage.getItem('cur');
+        updatePrices(selectedCurrency);
+
         pageNumber++;
         updateCountDisplay();
 
@@ -90,6 +99,8 @@ async function loadMore() {
 async function filteringSearch() {
 
     var sliderValues = $("#slider-range").slider("values");
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
 
     var obj = {
         PageNumber: 1,
@@ -101,7 +112,8 @@ async function filteringSearch() {
         City: $("#cityFilter").val(),
         TypeOfCat: Number($("#breedFilter").val()),
         PriceMin: sliderValues[0],
-        PriceMax: sliderValues[1]
+        PriceMax: sliderValues[1],
+        Currency: curr
 
     }
     debugger
@@ -134,7 +146,7 @@ async function filteringSearch() {
                      <div class="listing-content">
                          <div class="title d-flex justify-content-between align-items-center mb-10">
                              <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                              <h4 class="status  price">€ ${item.price}</h4>
+                              <h4 class="status   price" data-price="${item.price}"> ${item.price}</h4>
                          </div>
                          <h3 class="title">
                              <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
@@ -152,6 +164,11 @@ async function filteringSearch() {
             $("#load-more").show();
         });
 
+
+        
+
+        var selectedCurrency = localStorage.getItem('cur');
+        updatePrices(selectedCurrency);
 
         pageNumber++;
         updateCountDisplay();
@@ -187,7 +204,6 @@ function GetAllCatType() {
 
                 $.each(res.data, function (i, v) {
 
-                    debugger
                     $("#appendCatTypes").after(`
                       <option value="${v.id}">${v.catType}</option>
                       `);

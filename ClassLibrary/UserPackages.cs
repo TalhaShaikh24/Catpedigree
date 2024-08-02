@@ -42,6 +42,7 @@ namespace ClassLibrary
 
         public string? stripeSubscriptionId { get; set; }
 
+        public string? CouponCode { get; set; }
 
 
 

@@ -32,7 +32,6 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <style>
         .password-container {
             position: relative;
@@ -126,9 +125,34 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="address">Address</label>
-                                        <input type="text" class="form-control" id="address" name="address">
+                                        <textarea id="address" name="address" class="form-control"></textarea>
+                                       
+                                        <div id="results"></div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="country">Country</label>
+                                        <input type="text" class="form-control" id="country" name="Country">
+                                    
+                                    </div>
+
+                                </div> 
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="province">Province</label>
+                                        <input type="text" class="form-control" id="province" name="province">
+                                    </div>
+
+                                </div>   
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" name="city">
+                                    </div>
+
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="profileInfo">Profile Info</label>
@@ -165,6 +189,7 @@
     </section><!--====== End Add Listing Section ======-->
     <!--====== Jquery js ======-->
     <script src="~/webassets/js/vendor/jquery-3.6.0.min.js"></script>
+
     <!--====== Popper js ======-->
     <script src="~/webassets/js/popper.min.js"></script>
     <!--====== Bootstrap js ======-->
@@ -172,6 +197,8 @@
     <!--====== SweetAlerts js ======-->
     <script src="~/webassets/js/sweetalert2.min.js"></script>
 
+
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz7rPf5wTgxQt0ZxMl4gNuxtO5Rd5H1Sk&amp;v=weekly&amp;libraries=places&amp;callback=initMap" id="script-loader" async="" data-state="ready"></script>
 
 	<script src="~/webassets/pagesjs/userregistration.js"></script>
 </body>

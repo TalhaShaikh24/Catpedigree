@@ -5,8 +5,59 @@ $(document).ready(function () {
 
     GetProfileDetail();
 
+
+    initAutocomplete();
+    onPlaceChanged();
+
+
 });
 
+
+function initAutocomplete() {
+    const input = document.getElementById('address');
+    debugger;
+    autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Set up the dropdown element
+    dropdown = document.getElementById('places-dropdown');
+
+    // Listen for place selection
+    autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+function onPlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+    }
+
+    const addressComponents = place.address_components;
+    let city = "";
+    let state = "";
+    let country = "";
+
+    for (const component of addressComponents) {
+        const types = component.types;
+        if (types.includes("locality")) {
+            city = component.long_name;
+        }
+        if (types.includes("administrative_area_level_1")) {
+            state = component.short_name;
+        }
+        if (types.includes("country")) {
+            country = component.long_name;
+        }
+    }
+
+    // Log city, state, and country
+
+    $("#country").val(country);
+    $("#province").val(state);
+    $("#city").val(city);
+
+
+}
 
 $("#profilePic").change(function (e) {
 
@@ -46,15 +97,19 @@ function GetProfileDetail() {
                 $("#zoologicalNumber").val(res.data.zoologicalNumber);
                 $("#profileInfo").val(res.data.profileInfo);
                 $("#username").val(res.data.username);
-
-                debugger;
+                $("#country").val(res.data.country);
+                $("#province").val(res.data.province);
+                $("#city").val(res.data.city);
+                var newprofilePicPath = res.data.profilePicPath.replace(/~/g, '');
 
                 $("#AppendProfilePic").empty().append(`<div style="width:150px;height:150px;">
-                  <img src="${baseApiUrl+res.data.profilePicPath}" id="profilePicPath" class="img-fluid img-thumbnail" data-img-url="${res.data.profilePicPath}"/>
+                  <img src="${baseApiUrl + newprofilePicPath}" id="profilePicPath" class="img-fluid img-thumbnail" data-img-url="${res.data.profilePicPath}"/>
                </div>`);
 
+                var newbreederLicensePath = res.data.breederLicensePath.replace(/~/g, '');
+
                 $("#AppendBreederLicense").empty().append(`<div style="width:150px;height:150px;">
-                  <img src="${baseApiUrl+res.data.breederLicensePath}" id="breederLicensePath" class="img-fluid img-thumbnail" data-img-url="${res.data.breederLicensePath}"/>
+                  <img src="${baseApiUrl + newbreederLicensePath}" id="breederLicensePath" class="img-fluid img-thumbnail" data-img-url="${res.data.breederLicensePath}"/>
                 </div>`);
 
             }
@@ -137,6 +192,9 @@ $('#updateBtn').click(function () {
     formData.append('ZoologicalNumber', $('#zoologicalNumber').val());
     formData.append('ProfilePicPath', $("#profilePicPath").attr("data-img-url"));
     formData.append('BreederLicensePath', $("#breederLicensePath").attr("data-img-url"));
+    formData.append('Country', $('#country').val());
+    formData.append('City', $('#city').val());
+    formData.append('Province', $('#province').val());
 
     // Append ProfilePic if exists
     var profilePic = $("#profilePic")[0].files[0];

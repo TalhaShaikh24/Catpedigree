@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mollie.Api.Models;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Repositories;
@@ -25,20 +26,23 @@ namespace WebApi.Controllers
 
 
         private string webUrl = "";
-        public PackagesController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration,IAccountRepository accountRepository) 
+
+        private readonly ICurrencyConverterService _currencyConverterService;
+        public PackagesController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration,IAccountRepository accountRepository, ICurrencyConverterService currencyConverterService) 
         {
             _repository = repository;
             _stripeServices = stripeServices;
             webUrl = configuration.GetSection("UrlSetting").GetSection("baseWebUrl").Value ?? "";
             _accountRepository = accountRepository;
 
+            _currencyConverterService = currencyConverterService;
         }
 
         
 
 
-        [HttpPost("GetAllPackages")]
-        public Response GetAllPackages()
+        [HttpPost("GetAllPackages/{currency}")]
+        public async Task<Response> GetAllPackages(string currency)
         {
             Response response = new Response();
 
@@ -46,6 +50,19 @@ namespace WebApi.Controllers
             {
 
                 var res = _repository.GetAllPackages();
+
+                if (res.Count>0)
+                {
+                    decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+                    foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                    {
+
+                        res[index].Price = Math.Round((decimal)(item.Price * rate), 2);
+
+
+                    }
+                }
+
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
 
@@ -130,7 +147,7 @@ namespace WebApi.Controllers
 
 
                     var customerRespinse = await _stripeServices.CreateSubscriptionAsync(claimDTO.Email, obj.CardNumber,
-                    obj.expireMonth, obj.expireYear, obj.cvc, priceId);
+                    obj.expireMonth, obj.expireYear, obj.cvc, priceId, obj.CouponCode);
 
 
                     obj.stripeSubscriptionId = customerRespinse;
