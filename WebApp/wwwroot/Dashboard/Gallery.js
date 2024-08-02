@@ -16,6 +16,7 @@ $(document).ready(function () {
             tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
         }
     });
+ 
 
     GetAllGellary();
 
@@ -162,7 +163,15 @@ function GetAllGellary() {
                                                 </div>`);
 
             });
+            $('.thumb').hover(
+                function () {
+                    $(this).find('img').css({
+                        '-webkit-filter': 'grayscale(0)',
+                        'filter': 'grayscale(0)'
+                    });
+                },
 
+            );
         }
         if (res.status == 304) {
 
