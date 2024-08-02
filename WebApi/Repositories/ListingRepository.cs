@@ -1,5 +1,6 @@
 ﻿using ClassLibrary;
 using Dapper;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.SqlServer.Server;
 using System.Data;
 using WebApi.DBManager;
@@ -78,6 +79,7 @@ namespace WebApi.Repositories
                 obj.VideoPath = VideoFilePath;
             }
 
+
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Title", obj.Title, DbType.String, ParameterDirection.Input);
             parameters.Add("Location", obj.Location, DbType.String, ParameterDirection.Input);
@@ -101,7 +103,7 @@ namespace WebApi.Repositories
             parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
             parameters.Add("PedigreeFilePath", obj.PedigreeFilePath, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Age", obj.Age, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Age", obj.Age.IsNullOrEmpty()? null: obj.Age, DbType.String, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("IsActive", false, DbType.Boolean, ParameterDirection.Input);

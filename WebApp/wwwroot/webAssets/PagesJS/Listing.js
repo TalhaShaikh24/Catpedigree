@@ -610,6 +610,10 @@ $("#Btn_Post_Listing").click(function () {
                 //$(document).find("input").val(null);
                 //$(document).find("select").val(null).niceSelect('update');
                 //GetAllDropdowns();
+
+
+                window.location.href ="/Dashboard/MyListing"
+
             }
         }
         if (res.status == 304) {

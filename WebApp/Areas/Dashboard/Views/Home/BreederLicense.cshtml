@@ -15,7 +15,12 @@
             margin-bottom: 0;
         }
 
-        .thumb
+        .thumb img {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+       /*  .thumb
         figure img {
             -webkit-filter: grayscale(100%);
             filter: grayscale(100%);
@@ -27,7 +32,7 @@
         figure:hover img {
             -webkit-filter: grayscale(0);
             filter: grayscale(0);
-        }
+        } */
 
     .Watermarkbutton {
         position: absolute;

@@ -163,6 +163,17 @@ function GetAllGellary() {
 
             });
 
+
+
+            $('.thumb').hover(
+                function () {
+                    $(this).find('img').css({
+                        '-webkit-filter': 'grayscale(0)',
+                        'filter': 'grayscale(0)'
+                    });
+                },
+
+            );
         }
         if (res.status == 304) {
 
