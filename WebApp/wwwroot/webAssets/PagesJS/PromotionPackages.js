@@ -164,7 +164,7 @@ function BuypromotionPackage(pkgId) {
 $(document).on('click', '.buypackage', function () {
 
 
-    $('#exampleModalCenter').modal('show');
+   
 
 
      Promotionpackageid = $(this).attr('data-packageid');
@@ -172,8 +172,7 @@ $(document).on('click', '.buypackage', function () {
     $("#costslist").empty();
 
     
-
-    GetPromotionCost(Promotionpackageid);
+   GetPromotionCost(Promotionpackageid);
 
 
 
@@ -210,7 +209,7 @@ function GetPromotionCost(pkgId) {
       `);
 
                 }
-
+                $('#exampleModalCenter').modal('show');
 
             }
 
@@ -238,9 +237,9 @@ function GetPromotionCost(pkgId) {
         if (res.status == 401) {
 
             Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
+                title: "Oops",
+                text: "Please login to buy this package",
+                icon: "warning"
             })
         }
         if (res.status == 403) {
