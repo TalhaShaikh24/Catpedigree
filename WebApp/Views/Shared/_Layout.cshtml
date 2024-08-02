@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/css/intlTelInput.css">
     <!--====== FontAwesoem css ======-->
     <link rel="stylesheet" href="~/webassets/fonts/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     <!--====== Flaticon css ======-->
     <link rel="stylesheet" href="~/webassets/fonts/flaticon/flaticon.css">
     <!--====== Magnific Popup css ======-->
@@ -318,8 +319,11 @@
                         <div class="top-social">
                             <ul class="social-link">
                                 <li><span>Follow us:</span></li>
-                                <li><a href="https://www.facebook.com/catpedigreeworld"><i class="ti-facebook"></i></a></li>
-                                <li><a href="https://www.instagram.com/catpedigreeworld?utm_source=qr&igsh=MW9vNGx1ZzV3cXFreA=="><i class="ti-instagram"></i></a></li>
+                                <li><a href="https://www.facebook.com/catpedigreeworld"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="https://www.instagram.com/catpedigreeworld?utm_source=qr&igsh=MW9vNGx1ZzV3cXFreA=="><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                <li><a href="#"><i class="fab fa-tiktok"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -367,7 +371,15 @@
                                                 <li><a href="@Url.Action("Coaching","Home")">Coaching</a></li>
                                                 <li><a href="@Url.Action("BreederMediation","Home")">Mediation</a></li>
                                                 <li><a href="@Url.Action("HouseRules", "Home")">House Rules</a></li>
-                                                <li><a href="@Url.Action("PackageDeals","Home")">Package Deals</a></li>
+                                                <li class="menu-item has-children">
+                                                     <a href="@Url.Action("PackageDeals","Home")">Package Deals</a>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="@Url.Action("Pricing","Packages")">Pricing Plans</a></li>
+                                                        <li><a href="@Url.Action("Index","PromotionPackage")">Promotional Plans</a></li>
+                                                        <li><a href="@Url.Action("VideoPlans","VideoPackages")">Video Plan</a></li>
+                                                    </ul>
+                                                    <span class="dd-trigger"><i class="ti-arrow-left"></i></span>
+                                                </li>
                                             </ul>
                                         </li>
                                         <li class="menu-item">

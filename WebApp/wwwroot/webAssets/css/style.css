@@ -1114,8 +1114,9 @@ button {
 
 .header-area-three .header-navigation {
   position: relative; }
-  .header-area-three .header-navigation .main-menu ul > li.has-children > a:after {
-    color: #fff; }
+    .header-area-three .header-navigation .main-menu ul > li.has-children > a:after {
+        color: #ff344f;
+    }
   .header-area-three .header-navigation .main-menu ul > li.has-children > a.active:after {
     color: #ff344f; }
   .header-area-three .header-navigation .main-menu ul li a {
