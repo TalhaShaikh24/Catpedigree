@@ -360,14 +360,32 @@ namespace WebApp.Areas.Dashboard.Controllers
 		}
 
 
-		//[HttpPost]
-  //      [Route("Dashboard/AddBlogCategory")]
-  //      public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
-  //      {
-  //          var content = JsonConvert.SerializeObject(obj);
-  //          return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
+        [HttpPost]
+        [Route("Dashboard/AddBlogCategory")]
+        public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
 
-  //      }       
+        } 
+        [HttpPost]
+        [Route("Dashboard/UpdateBlogCategory")]
+        public Task<object> UpdateBlogCategory([FromBody] BlogCategories obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/UpdateBlogCategory", content, HttpContext);
+
+        } 
+        
+
+        [HttpPost]
+        [Route("Dashboard/DeleteBlogCategory")]
+        public Task<object> DeleteBlogCategory(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteBlogCategory/" + Id, "", HttpContext);
+
+        }
 
         [HttpPost]
         [Route("Dashboard/AddBlog")]

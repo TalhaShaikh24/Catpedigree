@@ -67,6 +67,43 @@
     </div>
 </section>
 
+<!-- Modal for Editing Blog Category -->
+
+<div class="modal fade" id="editCategoryModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Update Blog Category</b></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form id="editCategoryForm">
+                    <div class="mb-3">
+                        <label for="modalCategoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="modalCategoryName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="modalDescription" rows="3" required></textarea>
+                    </div>
+                    <input type="hidden" id="modalCategoryId">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" id="Btn_Update_Listing">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
 	<script src="~/dashboard/blogcategories.js"></script>

@@ -54,7 +54,7 @@ namespace WebApi.Controllers
 
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Blog Create Successfuly!";
+                    response.ResponseMsg = "Category created successfuly!";
                     response.Data = res;
                     return response;
                 }
@@ -76,6 +76,95 @@ namespace WebApi.Controllers
                 return response;
             }
         }
+         [HttpPost("UpdateBlogCategory")]
+        public async Task<Response> UpdateBlogCategory([FromBody] BlogCategories obj)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = await _repository.UpdateBlogCategory(obj);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Category updated Successfuly!";
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+        }
+
+        [HttpPost("DeleteBlogCategory/{Id}")]
+        public Response DeleteBlogCategory(int Id)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                var res = _repository.DeleteBlogCategory(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.ResponseMsg = "Delete Category Successfuly!";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+
+                else return CustomStatusResponse.GetResponse(320);
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
         [HttpPost("AddBlog")]
         public async Task<Response> AddBlog([FromForm] Blog obj)
         {

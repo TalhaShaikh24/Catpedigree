@@ -11,6 +11,7 @@ namespace WebApi.IRepositories
     public interface IBlogRepository
     {
         Task<BlogCategories> AddBlogCategory(BlogCategories obj);
+        Task<BlogCategories> UpdateBlogCategory(BlogCategories obj);
         Task<Blog> AddBlog(Blog obj);
         Task<Blog> UpdateBlog(Blog obj);
         List<Blog> GetHomePageBlogs();
@@ -23,6 +24,7 @@ namespace WebApi.IRepositories
         int BlogDeleteById(int Id);
         int DeleteCommentById(int Id);
         int DeleteReplyId(int Id);
+        int DeleteBlogCategory(int Id);
         Comment AddComment(Comment obj);
         Reply UpdateReply(Reply obj);
         Reply SendReply(Reply obj);

@@ -44,6 +44,20 @@ namespace WebApi.Repositories
 
             return data;
         }  
+        public async Task<BlogCategories> UpdateBlogCategory(BlogCategories obj)
+        {
+
+          
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", obj.Id, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CategoryName", obj.CategoryName, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Description", obj.Description, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<BlogCategories>(@"[sp_UpdateBlogCategory]", parameters);
+
+            return data;
+        }  
         public async Task<Blog> AddBlog(Blog obj)
         {
 
@@ -213,6 +227,13 @@ namespace WebApi.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<int>(@"[sp_DeleteReplyId]", parameters);
+            return data;
+        }
+        public int DeleteBlogCategory(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<int>(@"[sp_DeleteBlogCategoryById]", parameters);
             return data;
         }
     }
