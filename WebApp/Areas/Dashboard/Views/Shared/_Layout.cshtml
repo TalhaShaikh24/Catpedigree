@@ -147,7 +147,13 @@
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                    
                             <div class="image">
-                        <img src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@userinfo.ProfilePicPath.Replace("~","")" class="img-circle elevation-2" alt="User Image">
+                            @{
+                            if (!string.IsNullOrWhiteSpace(@userinfo.ProfilePicPath))
+                                {
+                                    <img src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@userinfo.ProfilePicPath.Replace("~","")" class="img-circle elevation-2" alt="User Image">
+                                }
+                            }
+                        
                             </div>
                             <div class="info">
                               <a href="javascript:void(0);" class="d-block">@userinfo.Username</a>
