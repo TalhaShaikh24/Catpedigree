@@ -194,7 +194,7 @@ namespace WebApi.Repositories
             parameters.Add("@UserId", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@ListingId", obj.Id, DbType.Int32, ParameterDirection.Input);
 
-            var data = _dapper.Insert<Listing>(@"[sp_IsViewPedigreeAllowed]", parameters);
+            var data = _dapper.Get<Listing>(@"[sp_IsViewPedigreeAllowed]", parameters);
 
             return data;
         }

@@ -534,11 +534,7 @@
                                                     Details
                                                 </button>
                                             </h2>
-                                            <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
-                                                <!-- Description -->
-                                                <div class="rtcl-listing-description">
-                                                    <p>@Model.data.Listing.Description</p>
-                                                </div>
+                                         
 
 
                                                 <!--  Inner Sidebar -->
@@ -608,7 +604,26 @@
                                                             @Model.data.Listing.CatteryName
                                                         </span>
                                                     </li>
+
+                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                        <span class="cfp-label">
+                                                            <span>Breerder Name:</span>
+                                                        </span>
+                                                        <span class="cfp-value">
+                                                            @Model.data.Listing.BreerderName
+                                                        </span>
+                                                    </li>
                                                 </ul>
+
+
+
+                                            <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3"  aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                                <span class="cfp-label">
+                                                    <span>Description:</span>
+                                                </span>
+                                                <div class="rtcl-listing-description">
+                                                    <p>@Model.data.Listing.Description</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
