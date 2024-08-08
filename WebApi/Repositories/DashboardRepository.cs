@@ -61,11 +61,13 @@ namespace WebApi.Repositories
 
         public async Task<Listing> UpdateListing(Listing obj)
         {
+            // Function to replace spaces with underscores in file names
+            string ReplaceSpaces(string input) => input.Replace(' ', '_');
 
             if (obj.PedigreeFile != null)
             {
 
-                string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.PedigreeFile.FileName);
+                string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.PedigreeFile.FileName));
                 string PedigreeFilePath = Path.Combine("UploadImages", PedigreeFileName);
                 string PedigreeFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, PedigreeFilePath);
 
@@ -78,7 +80,7 @@ namespace WebApi.Repositories
 
             if (obj.FeatureImageFile != null)
             {
-                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
+                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.FeatureImageFile.FileName));
                 string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
                 string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
 
@@ -96,7 +98,7 @@ namespace WebApi.Repositories
                 foreach (var item in obj.GalleryImageFiles)
                 {
 
-                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(item.FileName));
                     string GalleryFilePath = Path.Combine("UploadImages", GalleryFileName);
                     string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
 
@@ -112,7 +114,7 @@ namespace WebApi.Repositories
 
             if (obj.VideoFile != null)
             {
-                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
+                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.VideoFile.FileName));
                 string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
                 string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
 

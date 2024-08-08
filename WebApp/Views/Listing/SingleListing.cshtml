@@ -418,8 +418,8 @@
                                         @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
                                         {
                                             <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                                <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath">
-                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                                <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath">
+                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="w-100 attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                                 </a>
                                             </div>
                                         }

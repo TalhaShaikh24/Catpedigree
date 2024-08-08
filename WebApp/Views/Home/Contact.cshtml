@@ -1,4 +1,11 @@
-﻿<section class="contact-area pb-90 pt-120">
+﻿<style>
+    #department ~ .nice-select span.current {
+        position: relative;
+        top: -20px;
+}
+</style>
+
+<section class="contact-area pb-90 pt-120 light-bg">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -6,33 +13,125 @@
                     <img class="mb-5" src="~/webassets/images/logo/happy-cat.png" />
                     <span class="sub-title">Contact Cat Pedigree World</span>
                     <h2><span class="line">Have Questions?</span></h2>
+                    <p class="f-20" style="line-height:32px">Get in touch with Cat Pedigree World for any inquiries or questions you may have. We're here to help with all your feline pedigree needs. Contact us today!</p>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="contact-info wow fadeInUp">
-                    <h3 class="mb-4"><strong>General Questions:</strong></h3>
-                    <p class="f-20">For general inquiries, please email us at <a href="mailto:info@catpedigreeworld.com">info@catpedigreeworld.com</a>.</p>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="contact-info wow fadeInUp">
-                    <h3 class="mb-4"><strong> Technical Questions:</strong></h3>
-                    <p class="f-20">For technical support, please email us at <a href="mailto:support@catpedigreeworld.com">support@catpedigreeworld.com</a>.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-           <div class="col-md-12">
-
-                <iframe src="https://share-eu1.hsforms.com/1kNC-Djw9QLWORU_cYGxkuw2ecx3o" title="description" height="1000" width="1200"></iframe>
-           </div>
-        </div>
-
-
-
-
-
+       
     </div>
 </section>
+
+<!--====== Start Contact Section ======-->
+<section class="contact-section pt-115 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="section-title section-title-left mb-50">
+                    <span class="sub-title">Contact With Us</span>
+                    <h2>How Can We Help You</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="contact-information-list">
+                    <div class="information-item mb-30 wow fadeInUp">
+                        <div class="icon social" style="background-color:#4267B2">
+                            <i class="fab fa-facebook-f"></i>
+                        </div> 
+                        <div class="icon social" style="background-color:#C13584">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="icon social" style="background-color:#1DA1F2">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="icon social" style="background-color:#FF0000">
+                            <i class="fab fa-youtube"></i>
+                        </div> 
+                        <div class="icon social" style="background-color:#000000">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                    </div>
+                    <div class="information-item mb-30 wow fadeInUp">
+                        <div class="icon">
+                            <i class="ti-email"></i>
+                        </div>
+                        <div class="info">
+                            <h5>Email</h5>
+                            <p><a href="mailto:info@catpedigreeworld.com">info@catpedigreeworld.com</a></p>
+                            <p><a href="mailto:support@catpedigreeworld.com">support@catpedigreeworld.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="contact-wrapper-one mb-30 wow fadeInRight">
+                    <div class="contact-form">
+                        <form id="contactForm" name="contactForm">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <select class="form-control py-4" placeholder="Select Department" name="department" id="department">
+                                            <option>Support</option>
+                                            <option>Sale</option>
+                                            <option>Info</option>
+                                            <option>Mediation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group form-group">
+                                        <input type="text" class="form_control" placeholder="First Name" name="name" id="name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group form-group">
+                                        <input type="text" class="form_control" placeholder="Last Name" name="lastname" id="lastname">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group form-group">
+                                        <input type="text" class="form_control" placeholder="Phone" name="phone" id="phone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group form-group">
+                                        <input type="email" class="form_control" placeholder="Email" name="email" id="email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form_group form-group">
+                                        <input type="text" class="form_control" placeholder="Subject" name="subject" id="subject">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form_group form-group">
+                                        <textarea class="form_control" placeholder="Your Message" name="message" id="message"></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form_group">
+                                        <button type="button" id="btnSubmitContact" class="main-btn">Send Message</button>
+                                        <div id="msgSubmit" class="hidden"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== End Contact Section ======-->
+<!--====== Start Map section ======-->
+<section class="contact-page-map">
+    <div class="map-box">
+        <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    </div>
+</section><!--====== End Map section ======-->
+<script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/webassets/pagesjs/contact.js"></script>

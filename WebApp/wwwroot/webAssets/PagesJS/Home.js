@@ -51,7 +51,7 @@ function GetTopPageListings() {
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -123,6 +123,7 @@ function GetTopPageListings() {
         }
     });
 }
+
 function GetVetRimmedPageListings() {
     postRequest('/Listing/GetVetRimmedPageListings', null, function (res) {
 
@@ -133,8 +134,8 @@ function GetVetRimmedPageListings() {
                 $.each(res.data, function (index, item) {
 
                     var html = `
-                        <div class="col-lg-3 col-md-6 col-sm-12" >
-                            <div class="listing-item listing-grid-item-two mb-30  ${item.promotionName}">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
                                 <div class="listing-thumbnail">
                                    <a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
                                       <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
@@ -143,12 +144,12 @@ function GetVetRimmedPageListings() {
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price" data-price="${item.price}> ${item.price}</h4>
+                                        <h4 class="status price" data-price="${item.price}">${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -159,6 +160,7 @@ function GetVetRimmedPageListings() {
                         </div>`;
                     $('#appendVetandRimmedListings').append(html);
                 });
+
                 $("#sectionVetRimmedListings").show();
             }
         }
@@ -232,24 +234,32 @@ function GetHomePageListings() {
             if (res.data.length > 0) {
 
                 $.each(res.data, function (index, item) {
-
                     var html = `
-                        <div class="col-lg-3 col-md-6 col-sm-12" >
-                            <div class="listing-item listing-grid-item-two mb-30  ${item.promotionName}">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
                                 <div class="listing-thumbnail">
-                                   <a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
-                                      <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                   </a>
+                                    ${item.videoPath && item.videoPath.trim() !== "" ?
+                        
+                                 `
+                                     <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
+                                         <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:8px; background-image: url('${ baseApiUrl + item.featureImagePath}');">
+                                             <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                         </div>
+                                     </div>` :
+                                     `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
+                                     <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                 </a>`
+                                        }
                                 </div>
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                         <h4 class="status  price" data-price="${item.price}" >${item.price}</h4>
+                                        <h4 class="status price" data-price="${item.price}">${item.price}</h4>
                                     </div>
                                     <h3 class="title">
-                                        <a  onclick="SingleListing(${item.id})" >${item.title}</a>
+                                        <a onclick="SingleListing(${item.id})">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -260,6 +270,7 @@ function GetHomePageListings() {
                         </div>`;
                     $('#appendListings').append(html);
                 });
+
 
                 GetHomePageBlogs();
             }

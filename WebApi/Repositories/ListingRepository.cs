@@ -20,9 +20,12 @@ namespace WebApi.Repositories
         }
         public async Task<Listing> AddListing(Listing obj)
         {
+            // Function to replace spaces with underscores in file names
+            string ReplaceSpaces(string input) => input.Replace(' ', '_');
+
             if (obj.PedigreeFile != null)
             {
-                string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.PedigreeFile.FileName);
+                string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.PedigreeFile.FileName));
                 string PedigreeFilePath = Path.Combine("UploadImages", PedigreeFileName);
                 string PedigreeFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, PedigreeFilePath);
 
@@ -35,7 +38,7 @@ namespace WebApi.Repositories
 
             if (obj.FeatureImageFile != null)
             {
-                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImageFile.FileName);
+                string FeatureFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.FeatureImageFile.FileName));
                 string FeatureFilePath = Path.Combine("UploadImages", FeatureFileName);
                 string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
 
@@ -52,7 +55,7 @@ namespace WebApi.Repositories
 
                 foreach (var item in obj.GalleryImageFiles)
                 {
-                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(item.FileName));
                     string GalleryFilePath = Path.Combine("UploadImages", GalleryFileName);
                     string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
 
@@ -68,7 +71,7 @@ namespace WebApi.Repositories
 
             if (obj.VideoFile != null)
             {
-                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.VideoFile.FileName);
+                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(obj.VideoFile.FileName));
                 string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
                 string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
 
@@ -78,7 +81,6 @@ namespace WebApi.Repositories
                 }
                 obj.VideoPath = VideoFilePath;
             }
-
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Title", obj.Title, DbType.String, ParameterDirection.Input);
@@ -103,18 +105,20 @@ namespace WebApi.Repositories
             parameters.Add("FeatureImage", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
             parameters.Add("GallaryImages", obj.GallaryImagesPath, DbType.String, ParameterDirection.Input);
             parameters.Add("PedigreeFilePath", obj.PedigreeFilePath, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Age", obj.Age.IsNullOrEmpty()? null: obj.Age, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Age", string.IsNullOrEmpty(obj.Age) ? (object)null : obj.Age, DbType.String, ParameterDirection.Input);
             parameters.Add("@CategoryId", obj.CategoryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PackageId", obj.PackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("IsActive", false, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
             parameters.Add("PromotionPackageId", obj.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("CatteryName", obj.CatteryName, DbType.String, ParameterDirection.Input);
+
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
             return data;
         }
 
-		public class ListingResult
+
+        public class ListingResult
 		{
 			public List<Listing> Listings { get; set; }
 			public int TotalCount { get; set; }

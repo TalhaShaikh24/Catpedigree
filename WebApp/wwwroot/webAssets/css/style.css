@@ -84,6 +84,43 @@ h5 {
 
 h6 {
   font-size: 16px; }
+
+.text_limit_1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.text_limit_2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.text_limit_3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.text_limit_4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.text_limit_5 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* number of lines to show */
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
 .f-10 {
     font-size: 10px;
 }
@@ -541,7 +578,7 @@ button {
 .back-to-top {
   background: #ff344f;
   border-radius: 50%;
-  bottom: 30px;
+  bottom: 100px;
   color: #fff;
   cursor: pointer;
   display: none;
@@ -573,6 +610,18 @@ button {
 .hero-wrapper-two .hero-content h1, .hero-wrapper-two .hero-content p.tags, .hero-wrapper-three .hero-content h1, .hero-wrapper-three .hero-content h3, .hero-wrapper-three .hero-search-wrapper .search-nav .nav-link.active, .breadcrumbs-wrapper-one .button .icon-btn:hover, .category-item-two .category-img .category-overlay .category-content a, .features-list-one .list-item .icon i, .cta-wrapper-one .cta-content-box h2, .cta-wrapper-two .company-name, .cta-wrapper-two .cta-content-box h2, .cta-wrapper-two .cta-content-box p, .cta-wrapper-two .cta-content-box .main-btn:hover, .intro-wrapper-one .play-content-one h5, .intro-content-box-one p, .download-content-box-one ul.button li .app-btn:hover .info h6,
 .download-content-box-one ul.button li .app-btn:hover .info span, .client-wrapper-two .client-content-box p, .client-wrapper-two .client-content-box .main-btn:hover, .newsletter-wrapper .newsletter-content-box-one .icon, .newsletter-wrapper .newsletter-content-box-one .content h2, .fioxen-pagination .pagination-list li a.active, .fioxen-pagination .pagination-list li a:hover, .featured-btn, .listing-search-filter .filter-right ul.filter-nav li a.active, .listing-search-filter .filter-right ul.filter-nav li a:hover, .listing-slider-one .slick-arrow:hover, .listing-grid-one .listing-thumbnail .thumbnail-meta .meta-icon-title .icon, .listing-tab-filter .nav-link.active, .listing-list-item-one .listing-thumbnail .cat-btn, .listing-list-item-two .listing-thumbnail .thumbnail-meta .meta-icon-title .icon, .listing-details-wrapper .listing-tag-box a:hover, .listing-details-wrapper .listing-rating-box .single-average-rating span.rating, .listing-details-wrapper.listing-details-wrapper-two .listing-info-area .button .icon-btn:hover, .place-item-one .place-thumbnail .place-content span.listing, .place-item-two .place-thumbnail .place-overlay .place-content .icon, .place-item-three .place-thumbnail .place-overlay .place-content h4, .place-item-three .place-thumbnail .place-overlay .place-content ul.ratings, .place-item-three .place-thumbnail .place-overlay .place-content ul.ratings span, .products-filter .list li a.active, .products-filter .list li a:hover, .products-item-one .product-img .product-overlay .product-meta .icon:hover, .product-details-wrapper .products-gallery-slider .slick-arrow, .team-item-one .team-img .team-social ul.social-link li a, .blog-post-item-one .post-thumbnail .post-date a, .blog-post-item-three .post-thumbnail .post-date a, .blog-post-item-four .entry-content .cat-btn, .blog-details-wrapper .entry-content .post-tag a:hover, .sidebar-widget-area .widget.categories-widget .categories-nav li a:hover, .sidebar-widget-area .widget.tag-cloud-widget a:hover, .sidebar-widget-area .widget.newsletter-widget .newsletter-widget-wrap h3, .sidebar-widget-area .widget.contact-info-widget .contact-map .support-icon, .sidebar-widget-area .widget.contact-info-widget .contact-info-content .social-link li a:hover, .footer-widget .widget h4.widget-title, .footer-widget .widget p, .footer-widget .widget.categories-widget ul.categories-link li a, .copyright-area .copyright-text p, .contact-information-list .information-item .icon {
   color: #fff; }
+.listing-item.listing-grid-item-two.Rimmed {
+    border: 2px solid #333;
+}
+
+.listing-item .listing-thumbnail img {
+    border-radius: 14px!important;
+}
+.listing-item.Bold h3.title {
+    font-weight: 900;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
 .section-title span.sub-title, .header-area .header-top .top-social ul.social-link li a:hover, .header-area .header-top .top-content p a, .header-area .header-top .top-right ul li a:hover, .hero-wrapper-three .hero-content p.tags span, .category-item-one:hover .info .icon i, .category-item-three:hover .icon i, .category-item-three:hover .info h4.title, .features-item-one .icon i, .features-item-two .icon i, .icon-box-one .icon i, .work-process-wrapper .single-process-step .process-content-box .step-count, ul.ratings.ratings-one li.star:nth-child(1) i, ul.ratings.ratings-two li.star:nth-child(2) i, ul.ratings.ratings-two li.star:nth-child(1) i, ul.ratings.ratings-three li.star:nth-child(3) i, ul.ratings.ratings-three li.star:nth-child(2) i, ul.ratings.ratings-three li.star:nth-child(1) i, ul.ratings.ratings-four li.star:nth-child(4) i, ul.ratings.ratings-four li.star:nth-child(3) i, ul.ratings.ratings-four li.star:nth-child(2) i, ul.ratings.ratings-four li.star:nth-child(1) i, ul.ratings.ratings-five li.star:nth-child(5) i, ul.ratings.ratings-five li.star:nth-child(4) i, ul.ratings.ratings-five li.star:nth-child(3) i, ul.ratings.ratings-five li.star:nth-child(2) i, ul.ratings.ratings-five li.star:nth-child(1) i, .counter-item-one .info h3, .intro-wrapper-one .play-content-one .video-popup i, .intro-wrppaer-two .play-content .video-popup, .newsletter-wrapper .newsletter-form i, .single-checkbox label:after, .listing-item .listing-content h3.title:hover, .listing-item .listing-content span.phone-meta:hover, .listing-grid-one .listing-content span.phone-meta:hover, .listing-grid-one .listing-content .listing-meta ul span i, .listing-grid-item-two .listing-content .listing-meta ul span i, .listing-list-item-one .listing-content .listing-meta ul span i, .listing-list-item-two .listing-content .listing-meta ul span i, .listing-details-wrapper .listing-content p.para, .listing-details-wrapper .listing-review-box .review-list .review .review-content .content-meta .reply, .listing-details-wrapper.listing-details-wrapper-two .listing-info-area .listing-info-content .listing-meta ul li span i, .add-listing-form.upload-listing-form .upload-content .upload-title-icon span, .products-filter .sort-dropdown .show-text p, .products-item-one .product-info span.price, .product-details-wrapper .product-info span.price, .product-details-wrapper .product-info .product-meta .wishlist-btn, .description-wrapper .products-review-area ul.review-list .review .review-content .reply:hover, .description-wrapper .products-review-form .ratings li:hover i, .btn-link:hover, .post-meta ul li span a:hover, .blog-post-item-one .entry-content h3.title:hover, .blog-post-item-one .entry-content .cat-btn:hover, .blog-post-item-one .entry-content .post-meta ul li span i, .blog-post-item-two .entry-content h3.title:hover, .blog-post-item-three .entry-content h3.title:hover, .blog-post-item-three .entry-content .post-meta ul li span i, .blog-post-item-four .entry-content .post-meta ul li span:hover, .blog-post-item-four .entry-content .post-meta ul li span i, .blog-post-item-four .entry-content h3.title:hover, .blog-details-wrapper .entry-content p span, .blog-details-wrapper .entry-content .fioxen-blockquote h6, .blog-details-wrapper .entry-content .list li:before, .blog-details-wrapper .post-navigation .post-nav-item h5:hover, .blog-details-wrapper .comments-area .comments-list .comment .comment-wrap .comment-author-content .reply, .sidebar-widget-area .widget.search-widget form .form_group i, .sidebar-widget-area .widget.recent-post-widget .recent-post-list .post-thumbnail-content .post-title-date .posted-on i, .sidebar-widget-area .widget.recent-post-widget .recent-post-list .post-thumbnail-content .post-title-date h6:hover, .sidebar-widget-area .widget.business-hour-widget ul.time-info li span.st-close, .footer-widget .widget.recent-post-widget .post-widget-list .post-content-item .post-title-date h6.title:hover, .footer-widget .widget.categories-widget ul.categories-link li a:hover, .copyright-area .copyright-link ul li a:hover, .contact-information-list .information-item .info p a:hover {
   color: #ff344f; }
@@ -2451,7 +2500,9 @@ ul.ratings {
     07. Listing CSS
 ==========================*/
 .listing-item .listing-thumbnail {
-  position: relative; }
+  position: relative;
+  height:290px;
+}
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .listing-item .listing-thumbnail img {
       width: 100%; } }
@@ -2696,7 +2747,7 @@ h3.title {
   border-radius: 5px 5px 0px 0px; }
 
 .listing-grid-item-two .listing-content {
-  border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px 14px 14px;
   -webkit-box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
   box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
   background-color: #fff;
@@ -4847,21 +4898,42 @@ h3.title {
 .contact-wrapper-one .contact-form form textarea.form_control {
   height: 200px; }
 
+.error {
+    color: #ff344f!important;
+}
+
 .contact-information-list .information-item {
-  padding: 30px;
-  background-color: #fff;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
-  box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center; }
+    padding: 30px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
+    box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
   .contact-information-list .information-item .icon {
     min-width: 60px;
     max-width: 60px;
     height: 60px;
+    border-radius: 3px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 27px;
+    margin-right: 20px; }  
+  .contact-information-list .information-item .icon.social {
+    min-width: 45px;
+    max-width: 45px;
+    height: 45px;
     border-radius: 3px;
     display: -webkit-box;
     display: -ms-flexbox;

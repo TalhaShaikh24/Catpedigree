@@ -42,6 +42,7 @@ builder.Services.AddTransient<IBlogRepository, BlogRepository> ();
 builder.Services.AddTransient<IPromotionPackageRepository, PromotionPackageRepository> ();
 builder.Services.AddTransient<IVendorRepository, VendorRepository> ();
 builder.Services.AddTransient<IAdvertisementServices  ,   AdvertisementServices> ();
+builder.Services.AddTransient<IContactRepository,   ContactRepository> ();
 builder.Services.AddTransient<IMolliePaymentService  , MolliePaymentService> ();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddTransient<IStripeServices, StripeServices>();

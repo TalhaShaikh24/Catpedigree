@@ -551,7 +551,7 @@ function redirectToHome() {
 $("#Btn_Post_Listing").click(function () {
 
     debugger
-
+    $(".preloader").show();
     let formData = new FormData();
 
     for (let i = 0; i < filesToUpload.length; i++) {
@@ -595,7 +595,7 @@ $("#Btn_Post_Listing").click(function () {
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
         if (res.status == 200) {
-
+            $(".preloader").hide();
             if (res.data != null) {
 
                 Swal.fire({
@@ -617,7 +617,7 @@ $("#Btn_Post_Listing").click(function () {
             }
         }
         if (res.status == 304) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -625,7 +625,7 @@ $("#Btn_Post_Listing").click(function () {
             })
         }
         if (res.status == 305) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -633,7 +633,7 @@ $("#Btn_Post_Listing").click(function () {
             })
         }
         if (res.status == 401) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -641,14 +641,14 @@ $("#Btn_Post_Listing").click(function () {
             })
         }
         if (res.status == 403) {
-
+            $(".preloader").hide();
             Swal.fire(res.responseMsg, {
                 icon: "error",
                 title: "Error"
             });
         }
         if (res.status == 320) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -656,7 +656,7 @@ $("#Btn_Post_Listing").click(function () {
             })
         }
         if (res.status == 500) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -664,7 +664,7 @@ $("#Btn_Post_Listing").click(function () {
             })
         }
         if (res.status == 600) {
-
+            $(".preloader").hide();
             Swal.fire({
                 title: "Warning",
                 text: res.responseMsg,
