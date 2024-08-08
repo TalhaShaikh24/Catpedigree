@@ -30,7 +30,12 @@ $(document).ready(function () {
 })
 
 function getAll() {
-    postRequest('/Advertisement/GetAdvertisementPackage', null, function (res) {
+
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    debugger;
+    postRequest('/Dashboard/GetAdvertisementPackage/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
@@ -73,7 +78,7 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.advertisementPackageType}</p>
                             <h4 class="mb-4">Costs:</h4>
                              <ul class="pricing-content" id="costs${item.advertisementPackageID}">
-                               <li>${item.numberOfAdvertisement} Number of Advertisement + £  ${item.advertisementPackageCost}</li>
+                               <li>${item.numberOfAdvertisement} Number of Advertisement + <span class="price"></span>  ${item.advertisementPackageCost}</li>
                             </ul>
 
                             <div class="pricingTable-signup">
@@ -83,9 +88,12 @@ function getAll() {
                         </div>
                     </div>
             `;
-                    $('#AdvertisementpackagesContainer').append(html);
+                    $('#pricingContainer').append(html);
                 });
 
+                debugger;
+                var selectedCurrency = localStorage.getItem('cur');
+                SinglePriceListing(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -105,12 +113,23 @@ function getAll() {
             })
         }
         if (res.status == 401) {
-
             Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
+                title: "Oops",
+                text: "Please log in as a Business Advertiser!",
+                icon: "warning",
+                dangerMode: true,
+                showCancelButton: true, // Show the cancel button
+                confirmButtonText: "Login",
+                cancelButtonText: "Cancel",
+                confirmButtonColor: "#3085d6", // Optional: Change button color
+                cancelButtonColor: "#d33", // Optional: Change cancel button color
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to login page or perform login action
+                    window.location.href = '/Home/login'; // Adjust the URL to your login page
+                }
+            });
+
         }
         if (res.status == 403) {
 
@@ -167,7 +186,7 @@ function BuypromotionPackage(pkgId) {
     var obj = {
         AdvertisementPackageID: Number(pkgId),
 
-      //  Days: parseInt($('input[name="inlineRadioOptions"]:checked').val())
+        //  Days: parseInt($('input[name="inlineRadioOptions"]:checked').val())
     }
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 
@@ -248,16 +267,65 @@ function BuypromotionPackage(pkgId) {
 $(document).on('click', '.buypackage', function () {
 
 
-    //$('#exampleModalCenter').modal('show');
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json;charset=utf-8',
+        dataType: "json",
+        url: "/Advertisement/CheckCookiesData",
+      //  data: JSON.stringify(requestData),
+        success: function (data, textStatus, xhr) {
+
+            debugger;
 
 
-    $("#paymentModal").modal('show');
+            if (data) {
+
+                $("#paymentModal").modal('show');
 
 
-    AdvertisementPackageID = $(this).attr('data-packageid');
+                AdvertisementPackageID = $(this).attr('data-packageid');
 
- 
-        
+            }
+            else {
+
+                Swal.fire({
+                    title: "Oops",
+                    text: "Please log in as a Business Advertiser!",
+                    icon: "warning",
+                    dangerMode: true,
+                    showCancelButton: true, // Show the cancel button
+                    confirmButtonText: "Login",
+                    cancelButtonText: "Cancel",
+                    confirmButtonColor: "#3085d6", // Optional: Change button color
+                    cancelButtonColor: "#d33", // Optional: Change cancel button color
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to login page or perform login action
+                        window.location.href = '/Home/login'; // Adjust the URL to your login page
+                    }
+                });
+
+            }
+
+
+
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            Swal.fire({
+                title: "Error",
+                text: "Something Went Wrong!",
+                icon: "error",
+                dangerMode: true,
+            })
+        }
+    });
+
+
+
+
+
+
 
 
 
@@ -274,11 +342,11 @@ $("#makepayment").click(function () {
     var parts = expireDate.split('/');
     var obj = {
         AdvertisementPackageID: Number(AdvertisementPackageID),
-      
+
         CardNumber: $("#cc-number").val(),
         expireMonth: parseInt(parts[0]),
         expireYear: parseInt(parts[1]),
-        cvc: $("#cc-cvc").val(),
+        cvc: $("#cc-cvc").val()
     }
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 
@@ -460,7 +528,7 @@ function clear() {
     AdvertisementPackageID = 0;
 
     $("#paymentModal").modal('hide');
-  //  $('#exampleModalCenter').modal('hide');
+    //  $('#exampleModalCenter').modal('hide');
 
 }
 

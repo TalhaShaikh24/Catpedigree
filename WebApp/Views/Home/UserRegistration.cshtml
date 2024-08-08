@@ -29,7 +29,12 @@
     <link rel="stylesheet" href="~/webassets/css/style.css">
     <!--====== SweetAlert css ======-->
     <link rel="stylesheet" href="~/webassets/css/sweetalert2.css">
-
+    <link href="~/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/plugins/jquery-ui/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/plugins/jquery-ui/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/plugins/jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/plugins/jquery-ui/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -116,10 +121,16 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="contactNo">Contact Number</label>
                                         <input type="text" class="form-control" id="contactNo" name="contactNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="datepicker">Date of  Birth</label>
+                                        <input type="text" class="form-control" id="datepicker" name="datepicker">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -130,6 +141,10 @@
                                         <div id="results"></div>
                                     </div>
                                 </div>
+
+
+
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="country">Country</label>
@@ -165,6 +180,35 @@
                                         <input type="text" class="form-control" id="zoologicalNumber" name="zoologicalNumber">
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Facebook Profile Link</label>
+                                        <input id="FbProfile" name="FbProfile" class="form-control"/>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Insta Profile Link</label>
+                                        <input id="InProfile" name="InProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+                                   <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Twitter Profile Link</label>
+                                        <input id="TwProfile" name="TwProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="profilePic">Profile Picture</label>
@@ -199,6 +243,7 @@
 
 
     <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz7rPf5wTgxQt0ZxMl4gNuxtO5Rd5H1Sk&amp;v=weekly&amp;libraries=places&amp;callback=initMap" id="script-loader" async="" data-state="ready"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
 
 	<script src="~/webassets/pagesjs/userregistration.js"></script>
 </body>

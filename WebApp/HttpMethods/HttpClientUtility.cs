@@ -81,8 +81,11 @@ namespace WebApp.HttpMethods
 
                 var multiContent = new MultipartFormDataContent();
 
-                    // Add JSON content
-                    multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
+
+                string dateOfBirthString = obj.DateofBirth?.ToString("yyyy-MM-dd") ?? "";
+
+                // Add JSON content
+                multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
                     multiContent.Add(new StringContent(obj.Lastname ?? ""), "lastname");
                     multiContent.Add(new StringContent(obj.Username ?? ""), "username");
                     multiContent.Add(new StringContent(obj.Email ?? ""), "email");
@@ -95,6 +98,12 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.Country ?? ""), "country");
                 multiContent.Add(new StringContent(obj.City ?? ""), "city");
                 multiContent.Add(new StringContent(obj.Province ?? ""), "province");
+                multiContent.Add(new StringContent(dateOfBirthString ?? null), "DateofBirth");
+
+                multiContent.Add(new StringContent(obj.FaceBook ?? ""), "FaceBook");
+                multiContent.Add(new StringContent(obj.Insta ?? ""), "Insta");
+                multiContent.Add(new StringContent(obj.Twitter ?? ""), "Twitter");
+
 
                 if (obj.ProfilePic != null)
                     {
@@ -417,6 +426,13 @@ namespace WebApp.HttpMethods
 
                     var multiContent = new MultipartFormDataContent();
 
+
+
+                    // Convert DateTime to string
+                    string dateOfBirthString = obj.DateofBirth?.ToString("yyyy-MM-dd") ?? "";
+
+                    // Create StringContent with the formatted date string
+             
                     // Add JSON content
                     multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
                     multiContent.Add(new StringContent(obj.Lastname ?? ""), "lastname");
@@ -432,6 +448,11 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.Country ?? ""), "country");
                     multiContent.Add(new StringContent(obj.City ?? ""), "city");
                     multiContent.Add(new StringContent(obj.Province ?? ""), "province");
+                    multiContent.Add(new StringContent(dateOfBirthString ?? null), "DateofBirth");
+
+                    multiContent.Add(new StringContent(obj.FaceBook ?? ""), "FaceBook");
+                    multiContent.Add(new StringContent(obj.Insta ?? ""), "Insta");
+                    multiContent.Add(new StringContent(obj.Twitter ?? ""), "Twitter");
 
 
 

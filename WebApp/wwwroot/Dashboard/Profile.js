@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
+    $("#datepicker").datepicker();
     GetProfileDetail();
 
 
@@ -15,7 +16,7 @@ $(document).ready(function () {
 
 function initAutocomplete() {
     const input = document.getElementById('address');
-    debugger;
+    
     autocomplete = new google.maps.places.Autocomplete(input);
 
     // Set up the dropdown element
@@ -100,6 +101,22 @@ function GetProfileDetail() {
                 $("#country").val(res.data.country);
                 $("#province").val(res.data.province);
                 $("#city").val(res.data.city);
+
+
+
+                debugger;
+                $("#datepicker").datepicker('setDate', new Date(res.data.dateofBirth))
+
+
+                $("#FbProfile").val(res.data.faceBook)
+                $("#InProfile").val(res.data.insta)
+                $("#TwProfile").val(res.data.twitter)
+
+                
+
+
+
+
                 var newprofilePicPath = res.data.profilePicPath.replace(/~/g, '');
 
                 $("#AppendProfilePic").empty().append(`<div style="width:150px;height:150px;">
@@ -195,6 +212,10 @@ $('#updateBtn').click(function () {
     formData.append('Country', $('#country').val());
     formData.append('City', $('#city').val());
     formData.append('Province', $('#province').val());
+    formData.append('DateofBirth', $("#datepicker").val());
+    formData.append('FaceBook', $("#FbProfile").val());
+    formData.append('Insta', $("#InProfile").val());
+    formData.append('Twitter', $("#TwProfile").val());
 
     // Append ProfilePic if exists
     var profilePic = $("#profilePic")[0].files[0];
