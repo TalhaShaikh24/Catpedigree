@@ -22,6 +22,9 @@ namespace ClassLibrary
         public bool IsExpired { get; set; }
         public int CreatedBy { get; set; }
 
+
+        public string? UsedBy { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
     }

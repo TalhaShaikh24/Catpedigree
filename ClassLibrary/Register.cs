@@ -29,6 +29,9 @@ namespace ClassLibrary
         public string? ContactNo { get; set; }
         public string? Address { get; set; }
         public string? ProfileInfo { get; set; }
+
+        public DateTime? DateofBirth { get; set; }
+
         public IFormFile? ProfilePic { get; set; }
         public IFormFile? BreederLicense { get; set; }
         public string? ProfilePicPath { get; set; }
@@ -41,6 +44,17 @@ namespace ClassLibrary
         public string? City { get; set; }
         public string? Province { get; set; }
 
+
+        public int UserSocialLinskID { get; set; }
+
+
+        public string? FaceBook { get; set; }
+        public string? Insta { get; set; }
+        public string? Twitter { get; set; }
+
+
     }
+
+
 
 }

@@ -122,6 +122,10 @@ namespace WebApi.Repositories
                 parameters.Add("@Country", formData.Country, DbType.String, ParameterDirection.Input);
                 parameters.Add("@City", formData.City, DbType.String, ParameterDirection.Input);
                 parameters.Add("@province", formData.Province, DbType.String, ParameterDirection.Input);
+                parameters.Add("@DateofBirth", formData.DateofBirth, DbType.Date, ParameterDirection.Input);
+                parameters.Add("@FaceBook", formData.FaceBook, DbType.String, ParameterDirection.Input);
+                parameters.Add("@Insta", formData.Insta, DbType.String, ParameterDirection.Input);
+                parameters.Add("@Twitter", formData.Twitter, DbType.String, ParameterDirection.Input);
 
 
                 var data = _dapper.Insert<Register>(@"[sp_userRegister]", parameters);

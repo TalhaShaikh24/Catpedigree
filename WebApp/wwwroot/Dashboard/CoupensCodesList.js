@@ -26,6 +26,8 @@ function GetAllListings() {
                                                    <td>${v.isActive}</td>
                                                    <td>${v.isExpired}</td>
                                                  
+                                                   <td>${v.usedBy}</td>
+                                                 
 
                                                    <td>${v.createdOn}</td>
                                                            <td style=" width: 115px; display: flex; justify-content: space-evenly; align-items: center;">

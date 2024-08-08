@@ -75,6 +75,14 @@
                                             <input type="text" class="form-control" id="contactNo" name="contactNo">
                                         </div>
                                     </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="datepicker">Date of  Birth</label>
+                                        <input type="text" class="form-control" id="datepicker" name="datepicker">
+                                    </div>
+                                </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="address">Address</label>
@@ -135,18 +143,53 @@
                                     </div>
                                 </div>
 
+
+
+
+
+
+
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="profileInfo">Profile Info</label>
                                             <textarea class="form-control" rows="8" cols="8" id="profileInfo" name="profileInfo"></textarea>
                                         </div>
                                     </div>
-                                    
+
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Facebook Profile Link</label>
+                                        <input id="FbProfile" name="FbProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Insta Profile Link</label>
+                                        <input id="InProfile" name="InProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Twitter Profile Link</label>
+                                        <input id="TwProfile" name="TwProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+
+
+
 
                                 </div>
                            
                             <div class="float-right my-2">
-                                <button class="btn btn-success" type="button" id="updateBtn" type="button">Update</button>
+                                <button class="btn btn-success" type="button" id="updateBtn" >Update</button>
                             </div>
                         </div>
                     </div>
@@ -160,6 +203,5 @@
 
 
 @section Scripts {
- 
     <script src="~/dashboard/Profile.js"></script>
 }

@@ -6,6 +6,8 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
+    $("#datepicker").datepicker();
+
     $("#vendor").prop("checked", true);
     $('#registerBtn').click(function () {
 
@@ -26,6 +28,10 @@ $(document).ready(function () {
         formData.append('Country', $('#country').val());
         formData.append('City', $('#city').val());
         formData.append('Province', $('#province').val());
+        formData.append('DateofBirth', $("#datepicker").val());
+        formData.append('FaceBook', $("#FbProfile").val());
+        formData.append('Insta', $("#InProfile").val());
+        formData.append('Twitter', $("#TwProfile").val());
 
         // Append ProfilePic if exists
         var profilePic = $("#profilePic")[0].files[0];

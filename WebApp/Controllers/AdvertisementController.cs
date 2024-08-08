@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using WebApp.HttpMethods;
 
 namespace WebApp.Controllers
@@ -28,8 +29,40 @@ namespace WebApp.Controllers
 
         }
 
-		
-		public Task<object> GetAdvertisementPackage()
+
+        [HttpPost]
+        public  object CheckCookiesData()
+        {
+            bool cookieExists = Request.Cookies.ContainsKey("user");
+
+            if (cookieExists)
+            {
+                var cookieValue = Request.Cookies["user"];
+
+
+
+                var dataObj = JObject.Parse(cookieValue)["dataObj"];
+                var roleIds = dataObj["roleIds"]?.ToString();
+
+                if (string.IsNullOrEmpty(roleIds))
+                {
+                    return false;
+                }
+
+                var rolesArray = roleIds.Split(',');
+                return rolesArray.Select(role => role.Trim()).Contains("Business Advertiser");
+
+           
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+        public Task<object> GetAdvertisementPackage()
 		{
 			var content = "";
 

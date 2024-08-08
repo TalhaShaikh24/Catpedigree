@@ -256,7 +256,12 @@ function BuypromotionPackage(pkgId) {
 $(document).on('click', '.buypackage', function () {
 
 
-    //$('#exampleModalCenter').modal('show');
+
+
+
+
+
+
 
 
     $("#paymentModal").modal('show');

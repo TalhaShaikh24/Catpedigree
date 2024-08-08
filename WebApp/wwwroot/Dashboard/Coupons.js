@@ -152,6 +152,8 @@ $("#save").click(function () {
                         icon: "success"
                     });
 
+                    window.location.href ="/Dashboard/CouponsList"
+
 
 
                 }

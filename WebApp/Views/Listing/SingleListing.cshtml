@@ -656,6 +656,18 @@
                                             {
                                                 <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
                                             }
+                                            @if (!string.IsNullOrEmpty(@Model.data.Listing.FaceBook))
+                                            {
+                                                <p><a href="@Model.data.Listing.FaceBook"><i class="ti-facebook"></i></a></p>
+                                            }
+                                                @if (!string.IsNullOrEmpty(@Model.data.Listing.Twitter))
+                                            {
+                                                <p><a href="@Model.data.Listing.Twitter"><i class="ti-twitter"></i></a></p>
+                                            }
+                                            @if (!string.IsNullOrEmpty(@Model.data.Listing.Insta))
+                                            {
+                                                <p><a href="@Model.data.Listing.Insta"><i class="ti-instagram"></i></a></p>
+                                            }
                                         </div>
                                         <ul class="social-link d-none">
                                             <li><a href="#"><i class="ti-facebook"></i></a></li>
