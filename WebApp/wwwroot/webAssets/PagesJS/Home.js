@@ -5,7 +5,7 @@ $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
     GetHomePageListings();
     GetTopPageListings();
-    GetVetRimmedPageListings();
+    //GetVetRimmedPageListings();
     // GetHomeAdvertisments();
 })
 
@@ -244,17 +244,18 @@ function GetHomePageListings() {
                                      <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
                                          <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:8px; background-image: url('${ baseApiUrl + item.featureImagePath}');">
                                              <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                             <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
                                          </div>
                                      </div>` :
                                      `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
-                                     <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                 </a>`
+                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                         <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                     </a>`
                                         }
                                 </div>
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">
                                         <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                                        <h4 class="status price" data-price="${item.price}">${item.price}</h4>
                                     </div>
                                     <h3 class="title">
                                         <a onclick="SingleListing(${item.id})">${item.title}</a>

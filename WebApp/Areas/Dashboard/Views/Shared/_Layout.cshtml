@@ -114,7 +114,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center" style="height:100vh!important">
-            <img class="animation__shake" src="~/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" style="display:block!important">
+            <img class="animation__shake" src="~/webassets/images/cat_logo_icon.png" alt="AdminLTELogo" height="100" width="100" style="display:block!important">
         </div>
 
         <!-- Navbar -->
@@ -620,6 +620,27 @@
                 }
             });
         }
+
+        function ShowPreloader() {
+            $('.preloader').css({
+                "height": "100vh",
+                "display": "flex"  // assuming you want the preloader to be displayed as a flex container
+            });
+            $('.preloader img').css({
+                "display": "block"
+            });
+        }
+
+        function HidePreloader() {
+            $('.preloader').css({
+                "height": "0vh",
+                "display": "none"  // hide the preloader container
+            });
+            $('.preloader img').css({
+                "display": "none"
+            });
+        }
+
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz7rPf5wTgxQt0ZxMl4gNuxtO5Rd5H1Sk&amp;v=weekly&amp;libraries=places&amp;callback=initMap" id="script-loader" async="" data-state="ready"></script>

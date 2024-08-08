@@ -14,68 +14,71 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <style>
-   .listingDetails-header .page-header .photo-swip-gallery-wrap {
-    display: grid;
-    grid-gap: 8px;
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* Maintain 4 columns */
-}
+    .listingDetails-header .page-header .photo-swip-gallery-wrap {
+        display: grid;
+        grid-gap: 8px;
+        grid-template-columns: 1fr 1fr 1fr 1fr; /* Maintain 4 columns */
+    }
 
-.page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(1) {
-    grid-column: 1 / 3;
-    grid-row: 1 / 3;
-    display: block;
-}
+    .page-header .photo-swip-gallery-wrap.items-five .listing-gallery-item:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        display: block;
+    }
 
-.listing-gallery-item:nth-child(1)  {
-    height: 450px !important;
-}
-
-.listing-gallery-item:nth-child(1) img {
-    height: 450px !important;
-    object-fit: cover;
-}
-
-.listing-gallery-item img {
-    height: 225px !important;
-    object-fit: cover;
-}
-
-.listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item img {
-    height: auto;
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-/* Responsive adjustments */
-@@media (max-width: 1200px) {
     .listing-gallery-item:nth-child(1) {
-        height: 350px !important; /* Adjust height */
+        height: 450px !important;
     }
+
+        .listing-gallery-item:nth-child(1) img {
+            height: 450px !important;
+            object-fit: cover;
+        }
+
     .listing-gallery-item img {
-        height: 175px !important; /* Adjust height */
+        height: 225px !important;
+        object-fit: cover;
     }
-}
 
-@@media (max-width: 768px) {
-    .listing-gallery-item:nth-child(1) {
-        height: 300px !important; /* Adjust height */
+    .listingDetails-header .page-header .photo-swip-gallery-wrap .listing-gallery-item img {
+        height: auto;
+        max-width: 100%;
+        border-radius: 8px;
     }
-    .listing-gallery-item img {
-        height: 150px !important; /* Adjust height */
-    }
-}
 
-@@media (max-width: 480px) {
-    .listing-gallery-item:nth-child(1) {
-        height: 250px !important; /* Adjust height */
+    /* Responsive adjustments */
+    @@media (max-width: 1200px) {
+        .listing-gallery-item:nth-child(1) {
+            height: 350px !important; /* Adjust height */
+        }
+
+        .listing-gallery-item img {
+            height: 175px !important; /* Adjust height */
+        }
     }
-    .listing-gallery-item img {
-        height: 125px !important; /* Adjust height */
+
+    @@media (max-width: 768px) {
+        .listing-gallery-item:nth-child(1) {
+            height: 300px !important; /* Adjust height */
+        }
+
+        .listing-gallery-item img {
+            height: 150px !important; /* Adjust height */
+        }
     }
-}
+
+    @@media (max-width: 480px) {
+        .listing-gallery-item:nth-child(1) {
+            height: 250px !important; /* Adjust height */
+        }
+
+        .listing-gallery-item img {
+            height: 125px !important; /* Adjust height */
+        }
+    }
 
 
-    .listing-type-badge{
+    .listing-type-badge {
         height: 23px;
         color: #fff;
         font-size: 11px;
@@ -127,15 +130,15 @@
         clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
     }
 
-    .rtcl-listing-badge-wrap .badge:before {
-        content: '';
-        font-family: "rt-petslist";
-        font-weight: normal;
-        display: inline-block;
-        margin-right: 0.3em;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+        .rtcl-listing-badge-wrap .badge:before {
+            content: '';
+            font-family: "rt-petslist";
+            font-weight: normal;
+            display: inline-block;
+            margin-right: 0.3em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
     .listing-details-head {
         border-radius: 10px;
@@ -182,9 +185,9 @@
             flex-wrap: wrap;
         }
 
-    .listing-details-head .rtcl-listing-meta-data {
-        margin-top: 0;
-    }
+        .listing-details-head .rtcl-listing-meta-data {
+            margin-top: 0;
+        }
 
     .rtcl-listing-meta-data {
         color: grey;
@@ -196,7 +199,7 @@
         padding: 0;
     }
 
-    .listing-details-head .rtcl-listing-meta-data li{
+    .listing-details-head .rtcl-listing-meta-data li {
         margin-top: 0;
     }
 
@@ -365,13 +368,13 @@
 
 </style>
 
- <!--====== Start breadcrumbs Section ======-->
+<!--====== Start breadcrumbs Section ======-->
 <section class=" d-none page-breadcrumbs page-breadcrumbs-two bg_cover" style="background-image: url('https://t4.ftcdn.net/jpg/02/35/26/51/360_F_235265169_iZnBkQhBM1yVs6adbpB1pq2dlQVoFxLn.jpg');"></section>
 <!--====== End breadcrumbs Section ======-->
 <!--====== Start Listing Details Section ======-->
 <section class="listing-details-section pt-40 pb-90">
     <div class="container">
-        @if(@Model.data != null)
+        @if (@Model.data != null)
         {
             @if (@Model.status == 200 && @Model.data.Listing != null)
             {
@@ -380,7 +383,7 @@
                     {
 
                     }
-                    
+
                     <div class="col-12">
 
                         <h2 class="title pb-40 d-none" style="font-family: 'Quicksand', sans-serif;">@Model.data.Listing.Title</h2>
@@ -401,16 +404,17 @@
                                                 </div>
                                             </div>
                                         }
-                                        else{
+                                        else
+                                        {
                                             <!-- Show the feature image -->
-                                        <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                            <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
-                                                <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
-                                            </a>
-                                        </div>
+                                            <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+                                                <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
+                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail w-100" alt="" decoding="async" title="">
+                                                </a>
+                                            </div>
                                         }
                                     }
-                                    
+
 
                                     <!-- Iterate over gallery images -->
                                     @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.GallaryImagesPath))
@@ -474,7 +478,7 @@
                         </div>
 
 
-                       
+
                         <div class="listing-details-wrapper listing-details-wrapper-two">
 
                             @* Listing Video *@
@@ -534,90 +538,90 @@
                                                     Details
                                                 </button>
                                             </h2>
-                                         
-
-
-                                                <!--  Inner Sidebar -->
-                                                <ul class="list-group custom-field-wrapper">
-
-                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
-                                                        <span class="cfp-label">
-                                                            <span>Name:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.Title
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
-                                                        <span class="cfp-label">
-                                                            <span>Color:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.Color
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-isCastration">
-                                                        <span class="cfp-label">
-                                                            <span>Castration:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @(Model.data.Listing.IsCastration ? "Yes" : "No")
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
-                                                        <span class="cfp-label">
-                                                            <span>Sterilization:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @(Model.data.Listing.IsSterilization ? "Yes" : "No")
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
-                                                        <span class="cfp-label">
-                                                            <span>Gender:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.Gender
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                        <span class="cfp-label">
-                                                            <span>Age:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.Age
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                        <span class="cfp-label">
-                                                            <span>Type of Cat:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.CatType
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                        <span class="cfp-label">
-                                                            <span>Cattery :</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.CatteryName
-                                                        </span>
-                                                    </li>
-
-                                                    <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
-                                                        <span class="cfp-label">
-                                                            <span>Breerder Name:</span>
-                                                        </span>
-                                                        <span class="cfp-value">
-                                                            @Model.data.Listing.BreerderName
-                                                        </span>
-                                                    </li>
-                                                </ul>
 
 
 
-                                            <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3"  aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                            <!--  Inner Sidebar -->
+                                            <ul class="list-group custom-field-wrapper">
+
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
+                                                    <span class="cfp-label">
+                                                        <span>Name:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.Title
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
+                                                    <span class="cfp-label">
+                                                        <span>Color:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.Color
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-isCastration">
+                                                    <span class="cfp-label">
+                                                        <span>Castration:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(Model.data.Listing.IsCastration ? "Yes" : "No")
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-weight">
+                                                    <span class="cfp-label">
+                                                        <span>Sterilization:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(Model.data.Listing.IsSterilization ? "Yes" : "No")
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-gender">
+                                                    <span class="cfp-label">
+                                                        <span>Gender:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.Gender
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Age:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.Age
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Type of Cat:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.CatType
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Cattery :</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.CatteryName
+                                                    </span>
+                                                </li>
+
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-age">
+                                                    <span class="cfp-label">
+                                                        <span>Breerder Name:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.BreerderName
+                                                    </span>
+                                                </li>
+                                            </ul>
+
+
+
+                                            <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
                                                 <span class="cfp-label">
                                                     <span>Description:</span>
                                                 </span>
@@ -631,14 +635,14 @@
                             </div>
 
 
-                           
+
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="sidebar-widget-area">
-                            
+
                             <div class="widget contact-info-widget mb-30 wow fadeInUp" style="margin-top:28px">
-                               
+
                                 <div class="contact-info-widget-wrap">
                                     <div class="contact-info-content pt-0">
                                         <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
@@ -656,24 +660,21 @@
                                             {
                                                 <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
                                             }
+                                            
+                                        </div>
+                                        <ul class="social-link">
                                             @if (!string.IsNullOrEmpty(@Model.data.Listing.FaceBook))
                                             {
-                                                <p><a href="@Model.data.Listing.FaceBook"><i class="ti-facebook"></i></a></p>
+                                                <li><a href="@Model.data.Listing.FaceBook"><i class="ti-facebook"></i></a></li>
                                             }
-                                                @if (!string.IsNullOrEmpty(@Model.data.Listing.Twitter))
+                                            @if (!string.IsNullOrEmpty(@Model.data.Listing.Twitter))
                                             {
-                                                <p><a href="@Model.data.Listing.Twitter"><i class="ti-twitter"></i></a></p>
+                                                <li><a href="@Model.data.Listing.Twitter"><i class="ti-twitter"></i></a></li>
                                             }
                                             @if (!string.IsNullOrEmpty(@Model.data.Listing.Insta))
                                             {
-                                                <p><a href="@Model.data.Listing.Insta"><i class="ti-instagram"></i></a></p>
+                                                <li><a href="@Model.data.Listing.Insta"><i class="ti-instagram"></i></a></li>
                                             }
-                                        </div>
-                                        <ul class="social-link d-none">
-                                            <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                            <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                            <li><a href="#"><i class="ti-pinterest"></i></a></li>
-                                            <li><a href="#"><i class="ti-dribbble"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="contact-map mt-5">
@@ -766,7 +767,7 @@
             </div>
         }
 
-      
+
 
     </div>
 </section><!--====== End Listing Details Section ======-->

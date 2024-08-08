@@ -1,5 +1,6 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=League+Spartan:wght@400;700&family=Lora:wght@600&display=swap');
 html {
   font-size: 100%; }
 
@@ -2511,13 +2512,19 @@ ul.ratings {
       width: 100%; } }
 
 span.status {
-  padding: 5px 10px;
-  float: right;
-  color: #fff;
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: 600;
-  line-height: 13px; }
+    padding: 5px 10px;
+    float: right;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 13px;
+    border-radius: 10px;
+    padding: 5px 16px;
+    box-shadow: 2px 2px 6px #0000003d;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
   span.status.st-open {
     background-color: #35c54c; }
   span.status.st-close {
@@ -2732,9 +2739,14 @@ h3.title {
     line-height: 1; }
 
 .listing-grid-item-two .listing-thumbnail .featured-btn {
-  position: absolute;
-  top: 25px;
-  right: 20px; }
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    font-size: 20px;
+    font-family: "Asap Condensed", sans-serif!important;
+    font-weight: bold;
+    font-style: revert;
+}
 
 .listing-grid-item-two .listing-thumbnail .ratings {
   position: absolute;
@@ -4717,19 +4729,20 @@ h3.title {
       .sidebar-widget-area .widget.contact-info-widget .contact-info-content .social-link li {
         margin-right: 5px; }
         .sidebar-widget-area .widget.contact-info-widget .contact-info-content .social-link li a {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-align: center;
-          -ms-flex-align: center;
-          align-items: center;
-          -webkit-box-pack: center;
-          -ms-flex-pack: center;
-          justify-content: center;
-          width: 50px;
-          height: 50px;
-          border: 1px solid #efefef;
-          background-color: #fff; }
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border: 1px solid #d9d9d9;
+            background-color: #fff;
+        }
   .sidebar-widget-area .widget.business-hour-widget {
     padding: 32px 30px 35px; }
     .sidebar-widget-area .widget.business-hour-widget ul.time-info li {
