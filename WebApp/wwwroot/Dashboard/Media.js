@@ -16,7 +16,7 @@ $(document).ready(function () {
             tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
         }
     });
- 
+
 
     GetAllGellary();
 
@@ -30,7 +30,7 @@ $("#UploadWaterMark").change(function () {
 
     var img = new Image();
     img.src = WaterMarkURL;
-   // img.crossOrigin = "Anonymous";
+    // img.crossOrigin = "Anonymous";
 
     img.onload = function () {
         var width = img.naturalWidth;
@@ -41,6 +41,8 @@ $("#UploadWaterMark").change(function () {
 
 
 $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWidth, #watermarkOpacity').on('change keyup', function () {
+
+    debugger;
     var mainImageSrc = $("#mainImage").attr("value");
     var watermarkImageSrc = WaterMarkURL;
 
@@ -52,11 +54,11 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
         var mainImage = images[0];
         var watermarkImage = images[1];
 
-        
-    //    mainImage.crossOrigin = "Anonymous";
+
+        //    mainImage.crossOrigin = "Anonymous";
 
         var canvas = document.createElement('canvas');
-      
+
         var ctx = canvas.getContext('2d');
 
         canvas.width = mainImage.width;
@@ -65,8 +67,8 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.drawImage(mainImage, 0, 0);
-       // ctx.crossOrigin = true;
-         
+        // ctx.crossOrigin = true;
+
         var watermarkWidth = parseInt($('#watermarkWidth').val()) || watermarkImage.width;
         var aspectRatio = watermarkImage.width / watermarkImage.height;
         var watermarkHeight = watermarkWidth / aspectRatio;
@@ -138,7 +140,7 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
 
 function GetAllGellary() {
 
-    postRequest("/Dashboard/GetAllGallary", null, function (res) {
+    postRequest("/Dashboard/GetAllMedia", null, function (res) {
 
         if (res.status == 200) {
 
@@ -148,7 +150,7 @@ function GetAllGellary() {
 
                 $(".gallery").append(`<div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                                         <div class="CheckBoxSelection shadow-sm">
-                                                           <input type="checkbox" value="${v.fileName}"/>
+                                                           <input type="checkbox" value="${v.galleryImagesPath}"/>
                                                         </div>
                                                          <a href="${v.filePath}">
                                                         <figure class="position-relative">
@@ -337,7 +339,8 @@ $('#replaceImage').on('click', function () {
 
 $(document).on("click", "#ShowModalWatermark", function () {
 
-    debugger
+
+    $('#UploadWaterMark').val('');
 
     var ImageUrl = $(this).attr("data-imageurl");
 
@@ -360,7 +363,7 @@ function loadImageWatermark(src) {
     debugger;
     return new Promise(function (resolve, reject) {
         const img = new Image();
-      
+
         img.onload = function () {
             resolve(img);
         };
@@ -377,11 +380,11 @@ function loadImageWatermark(src) {
 }
 
 function loadImage(src) {
-    
+
     return new Promise(function (resolve, reject) {
         const img = new Image();
         img.crossOrigin = 'anonymous';
-     
+
         img.onload = function () {
             resolve(img);
         };
@@ -392,8 +395,8 @@ function loadImage(src) {
 
         let oldUrl = src;
         let newUrl = oldUrl.replace(/\/UploadImages\//, '/api/images/').replace(/v=\d+/, 'v=638540547168663316');
-      
-     
+
+
         img.src = newUrl;
 
 
@@ -403,16 +406,12 @@ function loadImage(src) {
 
 
 $('#UploadNewFile').on('change', function () {
-    var files = document.getElementById('UploadNewFile').files;
+
+    var file = document.getElementById('UploadNewFile').files[0];
 
     var formData = new FormData();
+    formData.append('file', file);
 
-    for (var i = 0; i < files.length; i++) {
-        formData.append('files', files[i]); // Use 'files[]' to handle multiple files on the server side
-    }
-
-
-    debugger;
     FilePostRequest(`/Dashboard/UploadNewGallery`, formData, function (res) {
 
         if (res.status == 200) {
@@ -505,8 +504,19 @@ $("#btn-saveGallery").click(function () {
         checkedValues.push($(this).val());
     });
 
+
+
+    debugger;
+
     if (checkedValues.length > 0) {
-        postRequest("/Dashboard/UploadSelectedGalleryPath/" + checkedValues.join(", "), null, function (res) {
+
+    
+
+           var Path= checkedValues.join(",")
+        
+
+
+        postRequest("/Dashboard/UploadSelectedGalleryPath", Path, function (res) {
 
             if (res.status == 200) {
 
@@ -598,7 +608,7 @@ $("#btn-deleteGallery").click(function () {
     });
 
     if (checkedValues.length > 0) {
-        postRequest("/Dashboard/DeleteSelectedGalleryPath/" + checkedValues.join(","), null, function (res) {
+        postRequest("/Dashboard/DeleteSelectedGalleryPath/" + checkedValues.join(", "), null, function (res) {
 
             if (res.status == 200) {
 

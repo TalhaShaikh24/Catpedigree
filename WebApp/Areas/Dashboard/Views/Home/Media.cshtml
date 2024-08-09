@@ -21,19 +21,19 @@
             transition: filter 0.5s ease;
         }
     /* .thumb
-    figure img {
-        -webkit-filter: grayscale(100%);
-        filter: grayscale(100%);
-        -webkit-transition: .3s ease-in-out;
-        transition: .3s ease-in-out;
-    }
+        figure img {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        }
 
-    .thumb
-    figure:hover img {
-        -webkit-filter: grayscale(0);
-        filter: grayscale(0);
-    }
-       */
+        .thumb
+        figure:hover img {
+            -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+        }
+           */
     .Watermarkbutton {
         position: absolute;
         bottom: 25px;
@@ -56,20 +56,18 @@
         min-width: 100% !important;
     }
 
-    .CheckBoxSelection{
+    .CheckBoxSelection {
         position: absolute;
         right: 22px;
         z-index: 1;
         top: 10px;
-    
     }
 
-    input[type="checkbox"]{
+    input[type="checkbox"] {
         transform: scale(2);
     }
 
     .SelectAll {
-
         display: flex;
         align-items: center;
     }
@@ -81,25 +79,25 @@
     <div class="row bg-white mb-4 p-3 d-flex align-items-baseline">
 
         <div class="SelectAll my-2 mr-5">
-                <input type="checkbox" id="masterCheckbox">
-                <strong class="ml-3" style="font-size: 20px;">Select All</strong>
-            </div>
-      
-          
-
-            <div class="my-2 d-flex ">
-                <strong for="UploadNewFile" style="font-size: 20px;text-wrap: nowrap;" class="mr-3">Upload File:</strong>
-            <input type="file" class="form-control-file" id="UploadNewFile" multiple>
-            </div>
-
-            <div class="my-2 d-flex">
-            <input type="button" id="btn-deleteGallery" class="btn btn-danger btn-md px-4 ml-3" value="Delete Gallery" />
-            </div>
+            <input type="checkbox" id="masterCheckbox">
+            <strong class="ml-3" style="font-size: 20px;">Select All</strong>
         </div>
-     
+
+
+
+        <div class="my-2 d-flex ">
+            <strong for="UploadNewFile" style="font-size: 20px;text-wrap: nowrap;" class="mr-3">Upload File:</strong>
+            <input type="file" class="form-control-file" id="UploadNewFile">
+        </div>
+
+        <div class="my-2 d-flex">
+            <input type="button" id="btn-saveGallery" class="btn btn-info btn-md px-4" value="Save Gallery" />
+            <input type="button" id="btn-deleteGallery" class="btn btn-danger btn-md px-4 ml-3" value="Delete Gallery" />
+        </div>
+    </div>
+
 
     <div class="row gallery">
-     
     </div>
 </section>
 
@@ -158,7 +156,7 @@
                                 <input type="number" class="form-control" id="watermarkOpacity" name="watermarkOpacity" step="0.1" min="0" max="1" value="0.5">
                             </div>
                         </form>
-                      
+
 
                     </div>
 
@@ -177,7 +175,7 @@
 
 @section Scripts {
 
-    <script src="~/dashboard/Gallery.js"></script>
+    <script src="~/dashboard/Media.js"></script>
 }
 
 

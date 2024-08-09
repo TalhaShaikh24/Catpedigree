@@ -29,7 +29,7 @@ function GetAllGallery() {
 
         if (res.status == 200) {
 
-            $(".gallery").html("");
+            $(".grid").html("");
 
             $.each(res.data, function (i, v) {
 
@@ -46,6 +46,8 @@ function GetAllGallery() {
 
             });
 
+
+    
         }
         if (res.status == 304) {
 
