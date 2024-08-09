@@ -39,5 +39,11 @@ namespace WebApi.IRepositories
 
         public bool DeleteSelectedGalleryPath(string Path);
 
+
+        public List<Gallery> GetAllGallary();
+
+
+        public int AddGallary(Gallery obj);
+
     }
 }

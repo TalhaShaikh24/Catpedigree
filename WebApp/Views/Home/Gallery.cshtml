@@ -5,6 +5,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/watermarkjs/dist/watermark.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 
 <section class="products-area pt-160 pb-120">
     <div class="container">
@@ -26,73 +27,29 @@
 </section>
 
 <style>
-
-    .thumb {
-        margin-bottom: 15px;
+    .grid {
+        width: 100%;
     }
 
-        .thumb:last-child {
-            margin-bottom: 0;
+    .grid-item {
+        width: 30%;
+        margin-bottom: 10px;
+    }
+
+        .grid-item img {
+            width: 100%;
+            height: auto;
         }
 
-        .thumb
-        figure img {
-            -webkit-filter: grayscale(5%);
-            filter: grayscale(50%);
-            -webkit-transition: .3s ease-in-out;
-            transition: .3s ease-in-out;
-        }
 
-        .thumb
-        figure:hover img {
-            -webkit-filter: grayscale(0);
-            filter: grayscale(0);
-        }
 
-    .Watermarkbutton {
-        position: absolute;
-        bottom: 25px;
-        right: 15px;
-        display: none;
-        opacity: 0.6;
-        transition: 0.3s;
-    }
-
-    .thumb:hover > .Watermarkbutton {
-        display: block;
-        opacity: 1
-    }
-
-    .img-thumbnail {
-        max-width: 100% !important;
-        height: 320px;
-        object-fit: cover;
-        width: 100% !important;
-        min-width: 100% !important;
-    }
-
-    .CheckBoxSelection {
-        position: absolute;
-        right: 22px;
-        z-index: 1;
-        top: 10px;
-    }
-
-    input[type="checkbox"] {
-        transform: scale(2);
-    }
-
-    .SelectAll {
-        display: flex;
-        align-items: center;
-    }
 
 </style>
 
 <section class="pt-120 pb-120">
     <div class="container">
 
-        <div class="row gallery">
+        <div class="row grid">
         </div>
     </div>
   

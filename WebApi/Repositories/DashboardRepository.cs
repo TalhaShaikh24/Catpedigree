@@ -165,6 +165,8 @@ namespace WebApi.Repositories
         }
 
 
+
+
         public async Task<Register> UpdateProfile(Register formData)
         {
             string folder = "Profile"; // Relative path
@@ -267,6 +269,21 @@ namespace WebApi.Repositories
 
             return data;
         }
+      
+        public List<Gallery> GetAllGallary()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<Gallery>(@"[sp_GetAllgallary]", parameters);
+
+            return data;
+        }
+
+     
+
+
+
+
 
         public object GetListing_ProdictionPackages(int id)
         {
@@ -378,7 +395,20 @@ namespace WebApi.Repositories
 
             return data;
         }
-    }
+
+        public int AddGallary(Gallery obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+             parameters.Add("@FilePath", obj.FilePath, DbType.String, ParameterDirection.Input);
+             parameters.Add("@FileName", obj.FileName, DbType.String, ParameterDirection.Input);
+             parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Insert<int>(@"[sp_AddGallary]", parameters);
+
+            return data;
+        }
+}
 
 
 

@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -606,6 +607,70 @@ namespace WebApi.Controllers
                     return response;
                 }
 
+                var images = _repository.GetAllGallary().Select(fileInfo => new Gallery
+                {
+                    Id = Path.GetFileNameWithoutExtension(fileInfo.FileName).GetHashCode(),
+                    FileName = fileInfo.FileName,
+                    FilePath = $"{BaseUrl}{fileInfo.FilePath}?v={DateTime.UtcNow.Ticks}"
+                })
+                .ToList(); 
+
+
+                if (images == null) return CustomStatusResponse.GetResponse(320);
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = images;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = "Internal server error!";
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+
+        
+
+        [HttpPost("GetAllMedia")]
+        public Response GetAllMedia()
+        {
+
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+               claimDTO = TokenManager.GetValidateToken(Request);
+
+               if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+            if (!Directory.Exists(_imagesPath))
+            {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.ResponseMsg = "Image directory not found.";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = null;
+                    return response;
+                }
+
                 var images = Directory.GetFiles(_imagesPath)
                 .Select(filePath => new FileInfo(filePath))
                 .OrderByDescending(fileInfo => fileInfo.LastWriteTime)
@@ -613,7 +678,8 @@ namespace WebApi.Controllers
                 {
                     Id = Path.GetFileNameWithoutExtension(fileInfo.Name).GetHashCode(),
                     FileName = fileInfo.Name,
-                    FilePath = $"{BaseUrl}UploadImages/{fileInfo.Name}?v={DateTime.UtcNow.Ticks}"
+                    FilePath = $"{BaseUrl}UploadImages/{fileInfo.Name}?v={DateTime.UtcNow.Ticks}",
+                    GalleryImagesPath= $"UploadImages/{fileInfo.Name}",
                 })
                 .ToList();
 
@@ -883,11 +949,18 @@ namespace WebApi.Controllers
                         System.IO.File.Delete(FullFilePath);
                     }
 
+                    
+
+
                     // Save the new file
                     using (var stream = new FileStream(FullFilePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
+
+
+      
+
 
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
@@ -913,7 +986,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("UploadNewGallery")]
-        public async Task<Response> UploadNewGallery(IFormFile file)
+        public async Task<Response> UploadNewGallery(List<IFormFile> files)
         {
             Response response = new Response();
             Register claimDTO = null;
@@ -924,37 +997,59 @@ namespace WebApi.Controllers
                 if (claimDTO == null)
                     return CustomStatusResponse.GetResponse(401);
 
-                if (file == null || file.Length == 0)
-                {
-                    response = CustomStatusResponse.GetResponse(600);
-                    response.ResponseMsg = "File is empty";
-                    response.Data = null;
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    return response;
-                }
-                else
-                {
-                    string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine("UploadImages", FileName);
-                    string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
-                    if (System.IO.File.Exists(FullFilePath))
+                foreach (var item in files)
+                {
+                    if (item == null || item.Length == 0)
                     {
+                        response = CustomStatusResponse.GetResponse(600);
+                        response.ResponseMsg = "File is empty";
+                        response.Data = null;
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        return response;
+                    }
+                    else
+                    {
+                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                        var filePath = Path.Combine("UploadImages", FileName);
+                        string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
-                        System.IO.File.Delete(FullFilePath);
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+                        using (var stream = new FileStream(FullFilePath, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+
+                    //    save in database
+
+                        Gallery gallery = new Gallery();
+                        gallery.FileName = FileName;
+                        gallery.FilePath = filePath;
+                        gallery.CreatedBy = claimDTO.UserId;
+
+
+                        _repository.AddGallary(gallery);
+
+
+
                     }
 
-                    using (var stream = new FileStream(FullFilePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = file.FileName;
-                    response.ResponseMsg = "File Upload successfully!";
-                    return response;
                 }
+
+
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = "";
+                response.ResponseMsg = "File Upload successfully!";
+                return response;
+
+
+
             }
             catch (DbException ex)
             {
@@ -972,8 +1067,8 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("UploadSelectedGalleryPath/{Path}")]
-        public Response UploadSelectedGalleryPath(string Path)
+        [HttpPost("UploadSelectedGalleryPath")]
+        public Response UploadSelectedGalleryPath([FromBody]string Path)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -983,17 +1078,36 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.UploadSelectedGalleryPath(Path);
 
-                if (res)
+                var imagespath = Path.Split(",");
+
+                foreach (var item in imagespath)
                 {
 
+                    string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, item);
+
+
+                    //    save in database
+
+                    Gallery gallery = new Gallery();
+                    gallery.FileName = item.Replace("UploadImages/", string.Empty);
+            
+                    gallery.FilePath = item;
+                    gallery.CreatedBy = claimDTO.UserId;
+
+
+
+                    _repository.AddGallary(gallery);
+                }
+
+
+
+
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Data = res;
+                    response.Data = true;
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Gallery save successfully!";
 
-                }
                 return response;
 
             }

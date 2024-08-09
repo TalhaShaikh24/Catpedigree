@@ -55,6 +55,17 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        
+        [Route("Dashboard/Media")]
+        public IActionResult Media()
+        {
+            return View();
+        }
+
+
+
+
+
 
 
         public IActionResult AddCategory()
@@ -179,6 +190,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllGallery", "", HttpContext);
 
+        } 
+
+        [HttpPost]
+        [Route("Dashboard/GetAllMedia")]
+        public Task<object> GetAllMedia()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllMedia", "", HttpContext);
+
         }
 
         [HttpPost]
@@ -209,12 +229,14 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+      
+
         [HttpPost]
         [Route("Dashboard/UploadNewGallery")]
-        public Task<object> UploadNewGallery(IFormFile file)
+        public Task<object> UploadNewGallery(List<IFormFile> files)
         {
 
-            return HttpClientUtility.CustomHttSingleFileDashboard(BaseUrl, "api/Dashboard/UploadNewGallery", file, HttpContext);
+            return HttpClientUtility.CustomHttSingleFileDashboard(BaseUrl, "api/Dashboard/UploadNewGallery", files, HttpContext);
 
         }
 
@@ -253,11 +275,13 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        [Route("Dashboard/UploadSelectedGalleryPath/{Path}")]
-        public Task<object> UploadSelectedGalleryPath(string Path)
+        [Route("Dashboard/UploadSelectedGalleryPath")]
+        public Task<object> UploadSelectedGalleryPath([FromBody]string Path)
         {
+            var content = JsonConvert.SerializeObject(Path);
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UploadSelectedGalleryPath/"+Path, "", HttpContext);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UploadSelectedGalleryPath", content, HttpContext);
 
         }
 
