@@ -14,6 +14,8 @@ namespace ClassLibrary
 
         public string? CouponCode { get; set; }
 
+        public string? CouponName { get; set; }
+
         public int UserId { get; set; }
 
         public string UserName { get; set; }

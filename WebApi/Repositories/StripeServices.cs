@@ -214,19 +214,38 @@ namespace WebApi.Repositories
             }
         }
 
-        public string CreateDiscountCoupon(decimal discountPercentage)
+        public string CreateDiscountCoupon(decimal discountPercentage,string couponId)
         {
             var options = new CouponCreateOptions
             {
+                Id = couponId, // Custom ID for your coupon
                 PercentOff = discountPercentage,
                 Duration = "repeating",
                 DurationInMonths = 1 // Equivalent to approximately 30 days
             };
 
             var service = new CouponService();
-            var coupon = service.Create(options);
+            var coupons = service.List(new CouponListOptions()).ToList();
+            var checkcoupon = coupons.FirstOrDefault(c => c.Id == couponId);
 
-            return coupon.Id;
+
+            if (checkcoupon == null)
+            {
+                var coupon = service.Create(options);
+
+                return coupon.Id;
+            }
+            else
+            {
+
+                return couponId;
+
+
+            }
+
+
+
+
         }
         public int AddCouponsCodes(CouponCodes obj)
         {
@@ -234,10 +253,15 @@ namespace WebApi.Repositories
             DynamicParameters parameters = new DynamicParameters();
 
 
-           string code= CreateDiscountCoupon(obj.DiscountPercentage);
+           string code= CreateDiscountCoupon(obj.DiscountPercentage,obj.CouponName);
 
             parameters.Add("@DiscountPercentage", obj.DiscountPercentage, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("@CouponCode", code, DbType.String, ParameterDirection.Input);
+
+            parameters.Add("@CodeName", obj.CouponName, DbType.String, ParameterDirection.Input);
+
+
+
             parameters.Add("@userId", obj.UserId, DbType.Int32, ParameterDirection.Input);
 
             parameters.Add("@CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);

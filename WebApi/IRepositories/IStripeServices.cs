@@ -14,7 +14,7 @@ namespace WebApi.IRepositories
         string GetExistingSubscriptionId(string customerId);
         Task<string> CreateSubscriptionAsync(string email, string cardNumber, int? expmonth, int? expyear, string cvc, string priceID, string couponCode = null);
         string ValidateCoupon(string email, string couponCode);
-        string CreateDiscountCoupon( decimal discountPercentage);
+        string CreateDiscountCoupon( decimal discountPercentage,string CouponName);
 
         int AddCouponsCodes(CouponCodes obj);
 
