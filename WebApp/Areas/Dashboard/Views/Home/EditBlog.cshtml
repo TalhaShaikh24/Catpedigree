@@ -18,6 +18,35 @@
         border: solid #ced4da 1px;
         outline: 0;
     }
+
+    .loaderBtn {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        border: 5px solid;
+        box-sizing: border-box;
+        animation: animloader 1s linear infinite alternate;
+    }
+
+    @@keyframes animloader {
+        0% {
+            border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+        }
+
+        33% {
+            border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+        }
+
+        66% {
+            border-color: white white white rgba(255, 255, 255, 0);
+        }
+
+        100% {
+            border-color: white white white white;
+        }
+    }
 </style>
 
 
@@ -28,11 +57,15 @@
         <div class="card card-primary p-0 m-0">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><b>Update Blog</b></h3>
-                <button class="btn btn-success" id="Btn_BlogUpdate" style="margin-left: auto;">Update</button>
+                <button class="btn btn-success" id="Btn_BlogUpdate" style="margin-left: auto;">
+                    <span id="BtnText">Submit</span>
+                    <span class="loaderBtn spinner-border spinner-border-sm d-none" id="BtnSpinner" role="status" aria-hidden="true"></span>
+                </button>
             </div>
+            
             <div class="card-body p-0 m-0">
                 <div class="row p-3">
-                    <input type="hidden" id="HDID"/>
+                    <input type="hidden" id="HDID" />
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Title</label>
@@ -60,13 +93,13 @@
                     </div>
                 </div>
                 <div class="row  p-3">
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="d-block">Upload Featured Image</label>
                             <input type="file" class="form-control" id="featuredFile">
 
                         </div>
-                   </div>
+                    </div>
 
                     <div class="col-md-12">
                         <div class="form-group col-4">

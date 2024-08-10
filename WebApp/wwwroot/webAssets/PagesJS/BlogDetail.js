@@ -34,7 +34,7 @@ function BlogDetails(Id) {
                             <img class="w-100" src="${baseApiUrl+v.featureImagePath}" alt="Blog Image">
                         </div>
                         <div class="entry-content">
-                            <div class="post-meta">
+                            <div class="post-meta d-none">
                                 <ul>
                                     <li><span><i class="ti-bookmark-alt"></i><a href="javascript:void(0);">Tours & Travel</a></span></li>
                                     <li><span><i class="ti-comments-smiley"></i><a href="javascript:void(0);">${v.commentsCount} Comment</a></span></li>

@@ -1,6 +1,6 @@
 ﻿let baseApiUrl = "";
 $(document).ready(function () {
-
+    ShowPreloader();
     baseApiUrl = $("#baseApiUrl").val();
 
 
@@ -14,7 +14,7 @@ function GetAllListings() {
     postRequest('/Dashboard/GetallUserAdvertisementForApprovals', null, function (res) {
 
         if (res.status == 200) {
-
+            HidePreloader();
             if (res.data != null) {
 
                 $("#AppendApprovalListing").empty();
@@ -50,7 +50,7 @@ function GetAllListings() {
             }
         }
         if (res.status == 304) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -58,7 +58,7 @@ function GetAllListings() {
             })
         }
         if (res.status == 305) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -66,7 +66,7 @@ function GetAllListings() {
             })
         }
         if (res.status == 401) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -74,14 +74,14 @@ function GetAllListings() {
             })
         }
         if (res.status == 403) {
-
+            HidePreloader();
             Swal.fire(res.responseMsg, {
                 icon: "error",
                 title: "Error"
             });
         }
         if (res.status == 320) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -89,7 +89,7 @@ function GetAllListings() {
             })
         }
         if (res.status == 500) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -97,7 +97,7 @@ function GetAllListings() {
             })
         }
         if (res.status == 600) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Warning",
                 text: res.responseMsg,

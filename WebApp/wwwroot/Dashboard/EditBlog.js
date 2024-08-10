@@ -1,6 +1,6 @@
 ﻿let baseApiUrl = "";
 $(document).ready(function () {
-
+    ShowPreloader();
     baseApiUrl = $("#baseApiUrl").val();
 
     $('#blogTags').select2({
@@ -35,7 +35,6 @@ function GetAllBlogCategories() {
                 $("#AppendCategories").empty();
                 $.each(res.data, function (i, v) {
 
-                    debugger
                     $("#blogCategory").append(`
                       <option value="${v.id}">${v.categoryName}</option>
                       `);
@@ -105,9 +104,9 @@ function GetAllBlogCategories() {
 
 function EditBlogById(Id) {
     postRequest('/Dashboard/BlogEditById?Id='+Id, null, function (res) {
-
+        ShowPreloader();
         if (res.status == 200) {
-
+            HidePreloader();
             if (res.data != null) {
                 // Populate Select2 with tags
                 if (res.data.tags) {
@@ -135,7 +134,7 @@ function EditBlogById(Id) {
 
         }
         if (res.status == 304) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -143,7 +142,7 @@ function EditBlogById(Id) {
             })
         }
         if (res.status == 305) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -151,7 +150,7 @@ function EditBlogById(Id) {
             })
         }
         if (res.status == 401) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -159,14 +158,14 @@ function EditBlogById(Id) {
             })
         }
         if (res.status == 403) {
-
+            HidePreloader();
             Swal.fire(res.responseMsg, {
                 icon: "error",
                 title: "Error"
             });
         }
         if (res.status == 320) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -174,7 +173,7 @@ function EditBlogById(Id) {
             })
         }
         if (res.status == 500) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -182,7 +181,7 @@ function EditBlogById(Id) {
             })
         }
         if (res.status == 600) {
-
+            HidePreloader();
             Swal.fire({
                 title: "Warning",
                 text: res.responseMsg,
@@ -195,9 +194,13 @@ function EditBlogById(Id) {
 
 
 $("#Btn_BlogUpdate").click(function () {
+  
+    // Show spinner and disable button
+    $("#BtnSpinner").removeClass("d-none");
+    $("#BtnText").text("Submitting...");
+    $(this).prop("disabled", true);
 
-
-    let formData = new FormData(); 
+    let formData = new FormData();
 
     formData.append("BlogID", $("#HDID").val());
     formData.append("Title", $("#title").val());
@@ -207,81 +210,51 @@ $("#Btn_BlogUpdate").click(function () {
     formData.append("Content", $('#summernote').summernote("code"));
     formData.append("FeatureImage", $("#featuredFile")[0].files[0]);
 
-    FilePostRequest('/Dashboard/UpdateBlog',formData, function (res) {
+    FilePostRequest('/Dashboard/UpdateBlog', formData, function (res) {
+        // Hide spinner and enable button
+        $("#BtnSpinner").addClass("d-none");
+        $("#BtnText").text("Submit");
+        $("#Btn_BlogUpdate").prop("disabled", false);
 
         if (res.status == 200) {
-
+          
             if (res.data != null) {
-
-                debugger
-
                 Swal.fire({
                     title: "Success",
                     text: res.responseMsg,
                     icon: "success"
-                })
-
-
+                });
             }
-        }
-        if (res.status == 304) {
+        } else {
+            
+            let errorMessage = res.responseMsg || "An error occurred.";
+            let icon = "error";
+            let title = "Error";
+
+            if (res.status == 600) {
+                icon = "warning";
+                title = "Warning";
+            }
 
             Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
+                title: title,
+                text: errorMessage,
+                icon: icon
             });
         }
-        if (res.status == 320) {
+    }).fail(function () {
+        
+        // In case of failure, hide spinner and enable button
+        $("#BtnSpinner").addClass("d-none");
+        $("#BtnText").text("Submit");
+        $("#Btn_BlogUpdate").prop("disabled", false);
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
+        Swal.fire({
+            title: "Error",
+            text: "An unexpected error occurred.",
+            icon: "error"
+        });
     });
-
-
 });
+
 

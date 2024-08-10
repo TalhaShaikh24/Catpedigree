@@ -91,6 +91,24 @@
 
 
     <style>
+        #preloader {
+            height:100vh;
+            display: -ms-flexbox;
+            display: none;
+            background-color: #f4f6f9;
+            height: 100vh;
+            width: 100%;
+            transition: height .2s linear;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .animation__shake {
+            -webkit-animation: shake 1.5s;
+            animation: shake 15.5s;
+        }
         .nav-treeview .nav-item {
             margin-left: 14px;
         }
@@ -112,8 +130,12 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-        <!-- Preloader -->
+        <!--Default Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center" style="height:100vh!important">
+            <img class="animation__shake" src="~/webassets/images/cat_logo_icon.png" alt="AdminLTELogo" height="100" width="100" style="display:block!important">
+        </div>
+        <!--Custom Preloader -->
+        <div id="preloader" class="flex-column justify-content-center align-items-center" style="height:100vh!important">
             <img class="animation__shake" src="~/webassets/images/cat_logo_icon.png" alt="AdminLTELogo" height="100" width="100" style="display:block!important">
         </div>
 
@@ -631,21 +653,21 @@
         }
 
         function ShowPreloader() {
-            $('.preloader').css({
+            $('#preloader').css({
                 "height": "100vh",
                 "display": "flex"  // assuming you want the preloader to be displayed as a flex container
             });
-            $('.preloader img').css({
+            $('#preloader img').css({
                 "display": "block"
             });
         }
 
         function HidePreloader() {
-            $('.preloader').css({
+            $('#preloader').css({
                 "height": "0vh",
                 "display": "none"  // hide the preloader container
             });
-            $('.preloader img').css({
+            $('#preloader img').css({
                 "display": "none"
             });
         }

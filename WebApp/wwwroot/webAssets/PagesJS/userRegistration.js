@@ -44,6 +44,11 @@ $(document).ready(function () {
         if (breederLicense) {
             formData.append('BreederLicense', breederLicense);
         }
+
+
+
+
+
       
         $.ajax({
             url: '/Account/RegisterUser',
@@ -52,7 +57,31 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                handleSuccess(response);
+                var res = JSON.parse(response);
+                switch (res.status) {
+                    case 200:
+                        handleSuccess(res);
+                        break;
+                    case 304:
+                    case 305:
+                    case 320:
+                    case 500:
+                        $(".preloader").hide()
+                        handleError(res.responseMsg, "error", "Oops")
+                        break;
+                    case 403:
+                        $(".preloader").hide()
+                        handleError(res.responseMsg, "error", "Error");
+                        break;
+                    case 600:
+                        $(".preloader").hide()
+                        handleError(res.responseMsg, "warning", "Warning");
+                        break;
+                    default:
+                        $(".preloader").hide()
+                        handleError("Unexpected error occurred", "error");
+                        break;
+                }
             },
             error: function (xhr, status, error) {
                 handleError(xhr);
@@ -63,28 +92,23 @@ $(document).ready(function () {
             $(".preloader").hide()
             Swal.fire({
                 title: "Success!",
-                text: "Congratulations! Your registration was successful.",
+                text: response.message,
                 icon: "success"
             }).then(() => {
                 redirectToHome();
             });
         }
 
-        function handleError(xhr) {
-            $(".preloader").hide()
-            let errorMessage = "Oops! Something went wrong.";
-            if (xhr.responseText) {
-                errorMessage = xhr.responseText;
-            }
+        function handleError(message, icon, title = "Error") {
             Swal.fire({
-                title: "Oops!",
-                text: errorMessage,
-                icon: "error"
+                title: title,
+                text: message,
+                icon: icon
             });
         }
 
         function redirectToHome() {
-            window.location.href = window.location.origin;
+            window.location.href = window.location.origin +'/Home/login';
         }
 
     });

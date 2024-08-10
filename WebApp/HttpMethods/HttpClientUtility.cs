@@ -796,6 +796,8 @@ namespace WebApp.HttpMethods
                     multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
                     multiContent.Add(new StringContent(obj.ShortDescription ?? ""), "ShortDescription");
                     multiContent.Add(new StringContent(obj.Content ?? ""), "Content");
+                    multiContent.Add(new StringContent(obj.BlogCategoryId.ToString()), "BlogCategoryId");
+                    multiContent.Add(new StringContent(obj.Tags ?? ""), "Tags");
 
 
                     if (obj.FeatureImage != null)

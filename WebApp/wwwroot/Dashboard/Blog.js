@@ -27,7 +27,7 @@ function GetAllBlogCategories() {
                 $("#AppendCategories").empty();
                 $.each(res.data, function (i, v) {
 
-                    debugger
+                    
                     $("#blogCategory").append(`
                       <option value="${v.id}">${v.categoryName}</option>
                       `);
@@ -95,93 +95,118 @@ function GetAllBlogCategories() {
     });
 }
 
+
 function GetAllAdminBLogs() {
-    postRequest('/Dashboard/GetAllAdminBLogs', null, function (res) {
+    debugger;
+    $("#TableBlogs").DataTable().destroy();
+    $("#TableBlogs").DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "processing": true, // for show progress bar
+        "serverSide": true, // for process server side
+        "searching": true, // Enable searching (filter)
+        "orderMulti": false, // Disable multiple column ordering
+        "pageLength": 10,
+        "orderClasses": false,
+        "language": {
+            "search": "Search:",
+            "processing": "Processing...",
+            "lengthMenu": "Display _MENU_ records",
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries"
+        },
+        "ajax": {
+            "url": "/Dashboard/GetAllAdminBLogs",
+            "type": "POST",
+            "dataType": "json",
+            "dataSrc": function (data) {
+                if (data.status === 200) {
+                    return data.data;
+                }
 
-        if (res.status == 200) {
+                let title, icon;
+                switch (data.status) {
+                    case 304:
+                    case 305:
+                    case 401:
+                    case 403:
+                    case 320:
+                    case 500:
+                        title = "Error";
+                        icon = "error";
+                        break;
+                    case 600:
+                        title = "Warning";
+                        icon = "warning";
+                        break;
+                    default:
+                        title = "Error";
+                        icon = "error";
+                        break;
+                }
 
-            if (res.data != null) {
-
-                $("#AppendBlogs").empty();
-                $.each(res.data, function (i, v) {
-
-                    debugger
-                    $("#AppendBlogs").append(`
-                      <tr>
-                      <td><p style=" text-overflow: ellipsis; width:300px; overflow: hidden;overflow: hidden; position: relative; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">${v.title}</p></td>
-                      <td><p style=" text-overflow: ellipsis; overflow: hidden; width:500px;  overflow: hidden; position: relative; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">${v.shortDescription}</p></td>
-                      <td>${v.commentsCount}</td>
-                      <td>${v.username}</td>
-                      <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                      <td style="width: 15%!important;"><div style=" display: flex; justify-content: space-between; align-items: center;"><a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${v.blogID}"><i class="fa fa-comment"></i></a><a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${v.blogID}"><i class="fa fa-edit"></i></a> <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${v.blogID})"><i class="fa fa-trash"></i></button></div></td>
-                      </tr>`);
-
+                Swal.fire({
+                    title: title,
+                    text: data.responseMsg,
+                    icon: icon
                 });
 
+                return []; // Return an empty array if there is an error
             }
-        }
-        if (res.status == 304) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
+        },
+        "columns": [
+            {
+                "data": "title",
+                "name": "title",
+                "autoWidth": true
+            },
+            {
+                "data": "shortDescription",
+                "name": "shortDescription",
+                "autoWidth": true
+            },
+            {
+                "data": "commentsCount",
+                "name": "commentsCount",
+                "autoWidth": true
+            },
+            {
+                "data": "username",
+                "name": "username",
+                "autoWidth": true
+            },
+            {
+                "data": "createdOn",
+                "name": "createdOn",
+                "autoWidth": true,
+                "render": function (data, type, full, meta) {
+                    return `<span>${moment(full.createdOn).format("DD - MMMM - YYYY")}</span>`;
+                }
+            },
+            {
+                "data": "blogID",
+                "name": "blogID",
+                "autoWidth": true,
+                "render": function (data) {
+                    return `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${data}">
+                                <i class="fa fa-comment"></i>
+                            </a>
+                            <a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${data}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${data})">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>`;
+                }
+            }
+        ]
     });
 }
 
-
 function BlogDeleteById(Id) {
-    postRequest('/Dashboard/BlogDeleteById?Id='+Id, null, function (res) {
+    postRequest('/Dashboard/BlogDeleteById?Id=' + Id, null, function (res) {
 
         if (res.status == 200) {
 
@@ -194,7 +219,7 @@ function BlogDeleteById(Id) {
                 })
 
                 GetAllAdminBLogs();
-                window.location.reload();
+
 
             }
         }
@@ -259,95 +284,93 @@ function BlogDeleteById(Id) {
 
 }
 
+    $("#Btn_BlogSubmit").click(function () {
 
 
-$("#Btn_BlogSubmit").click(function () {
+        let formData = new FormData();
+
+        formData.append("Title", $("#title").val());
+        formData.append("ShortDescription", $("#shortdescription").val());
+        formData.append("BlogCategoryId", $("#blogCategory").val());
+        formData.append("Tags", String($("#blogTags").val()));
+        formData.append("Content", $('#summernote').summernote("code"));
+        formData.append("FeatureImage", $("#featuredFile")[0].files[0]);
+
+        FilePostRequest('/Dashboard/AddBlog', formData, function (res) {
+
+            if (res.status == 200) {
+
+                if (res.data != null) {
+
+                    debugger
+
+                    Swal.fire({
+                        title: "Success",
+                        text: res.responseMsg,
+                        icon: "success"
+                    })
 
 
-    let formData = new FormData(); 
-
-    formData.append("Title", $("#title").val());
-    formData.append("ShortDescription", $("#shortdescription").val());
-    formData.append("BlogCategoryId", $("#blogCategory").val());
-    formData.append("Tags", String($("#blogTags").val()));
-    formData.append("Content", $('#summernote').summernote("code"));
-    formData.append("FeatureImage", $("#featuredFile")[0].files[0]);
-
-    FilePostRequest('/Dashboard/AddBlog',formData, function (res) {
-
-        if (res.status == 200) {
-
-            if (res.data != null) {
-
-                debugger
+                }
+            }
+            if (res.status == 304) {
 
                 Swal.fire({
-                    title: "Success",
+                    title: "Error",
                     text: res.responseMsg,
-                    icon: "success"
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
                 })
 
-
             }
-        }
-        if (res.status == 304) {
+        });
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
     });
-
-
-});
 

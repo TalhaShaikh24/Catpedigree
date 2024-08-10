@@ -91,7 +91,7 @@ namespace WebApi.Controllers
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = null;
                     response.Data = res;
-                    response.ResponseMsg = "You have registered successfully!";
+                    response.ResponseMsg = "Congratulations! Your registration was successful.";
                 }
                 else
                 {
