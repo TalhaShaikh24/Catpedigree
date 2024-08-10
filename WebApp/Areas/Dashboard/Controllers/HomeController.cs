@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using ClassLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebApp.HttpMethods;
@@ -169,6 +170,17 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        
+        [HttpGet("Dashboard/UserEditProfile")]
+        public IActionResult UserEditProfile()
+        {
+
+            
+            return View();
+        }
+
+
+
 
 
 
@@ -320,6 +332,15 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpIfileDashboard(BaseUrl, "api/Dashboard/UpdateProfile", obj, HttpContext);
+
+        }
+        
+        [HttpPost]
+        [Route("Dashboard/UpdateUserProfile")]
+        public Task<object> UpdateUserProfile([FromForm] Register obj)
+        {
+
+            return HttpClientUtility.CustomHttpIfileDashboardUserUpdate(BaseUrl, "api/Dashboard/UpdateUserProfile", obj, HttpContext);
 
         }
 
@@ -606,6 +627,15 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+        [HttpPost("Dashboard/UpdateUserRoles")]
+        public Task<object> UpdateUserRoles([FromBody] userRolesUpdate obj)
+        {
+            string content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateUserRoles", content, HttpContext);
+        }
+
+
+
         [HttpPost("Dashboard/GetCouponCodes")]
         public Task<object> GetCouponCodes()
         {
@@ -632,5 +662,40 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/ActiveDeactiveCode/" + Id, "", HttpContext);
 
         }
+
+        [HttpPost("Dashboard/UserEdit/{id}")]
+        public  Task<object> UserEdit(int id)
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Account/UserInfo/" + id, "", HttpContext);
+
+        
+
+        }
+        
+        [HttpPost("Dashboard/UpdateActiveInActiveUser/{id}")]
+        public  Task<object> UpdateActiveInActiveUser(int id)
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateActiveInActiveUser/" + id, "", HttpContext);
+
+        
+
+        } 
+        
+        [HttpPost("Dashboard/DeleteUser/{id}")]
+        public  Task<object> DeleteUser(int id)
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteUser/" + id, "", HttpContext);
+
+        
+
+        }
+
+
     }
 }

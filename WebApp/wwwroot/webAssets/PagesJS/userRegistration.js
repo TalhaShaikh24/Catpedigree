@@ -6,7 +6,10 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
-    $("#datepicker").datepicker();
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
 
     $("#vendor").prop("checked", true);
     $('#registerBtn').click(function () {

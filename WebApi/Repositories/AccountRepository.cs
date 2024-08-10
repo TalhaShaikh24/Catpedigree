@@ -139,7 +139,24 @@ namespace WebApi.Repositories
             }
         }
 
+        public async Task<UsersDTO> UserInfo(int id)
+        {
 
+            UsersDTO usersDTO = new UsersDTO();
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserId", id, DbType.Int32, ParameterDirection.Input);
+            
+           
+
+            var data = _dapper.GetMultipleObjects(@"[dbo].[sp_GetUsersById]", parameters, gr => gr.Read<Register>(), gr => gr.Read<Roles>());
+            usersDTO.Register = data.Item1.FirstOrDefault();
+            usersDTO.Roles = data.Item2.ToList();
+
+
+
+
+            return usersDTO;
+        }
     }
 
 

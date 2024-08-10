@@ -2,6 +2,18 @@
     .table-bordered td, .table-bordered th {
         width: 12%;
     }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color:#353950!important
+    }
+
+    .select2-container--default .select2-selection--single {
+    width: 200px!important; /* Set your desired width here */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    width: 100%!important;
+}
+
 </style>
 
 <section class="content pb-4 pt-4">
@@ -23,6 +35,11 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Roles</th>
+                                    <th>Activation Status</th>
+
+                                    <th>Actions</th>
+
+
                                 </tr>
                             </thead>
                             <tbody id="AppendUsers">

@@ -52,6 +52,50 @@ namespace ClassLibrary
         public string? Insta { get; set; }
         public string? Twitter { get; set; }
 
+        public string? IsActive { get; set; }
+
+
+    }
+
+
+    public class Roles
+    {
+
+        public int Id { get; set; }
+
+        public string Role { get; set; }
+    }
+
+    public  class UsersDTO
+    {
+
+
+        public Register Register { get; set; }
+
+        public List<Roles> Roles { get; set; }
+
+
+    }
+
+
+
+
+    public class ListUsersDTO
+    {
+
+        public  List<Register> Register { get; set; }
+
+        public List<Roles> Roles { get; set; }
+
+    }
+
+    public class userRolesUpdate
+    {
+
+        public int UserId { get; set; }
+
+
+        public string RolesIds { get; set; }
 
     }
 

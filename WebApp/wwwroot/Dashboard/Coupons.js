@@ -137,7 +137,8 @@ $("#save").click(function () {
             DiscountPercentage: Number($("#CouponCodePertentage").val()),
             UserId: $("#UserId").val(),
             CouponCode: "",
-            UserName:""
+            UserName: "",
+            CouponName : $("#Name").val()
 
 
         }

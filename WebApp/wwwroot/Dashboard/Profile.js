@@ -2,8 +2,10 @@
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
-
-    $("#datepicker").datepicker();
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     GetProfileDetail();
 
 
