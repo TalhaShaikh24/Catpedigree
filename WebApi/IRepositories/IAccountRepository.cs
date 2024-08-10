@@ -17,6 +17,8 @@ namespace WebApi.IRepositories
         ForgotPassword ResetPassword(ForgotPassword obj);
         int checkPackagesValidations(int userrid , int? packageId, string PackageType);
 
+        public Task<UsersDTO> UserInfo(int id);
+
 
     }
 }

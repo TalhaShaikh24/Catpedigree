@@ -1,0 +1,181 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>Profile</b></h3>
+
+            </div>
+            <div class="card-body">
+                <form id="registerForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+
+                            <div class="row">
+
+                             
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                </div>
+                         
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contactNo">Contact Number</label>
+                                        <input type="text" class="form-control" id="contactNo" name="contactNo">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="datepicker">Date of  Birth</label>
+                                        <input type="text" class="form-control" id="datepicker" name="datepicker">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="country">Country</label>
+                                        <input type="text" class="form-control" id="country" name="Country">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="province">Province</label>
+                                        <input type="text" class="form-control" id="province" name="province">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" name="city">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="zoologicalNumber">Zoological Number</label>
+                                        <input type="text" class="form-control" id="zoologicalNumber" name="zoologicalNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profilePic">Profile Picture</label>
+                                        <input type="file" class="form-control-file" id="profilePic" name="profilePic" />
+                                        <div class="d-block mt-3" id="AppendProfilePic">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="breederLicense">Breeder License</label>
+                                        <input type="file" class="form-control-file" id="breederLicense" name="breederLicense" />
+
+                                        <div class="d-block mt-3" id="AppendBreederLicense">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="profileInfo">Profile Info</label>
+                                        <textarea class="form-control" rows="8" cols="8" id="profileInfo" name="profileInfo"></textarea>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Facebook Profile Link</label>
+                                        <input id="FbProfile" name="FbProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Insta Profile Link</label>
+                                        <input id="InProfile" name="InProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Twitter Profile Link</label>
+                                        <input id="TwProfile" name="TwProfile" class="form-control" />
+
+
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="float-right my-2">
+                                <button class="btn btn-success" type="button" id="updateBtn">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+
+    <script src="~/dashboard/userprofileedit.js"></script>
+
+}

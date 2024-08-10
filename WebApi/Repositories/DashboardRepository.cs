@@ -246,6 +246,18 @@ namespace WebApi.Repositories
         }
 
 
+        public int UpdateActiveInActiveUser(int UserId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@UserId", UserId, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<int>(@"[sp_ActiveInActiveUser]", parameters);
+
+            return data;
+        }
+
+
         public Listing UpdateListingStatus(int Id, string Status)
         {
 
@@ -359,12 +371,19 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public List<Register> GetAllUsers()
+        public ListUsersDTO GetAllUsers()
         {
-            DynamicParameters parameters = new DynamicParameters();
-            var data = _dapper.GetAll<Register>(@"[sp_GetAllUsers]", parameters);
 
-            return data;
+            ListUsersDTO usersDTO = new ListUsersDTO();
+
+            DynamicParameters parameters = new DynamicParameters();
+           
+            var data = _dapper.GetMultipleObjects(@"[dbo].[sp_GetAllUsers]", parameters, gr => gr.Read<Register>(), gr => gr.Read<Roles>());
+            usersDTO.Register = data.Item1.ToList();
+            usersDTO.Roles = data.Item2.ToList();
+
+
+            return usersDTO;
         }
 
         public List<CouponCodes> GetCouponCodes()
@@ -408,7 +427,31 @@ namespace WebApi.Repositories
 
             return data;
         }
-}
+
+
+        public int UpdateRoles(userRolesUpdate obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@userId", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RolesId", obj.RolesIds, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Insert<int>(@"[sp_UpdateUserRoles]", parameters);
+
+            return data;
+        }
+
+        public int DeleteUser(int UserId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@UserId", UserId, DbType.Int32, ParameterDirection.Input);
+            
+            var data = _dapper.Update<int>(@"[sp_DeleteUser]", parameters);
+
+            return data;
+        }
+    }
 
 
 

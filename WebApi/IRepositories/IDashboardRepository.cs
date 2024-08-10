@@ -30,7 +30,7 @@ namespace WebApi.IRepositories
         List<string> GetAllPedigreeGallary();
         List<string> GetAllBreederLicense();
         List<string> GetAllVideosGallery();
-        List<Register> GetAllUsers();
+        public ListUsersDTO GetAllUsers();
 
         List<CouponCodes> GetCouponCodes();
 
@@ -44,6 +44,8 @@ namespace WebApi.IRepositories
 
 
         public int AddGallary(Gallery obj);
-
+        public int UpdateRoles(userRolesUpdate obj);
+        public int UpdateActiveInActiveUser(int UserId);
+        public int DeleteUser(int UserId);
     }
 }

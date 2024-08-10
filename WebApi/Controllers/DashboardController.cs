@@ -259,6 +259,107 @@ namespace WebApi.Controllers
 
         }
 
+
+
+
+        [HttpPost("UpdateUserProfile")]
+        public async Task<Response> UpdateUserProfile([FromForm] Register formData)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                var res = await _repository.UpdateProfile(formData);
+                response = CustomStatusResponse.GetResponse(200);
+
+                if (res != null)
+                {
+
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Data Update successfully!";
+
+
+                }
+                return response;
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
+
+
+        [HttpPost("UpdateUserRoles")]
+        public async Task<Response> UpdateUserRoles([FromBody] userRolesUpdate userRoles)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                var res =  _repository.UpdateRoles(userRoles);
+                response = CustomStatusResponse.GetResponse(200);
+
+                if (res >0)
+                {
+
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Data Update successfully!";
+
+
+                }
+                return response;
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
         #endregion
 
 
@@ -1375,6 +1476,92 @@ namespace WebApi.Controllers
             }
 
         }
+
+
+
+        [HttpPost("UpdateActiveInActiveUser/{Id}")]
+        public Response UpdateActiveInActiveUser(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.UpdateActiveInActiveUser(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "User Status Changed successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+        [HttpPost("DeleteUser/{Id}")]
+        public Response DeleteUser(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.DeleteUser(Id);
+
+                if (res > 0)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "User Deleted successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+        
 
 
 
