@@ -355,10 +355,10 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         [HttpPost]
         [Route("Dashboard/UpdateListingStatus")]
-        public Task<object> UpdateListingStatus(int Id, string Status)
+        public Task<object> UpdateListingStatus(int Id, string Status, string Reason = "")
         {
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateListingStatus?Id=" + Id + "&Status=" + Status, "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateListingStatus?Id=" + Id + "&Status=" + Status + "&Reason=" + Reason, "", HttpContext);
         }
 
 

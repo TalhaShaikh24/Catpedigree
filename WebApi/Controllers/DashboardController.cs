@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.Common;
 using System.IO;
+using System.Net.Mail;
 using WebApi.IRepositories;
 using WebApi.Utility;
 
@@ -18,6 +19,7 @@ namespace WebApi.Controllers
         private readonly IDashboardRepository _repository;
 
         private readonly IStripeServices _stripeServices;
+        private readonly IConfiguration _configuration;
 
         private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
 
@@ -26,6 +28,7 @@ namespace WebApi.Controllers
         {
             _repository = repository;
             _hostingEnvironment = hostingEnvironment;
+            _configuration = configuration;
 
             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
             _stripeServices = stripeServices;   
@@ -548,19 +551,18 @@ namespace WebApi.Controllers
 
 
         [HttpPost("UpdateListingStatus")]
-        public Response UpdateListingStatus(int Id, string Status)
+        public Response UpdateListingStatus(int Id, string Status, string Reason = "")
         {
             Response response = new Response();
             Register claimDTO = null;
 
             try
             {
-
                 claimDTO = TokenManager.GetValidateToken(Request);
 
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res =_repository.UpdateListingStatus(Id, Status);
+                var res = _repository.UpdateListingStatus(Id, Status, Reason);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else
@@ -570,12 +572,17 @@ namespace WebApi.Controllers
                     response.ResponseMsg = Status == "Approve" ? "Listing has been approved" : Status == "Pending" ? "Listing added in pending" : "Listing has been rejected";
                     response.Data = res;
 
+                    // Send email if the status is "Reject"
+                    if (Status == "Reject")
+                    {
+                        SendRejectionEmail(res.Email, Reason); // Assuming res has an Email property
+                    }
+
                     return response;
                 }
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
@@ -584,13 +591,49 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
+
+        private void SendRejectionEmail(string toEmail, string reason)
+        {
+            try
+            {
+                var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+                using (var mail = new MailMessage())
+                using (var smtpClient = new SmtpClient(smtpSettings["Server"]))
+                {
+                    mail.From = new MailAddress(smtpSettings["SenderEmail"], smtpSettings["SenderName"]);
+                    mail.To.Add(toEmail);
+                    mail.Subject = "Listing Rejection Notice";
+                    mail.Body = $"Your listing has been rejected for the following reason:\n\n{reason}";
+
+                    smtpClient.Port = int.Parse(smtpSettings["Port"]);
+                    smtpClient.Credentials = new System.Net.NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                    smtpClient.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
+                    smtpClient.Send(mail);
+                }
+            }
+            catch (SmtpException smtpEx)
+            {
+                // Log SMTP-specific exceptions
+                Console.WriteLine($"SMTP Error: {smtpEx.Message}");
+                // Handle or rethrow according to your needs
+            }
+            catch (Exception ex)
+            {
+                // Log other exceptions
+                Console.WriteLine($"General Error: {ex.Message}");
+                // Handle or rethrow according to your needs
+            }
+        }
+
+
         #endregion
 
 

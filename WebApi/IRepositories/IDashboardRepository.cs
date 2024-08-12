@@ -18,7 +18,7 @@ namespace WebApi.IRepositories
 
         Task<Register> UpdateProfile(Register obj);
 
-        Listing UpdateListingStatus(int Id, string Status); 
+        Listing UpdateListingStatus(int Id, string Status, string Reason = ""); 
 
         int DeleteListingById(int Id);
 

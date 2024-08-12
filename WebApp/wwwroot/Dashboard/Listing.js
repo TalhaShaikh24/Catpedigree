@@ -46,7 +46,7 @@ function GetAllListings() {
                                                    <td>${v.createdOn}</td>
                                                    <td style=" width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
                                                     <button type="button" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve" class="btn btn-success btn-xs p-2"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                                    <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="UpdateListingStatus(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="showReasonModal(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
                                                     <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateListingStatus(${v.id}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
                                                     </td>
 
@@ -123,10 +123,34 @@ function GetAllListings() {
 }
 
 
+// Function to show modal and handle form submission
+function showReasonModal(id, status) {
+    $('#reasonModal').modal('show');
 
-function UpdateListingStatus(id, status) {
+    $('#submitReason').off('click').on('click', function () {
+        var reason = $('#reason').val();
 
-    FilePostRequest(`/Dashboard/UpdateListingStatus?Id=${id}&Status=${status}`, null, function (res) {
+        if (reason.trim() === '') {
+            Swal.fire({
+                title: 'Error',
+                text: 'Reason cannot be empty.',
+                icon: 'error'
+            });
+            return;
+        }
+
+        // Call the function to update listing status with the reason
+        UpdateListingStatus(id, status, reason);
+
+        // Close the modal
+        $('#reasonModal').modal('hide');
+    });
+}
+
+
+function UpdateListingStatus(id, status, reason="") {
+
+    FilePostRequest(`/Dashboard/UpdateListingStatus?Id=${id}&Status=${status}&Reason=${encodeURIComponent(reason)}`, null, function (res) {
 
         if (res.status == 200) {
 

@@ -258,13 +258,14 @@ namespace WebApi.Repositories
         }
 
 
-        public Listing UpdateListingStatus(int Id, string Status)
+        public Listing UpdateListingStatus(int Id, string Status, string Reason = "")
         {
 
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Status", Status, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Reason", Status, DbType.String, ParameterDirection.Input);
 
 
             var data = _dapper.Update<Listing>(@"dbo.[sp_UpdateListingStatus]", parameters);

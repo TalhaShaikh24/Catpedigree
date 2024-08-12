@@ -4,6 +4,36 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .loaderBtn {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        border: 5px solid;
+        box-sizing: border-box;
+        animation: animloader 1s linear infinite alternate;
+    }
+
+    @@keyframes animloader {
+        0% {
+            border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+        }
+
+        33% {
+            border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+        }
+
+        66% {
+            border-color: white white white rgba(255, 255, 255, 0);
+        }
+
+        100% {
+            border-color: white white white white;
+        }
+    }
+</style>
 
 
 
@@ -15,50 +45,56 @@
                 <h3 class="card-title"><b>Coupons Codes</b></h3>
 
             </div>
-            <div class="card-body p-0 m-0">
-                <div class="row p-3">
+            <form id="frmCoupon">
+                <div class="card-body p-0 m-0">
+                    <div class="row p-3">
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="Name">Coupon Name</label>
-                            <input type="text" class="form-control" id="Name" name="Name" required>
-                         
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Name">Coupon Name</label>
+                                <input type="text" class="form-control" id="Name" name="Name" required>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="firstname">Coupon Code Pertentage (5-100):</label>
+                                <input type="text" class="form-control" id="CouponCodePertentage" name="CouponCodePertentage" required>
+                                <p id="message"></p>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-4">
+
+
+                            <div class="form_group">
+                                <label>Select User</label>
+                                <select class="form-control" id="UserId">
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-success m-3" id="save">
+                                <span id="BtnText">Generate</span>
+                                <span class="loaderBtn spinner-border spinner-border-sm d-none" id="BtnSpinner" role="status" aria-hidden="true"></span>
+                            </button>
                         </div>
                     </div>
 
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="firstname">Coupon Code Pertentage (5-100):</label>
-                            <input type="text" class="form-control" id="CouponCodePertentage" name="CouponCodePertentage" required>
-                            <p id="message"></p>
-                        </div>
-                    </div>
-
-              
-
-                    <div class="col-md-4">
-                    
-
-                    <div class="form_group">
-                        <label>Select User</label>
-                        <select class="form-control" id="UserId">
-                        </select>
-                    </div>
-
-                    </div>
-
                 </div>
+            </form>
+            
 
-
-                <div class="row">
-                    <div class="col-md-6">
-
-                        <button type="button" class="btn btn-success m-3" id="save">Generate</button>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
 
@@ -68,6 +104,7 @@
 
 
 @section Scripts {
-
+	<script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/plugins/jquery-validation/additional-methods.min.js"></script>
     <script src="~/dashboard/Coupons.js"></script>
 }

@@ -161,7 +161,6 @@ function GetAllMyListings() {
                                            <td>${v.isVaccinated}</td>
                                            <td>${v.zoologicalNumber}</td>
                                            <td>${v.gender}</td>
-                                           <td>${v.description}</td>
                                            <td>${v.age}</td>
                                            <td>${v.categoryId}</td>
                                            <td>${v.packageId}</td>
