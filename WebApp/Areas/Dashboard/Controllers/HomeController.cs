@@ -308,6 +308,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+          [HttpPost]
+        [Route("Dashboard/DeleteSelectedMediaPath/{Path}")]
+        public Task<object> DeleteSelectedMediaPath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedMediaPath/" + Path, "", HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetListingDetailById/{Id}")]

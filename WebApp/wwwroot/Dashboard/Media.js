@@ -407,10 +407,17 @@ function loadImage(src) {
 
 $('#UploadNewFile').on('change', function () {
 
-    var file = document.getElementById('UploadNewFile').files[0];
+
+    var files = document.getElementById('UploadNewFile').files;
 
     var formData = new FormData();
-    formData.append('file', file);
+
+    for (var i = 0; i < files.length; i++) {
+        formData.append('files', files[i]); // Use 'files[]' to handle multiple files on the server side
+    }
+
+
+    debugger;
 
     FilePostRequest(`/Dashboard/UploadNewGallery`, formData, function (res) {
 
@@ -608,7 +615,7 @@ $("#btn-deleteGallery").click(function () {
     });
 
     if (checkedValues.length > 0) {
-        postRequest("/Dashboard/DeleteSelectedGalleryPath/" + checkedValues.join(", "), null, function (res) {
+        postRequest("/Dashboard/DeleteSelectedMediaPath/" + encodeURIComponent(checkedValues.join(",")), null, function (res) {
 
             if (res.status == 200) {
 
