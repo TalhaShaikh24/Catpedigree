@@ -265,7 +265,7 @@ namespace WebApi.Repositories
 
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Status", Status, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Reason", Status, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Reason", Reason, DbType.String, ParameterDirection.Input);
 
 
             var data = _dapper.Update<Listing>(@"dbo.[sp_UpdateListingStatus]", parameters);

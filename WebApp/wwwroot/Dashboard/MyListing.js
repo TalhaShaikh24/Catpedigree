@@ -137,15 +137,32 @@ function GetAllMyListings() {
                 if ($.fn.DataTable.isDataTable('#TableMyListings')) {
                     $('#TableMyListings').DataTable().destroy();
                 }
-                debugger
          
 
                 $.each(res.data, function (i, v) {
 
-                    debugger
+                    var statusIcon = "";
+                    if (v.status == "Approve") {
+                        statusIcon = '<span class="badge badge-info">Approved</span>';
+                    }
+
+                    else if (v.status == "Reject") {
+                        statusIcon = '<span class="badge badge-danger">Rejected</span>'
+                    }
+
+                    else {
+
+                        statusIcon = '<span class="badge badge-warning">Pending</span>'
+                    }
+
+
+
+                    debugger;
                     $("#AppendMyListings").append(`
                                         <tr>
                                            <td>${v.id}</td>
+                                           <td>${statusIcon}</td>
+
                                            <td>${v.title}</td>
                                            <td>${v.location}</td>
                                            <td>${v.state}</td>
@@ -319,6 +336,15 @@ $(document).on("click", "#btn_Listing_Delete", function (e) {
 
 })
 $(document).on("click", "#btn_Listing_Edit", function (e) {
+    $("#status_reason").text('')
+    const statusReasonElement = document.querySelector('#status_reason');
+
+    // Remove any existing <p> element after .status_reason
+    const existingParagraph = statusReasonElement.nextElementSibling;
+    if (existingParagraph && existingParagraph.tagName === 'P') {
+        existingParagraph.remove();
+    }
+
 
   postRequest('/Dashboard/GetListingDetailById/'+ Number(e.currentTarget.dataset.id), null, function (res) {
 
@@ -333,6 +359,33 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 filesToUpload = [];
                 FeaturedFileUpload = [];
                 VideoFileUpload = [];
+
+                if (res.data.status == "Approve") {
+                    $("#status_reason")
+                        .text("Approved")
+                        .removeClass() // Remove all previous classes
+                        .addClass("badge badge-info");
+                }
+                else if (res.data.status == "Reject") {
+                    $("#status_reason")
+                        .text('Rejected')
+                        .removeClass() // Remove all previous classes
+                        .addClass("badge badge-danger")
+                        .css({ "line-height": "normal" });
+
+                    // Append the reason if it is not null
+                    if (res.data.reason != null) {
+                        $("#status_reason").after('<p class="m-0 mx-2" style="color:red">' + res.data.reason + '</p>');
+                    }
+                }
+                else {
+                    $("#status_reason")
+                        .text('pending')
+                        .removeClass() // Remove all previous classes
+                        .addClass("badge badge-warning");
+                }
+
+
                 $("#HDID").val(res.data.id);
                 $("#PackageId").val(res.data.packageId);
                 $("#Category").val(res.data.categoryId).change();
