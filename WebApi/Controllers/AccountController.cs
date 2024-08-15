@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Server;
 using System.Data;
 using System.Data.Common;
+using System.Net.Mail;
 using WebApi.IRepositories;
 using WebApi.Utility;
 
@@ -15,11 +16,13 @@ namespace WebApi.Controllers
     {
         private readonly IAccountRepository _repository;
         private readonly IPackagesRepository _repositoryPkg;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IAccountRepository repository, IPackagesRepository repositoryPkg)
+        public AccountController(IAccountRepository repository, IPackagesRepository repositoryPkg, IConfiguration configuration)
         {
             _repository = repository;
             _repositoryPkg = repositoryPkg;
+            _configuration = configuration;
         }
 
        
@@ -168,7 +171,9 @@ namespace WebApi.Controllers
 
                 if (res != null)
                 {
-                   
+
+                     SendForgotPasswordEmail(res.Email,res.VerificationCode);
+
                     // Prepare the response
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = null;
@@ -281,6 +286,53 @@ namespace WebApi.Controllers
             return response;
         }
 
+        private void SendForgotPasswordEmail(string toEmail, string verificationCode)
+        {
+            try
+            {
+                var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+                using (var mail = new MailMessage())
+                using (var smtpClient = new SmtpClient(smtpSettings["Server"]))
+                {
+                    mail.From = new MailAddress(smtpSettings["SenderEmail"], smtpSettings["SenderName"]);
+                    mail.To.Add(toEmail);
+                    mail.Subject = "Password Reset Request";
+
+                    mail.Body = $@"
+                <html>
+                <body>
+                    <p>Dear User,</p>
+                    <p>We received a request to reset your password. Please use the following verification code to proceed:</p>
+                    <h2 style='color: #007bff;'>{verificationCode}</h2>
+                    <p>If you did not request this password reset, please ignore this email. Your password will not be changed.</p>
+                    <p>Thank you,</p>
+                    <p>The Support Team</p>
+                </body>
+                </html>";
+
+                    mail.IsBodyHtml = true;
+
+                    smtpClient.Port = int.Parse(smtpSettings["Port"]);
+                    smtpClient.Credentials = new System.Net.NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                    smtpClient.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
+                    smtpClient.Send(mail);
+                }
+            }
+            catch (SmtpException smtpEx)
+            {
+                // Log SMTP-specific exceptions
+                Console.WriteLine($"SMTP Error: {smtpEx.Message}");
+                // Handle or rethrow according to your needs
+            }
+            catch (Exception ex)
+            {
+                // Log other exceptions
+                Console.WriteLine($"General Error: {ex.Message}");
+                // Handle or rethrow according to your needs
+            }
+        }
 
 
     }
