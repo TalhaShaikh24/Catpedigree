@@ -68,6 +68,7 @@ namespace ClassLibrary
 
         public string? Currency { get; set; }
         public string? Reason { get; set; }
+        public DateTime? FirstApprovedOn { get; set; }
     }
 
 	//public class ListingFilters

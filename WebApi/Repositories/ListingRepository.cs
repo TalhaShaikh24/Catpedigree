@@ -200,6 +200,7 @@ namespace WebApi.Repositories
 
             var data = _dapper.Get<Listing>(@"[sp_IsViewPedigreeAllowed]", parameters);
 
+
             return data;
         }
 

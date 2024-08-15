@@ -391,28 +391,12 @@
                             <div class="page-header">
                                 <div class="photo-swip-gallery-wrap items-five">
                                     @{
-                                        if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
-                                        {
-                                            <!-- Show the Video if Available With Feature Image Thumbnail-->
-
-                                            <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-
-                                                <div class="listing-play-box wow fadeInUp" style="height:100%; visibility: visible; animation-name: fadeInUp;">
-                                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:8px; background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
-                                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <!-- Show the feature image -->
-                                            <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                                <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
-                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail w-100" alt="" decoding="async" title="">
-                                                </a>
-                                            </div>
-                                        }
+                                        <!-- Show the feature image -->
+                                        <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
+                                            <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
+                                                <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail w-100" alt="" decoding="async" title="">
+                                            </a>
+                                        </div>
                                     }
 
 
@@ -431,8 +415,6 @@
                                 </div>
 
                             </div>
-
-
 
                         </div>
                     </div>
@@ -481,10 +463,36 @@
 
                         <div class="listing-details-wrapper listing-details-wrapper-two">
 
+
+                            @* Listing Description *@
+                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Description))
+                            {
+                                <div class="rtcl-single-listing-details custom-fields-box">
+                                    <div class="rtcl-main-content-wrapper">
+                                        <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        Description
+                                                    </button>
+                                                </h2>
+                                                <!--  Inner Sidebar -->
+                                                <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                                    <div class="rtcl-listing-description">
+                                                        <p>@Model.data.Listing.Description</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            
+
                             @* Listing Video *@
                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.VideoPath))
                             {
-                                <div class="rtcl-single-listing-details video-box d-none">
+                                <div class="rtcl-single-listing-details video-box">
                                     <div class="rtcl-main-content-wrapper">
                                         <div class="accordion accordion-flush" id="petslist-map-accordion">
                                             <div class="accordion-item">
@@ -494,7 +502,7 @@
                                                     </button>
                                                 </h2>
                                                 <div class="listing-play-box mb-30 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                                    <div class="play-content bg_cover text-center" style="background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
+                                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center" style="border-radius:14px; height:350px; background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
                                                         <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
                                                     </div>
                                                 </div>
@@ -503,6 +511,7 @@
                                     </div>
                                 </div>
                             }
+
 
                             @* Listing Pedigree *@
                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.PedigreeFilePath))
@@ -535,12 +544,9 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                    Details
+                                                    Specific Details
                                                 </button>
                                             </h2>
-
-
-
                                             <!--  Inner Sidebar -->
                                             <ul class="list-group custom-field-wrapper">
 
@@ -550,14 +556,6 @@
                                                     </span>
                                                     <span class="cfp-value">
                                                         @Model.data.Listing.Title
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-color">
-                                                    <span class="cfp-label">
-                                                        <span>Color:</span>
-                                                    </span>
-                                                    <span class="cfp-value">
-                                                        @Model.data.Listing.Color
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-isCastration">
@@ -618,23 +616,72 @@
                                                     </span>
                                                 </li>
                                             </ul>
-
-
-
-                                            <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
-                                                <span class="cfp-label">
-                                                    <span>Description:</span>
-                                                </span>
-                                                <div class="rtcl-listing-description">
-                                                    <p>@Model.data.Listing.Description</p>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
+
+
+                            @* Other Details *@
+                            <div class="rtcl-single-listing-details custom-fields-box">
+                                <div class="rtcl-main-content-wrapper">
+                                    <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    Other Details
+                                                </button>
+                                            </h2>
+                                            <!--  Inner Sidebar -->
+                                            <ul class="list-group custom-field-wrapper">
+
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-name">
+                                                    <span class="cfp-label">
+                                                        <span>Adv. ID:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.Id
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-firstApprovedOn">
+                                                    <span class="cfp-label">
+                                                        <span>Placed On:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.FirstApprovedOn
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-expireOn">
+                                                    <span class="cfp-label">
+                                                        <span>Expiry:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(Model.data.Listing.ExpiryDate == null ? "never" : Model.data.Listing.ExpiryDate)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-text rtcl-field-slug-views">
+                                                    <span class="cfp-label">
+                                                        <span>Views:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        ---
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>In Category:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.CategoryName
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>

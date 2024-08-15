@@ -137,6 +137,22 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
     });
 });
 
+function downloadImage(url) {
+    // Create a temporary <a> element
+    var link = document.createElement('a');
+    link.href = url;
+    link.target = "_blank";
+    link.download = url.substring(url.lastIndexOf('/') + 1); // Extract the file name from the URL
+
+    // Append the <a> element to the body
+    document.body.appendChild(link);
+
+    // Trigger a click on the link
+    link.click();
+
+    // Remove the <a> element from the document
+    document.body.removeChild(link);
+}
 
 function GetAllGellary() {
 
@@ -147,24 +163,28 @@ function GetAllGellary() {
             $(".gallery").html("");
 
             $.each(res.data, function (i, v) {
-
-                $(".gallery").append(`<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                                        <div class="CheckBoxSelection shadow-sm">
-                                                           <input type="checkbox" value="${v.galleryImagesPath}"/>
-                                                        </div>
-                                                         <a href="${v.filePath}">
-                                                        <figure class="position-relative">
-                                                             <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
-                                                            
-                                                     </figure>
-                                                      
-                                                    </a>
-                                                    <div class="Watermarkbutton">
-                                                                <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
-                                                        </div>
-                                                </div>`);
-
+                $(".gallery").append(`
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                        <div class="CheckBoxSelection shadow-sm">
+                            <input type="checkbox" value="${v.galleryImagesPath}" />
+                        </div>
+                        <a href="${v.filePath}">
+                            <figure class="position-relative">
+                                <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
+                            </figure>
+                        </a>
+                        <div class="Watermarkbutton">
+                            <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
+                        </div>
+                        <div class="DownloadButton">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="downloadImage('${v.filePath}')">Download</button>
+                        </div>
+                    </div>
+                `);
             });
+
+            
+
             $('.thumb').hover(
                 function () {
                     $(this).find('img').css({

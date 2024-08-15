@@ -34,7 +34,6 @@ function GetAllListings() {
                                                    <td>${v.breerderName}</td>
                                                    <td>${v.typeOfCat}</td>
                                                    <td>${v.gender}</td>
-                                                   <td>${v.description}</td>
                                                    <td>${v.age}</td>
                                                    <td>${v.zoologicalNumber}</td>
                                                    <td>${v.categoryId}</td>
