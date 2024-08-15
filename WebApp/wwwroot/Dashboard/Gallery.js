@@ -259,7 +259,7 @@ $('#replaceImage').on('click', function () {
     var formData = new FormData();
     formData.append('file', blob, filename);
 
-    FilePostRequest(`/Dashboard/replaceFile`, formData, function (res) {
+    FilePostRequest(`/Dashboard/replaceFileGallery`, formData, function (res) {
 
         if (res.status == 200) {
 
@@ -413,7 +413,7 @@ $('#UploadNewFile').on('change', function () {
 
 
     debugger;
-    FilePostRequest(`/Dashboard/UploadNewGallery`, formData, function (res) {
+    FilePostRequest(`/Dashboard/UploadNewGalleryOnly`, formData, function (res) {
 
         if (res.status == 200) {
 

@@ -241,6 +241,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+        [HttpPost]
+        [Route("Dashboard/replaceFileGallery")]
+        public Task<object> replaceFileGallery(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttpreplaceFileDashboard(BaseUrl, "api/Dashboard/replaceFileGallery", file, HttpContext);
+
+        }
+
       
 
         [HttpPost]
@@ -249,6 +258,16 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttSingleFileDashboard(BaseUrl, "api/Dashboard/UploadNewGallery", files, HttpContext);
+
+        }
+              
+
+        [HttpPost]
+        [Route("Dashboard/UploadNewGalleryOnly")]
+        public Task<object> UploadNewGalleryOnly(List<IFormFile> files)
+        {
+
+            return HttpClientUtility.CustomHttSingleFileDashboard(BaseUrl, "api/Dashboard/UploadNewGalleryOnly", files, HttpContext);
 
         }
 

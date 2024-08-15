@@ -163,13 +163,19 @@ namespace WebApp.Controllers
 
             return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetHomePageListings/" + currency, content, HttpContext);
         }
-        
-        [HttpPost]
-        public Task<object> GetTopPageListings()
+
+        [HttpPost("Listing/GetTopPageListings/{currency}")]
+        public Task<object> GetTopPageListings(string currency)
         {
+
+            if (currency == null)
+            {
+                currency = "EUR";
+            }
+
             string content = "";
 
-            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetTopPageListings", content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetTopPageListings/"+ currency, content, HttpContext);
         }
 
         [HttpPost]

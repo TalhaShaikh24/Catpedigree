@@ -27,7 +27,10 @@ $(document).on("click", "#btnSearch", function () {
 
 
 function GetTopPageListings() {
-    postRequest('/Listing/GetTopPageListings', null, function (res) {
+
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    postRequest('/Listing/GetTopPageListings/' + curr, null, function (res) {
 
         if (res.status == 200) {
 
@@ -122,6 +125,9 @@ function GetTopPageListings() {
 
         }
     });
+    var selectedCurrency = localStorage.getItem('cur');
+    updatePrices(selectedCurrency);
+
 }
 
 function GetVetRimmedPageListings() {
@@ -333,6 +339,9 @@ function GetHomePageListings() {
 
         }
     });
+
+
+
 }
 
 

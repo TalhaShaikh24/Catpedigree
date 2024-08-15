@@ -175,8 +175,8 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("GetTopPageListings")]
-        public Response GetTopPageListings()
+        [HttpPost("GetTopPageListings/{currency}")]
+        public async Task<Response> GetTopPageListings(string currency)
         {
             Response response = new Response();
 
@@ -187,6 +187,21 @@ namespace WebApi.Controllers
 
 
                 var res = _listing.GetTopPageListings();
+
+                if (res.Count > 0)
+                {
+                    decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                    foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                    {
+
+                        res[index].Price = Math.Round((item.Price * rate), 2);
+
+
+                    }
+
+                }
+
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else

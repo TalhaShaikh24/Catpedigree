@@ -23,6 +23,10 @@ namespace WebApi.Controllers
 
         private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
 
+        private readonly string _galleryimagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadGallery");
+
+
+
         private readonly IWebHostEnvironment _hostingEnvironment;
         public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices)
         {
@@ -742,7 +746,7 @@ namespace WebApi.Controllers
                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
 
-            if (!Directory.Exists(_imagesPath))
+            if (!Directory.Exists(_galleryimagesPath))
             {
                     response = CustomStatusResponse.GetResponse(600);
                     response.ResponseMsg = "Image directory not found.";
@@ -1129,6 +1133,9 @@ namespace WebApi.Controllers
             }
         }
 
+
+
+
         [HttpPost("UploadNewGallery")]
         public async Task<Response> UploadNewGallery(List<IFormFile> files)
         {
@@ -1211,6 +1218,166 @@ namespace WebApi.Controllers
             }
         }
 
+
+
+
+
+        [HttpPost("replaceFileGallery")]
+        public async Task<Response> replaceFileGallery(IFormFile file)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null)
+                    return CustomStatusResponse.GetResponse(401);
+
+                if (file == null || file.Length == 0)
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.ResponseMsg = "File is empty";
+                    response.Data = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    return response;
+                }
+                else
+                {
+                    var filePath = Path.Combine("UploadGallery", file.FileName);
+                    string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
+
+                    // Check if the file already exists
+                    if (System.IO.File.Exists(FullFilePath))
+                    {
+                        // Delete the existing file
+                        System.IO.File.Delete(FullFilePath);
+                    }
+
+
+
+
+                    // Save the new file
+                    using (var stream = new FileStream(FullFilePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+
+
+
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = file.FileName;
+                    response.ResponseMsg = "File replaced successfully!";
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+
+        [HttpPost("UploadNewGalleryOnly")]
+        public async Task<Response> UploadNewGalleryOnly(List<IFormFile> files)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null)
+                    return CustomStatusResponse.GetResponse(401);
+
+
+                foreach (var item in files)
+                {
+                    if (item == null || item.Length == 0)
+                    {
+                        response = CustomStatusResponse.GetResponse(600);
+                        response.ResponseMsg = "File is empty";
+                        response.Data = null;
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        return response;
+                    }
+                    else
+                    {
+                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                        var filePath = Path.Combine("UploadGallery", FileName);
+                        string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
+
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+                        using (var stream = new FileStream(FullFilePath, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+
+                       // save in database
+
+                    Gallery gallery = new Gallery();
+                        gallery.FileName = FileName;
+                        gallery.FilePath = filePath;
+                        gallery.CreatedBy = claimDTO.UserId;
+
+
+                        _repository.AddGallary(gallery);
+
+
+
+                    }
+
+                }
+
+
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = "";
+                response.ResponseMsg = "File Upload successfully!";
+                return response;
+
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
+
+
+
+
         [HttpPost("UploadSelectedGalleryPath")]
         public Response UploadSelectedGalleryPath([FromBody]string Path)
         {
@@ -1234,7 +1401,7 @@ namespace WebApi.Controllers
                     //    save in database
 
                     Gallery gallery = new Gallery();
-                    gallery.FileName = item.Replace("UploadImages/", string.Empty);
+                    gallery.FileName = item.Replace("UploadGallery/", string.Empty);
             
                     gallery.FilePath = item;
                     gallery.CreatedBy = claimDTO.UserId;
@@ -1292,25 +1459,24 @@ namespace WebApi.Controllers
                 if (res)
                 {
 
-                    //foreach (var item in filepaths)
-                    //{
-                    //    string filePath = System.IO.Path.Combine("UploadImages", item.TrimStart());
+                    foreach (var item in filepaths)
+                    {
 
-                    //    string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, filePath);
-                     
-
-                    //    // Check if the file already exists
-                    //    if (System.IO.File.Exists(FullFilePath))
-                    //    {
-                    //        // Delete the existing file
-                    //        System.IO.File.Delete(FullFilePath);
-                    //    }
+                        string FullFilePath = _galleryimagesPath + "\\"+item; 
 
 
-            
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
 
 
-                    //}
+
+
+
+                    }
 
 
 
