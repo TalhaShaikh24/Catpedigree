@@ -341,7 +341,7 @@ function UpdateUserStatus(id) {
 function DeleteUser(id) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "This action will delete the user and it can not be undone!",
+        text: "This action will delete the user and all the related data  which can not be undone!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
