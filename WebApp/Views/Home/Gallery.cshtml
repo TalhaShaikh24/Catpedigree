@@ -1,11 +1,56 @@
-﻿
-<link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+﻿<!-- Fancybox CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+<!-- Fancybox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/watermarkjs/dist/watermark.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+
+<style>
+    img {
+        max-width: 100%!important;
+        height: auto!important;
+        vertical-align: middle!important;
+        display: inline-block!important;
+    }
+
+    /* Main CSS */
+    .grid-wrapper > div {
+        display: flex!important;
+        justify-content: center!important;
+        align-items: center!important;
+    }
+
+        .grid-wrapper  a , .grid-wrapper img {
+            width: 100%!important;
+            height: 100%!important;
+            object-fit: cover!important;
+            border-radius: 5px!important;
+        }
+
+    .grid-wrapper {
+        display: grid!important;
+        grid-gap: 10px!important;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))!important;
+        grid-auto-rows: 200px!important;
+        grid-auto-flow: dense!important;
+    }
+
+        .grid-wrapper .wide {
+            grid-column: span 2!important;
+        }
+
+        .grid-wrapper .tall {
+            grid-row: span 2!important;
+        }
+
+        .grid-wrapper .big {
+            grid-column: span 2!important;
+            grid-row: span 2!important;
+        }
+</style>
 
 <section class="products-area pt-160 pb-120">
     <div class="container">
@@ -18,9 +63,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row gallery justify-content-between align-items-center">
+           @*  <div class="row gallery justify-content-between align-items-center">
                 
-            </div>
+            </div> *@
+
+            <div class="grid-wrapper" id="grid-wrapper"></div>
                 
         </div>
     </div>

@@ -220,6 +220,50 @@
             height: 120px!important;
             margin-right: 30px!important;
         }
+
+        .header-area .header-top .top-social ul.social-link li a i {
+            color: #fff !important;
+        }
+
+        .currency-dropdown .nice-select {
+            background-color: transparent;
+            color: #fff !important;
+            font-weight: 900 !important;
+            border:none;
+        }
+
+            .currency-dropdown .nice-select:after {
+                color: #fff !important;
+            }
+
+            .currency-dropdown .nice-select .list {
+                background-color: #4d4f5f;
+                box-shadow: 3px 5px 7px 2px #33333375;
+                max-height: 400px;
+                height: auto;
+                overflow-y: auto;
+            }
+
+                .currency-dropdown .nice-select .list .option:hover, .currency-dropdown .nice-select .list .option.selected.focus {
+                    background-color: #c1c1c17a;
+                }
+
+        p.google-languages {
+            color: #fff!important;
+            font-weight: 900;
+        }
+
+        .goog-te-gadget-simple {
+            background-color: transparent!important;
+            border: none!important;
+            margin: 0px 10px;
+        }
+
+        .header-area .header-top .top-content p.google-languages .goog-te-gadget-simple span {
+            color: #fff !important;
+            font-weight: 900;
+            border-left-color: #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -352,7 +396,7 @@
     <header class="header-area header-area-three transparent-header ">
         <div class="header-top">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col-md-4">
                         <div class="top-social">
                             <ul class="social-link">
@@ -372,8 +416,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="top-content text-center">
-                            <p>
-                                Choose Language <a id="google_translate_element" href="javascript.void(0)"></a> <!-- Google Translate dropdown element -->
+                            <p class="google-languages">
+                                Choose Language <a id="google_translate_element" href="#"></a> <!-- Google Translate dropdown element -->
                             </p>
                         </div>
                     </div>

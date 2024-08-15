@@ -935,9 +935,9 @@ button {
 .header-area .header-top .top-social ul.social-link li {
   margin-right: 10px; }
   .header-area .header-top .top-social ul.social-link li span {
-    font-weight: 600;
+    font-weight: 900;
     font-family: "Quicksand", sans-serif;
-    color: #0d0d0d; }
+    color: #fff; }
 
 @media (max-width: 767px) {
   .header-area .header-top .top-content {
@@ -1158,9 +1158,10 @@ button {
 
 /* Header Area Three */
 .header-area-three .header-top {
-  padding: 15px 0;
-  background-color: #fff;
-  margin-bottom: 12px; }
+    padding: 2px;
+    background-color: #df0724;
+    margin-bottom: 12px;
+}
 
 .header-area-three .header-navigation {
   position: relative; }

@@ -2,20 +2,20 @@
 var WaterMarkURL = "";
 $(document).ready(function () {
 
-    $(".gallery").magnificPopup({
-        delegate: "a",
-        type: "image",
-        tLoading: "Loading image #%curr%...",
-        mainClass: "mfp-img-mobile",
-        gallery: {
-            enabled: true,
-            navigateByImgClick: true,
-            preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-        },
-        image: {
-            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
-        }
-    });
+    //$(".gallery").magnificPopup({
+    //    delegate: "a",
+    //    type: "image",
+    //    tLoading: "Loading image #%curr%...",
+    //    mainClass: "mfp-img-mobile",
+    //    gallery: {
+    //        enabled: true,
+    //        navigateByImgClick: true,
+    //        preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+    //    },
+    //    image: {
+    //        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
+    //    }
+    //});
 
     GetAllGallery();
 
@@ -31,20 +31,32 @@ function GetAllGallery() {
 
             $(".grid").html("");
 
-            $.each(res.data, function (i, v) {
+            $.each(res.data, function (index, imageData) {
 
-                $(".gallery").append(`<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                                       
-                                                         <a href="${v.filePath}">
-                                                        <figure class="position-relative">
-                                                             <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
-                                                            
-                                                     </figure>
-                                                      
-                                                    </a>
-                                                </div>`);
+                const $div = $('<div></div>');
 
+                    // Example of applying classes dynamically based on the index
+                    if (index % 5 === 0) {
+                        $div.addClass('wide');
+                    } else if (index % 3 === 0) {
+                        $div.addClass('tall');
+                    } else if (index % 7 === 0) {
+                        $div.addClass('big');
+                    }
+                const $a = $('<a></a>')
+                    .attr('href', imageData.filePath)
+                    .attr('data-fancybox', 'gallery')
+                    .attr('data-caption', imageData.fileName);
+
+                    const $img = $('<img>').attr('src', imageData.filePath).attr('alt', imageData.fileName);
+
+                    $div.append($a);
+                    $a.append($img);
+                    $('#grid-wrapper').append($div);
             });
+
+
+                
 
 
     

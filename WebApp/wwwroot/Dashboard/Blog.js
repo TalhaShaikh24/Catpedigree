@@ -103,7 +103,7 @@ function GetAllAdminBLogs() {
         "responsive": true,
         "lengthChange": true,
         "processing": true, // for show progress bar
-        "serverSide": true, // for process server side
+        "serverSide": false, // for process server side
         "searching": true, // Enable searching (filter)
         "orderMulti": false, // Disable multiple column ordering
         "pageLength": 10,
