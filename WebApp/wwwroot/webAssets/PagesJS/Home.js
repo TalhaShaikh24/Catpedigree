@@ -29,7 +29,7 @@ $(document).on("click", "#btnSearch", function () {
 function GetTopPageListings() {
 
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
-
+    debugger
     postRequest('/Listing/GetTopPageListings/' + curr, null, function (res) {
 
         if (res.status == 200) {
@@ -54,7 +54,7 @@ function GetTopPageListings() {
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -125,7 +125,10 @@ function GetTopPageListings() {
 
         }
     });
+
     var selectedCurrency = localStorage.getItem('cur');
+    debugger;
+
     updatePrices(selectedCurrency);
 
 }
@@ -155,7 +158,7 @@ function GetVetRimmedPageListings() {
                                     <h3 class="title">
                                         <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -266,7 +269,7 @@ function GetHomePageListings() {
                                     <h3 class="title">
                                         <a onclick="SingleListing(${item.id})">${item.title}</a>
                                     </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2">${item.description}</p>
+                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>

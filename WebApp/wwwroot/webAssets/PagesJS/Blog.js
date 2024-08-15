@@ -18,11 +18,11 @@ function GetAllBlogs() {
                 $.each(res.data, function (i,v) {
 
                     debugger
-                    $("#Blog").append(`<div class="blog-standard-wrapper pb-50 mb-120">
+                    $("#Blog").append(`<div class="blog-standard-wrapper pb-50">
                    
                     <div class="blog-post-item blog-post-item-four mb-50 wow fadeInUp">
                         <div class="post-thumbnail">
-                            <a href="javascript:void(0);"><img class="w-100" src="${baseApiUrl+v.featureImagePath}" alt="Blog Image"></a>
+                            <a href="/Blog/BlogDetails?Id=${v.blogID}"><img class="w-100" src="${baseApiUrl+v.featureImagePath}" alt="Blog Image"></a>
                         </div>
                         <div class="entry-content">
                             <a href="javascript:void(0);" class="cat-btn">${moment(v.createdOn).format("DD MMMM - YYYY")}</a>
@@ -33,7 +33,7 @@ function GetAllBlogs() {
                                     <li><span><i class="ti-id-badge"></i><a href="javascript:void(0);">By admin</a></span></li>
                                 </ul>
                             </div>
-                            <h3 class="title"><a href="javascript:void(0);">${v.title}</a></h3>
+                            <h3 class="title"><a href="/Blog/BlogDetails?Id=${v.blogID}">${v.title}</a></h3>
                             <p>${v.shortDescription}</p>
                             <a href="/Blog/BlogDetails?Id=${v.blogID}" class="btn-link">Continue Reading</a>
                         </div>

@@ -337,7 +337,8 @@ $('#replaceImage').on('click', function () {
 
 $(document).on("click", "#ShowModalWatermark", function () {
 
-    debugger
+    $('#UploadWaterMark').val('');
+
 
     var ImageUrl = $(this).attr("data-imageurl");
 

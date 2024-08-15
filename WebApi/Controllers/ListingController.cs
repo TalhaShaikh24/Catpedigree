@@ -21,12 +21,18 @@ namespace WebApi.Controllers
 
         private readonly ICurrencyConverterService _currencyConverterService;
         private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadImages");
-        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages, ICurrencyConverterService currencyConverterService, IConfiguration configuration)
+
+        private readonly string _galleryimagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadGallery");
+
+        private readonly IDashboardRepository _dashboardRepository;
+        public ListingController(IListingRepository listing, IVideoPackagesRepository videoPackages, ICurrencyConverterService currencyConverterService, IConfiguration configuration, IDashboardRepository dashboardRepository)
         {
 
             _listing = listing;
             _videoPackages = videoPackages;
-            _currencyConverterService = currencyConverterService;   
+            _currencyConverterService = currencyConverterService;
+            _dashboardRepository = dashboardRepository;
+
            BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
            
         }
@@ -782,23 +788,22 @@ namespace WebApi.Controllers
 
 
 
-                if (!Directory.Exists(_imagesPath))
+                if (!Directory.Exists(_galleryimagesPath))
                 {
                     response = CustomStatusResponse.GetResponse(600);
                     response.ResponseMsg = "Image directory not found.";
+               
                     response.Data = null;
                     return response;
                 }
 
-                var images = Directory.GetFiles(_imagesPath)
-                   .Select(filePath => new Gallery
-                   {
-                       Id = Path.GetFileNameWithoutExtension(filePath).GetHashCode(),
-                       FileName = Path.GetFileName(filePath),
-                       FilePath = $"{BaseUrl}UploadImages/{Path.GetFileName(filePath)}?v={System.DateTime.UtcNow.Ticks}"
-                   })
-                   .OrderByDescending(g => g.FilePath)
-                   .ToList();
+                var images = _dashboardRepository.GetAllGallary().Select(fileInfo => new Gallery
+                {
+                    Id = Path.GetFileNameWithoutExtension(fileInfo.FileName).GetHashCode(),
+                    FileName = fileInfo.FileName,
+                    FilePath = $"{BaseUrl}{fileInfo.FilePath}?v={System.DateTime.UtcNow.Ticks}"
+                })
+                .ToList();
 
                 if (images == null) return CustomStatusResponse.GetResponse(320);
                 else

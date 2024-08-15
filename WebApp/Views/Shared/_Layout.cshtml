@@ -264,6 +264,12 @@
             font-weight: 900;
             border-left-color: #fff !important;
         }
+
+        .goog-te-gadget img.goog-te-gadget-icon {
+            border-radius: 50%;
+            box-shadow: 4px 3px 5px #00000075;
+            margin: 0px 8px;
+        }
     </style>
 </head>
 <body>
@@ -397,7 +403,7 @@
         <div class="header-top">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-4 d-flex flex-column align-items-center">
                         <div class="top-social">
                             <ul class="social-link">
                                 <li><span>Follow us:</span></li>
@@ -414,15 +420,14 @@
                     
                    
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="top-content text-center">
                             <p class="google-languages">
-                                Choose Language <a id="google_translate_element" href="#"></a> <!-- Google Translate dropdown element -->
+                                <a id="google_translate_element" href="#"></a> <!-- Google Translate dropdown element -->
                             </p>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="currency-dropdown">
                             <select id="currency" onchange="updateCurrencyFlag()">
                                 <option value="USD" data-flag="us" selected>US Dollar (USD)</option>
