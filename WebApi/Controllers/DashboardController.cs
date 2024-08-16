@@ -1602,7 +1602,7 @@ namespace WebApi.Controllers
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Reecord Deleted successfully!";
+                    response.ResponseMsg = "Listing has been deleted successfuly!";
 
                 }
                 return response;

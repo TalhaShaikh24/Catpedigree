@@ -65,7 +65,7 @@ async function loadMore() {
                                         <h3 class="title">
                                             <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                                         </h3>
-                                        <p class="d-none" style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                                        <p class="text_limit_2 d-none" style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                                         <div class="listing-meta">
                                             <ul>
                                                 <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
@@ -151,7 +151,7 @@ async function filteringSearch() {
                          <h3 class="title">
                              <a href="/Listing/SingleListing?listingId=${item.id}">${item.title}</a>
                          </h3>
-                         <p class="d-none" style="font-weight: ${item.propertiestoShow};">${item.description}</p>
+                         <p class="text_limit_2 d-none" style="font-weight: ${item.propertiestoShow};">${item.description}</p>
                          <div class="listing-meta">
                              <ul>
                                  <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>

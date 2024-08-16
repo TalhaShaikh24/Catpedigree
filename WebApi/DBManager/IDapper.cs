@@ -1,4 +1,5 @@
 ﻿
+using ClassLibrary;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace WebApi.DBManager
                                         Func<Dapper.SqlMapper.GridReader, IEnumerable<T1>> func1,
                                         Func<Dapper.SqlMapper.GridReader, IEnumerable<T2>> func2
                                       );
+
+
 
 
 

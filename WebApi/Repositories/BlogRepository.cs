@@ -140,8 +140,6 @@ namespace WebApi.Repositories
         }  
         
         
-      
-
         public int DeleteCommentById(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -183,6 +181,34 @@ namespace WebApi.Repositories
 
             return data;
         }
+
+
+       
+
+        public BlogResult GetAllBlogsPagination(Blog blog)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@PageNumber", blog.PageNumber);
+            parameters.Add("@PageSize", blog.PageSize);
+            parameters.Add("@BlogCategoryId", blog.BlogCategoryId == 0 ? null : blog.BlogCategoryId);
+            parameters.Add("@Title", blog.Title == "" ? null : blog.Title);
+
+            var data = _dapper.GetAll<Blog>(@"[dbo].[sp_GetAllBlogsPagination]", parameters).ToList();
+            int totalCount = data.Any() ? data.First().TotalCount : 0;
+            int fetchedCount = data.Count;
+
+            return new BlogResult
+            {
+                Blogs = data,
+                TotalCount = totalCount,
+                FetchedCount = fetchedCount
+            };
+        }
+
+
+
+
+
 
         public List<Comment> GetAllCommentsByBlogId(int Id)
         {

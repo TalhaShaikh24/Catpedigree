@@ -220,6 +220,56 @@
             height: 120px!important;
             margin-right: 30px!important;
         }
+
+        .header-area .header-top .top-social ul.social-link li a i {
+            color: #fff !important;
+        }
+
+        .currency-dropdown .nice-select {
+            background-color: transparent;
+            color: #fff !important;
+            font-weight: 900 !important;
+            border:none;
+        }
+
+            .currency-dropdown .nice-select:after {
+                color: #fff !important;
+            }
+
+            .currency-dropdown .nice-select .list {
+                background-color: #4d4f5f;
+                box-shadow: 3px 5px 7px 2px #33333375;
+                max-height: 400px;
+                height: auto;
+                overflow-y: auto;
+            }
+
+                .currency-dropdown .nice-select .list .option:hover, .currency-dropdown .nice-select .list .option.selected.focus {
+                    background-color: #c1c1c17a;
+                }
+
+        p.google-languages {
+            color: #fff!important;
+            font-weight: 900;
+        }
+
+        .goog-te-gadget-simple {
+            background-color: transparent!important;
+            border: none!important;
+            margin: 0px 10px;
+        }
+
+        .header-area .header-top .top-content p.google-languages .goog-te-gadget-simple span {
+            color: #fff !important;
+            font-weight: 900;
+            border-left-color: #fff !important;
+        }
+
+        .goog-te-gadget img.goog-te-gadget-icon {
+            border-radius: 50%;
+            box-shadow: 4px 3px 5px #00000075;
+            margin: 0px 8px;
+        }
     </style>
 </head>
 <body>
@@ -352,8 +402,8 @@
     <header class="header-area header-area-three transparent-header ">
         <div class="header-top">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-4 d-flex flex-column align-items-center">
                         <div class="top-social">
                             <ul class="social-link">
                                 <li><span>Follow us:</span></li>
@@ -370,15 +420,14 @@
                     
                    
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="top-content text-center">
-                            <p>
-                                Choose Language <a id="google_translate_element" href="javascript.void(0)"></a> <!-- Google Translate dropdown element -->
+                            <p class="google-languages">
+                                <a id="google_translate_element" href="#"></a> <!-- Google Translate dropdown element -->
                             </p>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="currency-dropdown">
                             <select id="currency" onchange="updateCurrencyFlag()">
                                 <option value="USD" data-flag="us" selected>US Dollar (USD)</option>
@@ -681,6 +730,13 @@
     <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/145049748.js"></script>
     <!-- End of HubSpot Embed Code -->
     <script type="text/javascript">
+
+        $(document).on('click', '.google_translate_element', function (event) {
+            event.preventDefault();
+
+        })
+
+
         // Function to initialize Google Translate Element
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({

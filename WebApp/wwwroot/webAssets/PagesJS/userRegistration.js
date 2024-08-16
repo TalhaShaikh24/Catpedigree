@@ -8,7 +8,11 @@ $(document).ready(function () {
 
     $("#datepicker").datepicker({
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        minDate: new Date(1800, 10 - 1, 25),//最小值                
+        yearRange: '-110:+20',
+        maxDate: 0
+
     });
 
     $("#vendor").prop("checked", true);
