@@ -4,7 +4,7 @@ trigger:
 pool: CatpedigreeSelfHost
 
 variables:
-  solution: '/CatsPedigree.sln'
+  solution: 'Catpedigree-master/CatsPedigree.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
