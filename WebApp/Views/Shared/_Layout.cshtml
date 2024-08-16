@@ -730,6 +730,13 @@
     <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/145049748.js"></script>
     <!-- End of HubSpot Embed Code -->
     <script type="text/javascript">
+
+        $(document).on('click', '.google_translate_element', function (event) {
+            event.preventDefault();
+
+        })
+
+
         // Function to initialize Google Translate Element
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({

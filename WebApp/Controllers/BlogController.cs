@@ -44,6 +44,22 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        public Task<object> GetAllBlogsPagination([FromBody] Blog blog)
+        {
+            string content = JsonConvert.SerializeObject(blog);
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogsPagination", content, HttpContext);
+        }
+
+        [HttpPost]
+        public Task<object> GetAllBlogCategories()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogCategories", content, HttpContext);
+        }
+
+        [HttpPost]
         public Task<object> GetAllBlogDetails(int Id)
         {
             string content = "";

@@ -6,6 +6,7 @@ using Microsoft.SqlServer.Server;
 using System.Data.Common;
 using System.Reflection.Metadata;
 using WebApi.IRepositories;
+using WebApi.Repositories;
 using WebApi.Utility;
 
 namespace WebApi.Controllers
@@ -363,6 +364,47 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost("GetAllBlogsPagination")]
+        public Response GetAllBlogsPagination([FromBody] Blog blog)
+        {
+            Response response = new Response();
+
+            try
+            {
+                var result = _repository.GetAllBlogsPagination(blog);
+
+                if (result == null || result.Blogs == null || !result.Blogs.Any())
+                {
+                    return CustomStatusResponse.GetResponse(320);
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    int currentCount = (blog.PageNumber - 1) * blog.PageSize + result.FetchedCount;
+
+                    response.Data = new
+                    {
+                        Blogs = result.Blogs,
+                        TotalCount = result.TotalCount,
+                        CurrentCount = currentCount
+                    };
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+        }
+
 
         [HttpPost("GetAllAdminBLogs")]
         public Response GetAllAdminBLogs()
@@ -414,13 +456,9 @@ namespace WebApi.Controllers
         {
             Response response = new Response();
 
-            Register claimDTO = null;
 
             try
             {
-                claimDTO = TokenManager.GetValidateToken(Request);
-
-                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
                 var res = _repository.GetAllBlogCategories();
 
@@ -430,7 +468,6 @@ namespace WebApi.Controllers
                 {
 
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = res;
                     return response;
                 }
@@ -438,7 +475,6 @@ namespace WebApi.Controllers
             catch (DbException ex)
             {
                 response = CustomStatusResponse.GetResponse(600);
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
 
 
@@ -447,7 +483,6 @@ namespace WebApi.Controllers
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
-                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
 
                 return response;

@@ -13,7 +13,9 @@ namespace ClassLibrary
     public class BlogCategories
     {
         public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public int BlogsCount { get; set; }
         public string Description { get; set; }
         public DateTime CreatedOn { get; set; }
     }
@@ -24,6 +26,13 @@ namespace ClassLibrary
         public string Content { get; set; }
         public IFormFile FeatureImage { get; set; }
     }
+    public class BlogResult
+    {
+        public List<Blog> Blogs { get; set; }
+        public int TotalCount { get; set; }
+        public int FetchedCount { get; set; }
+    }
+
 
     [FirestoreData]
     public class Blog
@@ -43,8 +52,11 @@ namespace ClassLibrary
         public string? Content { get; set; }
         [FirestoreProperty]
         public int? CommentsCount { get; set; } 
+        
         [FirestoreProperty]
         public int? BlogCategoryId { get; set; } 
+        [FirestoreProperty]
+        public string? BlogCategoryName { get; set; } 
         [FirestoreProperty]
         public string? Tags { get; set; }
         [FirestoreProperty]
@@ -55,6 +67,11 @@ namespace ClassLibrary
         public int? ModifiedBy { get; set; }
         [FirestoreProperty]
         public DateTime? ModifiedOn { get; set; }
+
+        public int TotalCount { get; set; }
+        public int FetchedCount { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class Comment

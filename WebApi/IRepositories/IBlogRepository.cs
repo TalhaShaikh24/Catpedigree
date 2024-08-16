@@ -1,9 +1,11 @@
 ﻿using ClassLibrary;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static WebApi.Repositories.BlogRepository;
 
 
 namespace WebApi.IRepositories
@@ -17,6 +19,7 @@ namespace WebApi.IRepositories
         List<Blog> GetHomePageBlogs();
         List<BlogCategories> GetAllBlogCategories();
         List<Blog> GetAllBlogs();
+        BlogResult GetAllBlogsPagination(Blog blog);
         object GetAllBlogDetails(int Id);
         List<Comment> GetAllCommentsByBlogId(int Id);
         List<Reply> GetAllReplyByCommentId(int Id);
