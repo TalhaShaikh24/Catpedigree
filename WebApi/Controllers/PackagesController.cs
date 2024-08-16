@@ -197,7 +197,62 @@ namespace WebApi.Controllers
 
 
 
-    
+
+        [HttpPost("AssignPackage")]
+        public async Task<Response> AssignPackage([FromBody] UserPackages obj)
+        {
+
+            Register claimDTO = null;
+            Response response = new Response();
+            string priceId = string.Empty;
+
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                obj.CreatedBy = claimDTO.UserId;
+
+
+                var res = _repository.AssignPackage(obj);
+
+                if (res != null)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+
+                    response.ResponseMsg = "Package has been assigned successfully!";
+
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                }
+                return response;
+
+
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+        }
+
+
+
 
     }
 }

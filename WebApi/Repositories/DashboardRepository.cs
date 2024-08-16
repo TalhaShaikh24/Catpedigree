@@ -452,7 +452,41 @@ namespace WebApi.Repositories
 
             return data;
         }
+
+        public List<Register> GetAllUsersForPricingPackages()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            
+            var data = _dapper.GetAll<Register>(@"[sp_GetAllUsersForPricingPackages]", parameters);
+
+            return data;
+        }
+
+        public List<Package> getAllPackagestoAssgin(int userid)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@UserId", userid, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.GetAll<Package>(@"[sp_getAllPackagestoAssgin]", parameters);
+
+            return data;
+        }
+
+        public List<GetUserpackagesAssigned> GetUserpackagesAssigned()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            
+            var data = _dapper.GetAll<GetUserpackagesAssigned>(@"[sp_GetUserpackagesAssigned]", parameters);
+
+            return data;
+        }
     }
+
+
+
 
 
 

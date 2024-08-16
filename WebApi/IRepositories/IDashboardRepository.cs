@@ -47,5 +47,18 @@ namespace WebApi.IRepositories
         public int UpdateRoles(userRolesUpdate obj);
         public int UpdateActiveInActiveUser(int UserId);
         public int DeleteUser(int UserId);
+
+
+        public List<Register> GetAllUsersForPricingPackages();
+
+
+        public List<Package> getAllPackagestoAssgin(int userid);
+        
+        public List<GetUserpackagesAssigned> GetUserpackagesAssigned();
+
+
+
+
+
     }
 }

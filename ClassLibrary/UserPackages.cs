@@ -61,4 +61,33 @@ namespace ClassLibrary
         public int? VideoCount { get; set; }
 
     }
+
+    public class GetUserpackagesAssigned
+    {
+        public int UserId { get; set; }
+
+        public string? Username { get; set; }
+
+        public string? Email { get; set; }
+        public string? ContactNo { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Price { get; set; }
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
 }

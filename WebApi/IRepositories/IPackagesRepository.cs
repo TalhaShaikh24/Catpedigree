@@ -6,5 +6,8 @@ namespace WebApi.IRepositories
     {
         List<Package> GetAllPackages();
         UserPackages BuyPackage(UserPackages obj);
+        UserPackages AssignPackage(UserPackages obj);
+
+
     }
 }

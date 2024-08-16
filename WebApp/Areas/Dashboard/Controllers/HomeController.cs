@@ -182,6 +182,18 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
 
+        [HttpGet("Dashboard/AssignPricingPackage")]
+        public IActionResult AssignPricingPackage()
+        {
+
+
+            return View();
+        }
+
+
+
+
+
 
 
 
@@ -721,6 +733,49 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteUser/" + id, "", HttpContext);
 
         
+
+        }
+        [HttpPost("Dashboard/GetAllUsersForPricingPackages")]
+        public  Task<object> GetAllUsersForPricingPackages()
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllUsersForPricingPackages", "", HttpContext);
+
+        
+
+        }
+
+        [HttpPost("Dashboard/getAllPackagestoAssgin/{userid}")]
+        public  Task<object> getAllPackagestoAssgin(int userid)
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/getAllPackagestoAssgin/"+ userid, "", HttpContext);
+
+        
+
+        }
+       
+        [HttpPost("Dashboard/AssignPackage")]
+        public  Task<object> AssignPackage([FromBody] UserPackages obj)
+        {
+
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Packages/AssignPackage", content, HttpContext);
+
+        
+
+        }
+
+
+        [HttpPost("Dashboard/GetUserpackagesAssigned")]
+        public Task<object> GetUserpackagesAssigned()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetUserpackagesAssigned", "", HttpContext);
+
+
 
         }
 
