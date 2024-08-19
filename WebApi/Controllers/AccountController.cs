@@ -24,7 +24,6 @@ namespace WebApi.Controllers
             _repositoryPkg = repositoryPkg;
             _configuration = configuration;
         }
-
        
         [HttpPost("Authenticate")]
         public Response Authenticate([FromBody] Register obj)
@@ -281,7 +280,6 @@ namespace WebApi.Controllers
 
             return response;
         }
-
         private void SendForgotPasswordEmail(string toEmail, string verificationCode)
         {
             try
