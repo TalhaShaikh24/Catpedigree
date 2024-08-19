@@ -34,7 +34,7 @@ namespace WebApp.Controllers
 
             return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetHomePageBlogs", content, HttpContext);
         }
-        
+
         [HttpPost]
         public Task<object> GetAllBlogs()
         {
@@ -64,9 +64,9 @@ namespace WebApp.Controllers
         {
             string content = "";
 
-            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogDetails/"+Id, content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogDetails/" + Id, content, HttpContext);
         }
-          
+
         [HttpPost]
         public Task<object> AddComment([FromBody] Comment obj)
         {

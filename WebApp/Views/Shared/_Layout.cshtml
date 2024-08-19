@@ -269,6 +269,11 @@
             border-radius: 50%;
             box-shadow: 4px 3px 5px #00000075;
             margin: 0px 8px;
+            display:none!important;
+        }
+
+        .VIpgJd-ZVi9od-vH1Gmf {
+            background-color: red !important;
         }
     </style>
 </head>
@@ -524,11 +529,11 @@
                                         @{
                                             if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
                                             {
-                                                    <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
+                                                        <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
                                             }
                                             else
                                             {
-                                                    <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
+                                                        <li class="menu-item"><a href="javascript:void(0);" id="btnLogOFf">Log out</a></li>
                                             }
                                         }
                                         @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
@@ -790,8 +795,128 @@
             }
         });
 
-        // Initialize on page load
-        window.onload = initializeGoogleTranslate;
+        window.onload = function () {
+            // Ensure initializeGoogleTranslate is called as a function
+            initializeGoogleTranslate();
+
+            // Function to check if an element with the specified class exists inside an iframe
+            function checkElementInIframe(iframe, className) {
+                // Access the iframe's document
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                // Check if the element with the specified class exists in the iframe's document
+                var element = iframeDocument.querySelector(`.${className}`);
+
+                // Return the iframe document and the found element (if any)
+                return { document: iframeDocument, element: element };
+            }
+
+            // Function to insert CSS into the iframe's head
+            function insertCssIntoIframe(iframeDocument, cssRules) {
+                var head = iframeDocument.head || iframeDocument.getElementsByTagName('head')[0];
+                var style = iframeDocument.createElement('style');
+                style.type = 'text/css';
+
+                if (style.styleSheet) {
+                    // This is required for IE8 and below.
+                    style.styleSheet.cssText = cssRules;
+                } else {
+                    style.appendChild(iframeDocument.createTextNode(cssRules));
+                }
+
+                head.appendChild(style);
+            }
+
+            // Function to continuously check for the element inside all iframes
+            function continuouslyCheckElement(iframeSelector, className, cssRules, interval = 1000, maxAttempts = 10) {
+                let attempts = 0;
+
+                // Create a timer to repeatedly check for the element
+                const timer = setInterval(() => {
+                    // Get all iframes matching the selector
+                    var iframes = document.querySelectorAll(iframeSelector);
+
+                    let foundElement = false;
+
+                    iframes.forEach((iframe) => {
+                        iframe.style.boxShadow = '2px 6px 8px 2px #00000057';
+                        iframe.style.borderRadius = '14px';
+                        iframe.style.marginTop = '10px';
+                        const result = checkElementInIframe(iframe, className);
+                        const iframeDocument = result.document;
+                        const element = result.element;
+
+                        if (element) {
+                            console.log('Element found inside the iframe.');
+
+                            // Insert CSS into the iframe's document
+                            if (iframeDocument) {
+                                insertCssIntoIframe(iframeDocument, cssRules);
+                            }
+
+                            foundElement = true; // Mark that we found the element
+                        }
+                    });
+
+                    if (foundElement) {
+                        clearInterval(timer); // Stop the timer if the element is found in any iframe
+                    } else {
+                        attempts++;
+                        console.log(`Attempt ${attempts}: Element not found inside the iframes.`);
+
+                        // Stop the timer after reaching the maximum number of attempts
+                        if (attempts >= maxAttempts) {
+                            console.log('Maximum attempts reached. Stopping check.');
+                            clearInterval(timer);
+                        }
+                    }
+                }, interval);
+            }
+
+            // Usage
+            var iframeSelector = 'iframe.skiptranslate'; // Target the iframe with class 'skiptranslate'
+            var className = 'VIpgJd-ZVi9od-vH1Gmf'; // Replace with the class name you're looking for
+            var cssRules = `
+                    body .VIpgJd-ZVi9od-vH1Gmf {
+                        max-height: 600px;
+                        height: auto !important;
+                        overflow-y: auto;
+                        width: 300px !important;
+                        max-width: 400px;
+                        border: 1px solid #fff !important;
+                        border-radius: 14px;
+                        padding-bottom: 20px;
+                        background-color: #4d4f5f;
+                        box-shadow: none !important;
+                    }
+                    table{
+                          width:100%!important;
+                    }
+                    .VIpgJd-ZVi9od-vH1Gmf-ibnC6b div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:link div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:visited div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:active div {
+                        color: #fff;
+                        background: transparent;
+                        padding: 14px 8px;
+                        -webkit-transition: all 0.2s;
+                        transition: all 0.2s;
+                    }
+                    .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:hover div {
+                        color: #FFF;
+                        background: #c1c1c17a;
+                    }
+                    a.VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd div span {
+                        font-size: 12pt !important;
+                        color:#fff
+                    }
+                    span.indicator {
+                        margin-right: 8px;
+                    }
+            `;
+
+            // Start checking for the element with a 1-second interval and a maximum of 10 attempts
+            continuouslyCheckElement(iframeSelector, className, cssRules, 1000, 10);
+
+        };
+
     </script>
 
 

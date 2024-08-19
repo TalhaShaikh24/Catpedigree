@@ -30,6 +30,7 @@ namespace WebApi.Repositories
 
 			return data;
 		}
+		
 		public async Task<BlogCategories> AddBlogCategory(BlogCategories obj)
         {
 
@@ -182,6 +183,15 @@ namespace WebApi.Repositories
             return data;
         }
 
+        
+        public List<Blog> GetAllAdminBlogs()
+        {
+              DynamicParameters parameters = new DynamicParameters();
+              var data = _dapper.GetAll<Blog>(@"[sp_GetAllAdminBlogs]", parameters);
+
+            return data;
+        }
+
 
        
 
@@ -210,51 +220,15 @@ namespace WebApi.Repositories
 
 
 
-        public List<Comment> GetAllCommentsByBlogId(int Id)
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.GetAll<Comment>(@"[sp_GetAllCommentsByBlogId]", parameters);
-            return data;
-        }
+        
 
-        public Reply SendReply(Reply obj)
-        {
+        
 
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@CommentId", obj.CommentId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@ReplyText", obj.ReplyText, DbType.String, ParameterDirection.Input);
-            var data = _dapper.Insert<Reply>(@"[sp_AddReply]", parameters);
-            return data;
-        }
+       
 
-        public List<Reply> GetAllReplyByCommentId(int Id)
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.GetAll<Reply>(@"[sp_GetAllReplyByCommentId]", parameters);
-            return data;
-        }
+        
 
-        public Reply UpdateReply(Reply obj)
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", obj.Id, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@CommentId", obj.CommentId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@ReplyText", obj.ReplyText, DbType.String, ParameterDirection.Input);
-            var data = _dapper.Update<Reply>(@"[sp_UpdateReply]", parameters);
-            return data;
-        }
-
-        public int DeleteReplyId(int Id)
-        {
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.Insert<int>(@"[sp_DeleteReplyId]", parameters);
-            return data;
-        }
+        
         public int DeleteBlogCategory(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();

@@ -115,7 +115,7 @@ $(document).ready(function () {
         }
 
         function redirectToHome() {
-            window.location.href = window.location.origin +'/Home/login';
+            window.location.href = window.location.origin + '/Home/login';
         }
 
     });

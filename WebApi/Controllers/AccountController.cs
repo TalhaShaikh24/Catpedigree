@@ -63,7 +63,6 @@ namespace WebApi.Controllers
             }
         }
 
-
         [HttpPost("RegisterUser")]
         public async Task<Response> RegisterUser([FromForm] Register formData)
         {
@@ -118,7 +117,6 @@ namespace WebApi.Controllers
 
             return response;
         }
-
 
         [HttpPost("Logout")]
         public Response PostLogout()
@@ -243,8 +241,6 @@ namespace WebApi.Controllers
 
             return response;
         }
-
-
 
         [HttpPost("UserInfo/{id}")]
         public async Task<Response> UserInfo(int id)

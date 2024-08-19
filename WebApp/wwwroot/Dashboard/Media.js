@@ -1,5 +1,6 @@
 ﻿
 var WaterMarkURL = "";
+var watermarkImageSrc = "/webassets/images/watermarks/cat-pedigree-world-logo.png";
 $(document).ready(function () {
 
     $(".gallery").magnificPopup({
@@ -44,7 +45,8 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
 
     debugger;
     var mainImageSrc = $("#mainImage").attr("value");
-    var watermarkImageSrc = WaterMarkURL;
+    //var watermarkImageSrc = WaterMarkURL;
+    var watermarkImageSrc = "/webassets/images/watermarks/cat-pedigree-world-logo.png";
 
     Promise.all([
         loadImage(mainImageSrc),
@@ -373,8 +375,8 @@ $(document).on("click", "#ShowModalWatermark", function () {
                             <figure>
                              <img id="mainImage" class="img-fluid " src="${ImageUrl}" value="${ImageUrl}" alt="${filename}">
                             </figure>
-                         </a>`)
-
+                         </a>`);
+    $("#UploadWaterMark").change();
 
 })
 

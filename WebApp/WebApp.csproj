@@ -36,4 +36,8 @@
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\webAssets\images\NewFolder\" />
+  </ItemGroup>
+
 </Project>

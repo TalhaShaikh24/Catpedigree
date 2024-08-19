@@ -56,6 +56,36 @@ namespace WebApi.IRepositories
         
         public List<GetUserpackagesAssigned> GetUserpackagesAssigned();
 
+        
+
+        #region Blogs
+        List<Blog> GetAllAdminBlogs();
+        Task<Blog> AddBlog(Blog obj);
+        Task<Blog> UpdateBlog(Blog obj);
+        Blog BlogEditById(int Id);
+        int BlogDeleteById(int Id);
+        List<BlogCategories> GetAllBlogCategories();
+        Task<BlogCategories> AddBlogCategory(BlogCategories obj);
+        Task<BlogCategories> UpdateBlogCategory(BlogCategories obj);
+        int DeleteBlogCategory(int Id);
+        Reply SendReply(Reply obj);
+        List<Comment> GetAllCommentsByBlogId(int Id);
+        int DeleteCommentById(int Id);
+        List<Reply> GetAllReplyByCommentId(int Id);
+        Reply UpdateReply(Reply obj);
+        int DeleteReplyId(int Id);
+        Comment AddComment(Comment obj);
+        #endregion
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -126,12 +126,12 @@ function GetDatatable() {
 
                 $.each(res.data, function (i, v) {
                     $('#packagesAssignedtable').DataTable().row.add([
-                        v.userId,
+                        //v.userId,
                         v.username,
                         v.email,
                         v.contactNo,
                         v.name,
-                        v.price
+                        //v.price
                     ]).draw();
                 });
 

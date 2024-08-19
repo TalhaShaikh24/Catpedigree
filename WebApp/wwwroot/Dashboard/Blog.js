@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 
 function GetAllBlogCategories() {
-    postRequest('/Dashboard/GetAllBlogCategories', null, function (res) {
+    postRequest('/Dashboard/GetAllAdminBlogCategories', null, function (res) {
 
         if (res.status == 200) {
 

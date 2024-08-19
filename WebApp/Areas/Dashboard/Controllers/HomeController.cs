@@ -429,151 +429,6 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
         [HttpPost]
-        [Route("Dashboard/GetAllAdminBLogs")]
-        public Task<object> GetAllAdminBLogs()
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllAdminBLogs", "", HttpContext);
-        }
-
-		[HttpPost]
-		[Route("Dashboard/GetAllBlogCategories")]
-		public Task<object> GetAllBlogCategories()
-		{
-
-			return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllBlogCategories", "", HttpContext);
-		}
-
-
-        [HttpPost]
-        [Route("Dashboard/AddBlogCategory")]
-        public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
-        {
-            var content = JsonConvert.SerializeObject(obj);
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/AddBlogCategory", content, HttpContext);
-
-        } 
-        [HttpPost]
-        [Route("Dashboard/UpdateBlogCategory")]
-        public Task<object> UpdateBlogCategory([FromBody] BlogCategories obj)
-        {
-            var content = JsonConvert.SerializeObject(obj);
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/UpdateBlogCategory", content, HttpContext);
-
-        } 
-        
-
-        [HttpPost]
-        [Route("Dashboard/DeleteBlogCategory")]
-        public Task<object> DeleteBlogCategory(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteBlogCategory/" + Id, "", HttpContext);
-
-        }
-
-        [HttpPost]
-        [Route("Dashboard/AddBlog")]
-        public Task<object> AddBlog([FromForm] Blog obj)
-        {
-           
-            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Blog/AddBlog",obj,HttpContext);
-
-        }       
-        
-        
-        [HttpPost]
-        [Route("Dashboard/UpdateBlog")]
-        public Task<object> UpdateBlog([FromForm] Blog obj)
-        {
-           
-            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Blog/UpdateBlog", obj,HttpContext);
-
-        }       
-        
-        
-        [HttpPost]
-        [Route("Dashboard/SendReply")]
-        public Task<object> SendReply([FromBody] Reply obj)
-        {
-            var content = JsonConvert.SerializeObject(obj);
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/SendReply", content, HttpContext);
-
-        }
-
-
-        [HttpPost]
-        [Route("Dashboard/GetAllCommentsByBlogId")]
-        public Task<object> GetAllCommentsByBlogId(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllCommentsByBlogId/"+Id,"",HttpContext);
-
-        }
-
-
-        [HttpPost]
-        [Route("Dashboard/BlogEditById")]
-        public Task<object> BlogEditById(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/BlogEditById/" + Id, "", HttpContext);
-
-        }
-
-
-        [HttpPost]
-        [Route("Dashboard/BlogDeleteById")]
-        public Task<object> BlogDeleteById(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/BlogDeleteById/" + Id, "", HttpContext);
-
-        }
-
-        [HttpPost]
-        [Route("Dashboard/DeleteCommentById")]
-        public Task<object> DeleteCommentById(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteCommentById/" + Id, "", HttpContext);
-
-        }
-
-
-        [HttpPost]
-        [Route("Dashboard/GetAllReplyByCommentId")]
-        public Task<object> GetAllReplyByCommentId(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/GetAllReplyByCommentId/"+Id, "", HttpContext);
-
-        }
-
-        [HttpPost]
-        [Route("Dashboard/UpdateReply")]
-        public Task<object> UpdateReply([FromBody] Reply obj)
-        {
-            var content = JsonConvert.SerializeObject(obj);
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/UpdateReply",content, HttpContext);
-
-        }
-
-
-        [HttpPost]
-        [Route("Dashboard/DeleteReplyId")]
-        public Task<object> DeleteReplyId(int Id)
-        {
-
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Blog/DeleteReplyId/"+Id, "", HttpContext);
-
-        }
-
-        
-
-        [HttpPost]
         [Route("Dashboard/DeleteListingById")]
         public Task<object> DeleteListingById(int Id)
         {
@@ -674,26 +529,23 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateUserRoles", content, HttpContext);
         }
 
-
-
         [HttpPost("Dashboard/GetCouponCodes")]
         public Task<object> GetCouponCodes()
         {
             string content = "";
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetCouponCodes", content, HttpContext);
         }
-
-
-
         
         [HttpPost]
         [Route("Dashboard/IsExpireCoupens")]
+
         public Task<object> IsExpireCoupens(int Id)
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/IsExpireCoupens/" + Id, "", HttpContext);
 
         } 
+
         [HttpPost]
         [Route("Dashboard/ActiveDeactiveCode")]
         public Task<object> ActiveDeactiveCode(int Id)
@@ -735,6 +587,7 @@ namespace WebApp.Areas.Dashboard.Controllers
         
 
         }
+
         [HttpPost("Dashboard/GetAllUsersForPricingPackages")]
         public  Task<object> GetAllUsersForPricingPackages()
         {
@@ -768,7 +621,6 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
-
         [HttpPost("Dashboard/GetUserpackagesAssigned")]
         public Task<object> GetUserpackagesAssigned()
         {
@@ -778,6 +630,148 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
         }
+
+
+
+
+        #region Blogs
+
+        [HttpPost]
+        [Route("Dashboard/GetAllAdminBLogs")]
+        public Task<object> GetAllAdminBLogs()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllAdminBLogs", "", HttpContext);
+        }
+
+        [HttpPost]
+        [Route("Dashboard/AddBlog")]
+        public Task<object> AddBlog([FromForm] Blog obj)
+        {
+
+            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Dashboard/AddBlog", obj, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateBlog")]
+        public Task<object> UpdateBlog([FromForm] Blog obj)
+        {
+
+            return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Dashboard/UpdateBlog", obj, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/BlogEditById")]
+        public Task<object> BlogEditById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/BlogEditById/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/BlogDeleteById")]
+        public Task<object> BlogDeleteById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/BlogDeleteById/" + Id, "", HttpContext);
+
+        }
+
+        
+        [HttpPost]
+        [Route("Dashboard/GetAllBlogCategories")]
+        public Task<object> GetAllBlogCategories()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllBlogCategories", "", HttpContext);
+        }
+
+        [HttpPost]
+        [Route("Dashboard/AddBlogCategory")]
+        public Task<object> AddBlogCategory([FromBody] BlogCategories obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AddBlogCategory", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateBlogCategory")]
+        public Task<object> UpdateBlogCategory([FromBody] BlogCategories obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateBlogCategory", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/DeleteBlogCategory")]
+        public Task<object> DeleteBlogCategory(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteBlogCategory/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/SendReply")]
+        public Task<object> SendReply([FromBody] Reply obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/SendReply", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllCommentsByBlogId")]
+        public Task<object> GetAllCommentsByBlogId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllCommentsByBlogId/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/DeleteCommentById")]
+        public Task<object> DeleteCommentById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteCommentById/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllReplyByCommentId")]
+        public Task<object> GetAllReplyByCommentId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllReplyByCommentId/" + Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UpdateReply")]
+        public Task<object> UpdateReply([FromBody] Reply obj)
+        {
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/UpdateReply", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/DeleteReplyId")]
+        public Task<object> DeleteReplyId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteReplyId/" + Id, "", HttpContext);
+
+        }
+        #endregion
 
 
     }
