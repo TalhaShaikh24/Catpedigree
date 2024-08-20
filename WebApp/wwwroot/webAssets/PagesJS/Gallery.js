@@ -50,15 +50,9 @@ function GetAllGallery() {
 
                 // Create the first image element
                 const $img1 = $('<img>', {
+                    class: 'img-watermark',
                     src: 'https://localhost:7297/webassets/images/logo/logo-1.png',
-                    alt: 'f46a1_Cattery Monti Della Meta (14).png',
-                    css: {
-                        width: '135px',
-                        position: 'relative',
-                        height: 'auto',
-                        left: '75%',
-                        bottom: '40px'
-                    }
+                    alt: 'f46a1_Cattery Monti Della Meta (14).png'
                 });
 
                 // Create the second image element (adjust attributes as needed)
@@ -67,14 +61,9 @@ function GetAllGallery() {
                     alt: imageData.fileName
                 });
 
-                // Create a link element (assuming $a is defined elsewhere or create one)
-                const $a = $('<a>');
-
-                // Create a div element (assuming $div is defined elsewhere or create one)
-                const $div = $('<div>');
-
                 // Append the first image to the link
                 $a.append($img1);
+                $a.append($img2);
 
                 // Append the link to the div
                 $div.append($a);
@@ -82,8 +71,7 @@ function GetAllGallery() {
                 // Append the div to the grid-wrapper
                 $('#grid-wrapper').append($div);
 
-                // Now, if you need to append the second image separately, you can do:
-                $div.append($img2); // Append the second image directly to the div or to any other element
+                
 
             });
 

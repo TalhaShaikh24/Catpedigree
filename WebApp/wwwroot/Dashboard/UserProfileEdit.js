@@ -1,5 +1,6 @@
 ﻿
 let baseApiUrl = "";
+let paginationIndex;
 $(document).ready(function () {
     $("html, body").animate({ scrollTop: 0 }, "slow");
 
@@ -14,6 +15,7 @@ $(document).ready(function () {
 
     // Get the value of the 'id' query parameter
     var id = urlParams.get('id');
+    paginationIndex = urlParams.get('paginationIndex');
 
     GetProfileDetails(id);
 
@@ -275,11 +277,16 @@ $('#updateBtn').click(function () {
 
             if (res.data != null) {
 
+                
                 Swal.fire({
                     title: "Success",
                     text: res.responseMsg,
                     icon: "success"
+                }).then(function () {
+                    window.location.href = `/Dashboard/Users?paginationIndex=${paginationIndex}`;
                 });
+
+                
 
             }
         }

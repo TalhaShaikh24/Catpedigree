@@ -17,21 +17,39 @@ function GetAllBlogCategories() {
 
             if (res.data != null) {
 
+                // Step 1: Destroy existing DataTable instance if it exists
+                if ($.fn.DataTable.isDataTable("#TableBlogCategories")) {
+                    $("#TableBlogCategories").DataTable().destroy();
+                }
+
+                // Step 2: Clear the table body
                 $("#AppendCategories").empty();
+
+                // Step 3: Sort data in descending order based on 'createdOn'
+                res.data.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
+
+                // Step 4: Append sorted data to the table
                 $.each(res.data, function (i, v) {
                     $("#AppendCategories").append(`
                       <tr>
-                      <td>${v.categoryName}</td>
-                      <td>${v.description}</td>
-                      <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                      <td>
-                        <div style="display: flex; justify-content: start; align-items: center;">
-                          <button class="btn btn-info btn-md mx-2" title="Edit" id="EditCategory" data-id="${v.id}" data-name="${v.categoryName}" data-description="${v.description}"><i class="fa fa-edit"></i></button>
-                          <button type="button" class="btn btn-danger btn-md mx-2" title="Delete" onclick="DeleteBlogCategory(${v.id})"><i class="fa fa-trash"></i></button>
-                        </div>
-                      </td>
+                        <td>${v.categoryName}</td>
+                        <td>${v.description}</td>
+                        <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
+                        <td>
+                          <div style="display: flex; justify-content: start; align-items: center;">
+                            <button class="btn btn-info btn-md mx-2" title="Edit" id="EditCategory" data-id="${v.id}" data-name="${v.categoryName}" data-description="${v.description}"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger btn-md mx-2" title="Delete" onclick="DeleteBlogCategory(${v.id})"><i class="fa fa-trash"></i></button>
+                          </div>
+                        </td>
                       </tr>`);
                 });
+
+                // Step 5: Reinitialize DataTable with sorting by the third column (index 2) in descending order
+                $("#TableBlogCategories").DataTable({
+                    "order": [[2, 'desc']] // 2 is the index of the 'createdOn' column (0-based index)
+                });
+
+
 
                 // Attach click event to edit buttons
                 $("#AppendCategories").on("click", "#EditCategory", function () {
