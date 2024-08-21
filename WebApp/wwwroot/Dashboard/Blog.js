@@ -17,7 +17,11 @@ $(document).ready(function () {
 })
 
 
+
 function GetAllBlogCategories() {
+
+
+
     postRequest('/Dashboard/GetAllAdminBlogCategories', null, function (res) {
 
         if (res.status == 200) {
@@ -186,20 +190,31 @@ function GetAllAdminBLogs() {
                 "data": "blogID",
                 "name": "blogID",
                 "autoWidth": true,
-                "render": function (data) {
+                "render": function (data, type, row) {
+                    // Example roleIds string (you should replace this with the actual value from your cookie)
+                    let roleIds = RoleIds; // For demonstration
+
+                    // Check if 'Blogger' exists in the roleIds string
+                    let isBlogger = roleIds.split(',').includes('Blogger');
+
+                    // Build the HTML string with conditional rendering
                     return `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${data}">
-                                <i class="fa fa-comment"></i>
-                            </a>
-                            <a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${data}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${data})">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>`;
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${data}">
+                <i class="fa fa-comment"></i>
+            </a>
+
+            ${isBlogger ? `
+            <a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${data}">
+                <i class="fa fa-edit"></i>
+            </a>` : ``}
+
+            <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${data})">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>`;
                 }
+
             }
         ]
     });

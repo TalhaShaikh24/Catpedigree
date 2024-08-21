@@ -19,6 +19,8 @@
 
 @{
     string userJson = JsonConvert.SerializeObject(@Accessor.HttpContext.Request.Cookies["user"]);
+    string roles = string.Empty;
+
     var userinfo = new Register();
 
     if (@Accessor.HttpContext.Request.Cookies["authorization"] != null && userJson != null)
@@ -41,6 +43,9 @@
 
         // Deserialize the inner JSON string to the Register object
         userinfo = JsonConvert.DeserializeObject<Register>(dataObjJson);
+
+        roles=userinfo.RoleIds;
+
 }
 }
 
@@ -184,7 +189,7 @@
                             @{
                             if (!string.IsNullOrWhiteSpace(@userinfo.ProfilePicPath))
                                 {
-                                    <img src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@userinfo.ProfilePicPath.Replace("~","")" class="img-circle elevation-2" alt="User Image">
+                                        <img src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@userinfo.ProfilePicPath.Replace("~","")" class="img-circle elevation-2" alt="User Image">
                                 }
                             }
                         
@@ -225,229 +230,234 @@
                         @{
                             if (userinfo.RoleIds.Contains("Admin"))
                             {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            My Listings
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Users","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
-                                        <i class="nav-icon fas fa-users"></i>
-                                        <p>
-                                            Users
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                My Listings
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Users","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>
+                                                Users
+                                            </p>
+                                        </a>
+                                    </li>
                                 
-                                <li class="nav-item">
-                                        <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallary"))">
-                                        <i class="nav-icon fas fa-users"></i>
-                                        <p>
-                                            Gallery
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                            <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallary"))">
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>
+                                                Gallery
+                                            </p>
+                                        </a>
+                                    </li>
 
 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
-                                        <i class="nav-icon fas fa-thumbs-up"></i>
-                                        <p>
-                                            Listing Approvals
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
+                                            <i class="nav-icon fas fa-thumbs-up"></i>
+                                            <p>
+                                                Listing Approvals
+                                            </p>
+                                        </a>
+                                    </li>
 
 
 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("advertisementApprovals","Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
-                                        <i class="nav-icon fas fa-thumbs-up"></i>
-                                        <p>
-                                            Advertise Approvals
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("advertisementApprovals","Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
+                                            <i class="nav-icon fas fa-thumbs-up"></i>
+                                            <p>
+                                                Advertise Approvals
+                                            </p>
+                                        </a>
+                                    </li>
 
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-book"></i>
-                                        <p>
-                                            Blogs
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview" style="display: none;">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Categories
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Add Blog
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Blogs
-                                                </p>
-                                            </a>
-                                        </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-book"></i>
+                                            <p>
+                                                Blogs
+                                                <i class="fas fa-angle-left right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview" style="display: none;">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Categories
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            @if (userinfo.RoleIds.Contains("Blogger"))
+                                        {
 
-                                    </ul>
-                                </li>
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>
+                                                            Add Blog
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                            
+                                        }
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Blogs
+                                                    </p>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
 
                                 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>
-                                            Promotion Packages
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                Promotion Packages
+                                            </p>
+                                        </a>
+                                    </li>
                                 
 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("AssignPricingPackage","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignPricingPackage"))">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>
-                                            Assign Pricing Packages
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("AssignPricingPackage","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignPricingPackage"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                Assign Pricing Packages
+                                            </p>
+                                        </a>
+                                    </li>
 
                              
 
 
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-edit"></i>
-                                        <p>
-                                            Media
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview" style="display: none;">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Media
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Pedigree
-                                                </p>
-                                            </a>
-                                        </li>    
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Breeder License
-                                                </p>
-                                            </a>
-                                        </li>   
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("VideoGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Videos
-                                                </p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-edit"></i>
+                                            <p>
+                                                Media
+                                                <i class="fas fa-angle-left right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview" style="display: none;">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Media
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Pedigree
+                                                    </p>
+                                                </a>
+                                            </li>    
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Breeder License
+                                                    </p>
+                                                </a>
+                                            </li>   
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("VideoGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Videos
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
 
 
 
 
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-edit"></i>
-                                        <p>
-                                            Coupons Codes
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                     Code Lists
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
-                                                <i class="nav-icon fas fa-list"></i>
-                                                <p>
-                                                    Generate Codes
-                                                </p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-edit"></i>
+                                            <p>
+                                                Coupons Codes
+                                                <i class="fas fa-angle-left right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                         Code Lists
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>
+                                                        Generate Codes
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
                             }  
                             
                             else if (userinfo.RoleIds.Contains("Vendor"))
                             {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            My Listings
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                My Listings
+                                            </p>
+                                        </a>
+                                    </li>
 
 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>
-                                            Promotion Packages
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                Promotion Packages
+                                            </p>
+                                        </a>
+                                    </li>
                             }
                             else if (userinfo.RoleIds.Contains("Business Advertiser"))
                             {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            My Advertisements
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                My Advertisements
+                                            </p>
+                                        </a>
+                                    </li>
 
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            Advertisement Packages
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                Advertisement Packages
+                                            </p>
+                                        </a>
+                                    </li>
                             }
                         }
 
@@ -567,6 +577,9 @@
 
     <script>
 
+
+        var RoleIds = '@roles';
+    
         var currencySymbols = {
             "USD": "$",
             "EUR": "€",
