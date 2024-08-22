@@ -193,30 +193,32 @@ function GetAllAdminBLogs() {
                 "render": function (data, type, row) {
                     // Example roleIds string (you should replace this with the actual value from your cookie)
                     let roleIds = RoleIds; // For demonstration
-
+                    debugger;
                     // Check if 'Blogger' exists in the roleIds string
-                    let isBlogger = roleIds.split(',').includes('Blogger');
+                    let isBlogger = roleIds.split(',').includes('Blogger') || roleIds.split(',').includes('Admin');
 
                     // Build the HTML string with conditional rendering
                     return `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${data}">
-                <i class="fa fa-comment"></i>
-            </a>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <a class="btn btn-success btn-md" title="Comments" href="/Dashboard/Comments?Id=${data}">
+                            <i class="fa fa-comment"></i>
+                            ${row.unreadComments > 0 ? `<span class="badge badge-danger navbar-badge">${row.unreadComments}</span>` : ''}
+                        </a>
 
-            ${isBlogger ? `
-            <a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${data}">
-                <i class="fa fa-edit"></i>
-            </a>` : ``}
+                        ${isBlogger ? `
+                        <a class="btn btn-info btn-md" title="Edit" href="/Dashboard/EditBlog?Id=${data}">
+                            <i class="fa fa-edit"></i>
+                        </a>` : ``}
 
-            <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${data})">
-                <i class="fa fa-trash"></i>
-            </button>
-        </div>`;
+                        <button type="button" class="btn btn-danger btn-md" title="Delete" onclick="BlogDeleteById(${data})">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>`;
                 }
 
             }
-        ]
+        ],
+        "order": [[2, 'desc']]
     });
 }
 

@@ -131,12 +131,13 @@ function GetAllMyListings() {
         if (res.status == 200) {
 
             if (res.data != null) {
+                $('#TableMyListings').DataTable().destroy();
 
                 $("#AppendMyListings").empty();
 
-                if ($.fn.DataTable.isDataTable('#TableMyListings')) {
-                    $('#TableMyListings').DataTable().destroy();
-                }
+                
+                    
+              
          
 
                 $.each(res.data, function (i, v) {
@@ -185,7 +186,7 @@ function GetAllMyListings() {
                                             <td>${v.catteryName}</td>
                                            <td>${v.isActive}</td>
                                            <td>${v.createdBy}</td>
-                                           <td>${v.createdOn}</td>
+                                           <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
                                            <td><button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info mr-2" data-id="${v.id}"><i class="fa fa-edit"></i></button>|<button id="btn_Listing_Delete" type="button" class="btn btn-xs btn-danger ml-2" data-id="${v.id}"><i class="fa fa-trash"></i></button></td>
                                         </tr>`);
 

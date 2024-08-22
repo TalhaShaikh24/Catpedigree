@@ -202,6 +202,7 @@ namespace WebApi.Repositories
             parameters.Add("@PageSize", blog.PageSize);
             parameters.Add("@BlogCategoryId", blog.BlogCategoryId == 0 ? null : blog.BlogCategoryId);
             parameters.Add("@Title", blog.Title == "" ? null : blog.Title);
+            parameters.Add("@Tag", blog.Tags == "" ? null : blog.Tags);
 
             var data = _dapper.GetAll<Blog>(@"[dbo].[sp_GetAllBlogsPagination]", parameters).ToList();
             int totalCount = data.Any() ? data.First().TotalCount : 0;

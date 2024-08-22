@@ -62,7 +62,7 @@ function GetAllGallery() {
                 });
 
                 // Append the first image to the link
-                $a.append($img1);
+                //$a.append($img1);
                 $a.append($img2);
 
                 // Append the link to the div

@@ -352,7 +352,10 @@ $('#updateBtn').click(function () {
 });
 
 
-
+function goBack() {
+    
+    window.location.href = `/Dashboard/Users?paginationIndex=${paginationIndex}`;
+}
 
 function postRequest(url, requestData, handledata) {
     $.ajax({

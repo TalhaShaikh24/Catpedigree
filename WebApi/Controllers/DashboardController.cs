@@ -2552,6 +2552,50 @@ namespace WebApi.Controllers
                 return response;
             }
         }
+       
+        [HttpPost("GetAllUnreadComments")]
+        public Response GetAllUnreadComments()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                var res = _repository.GetAllUnreadComments();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
 
         [HttpPost("DeleteCommentById/{Id}")]
         public Response DeleteCommentById(int Id)

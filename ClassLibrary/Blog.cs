@@ -51,7 +51,9 @@ namespace ClassLibrary
         [FirestoreProperty]
         public string? Content { get; set; }
         [FirestoreProperty]
-        public int? CommentsCount { get; set; } 
+        public int? CommentsCount { get; set; }  
+        [FirestoreProperty]
+        public int? UnreadComments { get; set; } 
         
         [FirestoreProperty]
         public int? BlogCategoryId { get; set; } 

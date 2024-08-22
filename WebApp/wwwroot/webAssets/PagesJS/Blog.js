@@ -4,20 +4,18 @@ const pageSize = 10;
 let varTotalCount = 0;
 let varCurrentCount = 0;
 
-//$(document).ready(function () {
-//    loadBlogs();
-//});
-
-// Initialize baseApiUrl and load the first page of blogs
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
-    
+    GetAllBlogCategories();
     loadBlogs();
 });
 
+// Initialize baseApiUrl and load the first page of blogs
+
+
 
 // Function to load blogs
-async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "") {
+async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "", tag = "") {
 
     let blogCategoryId = paramBlogCategoryId || null;
     let keywordFilter = paramKeywordFilter || null;
@@ -26,7 +24,8 @@ async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "") {
         PageNumber: pageNumber,
         PageSize: pageSize,
         BlogCategoryId: blogCategoryId,
-        Title: keywordFilter
+        Title: keywordFilter,
+        Tags: tag
     };
 
     const response = await fetch('/Blog/GetAllBlogsPagination', {
@@ -70,7 +69,7 @@ async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "") {
         });
 
         pageNumber++;
-       await GetAllBlogCategories();
+       //await GetAllBlogCategories();
         updateCountDisplay();
 
 
@@ -104,19 +103,36 @@ $("#formKeywordFilter").submit(function (event) {
     pageNumber = 1;
     $('#appendBlogs').empty(); // Clear previous blogs
 
-    loadBlogs("", $(this).find("#keywordFilter").val());
+    loadBlogs("", $(this).find("#keywordFilter").val(), "");
     
 });
 
 // Event listener for category filter
 
-$(document).on('click', '.categoryId', function (event) {
-    event.preventDefault();
+$(document).on('change', '#appendBlogCategories', function (event) {
+    
     pageNumber = 1;
     $('#appendBlogs').empty(); // Clear previous blogs
-    loadBlogs($(this).data('id'), $(this).find("#keywordFilter").val());
+    loadBlogs($(this).val(), $(this).find("#keywordFilter").val());
     
 })
+$('.tagcloud a').on('click', function (event) {
+    event.preventDefault(); // Prevent default link behavior
+    console.log($(this).text()); // Print the text of the clicked tag
+});
+$(document).on('click', '.tagcloud a', function (event) {
+    
+    pageNumber = 1;
+    $('#appendBlogs').empty(); // Clear previous blogs
+
+    event.preventDefault(); // Prevent default link behavior
+
+    loadBlogs("", $(this).find("#keywordFilter").val(), $(this).text());
+    
+})
+
+
+
 
 // Event listener for load more button
 $('#load-more').click(function () {
@@ -129,16 +145,25 @@ async function  GetAllBlogCategories() {
         if (res.status == 200) {
 
             if (res.data != null) {
+                // Empty the select element
                 $("#appendBlogCategories").empty();
+
+                // Add the placeholder option
+                $("#appendBlogCategories").append(`
+                    <option value="" disabled selected>Select a category</option>
+                `);
+
+                // Append each category option
                 $.each(res.data, function (i, v) {
-
                     $("#appendBlogCategories").append(`
-                      <li><a href="#" class="categoryId" data-id="${v.categoryId}">${v.categoryName} <span>(${v.blogsCount})</span></a></li>
+                        <option value="${v.categoryId}">${v.categoryName} <span>(${v.blogsCount})</span></option>
                     `);
-
                 });
 
+                // Update the niceSelect plugin
+                $("#appendBlogCategories").niceSelect('update');
             }
+
         }
         if (res.status == 304) {
 

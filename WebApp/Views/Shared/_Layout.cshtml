@@ -588,14 +588,14 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="widget about-widget mb-40 wow fadeInUp" data-wow-delay="10ms">
-                                <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
+                                <a href="@Url.Action("Index","Home")" class="brand-logo"><img style="width:75%" src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                                 <div>
                                     <h6 class="text-white mb-2 mt-4">CAT PEDIGREE WORLD</h6>
                                     <p>
                                         The place to be if you are looking for a pedigree cat. Here you can find your beautiful and unique breed with pedigree all over the world!
                                     </p>
                                 </div> 
-                                <div>
+                                <div class="d-none">
                                     <h6 class="text-white mb-2 mt-4">UPLOAD YOUR PEDIGREE</h6>
                                     <p>
                                         
@@ -604,7 +604,7 @@
                                 </div>
                                 <div>
                                     <h6 class="text-white mb-2 mt-4">SECURE PAYMENTS</h6>
-									<img src="~/webassets/images/credit-card-4.png" />
+                                    <img style="width: 280px; margin-top: 10px;" src="~/webassets/images/credit-card-4.png" />
                                 </div>
                             </div>
                         </div>
@@ -616,6 +616,9 @@
                                     <li><a href="@Url.Action("ViewListings","Listing")">Explore</a></li>
                                     <li><a href="@Url.Action("Index","Blog")">Blogs</a></li>
                                     <li><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
+                                    <li><a href="@Url.Action("PedigreeInfo","Home")">Pricing</a></li>
+                                    <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
+                                    <li><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -643,7 +646,7 @@
                                     Catpedigreeworld is made especially for all cat’s with a pedigree. Here you can always find information about your special cat breed and contact the owner if you are interested in the Cattery.
                                     
                                 </p>
-                                <p>  With a few clicks you can see the lines if it fits for your own breeding program. Every breeder is checked for his licences, to prevent scammers</p>
+                                <p class="d-none">  With a few clicks you can see the lines if it fits for your own breeding program. Every breeder is checked for his licences, to prevent scammers</p>
                             </div>
                             <div class="button text-left mt-40 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <a href="/Home/WhyCatPedigree" class="main-btn icon-btn">Know more</a>

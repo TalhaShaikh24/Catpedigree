@@ -110,6 +110,15 @@
             z-index: 9999;
         }
 
+        #CommentsCount {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity */
+        }
+
+            #CommentsCount.hidden {
+                opacity: 0; /* Hidden state with opacity set to 0 */
+            }
+
         .animation__shake {
             -webkit-animation: shake 1.5s;
             animation: shake 15.5s;
@@ -159,10 +168,15 @@
                     <a href="@Url.Action("Index","Home")" class="nav-link">Home</a>
                 </li>
             </ul>
-
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-               
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/Dashboard/Blogs">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge hidden" id="CommentsCount">0</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -170,6 +184,7 @@
                     </a>
                 </li>
             </ul>
+            
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
@@ -227,56 +242,87 @@
                                 </p>
                             </a>
                         </li>
+                        
                         @{
-                            if (userinfo.RoleIds.Contains("Admin"))
+                            var displayedMenus = new HashSet<string>();
+
+                            if (userinfo.RoleIds.Contains("Vendor"))
                             {
+                                if (displayedMenus.Add("MyListing"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
                                             <i class="nav-icon fas fa-list"></i>
-                                            <p>
-                                                My Listings
-                                            </p>
+                                            <p>My Listings</p>
                                         </a>
                                     </li>
+                                }
+
+                                if (displayedMenus.Add("PromotionPackages"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>Promotion Packages</p>
+                                        </a>
+                                    </li>
+                                }
+
+                            }
+                            if (userinfo.RoleIds.Contains("Admin"))
+                            {
+                                if (displayedMenus.Add("MyListing"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>My Listings</p>
+                                        </a>
+                                    </li>
+                                }
+
+                                if (displayedMenus.Add("Users"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("Users","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
                                             <i class="nav-icon fas fa-users"></i>
-                                            <p>
-                                                Users
-                                            </p>
+                                            <p>Users</p>
                                         </a>
                                     </li>
-                                
+                                }
+
+                                if (displayedMenus.Add("Gallery"))
+                                {
                                     <li class="nav-item">
-                                            <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallary"))">
+                                        <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallary"))">
                                             <i class="nav-icon fas fa-users"></i>
-                                            <p>
-                                                Gallery
-                                            </p>
+                                            <p>Gallery</p>
                                         </a>
                                     </li>
+                                }
 
-
+                                if (displayedMenus.Add("ListingApproval"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
                                             <i class="nav-icon fas fa-thumbs-up"></i>
-                                            <p>
-                                                Listing Approvals
-                                            </p>
+                                            <p>Listing Approvals</p>
                                         </a>
                                     </li>
+                                }
 
-
-
+                                if (displayedMenus.Add("AdvertiseApprovals"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("advertisementApprovals","Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
                                             <i class="nav-icon fas fa-thumbs-up"></i>
-                                            <p>
-                                                Advertise Approvals
-                                            </p>
+                                            <p>Advertise Approvals</p>
                                         </a>
                                     </li>
+                                }
 
+                                if (displayedMenus.Add("Blogs"))
+                                {
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
@@ -286,62 +332,59 @@
                                             </p>
                                         </a>
                                         <ul class="nav nav-treeview" style="display: none;">
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Categories
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            @if (userinfo.RoleIds.Contains("Blogger"))
-                                        {
-
+                                            @if (displayedMenus.Add("BlogCategories"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Categories</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("AddBlog"))
+                                            {
                                                 <li class="nav-item">
                                                     <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
                                                         <i class="nav-icon fas fa-list"></i>
-                                                        <p>
-                                                            Add Blog
-                                                        </p>
+                                                        <p>Add Blog</p>
                                                     </a>
                                                 </li>
-                                            
-                                        }
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Blogs
-                                                    </p>
-                                                </a>
-                                            </li>
-
+                                            }
+                                            @if (displayedMenus.Add("BlogsList"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Blogs</p>
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
+                                }
 
-                                
+                                if (displayedMenus.Add("PromotionPackages"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
                                             <i class="nav-icon fas fa-user"></i>
-                                            <p>
-                                                Promotion Packages
-                                            </p>
+                                            <p>Promotion Packages</p>
                                         </a>
                                     </li>
-                                
+                                }
 
+                                if (displayedMenus.Add("AssignPricingPackage"))
+                                {
                                     <li class="nav-item">
                                         <a href="@Url.Action("AssignPricingPackage","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignPricingPackage"))">
                                             <i class="nav-icon fas fa-user"></i>
-                                            <p>
-                                                Assign Pricing Packages
-                                            </p>
+                                            <p>Assign Pricing Packages</p>
                                         </a>
                                     </li>
+                                }
 
-                             
-
-
+                                if (displayedMenus.Add("Media"))
+                                {
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-edit"></i>
@@ -351,44 +394,48 @@
                                             </p>
                                         </a>
                                         <ul class="nav nav-treeview" style="display: none;">
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Media
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Pedigree
-                                                    </p>
-                                                </a>
-                                            </li>    
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Breeder License
-                                                    </p>
-                                                </a>
-                                            </li>   
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("VideoGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Videos
-                                                    </p>
-                                                </a>
-                                            </li>
+                                            @if (displayedMenus.Add("MediaList"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Media</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("PedigreeGallery"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Pedigree</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("BreederLicense"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Breeder License</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("VideoGallery"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("VideoGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Videos</p>
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
+                                }
 
-
-
-
+                                if (displayedMenus.Add("CouponsCodes"))
+                                {
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-edit"></i>
@@ -398,68 +445,100 @@
                                             </p>
                                         </a>
                                         <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                         Code Lists
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
-                                                    <i class="nav-icon fas fa-list"></i>
-                                                    <p>
-                                                        Generate Codes
-                                                    </p>
-                                                </a>
-                                            </li>
+                                            @if (displayedMenus.Add("CouponsList"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Code Lists</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("GenerateCodes"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Generate Codes</p>
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
-                            }  
-                            
-                            else if (userinfo.RoleIds.Contains("Vendor"))
-                            {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>
-                                                My Listings
-                                            </p>
-                                        </a>
-                                    </li>
-
-
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>
-                                                Promotion Packages
-                                            </p>
-                                        </a>
-                                    </li>
+                                }
                             }
-                            else if (userinfo.RoleIds.Contains("Business Advertiser"))
-                            {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>
-                                                My Advertisements
-                                            </p>
-                                        </a>
-                                    </li>
 
+                            if (userinfo.RoleIds.Contains("Blogger"))
+                            {
+                                if (displayedMenus.Add("Blogs"))
+                                {
                                     <li class="nav-item">
-                                        <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
-                                            <i class="nav-icon fas fa-list"></i>
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Advertisement Packages
+                                                Blogs
+                                                <i class="fas fa-angle-left right"></i>
                                             </p>
                                         </a>
+                                        <ul class="nav nav-treeview" style="display: none;">
+                                            @if (displayedMenus.Add("BlogCategories"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Categories</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("AddBlog"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Add Blog</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (displayedMenus.Add("BlogsList"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                        <p>Blogs</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
                                     </li>
+                                }
+                            }
+
+                            if (userinfo.RoleIds.Contains("Business Advertiser"))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            My Advertisements
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            Advertisement Packages
+                                        </p>
+                                    </a>
+                                </li>
+
+                               
                             }
                         }
+
+
+
 
 
                        
@@ -574,6 +653,97 @@
     <script src="~/Dashboard/HttpPostRequest.js"></script>
 
     
+    <script>
+        var $badge = $('#CommentsCount');
+        function blinkBadge() {
+            var $badge = $('#CommentsCount');
+            var blinkInterval = setInterval(function () {
+                $badge.toggleClass('hidden'); // Toggle the 'hidden' class
+            }, 500); // Toggle every 500ms (adjust as needed)
+        }
+
+
+        $(document).ready(function(){
+            GetAllUnreadComments();
+            
+        })
+
+        function GetAllUnreadComments() {
+            postRequest('/Dashboard/GetAllUnreadComments/',null, function (res) {
+
+                debugger;
+                if (res.status == 200) {
+
+                    if (res.data[0].unreadComments > 0) {
+
+                        $("#CommentsCount").text(res.data[0].unreadComments);
+                        blinkBadge();
+
+                    }
+                }
+                if (res.status == 304) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 305) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 401) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 403) {
+
+                    Swal.fire(res.responseMsg, {
+                        icon: "error",
+                        title: "Error"
+                    });
+                }
+                if (res.status == 320) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 500) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 600) {
+
+                    Swal.fire({
+                        title: "Warning",
+                        text: res.responseMsg,
+                        icon: "warning"
+                    })
+
+                }
+            });
+        }
+
+        
+    </script>
+
+
 
     <script>
 

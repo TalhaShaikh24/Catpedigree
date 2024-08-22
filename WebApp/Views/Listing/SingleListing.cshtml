@@ -465,29 +465,7 @@
                         <div class="listing-details-wrapper listing-details-wrapper-two">
 
 
-                            @* Listing Description *@
-                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Description))
-                            {
-                                <div class="rtcl-single-listing-details custom-fields-box">
-                                    <div class="rtcl-main-content-wrapper">
-                                        <div class="accordion accordion-flush" id="petslist-content-accordion">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="flush-headingOne">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                        Description
-                                                    </button>
-                                                </h2>
-                                                <!--  Inner Sidebar -->
-                                                <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
-                                                    <div class="rtcl-listing-description">
-                                                        <p>@Model.data.Listing.Description</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                           
                             
 
                             @* Listing Video *@
@@ -623,7 +601,29 @@
                             </div>
 
 
-
+                            @* Listing Description *@
+                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Description))
+                            {
+                                <div class="rtcl-single-listing-details custom-fields-box">
+                                    <div class="rtcl-main-content-wrapper">
+                                        <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        Description
+                                                    </button>
+                                                </h2>
+                                                <!--  Inner Sidebar -->
+                                                <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
+                                                    <div class="rtcl-listing-description">
+                                                        <p>@Model.data.Listing.Description</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
 
                             @* Other Details *@
                             <div class="rtcl-single-listing-details custom-fields-box">

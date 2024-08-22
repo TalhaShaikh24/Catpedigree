@@ -70,6 +70,7 @@ namespace WebApi.IRepositories
         int DeleteBlogCategory(int Id);
         Reply SendReply(Reply obj);
         List<Comment> GetAllCommentsByBlogId(int Id);
+        List<Blog> GetAllUnreadComments();
         int DeleteCommentById(int Id);
         List<Reply> GetAllReplyByCommentId(int Id);
         Reply UpdateReply(Reply obj);

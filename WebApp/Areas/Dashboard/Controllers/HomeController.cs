@@ -688,6 +688,14 @@ namespace WebApp.Areas.Dashboard.Controllers
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllBlogCategories", "", HttpContext);
         }
+        
+        [HttpPost]
+        [Route("Dashboard/GetAllUnreadComments")]
+        public Task<object> GetAllUnreadComments()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllUnreadComments", "", HttpContext);
+        }
 
         [HttpPost]
         [Route("Dashboard/AddBlogCategory")]

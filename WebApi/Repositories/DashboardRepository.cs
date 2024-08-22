@@ -621,6 +621,12 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<Comment>(@"[sp_GetAllCommentsByBlogId]", parameters);
             return data;
         }
+        public List<Blog> GetAllUnreadComments()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Blog>(@"[sp_GetAllUnreadComments]", parameters);
+            return data;
+        }
         public int DeleteCommentById(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
