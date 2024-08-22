@@ -140,7 +140,7 @@ $('#load-more').click(function () {
 });
 
 async function  GetAllBlogCategories() {
-    postRequest('/Blog/GetAllBlogCategories', null, function (res) {
+    postRequest('/Blog/GetAllBlogCategoriesAndLatestBlog', null, function (res) {
 
         if (res.status == 200) {
 
@@ -154,7 +154,7 @@ async function  GetAllBlogCategories() {
                 `);
 
                 // Append each category option
-                $.each(res.data, function (i, v) {
+                $.each(res.data.blogCategories, function (i, v) {
                     $("#appendBlogCategories").append(`
                         <option value="${v.categoryId}">${v.categoryName} <span>(${v.blogsCount})</span></option>
                     `);
@@ -162,6 +162,22 @@ async function  GetAllBlogCategories() {
 
                 // Update the niceSelect plugin
                 $("#appendBlogCategories").niceSelect('update');
+
+                $.each(res.data.latestblog, function (i, v) {
+               
+                    $("#ulrecenposts").append(`
+
+                             <li class="mt-2">
+                             <a href="/Blog/BlogDetails?Id=${v.blogID}" class="blog_links"> <i class="fa-solid fa-file mr-1"></i>   ${v.title}</a>
+                            </li>
+                    `);
+                });
+
+
+
+
+
+
             }
 
         }

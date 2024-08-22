@@ -95,4 +95,24 @@ namespace ClassLibrary
         public DateTime? ReplyDate { get; set; }
     }
 
+
+    public class LatestBlog
+    {
+
+        public int BlogID { get; set; }
+        public string Title { get; set; }
+    }
+
+
+    public class GetBlogCategoriesAndLatestBlogDTO
+    {
+
+        public List<BlogCategories>? blogCategories { get; set; }
+
+        public List<LatestBlog>? latestblog { get; set; }
+
+
+    } 
+
+
 }

@@ -57,6 +57,14 @@ namespace WebApp.Controllers
             string content = "";
 
             return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogCategories", content, HttpContext);
+        }    
+        
+        [HttpPost]
+        public Task<object> GetAllBlogCategoriesAndLatestBlog()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllBlogCategoriesAndLatestBlog", content, HttpContext);
         }
 
         [HttpPost]

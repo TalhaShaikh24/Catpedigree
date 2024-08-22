@@ -30,6 +30,22 @@ namespace WebApi.Repositories
 
 			return data;
 		}
+			public GetBlogCategoriesAndLatestBlogDTO GetAllBlogCategoriesAndLatestBlog()
+		{
+
+            GetBlogCategoriesAndLatestBlogDTO getBlogCategoriesAndLatestBlogDTO = new GetBlogCategoriesAndLatestBlogDTO();
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetMultipleObjects("[sp_GetAllBlogCategoriesAndLatestBlog]", parameters, gr => gr.Read<BlogCategories>(), gr => gr.Read<LatestBlog>());
+
+            getBlogCategoriesAndLatestBlogDTO.blogCategories = data.Item1.AsList();
+            getBlogCategoriesAndLatestBlogDTO.latestblog = data.Item2.AsList();
+
+            return getBlogCategoriesAndLatestBlogDTO;
+
+
+
+        }
 		
 		public async Task<BlogCategories> AddBlogCategory(BlogCategories obj)
         {
@@ -237,6 +253,7 @@ namespace WebApi.Repositories
             var data = _dapper.Insert<int>(@"[sp_DeleteBlogCategoryById]", parameters);
             return data;
         }
+
     }
 
   }

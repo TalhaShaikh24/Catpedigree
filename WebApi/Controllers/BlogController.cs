@@ -200,6 +200,51 @@ namespace WebApi.Controllers
         }
 
 
+
+
+        //Front Website
+        [HttpPost("GetAllBlogCategoriesAndLatestBlog")]
+        public Response GetAllBlogCategoriesAndLatestBlog()
+        {
+            Response response = new Response();
+
+
+            try
+            {
+
+                var res = _repository.GetAllBlogCategoriesAndLatestBlog();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+        }
+
+
+
+
+
         [HttpPost("GetAllBlogDetails/{Id}")]
         public Response GetAllBlogDetails(int Id)
         {

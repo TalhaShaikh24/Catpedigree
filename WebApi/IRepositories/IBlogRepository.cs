@@ -31,8 +31,9 @@ namespace WebApi.IRepositories
         
         int DeleteBlogCategory(int Id);
         Comment AddComment(Comment obj);
-        
-        
+        GetBlogCategoriesAndLatestBlogDTO GetAllBlogCategoriesAndLatestBlog();
+
+
 
 
     }
