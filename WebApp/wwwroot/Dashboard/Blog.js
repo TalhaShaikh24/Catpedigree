@@ -22,7 +22,7 @@ function GetAllBlogCategories() {
 
 
 
-    postRequest('/Dashboard/GetAllAdminBlogCategories', null, function (res) {
+    postRequest('/Dashboard/GetAllBlogCategories', null, function (res) {
 
         if (res.status == 200) {
 
@@ -37,7 +37,9 @@ function GetAllBlogCategories() {
                       `);
 
                 });
-
+                $('#blogCategory').select2({
+                    placeholder: "Select Category"
+                });
             }
         }
         if (res.status == 304) {

@@ -4,9 +4,121 @@ $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
 
 
-    GetAllListings();
+    GetAllDropdowns();
+    $('#Phone').intlTelInput({
+        initialCountry: 'br',
+        preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
+        autoPlaceholder: 'aggressive',
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
+    });
 });
 
+
+function GetAllDropdowns() {
+
+
+    postRequest('/Dashboard/GetAllDropdowns', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+
+                debugger
+
+                $("#PackageId").empty();
+                $("#Category").empty();
+                $("#TypeOfCat").empty();
+
+
+
+                $("#PromotionPackageId").empty();
+
+                $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+                $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
+                $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
+                $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+
+                $.each(res.data.item3, function (i, v) {
+                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+                });
+
+                $.each(res.data.item2, function (i, v) {
+                    $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
+                });
+
+                $.each(res.data.item1, function (i, v) {
+                    $("#Category").append(`<option value="${v.id}">${v.categoryName}</option>`);
+                });
+
+
+
+
+                GetAllListings()
+
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+
+}
 
 function GetAllListings() {
 
@@ -58,11 +170,12 @@ function GetAllListings() {
                                                    <td>${v.createdBy}</td>
                                                    <td>${moment(v.createdOn).format("DD - MMMM - YYYY") }</td>
                                                    <td style="display: flex; justify-content: space-evenly; align-items: center;">
-                                                    <button type="button" class="btn btn-success btn-xs p-2 mx-1" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                                    <button type="button" class="btn btn-info btn-xs p-2 mx-1" title="Reject" onclick="showReasonModal(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                                                    <button type="button" class="btn btn-warning btn-xs p-2 mx-1" title="Pending" onclick="UpdateListingStatus(${v.id}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
-                                                    <button type="button" class="btn btn-danger btn-xs p-2 mx-1" id="btn_Listing_Delete" title="Delete Listing" data-id="${v.id}"><i class="fa fa-trash"></i></button>
-                                                    </td>
+                                                       <button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info mr-2" data-id="${v.id}"><i class="fa fa-edit"></i></button>
+                                                       <button type="button" class="btn btn-success btn-xs p-2 mx-1" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                       <button type="button" class="btn btn-info btn-xs p-2 mx-1" title="Reject" onclick="showReasonModal(${v.id}, 'Reject');"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                                                       <button type="button" class="btn btn-warning btn-xs p-2 mx-1" title="Pending" onclick="UpdateListingStatus(${v.id}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
+                                                       <button type="button" class="btn btn-danger btn-xs p-2 mx-1" id="btn_Listing_Delete" title="Delete Listing" data-id="${v.id}"><i class="fa fa-trash"></i></button>
+                                                   </td>
 
                                                 </tr>`);
 
@@ -135,6 +248,270 @@ function GetAllListings() {
 
 
 }
+
+
+$(document).on("click", "#btn_Listing_Edit", function (e) {
+  
+
+    postRequest('/Dashboard/GetListingDetailById/' + Number(e.currentTarget.dataset.id), null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+
+                debugger
+
+                var promises = [];
+                filesToUpload = [];
+                FeaturedFileUpload = [];
+                VideoFileUpload = [];
+
+               
+
+                $("#HDID").val(res.data.id);
+                $("#PackageId").val(res.data.packageId);
+                $("#Category").val(res.data.categoryId).change();
+                $("#Title").val(res.data.title);
+                $("#Gender").val(res.data.gender);
+                $("#TypeOfCat").val(res.data.typeOfCat);
+                $("#Age").val(res.data.age);
+                $("#Description").val(res.data.description);
+                $("#Location").val(res.data.location);
+                $("#State").val(res.data.state);
+                $("#City").val(res.data.city);
+                $("#Phone").val(res.data.phone);
+                $("#Email").val(res.data.email);
+                $("#BreerderName").val(res.data.breerderName);
+                $('#check1').prop("Checked", !res.data.isBreerderLicenseUpload);
+                $('#check2').prop("Checked", !res.data.isBreerderLicenseUpload);
+                $("#ZoologicalNumber").prop("checked", res.data.zoologicalNumber);
+                if (res.data.isVaccinated) $('input[name="IsVaccinated"][value="1"]').prop('checked', true); else $('input[name="IsVaccinated"][value="0"]').prop('checked', true);
+                $("#Price").val(res.data.price);
+                $("#Weigth").val(res.data.weigth);
+                $("#Color").val(res.data.color);
+
+
+                //update code changes 
+                if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
+                if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
+
+                $("#CatteryName").val(res.data.catteryName);
+                debugger
+
+                if (res.data.pedigreeFilePath != null) {
+                    $.each(res.data.pedigreeFilePath.split(","), function (i, v) {
+
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+
+                        var promise = new Promise(function (resolve, reject) {
+
+                            $.ajax({
+                                url: Path,
+                                type: "GET",
+                                xhrFields: {
+                                    responseType: "blob"
+                                },
+                                success: function (blob) {
+                                    debugger
+
+                                    PedigreeFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+
+
+                                    resolve();
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.error("Error fetching image:", errorThrown);
+                                    reject(errorThrown);
+                                }
+                            });
+                        });
+                        promises.push(promise);
+                    });
+                }
+
+                if (res.data.featureImagePath != null) {
+                    $.each(res.data.featureImagePath.split(","), function (i, v) {
+
+                        debugger
+
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+
+                        var promise = new Promise(function (resolve, reject) {
+
+                            $.ajax({
+                                url: Path,
+                                type: "GET",
+                                xhrFields: {
+                                    responseType: "blob"
+                                },
+                                success: function (blob) {
+                                    debugger
+
+                                    FeaturedFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+
+
+                                    resolve();
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.error("Error fetching image:", errorThrown);
+                                    reject(errorThrown);
+                                }
+                            });
+                        });
+                        promises.push(promise);
+                    });
+                }
+
+
+                if (res.data.videoPath != null) {
+                    $.each(res.data.videoPath.split(","), function (i, v) {
+
+                        debugger
+
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+
+                        var promise = new Promise(function (resolve, reject) {
+
+                            $.ajax({
+                                url: Path,
+                                type: "GET",
+                                xhrFields: {
+                                    responseType: "blob"
+                                },
+                                success: function (blob) {
+                                    debugger
+
+                                    VideoFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+
+
+                                    resolve();
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.error("Error fetching image:", errorThrown);
+                                    reject(errorThrown);
+                                }
+                            });
+                        });
+                        promises.push(promise);
+                    });
+
+                }
+
+
+                if (res.data.gallaryImagesPath != null) {
+                    $.each(res.data.gallaryImagesPath.split(","), function (i, v) {
+
+                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+
+                        var promise = new Promise(function (resolve, reject) {
+
+                            $.ajax({
+                                url: Path,
+                                type: "GET",
+                                xhrFields: {
+                                    responseType: "blob"
+                                },
+                                success: function (blob) {
+                                    debugger
+
+                                    var myFileID = "FID" + (1000 + Math.floor(Math.random() * 9000));
+
+                                    var file = new File([blob], v.split("\\")[1], { type: blob.type });
+
+                                    debugger
+
+                                    filesToUpload.push({
+                                        file: file,
+                                        size: file.size,
+                                        FID: myFileID,
+                                        name: file.name
+                                    });
+                                    resolve();
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.error("Error fetching image:", errorThrown);
+                                    reject(errorThrown);
+                                }
+                            });
+                        });
+                        promises.push(promise);
+                    });
+
+                }
+                Promise.all(promises).then(function () {
+
+                    $("#FeaturedFile").change();
+                    $("#PedigreeFile").change();
+                    GalleryView();
+                }).catch(function (error) {
+                    console.error("One or more AJAX requests failed:", error);
+                });
+
+                $("#UpdateListingModal").modal("show");
+
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+
+})
 
 
 // Function to show modal and handle form submission

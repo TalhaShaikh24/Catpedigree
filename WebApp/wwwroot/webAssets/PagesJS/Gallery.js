@@ -29,56 +29,42 @@ function GetAllGallery() {
 
         if (res.status == 200) {
 
-            $(".grid").html("");
-
             $.each(res.data, function (index, imageData) {
-
-                const $div = $('<div></div>');
-
-                    // Example of applying classes dynamically based on the index
-                    if (index % 5 === 0) {
-                        $div.addClass('wide');
-                    } else if (index % 3 === 0) {
-                        $div.addClass('tall');
-                    } else if (index % 7 === 0) {
-                        $div.addClass('big');
-                    }
+                // Create the <a> tag with appropriate attributes
                 const $a = $('<a></a>')
                     .attr('href', imageData.filePath)
                     .attr('data-fancybox', 'gallery')
                     .attr('data-caption', imageData.fileName);
 
-                // Create the first image element
-                const $img1 = $('<img>', {
-                    class: 'img-watermark',
-                    src: 'https://localhost:7297/webassets/images/logo/logo-1.png',
-                    alt: 'f46a1_Cattery Monti Della Meta (14).png'
+                // Create the <img> tag
+                const $img = $('<img />')
+                    .attr('src', imageData.filePath)
+                    .attr('alt', imageData.fileName);
+
+                // Append the <img> tag to the <a> tag
+                $a.append($img);
+
+                // Create the grid item and append the <a> tag inside it
+                const $gridItem = $('<div class="grid-item"></div>').append($a);
+
+                // Append the grid item to the grid wrapper
+                $("#grid-wrapper").append($gridItem);
+            });
+
+            // Initialize Masonry layout after images are loaded
+            var $grid = $('.grid').imagesLoaded(function () {
+                $grid.masonry({
+                    itemSelector: '.grid-item',
+                    percentPosition: true,
+                    columnWidth: '.grid-sizer'
                 });
-
-                // Create the second image element (adjust attributes as needed)
-                const $img2 = $('<img>', {
-                    src: imageData.filePath,  // Assuming imageData.filePath is defined
-                    alt: imageData.fileName
-                });
-
-                // Append the first image to the link
-                //$a.append($img1);
-                $a.append($img2);
-
-                // Append the link to the div
-                $div.append($a);
-
-                // Append the div to the grid-wrapper
-                $('#grid-wrapper').append($div);
-
-                
-
             });
 
 
+            $('.grid-sizer, .grid-item ').css({
                 
-
-
+                "width": "32.333%"
+            });
     
         }
         if (res.status == 304) {

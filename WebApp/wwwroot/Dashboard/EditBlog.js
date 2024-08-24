@@ -42,6 +42,9 @@ function GetAllBlogCategories() {
                 });
 
             }
+            $('#AppendCategories').select2({
+                placeholder: "Select Category"
+            });
         }
         if (res.status == 304) {
 
