@@ -2873,7 +2873,158 @@ namespace WebApi.Controllers
             }
         }
 
-        
+        [HttpPost("GetPromotionPackagesWithDays")]
+        public Response GetPromotionPackagesWithDays()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+            
+
+                var res = _repository.GetPromotionPackagesWithDays();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+
+
+        [HttpPost("AssignPromotionPackageToUser")]
+        public Response AssignPromotionPackageToUser([FromBody]AssignPromotionPackage obj)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                obj.CreatedBy = claimDTO.UserId;
+
+                var res = _repository.AssignPromotionPackageToUser(obj);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+        [HttpPost("getAllUsersPromotionPackages")]
+        public Response getAllUsersPromotionPackages()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+            
+
+                var res = _repository.getAllUsersPromotionPackages();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                   
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+
+
+
+
         #endregion
 
     }

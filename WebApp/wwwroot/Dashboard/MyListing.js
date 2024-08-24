@@ -180,7 +180,7 @@ function GetAllMyListings() {
                                            <td>${v.zoologicalNumber}</td>
                                            <td>${v.gender}</td>
                                            <td>${v.age}</td>
-                                           <td>${v.categoryId}</td>
+                                           <td>${v.categoryName}</td>
                                            <td>${v.packageId}</td>
                                             <td>${v.promotionName}</td>
                                             <td>${v.catteryName}</td>

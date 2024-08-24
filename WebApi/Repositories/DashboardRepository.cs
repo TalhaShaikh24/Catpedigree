@@ -486,6 +486,67 @@ namespace WebApi.Repositories
 
 
 
+        public AssignPromotionPackageDTO GetPromotionPackagesWithDays()
+        {
+
+            AssignPromotionPackageDTO promotionPackageDTO = new AssignPromotionPackageDTO();
+
+
+            DynamicParameters parameters = new DynamicParameters();
+
+
+
+            var data = _dapper.GetMultipleObjects("[GetPromotionPackageAndUsers]", parameters, gr => gr.Read<AssignPromotionPackage>(), gr => gr.Read<Register>());
+
+
+            promotionPackageDTO.assignPromotionPackages = data.Item1.ToList();
+            
+            promotionPackageDTO.Users = data.Item2.ToList();
+
+
+
+            return promotionPackageDTO;
+        }
+
+
+
+
+        public PromotionPackages AssignPromotionPackageToUser(AssignPromotionPackage obj)
+        {
+
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@PPCID", obj.PPCID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserID", obj.userId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@SubscriptionDate", DateTime.Now, DbType.String, ParameterDirection.Input);
+            // Calculate expiry date by adding 365 days to the subscription date
+            DateTime? expiryDate = DateTime.Now.AddDays(365);
+            parameters.Add("@ExpiryDate", expiryDate, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsActive", true, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsExpired", false, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", null, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<PromotionPackages>(@"[sp_AssignPromotionPackageToUser]", parameters);
+
+            return data;
+
+
+        }
+
+
+        public List<GetAllUsersPromotionPackage> getAllUsersPromotionPackages()
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            var data =_dapper.GetAll<GetAllUsersPromotionPackage>(@"[GetAllUsersPromotionPackage]", parameters);
+
+            return data;
+
+
+        }
+
+
         #region
         public List<Blog> GetAllAdminBlogs()
         {

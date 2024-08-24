@@ -56,7 +56,12 @@ namespace WebApi.IRepositories
         
         public List<GetUserpackagesAssigned> GetUserpackagesAssigned();
 
-        
+        public AssignPromotionPackageDTO GetPromotionPackagesWithDays();
+
+
+        public PromotionPackages AssignPromotionPackageToUser(AssignPromotionPackage obj);
+
+        public List<GetAllUsersPromotionPackage> getAllUsersPromotionPackages();
 
         #region Blogs
         List<Blog> GetAllAdminBlogs();
