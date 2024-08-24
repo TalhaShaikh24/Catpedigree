@@ -32,7 +32,7 @@ function GetAllBlogCategories() {
 
             if (res.data != null) {
 
-                $("#AppendCategories").empty();
+              
                 $.each(res.data, function (i, v) {
 
                     $("#blogCategory").append(`
@@ -42,7 +42,7 @@ function GetAllBlogCategories() {
                 });
 
             }
-            $('#AppendCategories').select2({
+            $('#blogCategory').select2({
                 placeholder: "Select Category"
             });
         }

@@ -3,9 +3,7 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
-    $('#blogTags').select2({
-        tags: true
-    });
+    
 
     $('#summernote').summernote({
         height:650
@@ -28,7 +26,6 @@ function GetAllBlogCategories() {
 
             if (res.data != null) {
 
-                $("#AppendCategories").empty();
                 $.each(res.data, function (i, v) {
 
                     
@@ -39,6 +36,90 @@ function GetAllBlogCategories() {
                 });
                 $('#blogCategory').select2({
                     placeholder: "Select Category"
+                });
+                GetAllDistinctTags();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+function GetAllDistinctTags() {
+
+
+
+    postRequest('/Dashboard/GetAllDistinctTags', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+
+                $.each(res.data, function (i, v) {
+
+                    $("#blogTags").append(`
+                      <option>${v.tags}</option>
+                      `);
+
+                });
+
+                $('#blogTags').select2({
+                    tags: true,
+                    placeholder: "Enter Tags"
                 });
             }
         }

@@ -65,6 +65,7 @@ namespace WebApi.IRepositories
         Blog BlogEditById(int Id);
         int BlogDeleteById(int Id);
         List<BlogCategories> GetAllBlogCategories();
+        List<Blog> GetAllDistinctTags();
         Task<BlogCategories> AddBlogCategory(BlogCategories obj);
         Task<BlogCategories> UpdateBlogCategory(BlogCategories obj);
         int DeleteBlogCategory(int Id);

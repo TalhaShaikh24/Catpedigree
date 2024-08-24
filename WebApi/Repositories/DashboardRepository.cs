@@ -573,6 +573,13 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<BlogCategories>(@"[sp_GetAllBlogCategories]", parameters);
 
             return data;
+        }        
+        public List<Blog> GetAllDistinctTags()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Blog>(@"[sp_GetAllDistinctTags]", parameters);
+
+            return data;
         }
         public async Task<BlogCategories> AddBlogCategory(BlogCategories obj)
         {

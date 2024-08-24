@@ -688,6 +688,14 @@ namespace WebApp.Areas.Dashboard.Controllers
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllBlogCategories", "", HttpContext);
         }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllDistinctTags")]
+        public Task<object> GetAllDistinctTags()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllDistinctTags", "", HttpContext);
+        }
         
         [HttpPost]
         [Route("Dashboard/GetAllUnreadComments")]
