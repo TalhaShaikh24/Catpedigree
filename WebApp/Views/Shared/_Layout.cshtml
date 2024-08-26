@@ -418,12 +418,7 @@
                                 <li><a href="#"><i class="fab fa-youtube" style="color:#FF0000"></i></a></li>
                                 <li><a href="#"><i class="fab fa-tiktok" style="color:#000000"></i></a></li>
                             </ul>
-                        
-
                         </div>
-
-                    
-                   
                     </div>
                     <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="top-content text-center">
@@ -450,19 +445,19 @@
             <div class="container-fuild" style="margin: 0px 50px;">
                 <div class="primary-menu">
                     <div class="row align-items-center">
-                        <div class="col-lg-2 col-5">
+                        <div class="col-md-2">
                             <div class="site-branding">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-2">
+                        <div class="col-md-8">
                             <div class="nav-menu">
                                 <div class="navbar-close"><i class="ti-close"></i></div>
-                                <nav class="main-menu">
+                                <nav class="main-menu d-flex justify-content-center">
                                     <ul>
                                         <li class="menu-item"><a href="@Url.Action("Index","Home")">Home</a></li>
                                         <li class="menu-item">
-                                            <a href="">Breeders</a>
+                                            <a href="">Services</a>
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("PedigreeInfo","Home")">Pedigree Info</a></li>
                                                 <li><a href="@Url.Action("PedigreeService","Home")">Pedigree Service</a></li>
@@ -492,7 +487,7 @@
                                             </ul>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="">Cats & Kittens to Sale</a>
+                                            <a href="">Cats & Kittens</a>
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("Kittens","Home")">Kittens</a></li>
                                                 <li><a href="@Url.Action("Relocation","Home")">Relocation</a></li>
@@ -501,7 +496,7 @@
                                             </ul>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="">General Information</a>
+                                            <a href="">Info</a>
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
                                                 <li><a href="@Url.Action("CostOfPedigreeCat","Home")">Costs of a Pedigree Cat</a></li>
@@ -549,7 +544,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-5">
+                        <div class="col-md-2">
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
                                     @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))

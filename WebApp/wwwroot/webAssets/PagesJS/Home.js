@@ -44,14 +44,18 @@ function GetTopPageListings() {
                                 <div class="listing-thumbnail">
                                     ${item.videoPath && item.videoPath.trim() !== "" ?
                                         `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
-                                             <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:8px; background-image: url('${baseApiUrl + item.featureImagePath}');">
+                                             <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
                                                  <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                                 <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                                 ${item.price && item.price !== "" ?
+                                                    `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                                    ''}
                                              </div>
                                          </div>` :
                                         `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
                                              <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                             <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                             ${item.price && item.price !== "" ?
+                                                `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                                ''}
                                          </a>`
                                      }
                                 </div>
@@ -259,14 +263,18 @@ function GetHomePageListings() {
                         
                                  `
                                      <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
-                                         <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:8px; background-image: url('${ baseApiUrl + item.featureImagePath}');">
+                                         <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${ baseApiUrl + item.featureImagePath}');">
                                              <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                             <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                              ${item.price && item.price !== "" ?
+                                                `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                                ''}
                                          </div>
                                      </div>` :
                                      `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
                                          <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                         <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                         ${item.price && item.price !== "" ?
+                                            `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                            ''}
                                      </a>`
                                         }
                                 </div>
