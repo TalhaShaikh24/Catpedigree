@@ -12,6 +12,7 @@ namespace WebApi.IRepositories
         public Listing Assgin_PromotionPackage_to_List(Listing listing);
         List<Listing> GetAllMyListings(int Id);
         List<Listing> GetAllListings();
+        
         Listing GetListingDetailById(int Id);
 
         Task<Listing> UpdateListing(Listing obj);
@@ -85,7 +86,7 @@ namespace WebApi.IRepositories
         #endregion
 
 
-
+        object GetAllListingFiltersDashboard();
 
 
 

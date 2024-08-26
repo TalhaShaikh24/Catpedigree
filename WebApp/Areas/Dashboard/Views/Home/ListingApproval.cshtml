@@ -3,6 +3,51 @@
 
         <div class="card card-primary">
             <div class="card-header">
+                <h3 class="card-title"><b>Filters</b></h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row filter-container">
+                    <div class="col-md-3">
+                        <label for="filterStatus">Status:</label>
+                        <select id="filterStatus" class="form-control">
+                            <option value="">All</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="filterCatType">Breed:</label>
+                        <select id="filterCatType" class="form-control">
+                            <option value="">All</option>
+                            <!-- Add options dynamically based on data -->
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="filterCategoryName">Category:</label>
+                        <select id="filterCategoryName" class="form-control">
+                            <option value="">All</option>
+                            <!-- Add options dynamically based on data -->
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="filterPackageName">Package:</label>
+                        <select id="filterPackageName" class="form-control">
+                            <option value="">All</option>
+                            <!-- Add options dynamically based on data -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-primary">
+            <div class="card-header">
                 <h3 class="card-title"><b>Listings</b></h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -12,28 +57,18 @@
                 </div>
             </div>
             <div class="card-body">
+                
                 <table id="TableApprovalListing" class="table table-bordered table-responsive">
                     <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Status</th>
                             <th>Title</th>
-                            <th>Location</th>
-                            <th>State</th>
-                            <th>City</th>
-                            <th>IsBreerderLicenseUpload</th>
-                            <th>Phone</th>
                             <th>Email</th>
-                            <th>BreerderName</th>
-                            <th>TypeOfCat</th>
-                            <th>Gender</th>
-                            <th>Age</th>
-                            <th>ZoologicalNumber</th>
+                            <th>Breed</th>
                             <th>Category</th>
-                            <th>PackageId</th> 
-                            <th>Promotion  Package</th>
+                            <th>Package</th> 
+                            <th>Promotion</th>
                             <th>IsActive</th>
-                            <th>CreatedBy</th>
                             <th>CreatedOn</th>
                             <th>Action</th>
                         </tr>

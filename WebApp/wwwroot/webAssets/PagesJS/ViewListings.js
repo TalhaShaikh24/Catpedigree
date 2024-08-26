@@ -54,21 +54,21 @@ async function loadMore() {
                                 <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
                                 <div class="listing-thumbnail">
                                     ${item.videoPath && item.videoPath.trim() !== "" ?
-                    `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
+                                        `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
                                              <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
                                                  <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
                                                  ${item.price && item.price !== "" ?
-                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                        ''}
+                                                    `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                                    ''}
                                              </div>
                                          </div>` :
-                    `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
-                                             <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                             ${item.price && item.price !== "" ?
-                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                        ''}
+                                        `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
+                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                         ${item.price && item.price !== "" ?
+                                            `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                                            ''}
                                          </a>`
-                }
+                                    }
                                 </div>
                                 <div class="listing-content">
                                     <div class="title d-flex justify-content-between align-items-center mb-10">

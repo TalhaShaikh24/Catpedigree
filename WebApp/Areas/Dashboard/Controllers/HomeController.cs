@@ -834,5 +834,14 @@ namespace WebApp.Areas.Dashboard.Controllers
         #endregion
 
 
+
+        [HttpPost]
+        [Route("Dashboard/GetAllListingFiltersDashboard")]
+        public Task<object> GetAllListingFiltersDashboard()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllListingFiltersDashboard", "", HttpContext);
+
+        }
     }
 }

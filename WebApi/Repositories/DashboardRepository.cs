@@ -51,6 +51,7 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllMyListing]", parameters);
             return data;
         }
+        
         public Listing GetListingDetailById(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -163,9 +164,6 @@ namespace WebApi.Repositories
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);
             return data;
         }
-
-
-
 
         public async Task<Register> UpdateProfile(Register formData)
         {
@@ -738,6 +736,15 @@ namespace WebApi.Repositories
             return data;
         }
         #endregion
+
+
+        public object GetAllListingFiltersDashboard()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetMultipleObjects(@"[dbo].[sp_GetAllListingFiltersDashboard]", parameters,gr=>gr.Read<Category>(), gr => gr.Read<CatTypes>(), gr => gr.Read<Package>());
+          
+            return data;
+        }
     }
 
 

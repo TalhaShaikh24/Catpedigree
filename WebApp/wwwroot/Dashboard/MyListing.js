@@ -7,7 +7,16 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
-    GetAllDropdowns();
+    // Define and call the async function
+    (async function () {
+        try {
+            await GetAllDropdowns();
+            await GetAllListingFiltersDashboard();
+            await GetAllMyListings();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
     $('#Phone').intlTelInput({
         initialCountry: 'br',
         preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
@@ -57,10 +66,79 @@ function GetAllDropdowns() {
 
 
 
-
-                GetAllMyListings()
-
             }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+
+
+}
+
+function GetAllListingFiltersDashboard() {
+    
+
+    postRequest('/Dashboard/GetAllListingFiltersDashboard', null, function (res) {
+
+        if (res.status == 200 && res.data != null) {
+            // Populate filter dropdowns using the separate API response
+            populateFilterOptions('#filterCategoryName', res.data.item1, 'categoryName');
+            populateFilterOptions('#filterCatType', res.data.item2, 'catType');
+            populateFilterOptions('#filterPackageName', res.data.item3, 'name');
         }
         if (res.status == 304) {
 
@@ -131,71 +209,77 @@ function GetAllMyListings() {
         if (res.status == 200) {
 
             if (res.data != null) {
-                $('#TableMyListings').DataTable().destroy();
+
+                // Check if the DataTable exists and destroy it if it does
+                if ($.fn.DataTable.isDataTable('#TableMyListings')) {
+                    $('#TableMyListings').DataTable().destroy();
+                }
 
                 $("#AppendMyListings").empty();
 
-                
-                    
               
          
 
                 $.each(res.data, function (i, v) {
-
                     var statusIcon = "";
                     if (v.status == "Approve") {
                         statusIcon = '<span class="badge badge-info">Approved</span>';
-                    }
-
-                    else if (v.status == "Reject") {
-                        statusIcon = '<span class="badge badge-danger">Rejected</span>'
-                    }
-
-                    else {
-
-                        statusIcon = '<span class="badge badge-warning">Pending</span>'
+                    } else if (v.status == "Reject") {
+                        statusIcon = '<span class="badge badge-danger">Rejected</span>';
+                    } else {
+                        statusIcon = '<span class="badge badge-warning">Pending</span>';
                     }
 
 
-
-                    debugger;
                     $("#AppendMyListings").append(`
-                                        <tr>
-                                           <td>${v.id}</td>
-                                           <td>${statusIcon}</td>
-
-                                           <td>${v.title}</td>
-                                           <td>${v.location}</td>
-                                           <td>${v.state}</td>
-                                           <td>${v.city}</td>
-                                           <td>${v.isBreerderLicenseUpload}</td>
-                                           <td>${v.phone}</td>
-                                           <td>${v.email}</td>
-                                           <td>${v.breerderName}</td>
-                                           <td>${v.typeOfCat}</td>
-                                           <td>${v.weigth}</td>
-                                           <td>${v.color}</td>
-                                           <td>${v.price}</td>
-                                           <td>${v.isVaccinated}</td>
-                                           <td>${v.zoologicalNumber}</td>
-                                           <td>${v.gender}</td>
-                                           <td>${v.age}</td>
-                                           <td>${v.categoryName}</td>
-                                           <td>${v.packageId}</td>
-                                            <td>${v.promotionName}</td>
-                                            <td>${v.catteryName}</td>
-                                           <td>${v.isActive}</td>
-                                           <td>${v.createdBy}</td>
-                                           <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                                           <td><button id="btn_Listing_Edit" type="button" class="btn btn-xs btn-info mr-2" data-id="${v.id}"><i class="fa fa-edit"></i></button>|<button id="btn_Listing_Delete" type="button" class="btn btn-xs btn-danger ml-2" data-id="${v.id}"><i class="fa fa-trash"></i></button></td>
-                                        </tr>`);
-
+                    <tr>
+                        <td>${statusIcon}</td>
+                        <td>${v.title}</td>
+                        <td>${v.email}</td>
+                        <td>${v.catType}</td>
+                        <td>${v.categoryName}</td>
+                        <td>${v.packageName}</td>
+                        <td>${v.promotionName}</td>
+                        <td>${v.isActive}</td>
+                        <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
+                        <td style="display: flex; justify-content: space-evenly; align-items: center;">
+                            <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button> 
+                            <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>`);
                 });
 
-              
-                $('#TableMyListings').DataTable({
+
+                var table = $('#TableMyListings').DataTable({
                     "order": [[0, "desc"]]
                 });
+
+                // Apply custom filtering for dropdowns
+                $('#filterStatus, #filterCatType, #filterCategoryName, #filterPackageName').on('change', function () {
+                    table.draw();
+                });
+
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var status = $('#filterStatus').val();
+                        var catType = $('#filterCatType').val();
+                        var categoryName = $('#filterCategoryName').val();
+                        var packageName = $('#filterPackageName').val();
+
+                        var rowStatus = $(table.row(dataIndex).node()).find('td:eq(0) span').text().trim();
+                        var rowCatType = data[3] || '';
+                        var rowCategoryName = data[4] || '';
+                        var rowPackageName = data[5] || '';
+
+                        if ((status === '' || rowStatus === status) &&
+                            (catType === '' || rowCatType === catType) &&
+                            (categoryName === '' || rowCategoryName === categoryName) &&
+                            (packageName === '' || rowPackageName === packageName)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
 
             }
         }
@@ -260,8 +344,13 @@ function GetAllMyListings() {
 
 }
 
-
-
+// Function to populate filter options dynamically
+function populateFilterOptions(selector, options, key) {
+    $(selector).empty().append('<option value="">All</option>'); // Reset options
+    $.each(options, function (index, option) {
+        $(selector).append(`<option value="${option[key]}">${option[key]}</option>`);
+    });
+}
 $(document).on("click", "#btn_Listing_Delete", function (e) {
 
     postRequest('/Dashboard/DeleteListingById?Id=' + Number(e.currentTarget.dataset.id), null, function (res) {

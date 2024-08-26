@@ -37,6 +37,7 @@ namespace ClassLibrary
         public string? Age { get; set; }
         public int CategoryId { get; set; }
         public int PackageId { get; set; }
+        public string? PackageName { get; set; }
         public bool? IsActive { get; set; }
         public new int CreatedBy { get; set; }
         public new DateTime? CreatedOn { get; set; }
