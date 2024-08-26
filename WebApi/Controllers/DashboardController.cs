@@ -2972,6 +2972,9 @@ namespace WebApi.Controllers
 
 
         }
+       
+        
+        
         [HttpPost("getAllUsersPromotionPackages")]
         public Response getAllUsersPromotionPackages()
         {
@@ -2996,6 +2999,160 @@ namespace WebApi.Controllers
 
                     response = CustomStatusResponse.GetResponse(200);
                    
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+
+
+
+        [HttpPost("GetAdvertisementPackagesAndUsers")]
+        public Response GetAdvertisementPackagesAndUsers()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+
+                var res = _repository.GetAdvertisementPackagesAndUsers();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+
+
+
+        [HttpPost("AssignAdvertisementPackage")]
+        public Response AssignAdvertisementPackage([FromBody] UserAdvertisementPackage obj)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                obj.CreatedBy = claimDTO.UserId;
+
+                var res = _repository.AssignAdvertisementPackage(obj);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+
+
+
+        }
+
+
+        [HttpPost("GetAssignedUserAdvertisements")]
+        public Response GetAssignedUserAdvertisements()
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+                var res = _repository.GetAssignedUserAdvertisements();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = res;
                     return response;

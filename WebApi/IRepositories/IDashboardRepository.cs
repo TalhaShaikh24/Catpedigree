@@ -63,6 +63,15 @@ namespace WebApi.IRepositories
 
         public List<GetAllUsersPromotionPackage> getAllUsersPromotionPackages();
 
+        public AssignAdvertisementPackagesDTO GetAdvertisementPackagesAndUsers();
+
+
+        public UserAdvertisementPackage AssignAdvertisementPackage(UserAdvertisementPackage obj);
+
+
+        public List<AssignedUserAdvertisementsList> GetAssignedUserAdvertisements();
+
+
         #region Blogs
         List<Blog> GetAllAdminBlogs();
         Task<Blog> AddBlog(Blog obj);

@@ -399,6 +399,15 @@
                                         </a>
                                     </li>
                                 }
+                                    if (displayedMenus.Add("AssignAdvertisement"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("AssignAdvertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignAdvertisement"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>Assign Advertisement Packages</p>
+                                        </a>
+                                    </li>
+                                }
 
                                 if (displayedMenus.Add("Media"))
                                 {
