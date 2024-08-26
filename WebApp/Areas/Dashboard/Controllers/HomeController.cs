@@ -194,6 +194,12 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
 
+        [HttpGet("Dashboard/AssignUserPromotionPackagesToUser")]
+        public IActionResult AssignUserPromotionPackagesToUser()
+        {
+            return View();
+
+        }
 
 
 
@@ -626,6 +632,44 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetUserpackagesAssigned", "", HttpContext);
+
+
+
+        }
+
+
+        
+        [HttpPost("Dashboard/GetPromotionPackagesWithDaysRes")]
+        public Task<object> GetPromotionPackagesWithDaysRes()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetPromotionPackagesWithDays", "", HttpContext);
+
+
+
+        }  
+        
+        
+        [HttpPost("Dashboard/AssignPromotionPackageToUser")]
+        public Task<object> AssignPromotionPackageToUser([FromBody] AssignPromotionPackage obj)
+        {
+
+
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AssignPromotionPackageToUser", content, HttpContext);
+
+
+
+        }
+
+
+
+        [HttpPost("Dashboard/getAllUsersPromotionPackages")]
+        public Task<object> getAllUsersPromotionPackages()
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/getAllUsersPromotionPackages", "", HttpContext);
 
 
 
