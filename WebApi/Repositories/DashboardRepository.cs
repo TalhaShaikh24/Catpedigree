@@ -545,6 +545,51 @@ namespace WebApi.Repositories
         }
 
 
+        public AssignAdvertisementPackagesDTO GetAdvertisementPackagesAndUsers()
+        {
+
+            AssignAdvertisementPackagesDTO advertisementPackagesDTO = new AssignAdvertisementPackagesDTO();
+
+
+            DynamicParameters parameters = new DynamicParameters();
+
+
+
+            var data = _dapper.GetMultipleObjects("[sp_Get_AdvertisementPackagesAndUsers]", parameters, gr => gr.Read<AssignAdvertisementPackages>(), gr => gr.Read<Register>());
+
+
+            advertisementPackagesDTO.assignAdvertisementPackages = data.Item1.ToList();
+
+            advertisementPackagesDTO.Users = data.Item2.ToList();
+
+
+
+            return advertisementPackagesDTO;
+        }
+
+
+        public UserAdvertisementPackage AssignAdvertisementPackage(UserAdvertisementPackage obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserID", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@AdvertisementPackageID", obj.AdvertisementPackageID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", obj.CreatedBy, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", obj.stripeSubscriptionId, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Get<UserAdvertisementPackage>(@"[dbo].[sp_AssignAdvertisementPackage]", parameters);
+            return data;
+        }
+
+
+        public List<AssignedUserAdvertisementsList> GetAssignedUserAdvertisements()
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<AssignedUserAdvertisementsList>(@"[sp_GetallAssignedUserAdvertisements]", parameters);
+
+            return data;
+
+        }
+
         #region
         public List<Blog> GetAllAdminBlogs()
         {

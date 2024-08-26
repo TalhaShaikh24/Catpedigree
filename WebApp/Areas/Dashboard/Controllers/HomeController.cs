@@ -201,6 +201,13 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+        [HttpGet("Dashboard/AssignAdvertisement")]
+        public IActionResult AssignAdvertisement()
+        {
+            return View();
+
+        }
+
 
 
 
@@ -674,6 +681,45 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
         }
+
+
+        [HttpPost("Dashboard/GetAdvertisementPackagesAndUsers")]
+        public Task<object> GetAdvertisementPackagesAndUsers()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAdvertisementPackagesAndUsers", "", HttpContext);
+
+
+
+        }
+
+
+        [HttpPost("Dashboard/AssignAdvertisementPackage")]
+        public Task<object> AssignAdvertisementPackage([FromBody] UserAdvertisementPackage obj)
+        {
+
+
+            var content = JsonConvert.SerializeObject(obj);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AssignAdvertisementPackage", content, HttpContext);
+
+
+
+        }
+
+
+        [HttpPost("Dashboard/GetAssignedUserAdvertisements")]
+        public Task<object> GetAssignedUserAdvertisements()
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAssignedUserAdvertisements", "", HttpContext);
+
+
+
+        }
+
+
+
 
 
 
