@@ -1,8 +1,8 @@
-﻿var filesToUpload = [];
-var FeaturedFileUpload = [];
-var VideoFileUpload = [];
-var PedigreeFileUpload = [];
+﻿var GalleryFilesUpload = [];
+var FeaturedFileUpload = null;
+var PedigreeFileUpload = null;
 let baseApiUrl = "";
+
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 
 function GetAllDropdowns() {
-    
+
 
     postRequest('/Dashboard/GetAllDropdowns', null, function (res) {
 
@@ -37,7 +37,7 @@ function GetAllDropdowns() {
             if (res.data != null) {
 
 
-                debugger
+
 
                 $("#PackageId").empty();
                 $("#Category").empty();
@@ -130,7 +130,7 @@ function GetAllDropdowns() {
 }
 
 function GetAllListingFiltersDashboard() {
-    
+
 
     postRequest('/Dashboard/GetAllListingFiltersDashboard', null, function (res) {
 
@@ -217,8 +217,8 @@ function GetAllMyListings() {
 
                 $("#AppendMyListings").empty();
 
-              
-         
+
+
 
                 $.each(res.data, function (i, v) {
                     var statusIcon = "";
@@ -362,8 +362,8 @@ $(document).on("click", "#btn_Listing_Delete", function (e) {
                 text: res.responseMsg,
                 icon: "success"
             })
-                GetAllMyListings();
-              
+            GetAllMyListings();
+
         }
         if (res.status == 304) {
 
@@ -425,30 +425,32 @@ $(document).on("click", "#btn_Listing_Delete", function (e) {
 
 
 })
+
+
 $(document).on("click", "#btn_Listing_Edit", function (e) {
+
     $("#status_reason").text('')
+
+    GalleryFilesUpload = [];
+    FeaturedFileUpload = null;
+    PedigreeFileUpload = null;
+
     const statusReasonElement = document.querySelector('#status_reason');
 
     // Remove any existing <p> element after .status_reason
     const existingParagraph = statusReasonElement.nextElementSibling;
+
     if (existingParagraph && existingParagraph.tagName === 'P') {
+
         existingParagraph.remove();
     }
 
+    postRequest('/Dashboard/GetListingDetailById/' + Number(e.currentTarget.dataset.id), null, function (res) {
 
-  postRequest('/Dashboard/GetListingDetailById/'+ Number(e.currentTarget.dataset.id), null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
-
-
-                debugger
-
-                var promises = [];
-                filesToUpload = [];
-                FeaturedFileUpload = [];
-                VideoFileUpload = [];
 
                 if (res.data.status == "Approve") {
                     $("#status_reason")
@@ -478,7 +480,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
                 $("#HDID").val(res.data.id);
                 $("#PackageId").val(res.data.packageId);
-                $("#Category").val(res.data.categoryId).change();
                 $("#Title").val(res.data.title);
                 $("#Gender").val(res.data.gender);
                 $("#TypeOfCat").val(res.data.typeOfCat);
@@ -504,15 +505,18 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
 
                 $("#CatteryName").val(res.data.catteryName);
-                debugger
 
-                if (res.data.pedigreeFilePath != null) {
-                    $.each(res.data.pedigreeFilePath.split(","), function (i, v) {
+                $('#GalleryFilesAppend').empty();
+                $("#PedigreeImageViewAppend").empty();
+                $('#FeaturedImageAppend').empty();
 
-                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+                if (res.data.pedigreeFilePath) {
 
-                        var promise = new Promise(function (resolve, reject) {
+                    const filePaths = res.data.pedigreeFilePath.split(",");
+                    const promises = filePaths.map((filePath) => {
+                        const Path = baseApiUrl + filePath.replace(/\\/g, "/");
 
+                        return new Promise((resolve, reject) => {
                             $.ajax({
                                 url: Path,
                                 type: "GET",
@@ -520,12 +524,11 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                     responseType: "blob"
                                 },
                                 success: function (blob) {
-                                    debugger
+                                    const fileName = filePath.split("\\").pop(); // Get the file name
 
-                                    PedigreeFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+                                    PedigreeFileUpload = new File([blob], fileName, { type: blob.type });
 
-
-                                    resolve();
+                                    resolve(PedigreeFileUpload);
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
                                     console.error("Error fetching image:", errorThrown);
@@ -533,20 +536,32 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                 }
                             });
                         });
-                        promises.push(promise);
                     });
+
+                    Promise.all(promises)
+                        .then((files) => {
+
+                            $("#Category").val(res.data.categoryId).change();
+                            $("#PedigreeFile").val(null).change();
+                        })
+                        .catch((error) => {
+                            console.log("One or more AJAX requests failed:", error);
+                        });
+                }
+                else {
+
+                    $("#Category").val(res.data.categoryId).change();
                 }
 
-                if (res.data.featureImagePath != null)
-                {
-                    $.each(res.data.featureImagePath.split(","), function (i, v) {
 
-                        debugger
 
-                        var Path = baseApiUrl + v.replace(/\\/g, "/");
+                if (res.data.featureImagePath) {
 
-                        var promise = new Promise(function (resolve, reject) {
+                    const filePaths = res.data.featureImagePath.split(",");
+                    const promises = filePaths.map((filePath) => {
+                        const Path = baseApiUrl + filePath.replace(/\\/g, "/");
 
+                        return new Promise((resolve, reject) => {
                             $.ajax({
                                 url: Path,
                                 type: "GET",
@@ -554,12 +569,12 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                     responseType: "blob"
                                 },
                                 success: function (blob) {
-                                    debugger
 
-                                    FeaturedFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
+                                    const fileName = filePath.split("\\").pop(); // Get the file name
 
+                                    FeaturedFileUpload = new File([blob], fileName, { type: blob.type });
 
-                                    resolve();
+                                    resolve(FeaturedFileUpload);
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
                                     console.error("Error fetching image:", errorThrown);
@@ -567,55 +582,29 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                 }
                             });
                         });
-                        promises.push(promise);
                     });
-                }
 
-
-                if (res.data.videoPath != null)
-                {
-                    $.each(res.data.videoPath.split(","), function (i, v) {
-
-                        debugger
-
-                        var Path = baseApiUrl + v.replace(/\\/g, "/");
-
-                        var promise = new Promise(function (resolve, reject) {
-
-                            $.ajax({
-                                url: Path,
-                                type: "GET",
-                                xhrFields: {
-                                    responseType: "blob"
-                                },
-                                success: function (blob) {
-                                    debugger
-
-                                    VideoFileUpload = new File([blob], v.split("\\")[1], { type: blob.type });
-
-
-                                    resolve();
-                                },
-                                error: function (xhr, textStatus, errorThrown) {
-                                    console.error("Error fetching image:", errorThrown);
-                                    reject(errorThrown);
-                                }
-                            });
+                    Promise.all(promises)
+                        .then((files) => {
+                            $("#FeaturedFile").val(null).change();
+                        })
+                        .catch((error) => {
+                            console.log("One or more AJAX requests failed:", error);
                         });
-                        promises.push(promise);
-                    });
-
                 }
 
 
-                if (res.data.gallaryImagesPath != null)
-                {
-                    $.each(res.data.gallaryImagesPath.split(","), function (i, v) {
+                if (res.data.gallaryImagesPath) {
 
-                        var Path = baseApiUrl + v.replace(/\\/g, "/");
 
-                        var promise = new Promise(function (resolve, reject) {
 
+                    const galleryPaths = res.data.gallaryImagesPath.split(",");
+
+                    const galleryPromises = galleryPaths.map((galleryPath) => {
+
+                        const Path = baseApiUrl + galleryPath.replace(/\\/g, "/");
+
+                        return new Promise((resolve, reject) => {
                             $.ajax({
                                 url: Path,
                                 type: "GET",
@@ -623,21 +612,19 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                     responseType: "blob"
                                 },
                                 success: function (blob) {
-                                    debugger
+                                    const myFileID = "FID" + (1000 + Math.floor(Math.random() * 9000));
+                                    const fileName = galleryPath.split("\\").pop(); // Get the file name
+                                    const file = new File([blob], fileName, { type: blob.type });
 
-                                    var myFileID = "FID" + (1000 + Math.floor(Math.random() * 9000));
-
-                                    var file = new File([blob], v.split("\\")[1], { type: blob.type });
-
-                                    debugger
-
-                                    filesToUpload.push({
+                                    // Push the file and related info into the global array
+                                    GalleryFilesUpload.push({
                                         file: file,
                                         size: file.size,
                                         FID: myFileID,
                                         name: file.name
                                     });
-                                    resolve();
+
+                                    resolve(file);
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
                                     console.error("Error fetching image:", errorThrown);
@@ -645,22 +632,29 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                                 }
                             });
                         });
-                        promises.push(promise);
                     });
 
+                    Promise.all(galleryPromises)
+                        .then((files) => {
+
+
+
+                            $("#Gallery_Files").val(null).change();
+
+
+                        })
+                        .catch((error) => {
+                            console.error("One or more AJAX requests failed:", error);
+                        });
                 }
-                Promise.all(promises).then(function () {
 
-                    $("#FeaturedFile").change();
-                    $("#PedigreeFile").change();
-                    GalleryView();
-                }).catch(function (error) {
-                    console.error("One or more AJAX requests failed:", error);
-                });
 
-                $("#UpdateListingModal").modal("show");
+
+
 
             }
+
+            $("#UpdateListingModal").modal("show");
         }
         if (res.status == 304) {
 
@@ -719,7 +713,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
         }
     });
-    
+
 
 })
 
@@ -727,7 +721,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 $("#FeaturedFile").on('change', function (e) {
 
     if (e.target.files[0] != undefined) {
-        FeaturedFileUpload = [];
         FeaturedFileUpload = e.target.files[0];
     }
 
@@ -748,14 +741,6 @@ $("#FeaturedFile").on('change', function (e) {
 });
 
 
-$("#VideoFile").on('change', function (e) {
-
-    if (e.target.files[0] != undefined) {
-        VideoFileUpload = [];
-        VideoFileUpload = e.target.files[0];
-    }
-});
-
 $(document).on('click', '.Featured-remove-button', function () {
     $("#FeaturedImageAppend").children().remove();
     $("#FeaturedFile").val(null);
@@ -763,12 +748,14 @@ $(document).on('click', '.Featured-remove-button', function () {
 
 
 $("#Gallery_Files").on('change', function (e) {
+
     for (let i = 0; i < e.target.files.length; i++) {
+
         let myFile = e.target.files[i];
         let myFileID = "FID" + (1000 + Math.random() * 9000).toFixed(0);
-        if (filesToUpload.length < 6) {
+        if (GalleryFilesUpload.length < 6) {
 
-            filesToUpload.push({
+            GalleryFilesUpload.push({
                 file: myFile,
                 size: myFile.size,
                 FID: myFileID,
@@ -782,17 +769,19 @@ $("#Gallery_Files").on('change', function (e) {
                 icon: "error"
             })
         }
-    
+
     }
+
     GalleryView();
+
     e.target.value = null;
 });
 
 $(document).on('click', '.gallery-remove-button', function () {
     var fidToRemove = $(this).data('fid');
-    for (let i = 0; i < filesToUpload.length; i++) {
-        if (filesToUpload[i].FID === fidToRemove) {
-            filesToUpload.splice(i, 1);
+    for (let i = 0; i < GalleryFilesUpload.length; i++) {
+        if (GalleryFilesUpload[i].FID === fidToRemove) {
+            GalleryFilesUpload.splice(i, 1);
             break;
         }
     }
@@ -803,15 +792,17 @@ $(document).on('click', '.gallery-remove-button', function () {
 const GalleryView = () => {
 
     $('#GalleryFilesAppend').empty();
-    for (let i = 0; i < filesToUpload.length; i++) {
+
+    for (let i = 0; i < GalleryFilesUpload.length; i++) {
+
         $("#GalleryFilesAppend").append(`
                                      <div class="col-lg-4 mb-4">
                                  <div class="form_group file-input-one">
                                        
                                         <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
-                                                 <img src="${URL.createObjectURL(filesToUpload[i].file)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
+                                                 <img src="${URL.createObjectURL(GalleryFilesUpload[i].file)}" alt="Image" style="width:200px;height:200px;" class="img-thumbnail">
                                             <div style="position:absolute;top:5px;right:5px;">
-                                             <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${filesToUpload[i].FID}"style="border-radius: 25px;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;">X</button>
+                                             <button class="btn btn-danger btn-xs gallery-remove-button" data-fid="${GalleryFilesUpload[i].FID}"style="border-radius: 25px;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;">X</button>
                                            
                                         </div>
                                     </div>
@@ -823,8 +814,10 @@ const GalleryView = () => {
 
 
 $("#Category").change(function (e) {
+
     if ($("#Category option:selected").text().toUpperCase() == "PEDIGREE") {
-        $("#PEDIGREE").show().append(`
+
+        $("#PEDIGREE").show().empty().append(`
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form_group">
@@ -839,6 +832,10 @@ $("#Category").change(function (e) {
                             </div>
                         </div>
                     `);
+
+        if (PedigreeFileUpload) {
+            $("#PedigreeFile").change()
+        };
     }
     else {
 
@@ -846,12 +843,11 @@ $("#Category").change(function (e) {
     }
 });
 
-
-
 $(document).on("change", "#PedigreeFile", function (e) {
 
+    debugger
+
     if (e.target.files[0] != undefined) {
-        PedigreeFileUpload = [];
         PedigreeFileUpload = e.target.files[0];
     }
     $("#PedigreeImageViewAppend").empty();
@@ -867,37 +863,33 @@ $(document).on("change", "#PedigreeFile", function (e) {
 
 
 
-$(document).on("change", "#PedigreeFile", function (e) {
-    $("#PedigreeImageViewAppend").empty();
-    $("#PedigreeImageViewAppend").append(`
-                      <div class="col-lg-4 mb-4 pl-0">
-                          <div class="mb-4 img-thumbnail" style="width:50%!important;">
-                           <div class="upload-title-icon d-flex align-items-center justify-content-center" style="position:relative;">
-                            <img src="${URL.createObjectURL(e.target.files[0])}" alt="Image" style="width: 200px; height: 200px;" class="img-thumbnail">
-                          </div>
-                     </div>
-                     </div>`);
-})
-
-
 $("#Btn_Update_Listing").click(function () {
 
     debugger
 
     let formData = new FormData();
 
-    for (let i = 0; i < filesToUpload.length; i++) {
+    for (let i = 0; i < GalleryFilesUpload.length; i++) {
 
-        formData.append("GalleryImageFiles", filesToUpload[i].file);
+        formData.append("GalleryImageFiles", GalleryFilesUpload[i].file);
     }
+
+
+    debugger
 
     if ($('body').find('#PedigreeFile').length > 0) {
 
-        formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
+        if ($("#PedigreeFile")[0].files[0] != undefined) {
+
+            formData.append("PedigreeFile", $("#PedigreeFile")[0].files[0]);
+        }
+        else {
+            formData.append("PedigreeFile", PedigreeFileUpload);
+        }
     }
 
     formData.append("FeatureImageFile", FeaturedFileUpload);
-    formData.append("VideoFile", VideoFileUpload);
+    formData.append("VideoFile", []);
     formData.append("CategoryId", $("#Category").val());
     formData.append("Id", $("#HDID").val());
     formData.append("Title", $("#Title").val());
@@ -914,9 +906,6 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
     formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
     formData.append("Description", $("#Description").val());
-  //  formData.append("Weigth", $("#Weigth").val());
-  //  formData.append("Color", $("#Color").val());
-  //  formData.append("IsVaccinated", $('input[name="IsVaccinated"]:checked').val());
     formData.append("Price", $('#Price').val());
 
     //update code changes 
@@ -932,9 +921,10 @@ $("#Btn_Update_Listing").click(function () {
 
                 $('#FeaturedImageAppend').empty();
                 $('#GalleryFilesAppend').empty();
-                filesToUpload = [];
-                FeaturedFileUpload = [];
-                VideoFileUpload = [];
+                $("#PedigreeImageViewAppend").empty();
+                GalleryFilesUpload = [];
+                FeaturedFileUpload = null;
+                PedigreeFileUpload = null;
 
                 Swal.fire({
                     title: "Success",

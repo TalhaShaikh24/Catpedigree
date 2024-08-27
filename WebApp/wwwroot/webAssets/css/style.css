@@ -2,7 +2,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Quicksand:wght@300;400;500;600;700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=League+Spartan:wght@400;700&family=Lora:wght@600&display=swap');
 html {
-  font-size: 100%; }
+    font-size: 100%;
+    height: 100%;
+    margin: 0;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: black; /* Color of the track */
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff344f; /* Color of the thumb */
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Color of the thumb on hover */
+    }
+
+
 
 * {
   margin: 0;
@@ -721,7 +749,7 @@ button {
         .header-navigation .main-menu ul li.nav-btn .main-btn {
           color: #fff;
           padding: 14px 30px; } }
-  .header-navigation .main-menu ul li .sub-menu {
+.header-navigation .main-menu ul li .sub-menu {
     position: absolute;
     left: 0;
     top: 120%;
@@ -734,7 +762,9 @@ button {
     transition: all 0.2s;
     z-index: 99;
     height: auto;
-    text-align: left; }
+    box-shadow: 8px 10px 11px -3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
     .header-navigation .main-menu ul li .sub-menu li {
       display: block;
       margin: 0; }

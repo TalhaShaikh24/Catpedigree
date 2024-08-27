@@ -33,7 +33,7 @@ namespace WebApi.IRepositories
         Comment AddComment(Comment obj);
         GetBlogCategoriesAndLatestBlogDTO GetAllBlogCategoriesAndLatestBlog();
 
-
+        List<Blog> GetAllDistinctTags();
 
 
     }

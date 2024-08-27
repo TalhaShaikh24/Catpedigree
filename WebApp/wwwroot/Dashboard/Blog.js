@@ -100,8 +100,6 @@ function GetAllBlogCategories() {
 }
 function GetAllDistinctTags() {
 
-
-
     postRequest('/Dashboard/GetAllDistinctTags', null, function (res) {
 
         if (res.status == 200) {

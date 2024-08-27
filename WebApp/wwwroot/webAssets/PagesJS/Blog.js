@@ -6,7 +6,14 @@ let varCurrentCount = 0;
 
 $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
-    GetAllBlogCategories();
+    (async function () {
+        try {
+            await GetAllBlogCategories();
+            await GetAllDistinctTags();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
     loadBlogs();
 });
 
@@ -51,7 +58,7 @@ async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "", tag 
                         <a href="/Blog/BlogDetails?Id=${blog.blogID}"><img class="w-100" src="${baseApiUrl + blog.featureImagePath}" alt="Blog Image"></a>
                     </div>
                     <div class="entry-content">
-                        <a href="javascript:void(0);" class="cat-btn">${moment(blog.createdOn).format("DD MMMM - YYYY")}</a>
+                        <a href="javascript:void(0);" class="cat-btn">${moment(blog.createdOn).format("DD-MMMM-YYYY")}</a>
                         <div class="post-meta">
                             <ul>
                                 <li><span><i class="ti-bookmark-alt"></i><a href="javascript:void(0);">${blog.blogCategoryName}</a></span></li>
@@ -60,7 +67,7 @@ async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "", tag 
                             </ul>
                         </div>
                         <h3 class="title"><a href="/Blog/BlogDetails?Id=${blog.blogID}">${blog.title}</a></h3>
-                        <p>${blog.shortDescription}</p>
+                        <p>${blog.shortDescription ? blog.shortDescription : ''}</p>
                         <a href="/Blog/BlogDetails?Id=${blog.blogID}" class="btn-link">Continue Reading</a>
                     </div>
                 </div>
@@ -239,6 +246,90 @@ async function  GetAllBlogCategories() {
         }
     });
 }
+
+
+function GetAllDistinctTags() {
+
+    postRequest('/Blog/GetAllDistinctTags', null, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+
+                $.each(res.data, function (i, v) {
+
+                    $("#appendTags").append(`
+                    <a class="tag-cloud-link">${v.tags}</a>
+                      `);
+
+                });
+
+                $('#blogTags').select2({
+                    tags: true,
+                    placeholder: "Enter Tags"
+                });
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+
 
 function postRequest(url, requestData, handledata) {
     $.ajax({

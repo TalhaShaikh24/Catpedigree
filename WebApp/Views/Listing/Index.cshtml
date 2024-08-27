@@ -16,6 +16,37 @@
         .step-form.active {
             display: block;
         }
+/* Container styling */
+.single-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+/* Typing effect styling */
+.typing-text {
+    font-family: monospace; /* Monospace font for typewriter effect */
+    color: #ff344f; /* Text color */
+    font-size: 18px; /* Font size */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide text overflow */
+    border-right: 3px solid #ff344f; /* Cursor effect */
+    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+}
+
+/* Typing animation */
+@@keyframes typing {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+}
+
+/* Blinking cursor animation */
+@@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #ff344f; } /* Cursor color matching text */
+}
+
+
 </style>
 
 <section class="fioxen-add-listing pt-120 pb-120 mt-60">
@@ -28,10 +59,15 @@
                         <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
                             <h4 class="title">General Information</h4>
                             <div class="row">
+                                <div class="col-lg-12 mb-4">
+                                    <a href="/PromotionPackage" class="font-weight-bold" target="_blank">See Promotion Packages</a>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="single-checkbox d-flex">
                                         <input type="checkbox" id="showpromotionpackage" name="showpromotionpackage">
-                                        <label for="showpromotionpackage" class="mb-5"><strong style=" color: #ff344f; font-size: 18px; ">Do you want promotion of your list?</strong></label>
+                                        <label for="showpromotionpackage" class="mb-5">
+                                            <strong class="typing-text">Do you want promote of your list?</strong>
+                                        </label>
                                     </div>
                                 </div>
 

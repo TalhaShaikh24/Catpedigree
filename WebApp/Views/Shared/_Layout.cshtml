@@ -242,11 +242,33 @@
                 max-height: 400px;
                 height: auto;
                 overflow-y: auto;
+                width: max-content;
             }
 
                 .currency-dropdown .nice-select .list .option:hover, .currency-dropdown .nice-select .list .option.selected.focus {
                     background-color: #c1c1c17a;
                 }
+        
+                /* For WebKit-based browsers (Chrome, Safari) */
+                .currency-dropdown .nice-select .list::-webkit-scrollbar {
+                    width: 12px; /* Width of the scrollbar */
+                }
+
+                .currency-dropdown .nice-select .list::-webkit-scrollbar-track {
+                    background: #4d4f5f; /* Color of the track */
+                    border-radius: 10px;
+                }
+
+                .currency-dropdown .nice-select .list::-webkit-scrollbar-thumb {
+                    background: #888; /* Color of the thumb */
+                    border-radius: 10px;
+                }
+
+                    .currency-dropdown .nice-select .list::-webkit-scrollbar-thumb:hover {
+                        background: #555; /* Color of the thumb on hover */
+                    }
+
+
 
         p.google-languages {
             color: #fff!important;
@@ -433,6 +455,23 @@
                                 <option value="USD" data-flag="us" selected>US Dollar (USD)</option>
                                 <option value="GBP" data-flag="gb">British Pound (GBP)</option>
                                 <option value="EUR" data-flag="eu">Euro (EUR)</option>
+                                <option value="PLN" data-flag="pl">Polish złoty (PLN)</option>
+                                <option value="DKK" data-flag="dk">Danish krone (DKK)</option>
+                                <option value="SEK" data-flag="se">Swedish krona (SEK)</option>
+                                <option value="NOK" data-flag="no">Norwegian krone (NOK)</option>
+                                <option value="ANG" data-flag="aw">Netherlands Antillean Guilder (ANG)</option>
+                                <option value="ARS" data-flag="ar">Argentine Peso (ARS)</option>
+                                <option value="AUD" data-flag="au">Australian Dollar (AUD)</option>
+                                <option value="BAM" data-flag="ba">Bosnia-Herzegovina Convertible Mark (BAM)</option>
+                                <option value="BGN" data-flag="bg">Bulgarian Lev (BGN)</option>
+                                <option value="CAD" data-flag="ca">Canadian Dollar (CAD)</option>
+                                <option value="CHF" data-flag="ch">Swiss Franc (CHF)</option>
+                                <option value="CNY" data-flag="cn">Chinese Yuan (CNY)</option>
+                                <option value="CZK" data-flag="cz">Czech Republic Koruna (CZK)</option>
+                                <option value="HRK" data-flag="hr">Croatian Kuna (HRK)</option>
+                                <option value="HUF" data-flag="hu">Hungarian Forint (HUF)</option>
+                                <option value="RUB" data-flag="ru">Russian Ruble (RUB)</option>
+                                <option value="TRY" data-flag="tr">Turkish Lira (TRY)</option>
                                 <option value="PKR" data-flag="pk">Pakistani Rupee (PKR)</option>
                             </select>
                         </div>
@@ -459,31 +498,22 @@
                                         <li class="menu-item">
                                             <a href="">Services</a>
                                             <ul class="sub-menu">
-                                                <li><a href="@Url.Action("PedigreeInfo","Home")">Pedigree Info</a></li>
+                                                <li><a href="@Url.Action("BreederMediation","Home")">Breeder Mediation</a></li>
                                                 <li><a href="@Url.Action("PedigreeService","Home")">Pedigree Service</a></li>
                                                 <li class="menu-item has-children">
                                                     <a href="">Advertising</a>
                                                     <ul class="sub-menu">
-                                                        <li><a href="@Url.Action("Banners","Home")">Banners</a></li>
-                                                        <li><a href="">Kittens for Sale</a></li>
-                                                        <li><a href="@Url.Action("Video","Home")">Videos</a></li>
-                                                        <li><a href="@Url.Action("Others","Home")">Other</a></li>
+                                                        <li><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
+                                                        <li><a href="@Url.Action("index","promotionPackage")">Enhancement</a></li>
+                                                        <li><a href="@Url.Action("VideoPlans","VideoPackages")">Video Promotion</a></li>
+                                                        <li><a href="#">Cattery Banners</a></li>
+                                                        <li><a href="@Url.Action("AdvertisementPackages","Advertisement")">Business Advertising</a></li>
+                                                        <li><a href="#">How to place listings</a></li>
                                                     </ul>
                                                     <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
                                                 </li>
-                                                <li><a href="@Url.Action("Studs","Home")">Studs</a></li>
-                                                <li><a href="@Url.Action("Coaching","Home")">Coaching</a></li>
-                                                <li><a href="@Url.Action("BreederMediation","Home")">Mediation</a></li>
-                                                <li><a href="@Url.Action("HouseRules", "Home")">House Rules</a></li>
-                                                <li class="menu-item has-children">
-                                                     <a href="@Url.Action("PackageDeals","Home")">Package Deals</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="@Url.Action("Pricing","Packages")">Pricing Plans</a></li>
-                                                        <li><a href="@Url.Action("Index","PromotionPackage")">Promotional Plans</a></li>
-                                                        <li><a href="@Url.Action("VideoPlans","VideoPackages")">Video Plan</a></li>
-                                                    </ul>
-                                                    <span class="dd-trigger"><i class="ti-arrow-left"></i></span>
-                                                </li>
+                                                <li><a href="@Url.Action("PedigreeInfo","Home")">Coaching</a></li>
+                                                
                                             </ul>
                                         </li>
                                         <li class="menu-item">
@@ -491,8 +521,9 @@
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("Kittens","Home")">Kittens</a></li>
                                                 <li><a href="@Url.Action("Relocation","Home")">Relocation</a></li>
-                                                <li><a href="@Url.Action("Breeds","Home")">Breeders List</a></li>
-                                                <li><a href="@Url.Action("CatMediation","Home")">Mediation</a></li>
+                                                <li><a href="@Url.Action("Studs","Home")">Studs</a></li>
+                                                <li><a href="#">Pedigrees</a></li>
+                                                <li><a href="@Url.Action("catMadiation","Home")">Kitten Mediation</a></li>
                                             </ul>
                                         </li>
                                         <li class="menu-item">
@@ -500,25 +531,25 @@
                                             <ul class="sub-menu">
                                                 <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
                                                 <li><a href="@Url.Action("CostOfPedigreeCat","Home")">Costs of a Pedigree Cat</a></li>
-                                                <li><a href="@Url.Action("WhatToCheckFor","Home")">What to Check for</a></li>
-                                                <li><a href="@Url.Action("FelineHealth","Home")">Feline Health</a></li>
+                                                <li><a href="@Url.Action("WhatToCheckFor","Home")">What to Check for when buying a kitten</a></li>
                                                 <li><a href="">Feline Care</a></li>
                                                 <li><a href="@Url.Action("FelineFood", "Home")">Feline Food</a></li>
                                                 <li><a href="@Url.Action("PoisonousPlants", "Home")">Poisonous Plants</a></li>
                                                 <li><a href="@Url.Action("Shows","Home")">Shows</a></li>
-                                                <li><a href="">Useful Links</a></li>
+                                                <li><a href="@Url.Action("houseRules","Home")">House rules</a></li>
+                                                <li><a href="#">Payment Options</a></li>
+                                                <li><a href="#">Useful Links</a></li>
                                             </ul>
                                         </li>
-                                        <li class="menu-item"><a href="@Url.Action("Index","Blog")">Blog</a></li>
+                                        <li class="menu-item"><a href="@Url.Action("Index","Blog")">Blogs</a></li>
                                         <li class="menu-item"><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
                                         <li class="menu-item">
                                             <a href="@Url.Action("Contact","Home")">Contact</a>
                                             <ul class="sub-menu">
                                                 <li><a href="">Breeders FAQ</a></li>
                                                 <li><a href="">General FAQ</a></li>
-                                                <li><a href="">Who Are We</a></li>
-                                                <li><a href="@Url.Action("WhatDoWeDo","Home")">What Do We Do</a></li>
-                                                <li><a href="@Url.Action("WhyDidWeStart","Home")">Why Did We Start</a></li>
+                                                <li><a href="">About us</a></li>
+                                                <li><a href="@Url.Action("WhatDoWeDo","Home")">Why are we unique</a></li>
                                             </ul>
                                         </li>
                                         @{
@@ -611,7 +642,7 @@
                                     <li><a href="@Url.Action("ViewListings","Listing")">Explore</a></li>
                                     <li><a href="@Url.Action("Index","Blog")">Blogs</a></li>
                                     <li><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
-                                    <li><a href="@Url.Action("PedigreeInfo","Home")">Pricing</a></li>
+                                    <li><a href="@Url.Action("PedigreeInfo","Home")">Pedigree Services</a></li>
                                     <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
                                     <li><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
                                 </ul>
@@ -744,10 +775,11 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,it,ja,ko,zh-CN,nl,da,sv,fi,el,he,no,pl,ro,ru',
+                includedLanguages: 'en,es,fr,de,it,ja,ko,zh-CN,nl,da,sv,fi,el,he,no,pl,ro,ru,pt,be,cs,bg,hu,tr',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
+
 
         // Function to save selected language in local storage
         function saveLanguagePreference(lang) {
@@ -925,9 +957,27 @@
             "USD": "$",
             "EUR": "€",
             "GBP": "£",
+            "PLN": "zł",
+            "DKK": "kr",
+            "SEK": "kr",
+            "NOK": "kr",
+            "ANG": "ƒ",
+            "ARS": "$",
+            "AUD": "$",
+            "BAM": "KM",
+            "BGN": "лв",
+            "CAD": "$",
+            "CHF": "CHF",
+            "CNY": "¥",
+            "CZK": "Kč",
+            "HRK": "kn",
+            "HUF": "Ft",
+            "RUB": "₽",
+            "TRY": "₺",
             "PKR": "Rs"
             // Add more mappings as needed
         };
+
 
 
 

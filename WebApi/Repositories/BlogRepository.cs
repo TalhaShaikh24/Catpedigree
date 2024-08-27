@@ -233,24 +233,19 @@ namespace WebApi.Repositories
         }
 
 
-
-
-
-
-        
-
-        
-
-       
-
-        
-
-        
         public int DeleteBlogCategory(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<int>(@"[sp_DeleteBlogCategoryById]", parameters);
+            return data;
+        }
+
+        public List<Blog> GetAllDistinctTags()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Blog>(@"[sp_GetAllDistinctTags]", parameters);
+
             return data;
         }
 

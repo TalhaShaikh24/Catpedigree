@@ -83,5 +83,12 @@ namespace WebApp.Controllers
             return HttpClientUtility.CustomHttp(BaseUrl, "api/Blog/AddComment", content, HttpContext);
         }
 
+        [HttpPost]
+        public Task<object> GetAllDistinctTags()
+        {
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Blog/GetAllDistinctTags", "", HttpContext);
+        }
+
     }
 }

@@ -283,9 +283,44 @@ namespace WebApi.Controllers
                 return response;
             }
         }
-        
 
 
+        [HttpPost("GetAllDistinctTags")]
+        public Response GetAllDistinctTags()
+        {
+            Response response = new Response();
+
+            try
+            {
+
+                var res = _repository.GetAllDistinctTags();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+        }
 
 
 
