@@ -18,6 +18,8 @@ namespace ClassLibrary
 
         public int UserId { get; set; }
 
+        public int? CouponsDays { get; set; }
+
         public string UserName { get; set; }
 
         public bool IsActive { get; set; }

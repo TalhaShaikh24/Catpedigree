@@ -11,6 +11,10 @@ $(document).ready(function () {
                 number: true,
                 min: 5,
                 max: 100
+            },
+            CouponsDays: {
+                required: true,
+                number: true
             }
         },
         messages: {
@@ -22,10 +26,15 @@ $(document).ready(function () {
                 number: "Please enter a valid number.",
                 min: "The percentage must be at least 5.",
                 max: "The percentage cannot exceed 100."
+            },
+            CouponsDays: {
+                required: "Please enter the number of coupon days.",
+                number: "Please enter a valid number for coupon days."
             }
         },
         errorElement: "p",
         errorClass: "error"
+
     });
 
 
@@ -174,7 +183,8 @@ $("#save").click(function () {
                 UserId: $("#UserId").val(),
                 CouponCode: "",
                 UserName: "",
-                CouponName: $("#Name").val()
+                CouponName: $("#Name").val(),
+                CouponsDays: $("#CouponsDays").val()
 
 
             }

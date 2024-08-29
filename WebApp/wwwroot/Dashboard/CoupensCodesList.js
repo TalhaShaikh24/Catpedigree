@@ -14,33 +14,37 @@ function GetAllListings() {
 
             if (res.data != null) {
 
+                // Destroy existing DataTable instance if it exists
+                if ($.fn.DataTable.isDataTable('#TableCoupensCodesListing')) {
+                    $('#TableCoupensCodesListing').DataTable().clear().destroy();
+                }
+
+                // Initialize DataTable instance
+                var table = $('#TableCoupensCodesListing').DataTable();
+
+                // Clear any existing rows before adding new ones
                 $("#AppendCoupensCodesListing").empty();
+
+                // Iterate over the response data and add rows to the DataTable
                 $.each(res.data, function (i, v) {
-
-                    $("#AppendCoupensCodesListing").append(`
-                                                <tr>
-
-                                                   <td>${v.couponCode}</td>
-                                                   <td>${v.discountPercentage+ '%'}</td>
-                                                   <td>${v.userName}</td>
-                                                   <td>${v.isActive}</td>
-                                                   <td>${v.isExpired}</td>
-                                                 
-                                                   <td>${v.usedBy}</td>
-                                                 
-
-                                                   <td>${v.createdOn}</td>
-                                                           <td style=" width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
-                                                                   <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="UpdateExpireStatus(${v.couponID});"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                                                                 <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateActiveStatus(${v.couponID});"><i class="fa fa-clock" aria-hidden="true"></i></button>
-                                                    </td>
-
-                                                </tr>`);
-
+                    table.row.add([
+                        v.couponCode,
+                        v.discountPercentage + '%',
+                        v.userName,
+                        v.couponsDays,
+                        v.isActive,
+                        v.isExpired,
+                        v.usedBy,
+                        v.createdOn,
+                        `<div style="width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
+            <button type="button" class="btn btn-danger btn-xs p-2" title="Delete" onclick="UpdateExpireStatus(${v.couponID});"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateActiveStatus(${v.couponID});"><i class="fa fa-clock" aria-hidden="true"></i></button>
+         </div>`
+                    ]);
                 });
 
-                $('#TableCoupensCodesListing').DataTable();
-
+                // Redraw the DataTable to display the new data
+                table.draw();
 
             }
         }

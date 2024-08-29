@@ -260,7 +260,7 @@ function GetAllDropdowns() {
 
 $(document).on('change', '#VideoFile', function (e) {
     var file = e.target.files[0];
-    var maxSizeMB = 5;
+    var maxSizeMB = 30 * 1024 * 1024; // 30 MB in bytes
     var maxDuration = 30; // Max duration in seconds
 
     if (file) {

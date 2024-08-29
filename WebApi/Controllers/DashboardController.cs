@@ -2004,7 +2004,7 @@ namespace WebApi.Controllers
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Code Status Changed successfully!";
+                    response.ResponseMsg = "Code has been Deleted successfully!";
 
                 }
                 return response;

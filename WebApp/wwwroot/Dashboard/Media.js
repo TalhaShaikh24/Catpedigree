@@ -432,6 +432,29 @@ $('#UploadNewFile').on('change', function () {
 
     var files = document.getElementById('UploadNewFile').files;
 
+
+
+    var maxSize = 30 * 1024 * 1024; // 30 MB in bytes
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.size > maxSize) {
+
+            Swal.fire({
+                title: "Warning",
+                text: "The file size is too large. Maximum allowed size is " + maxSize + " MB.",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+            });
+            e.target.value = null;
+
+            break;
+            return;
+        }
+    }
     var formData = new FormData();
 
     for (var i = 0; i < files.length; i++) {

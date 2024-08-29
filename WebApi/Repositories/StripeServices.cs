@@ -214,15 +214,21 @@ namespace WebApi.Repositories
             }
         }
 
-        public string CreateDiscountCoupon(decimal discountPercentage,string couponId)
+        public string CreateDiscountCoupon(decimal discountPercentage,string couponId, int? customDays)
         {
+            var customExpirationDate = DateTime.UtcNow.AddDays((int)customDays);
             var options = new CouponCreateOptions
             {
-                Id = couponId, // Custom ID for your coupon
+                Id = couponId,
                 PercentOff = discountPercentage,
-                Duration = "repeating",
-                DurationInMonths = 1 // Equivalent to approximately 30 days
+                Duration = "once", // You can manage expiration with your logic
+                Metadata = new Dictionary<string, string>
+    {
+        { "expiration_date", customExpirationDate.ToString("o") }
+    }
             };
+
+           
 
             var service = new CouponService();
             var coupons = service.List(new CouponListOptions()).ToList();
@@ -253,12 +259,15 @@ namespace WebApi.Repositories
             DynamicParameters parameters = new DynamicParameters();
 
 
-           string code= CreateDiscountCoupon(obj.DiscountPercentage,obj.CouponName);
+           string code= CreateDiscountCoupon(obj.DiscountPercentage,obj.CouponName,obj.CouponsDays);
 
             parameters.Add("@DiscountPercentage", obj.DiscountPercentage, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("@CouponCode", code, DbType.String, ParameterDirection.Input);
 
             parameters.Add("@CodeName", obj.CouponName, DbType.String, ParameterDirection.Input);
+
+
+                parameters.Add("@CouponsDays", obj.CouponsDays, DbType.Int32, ParameterDirection.Input);
 
 
 
@@ -272,6 +281,6 @@ namespace WebApi.Repositories
             return data;
         }
 
-    
+      
     }
 }
