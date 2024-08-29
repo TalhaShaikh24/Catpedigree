@@ -19,6 +19,7 @@ namespace ClassLibrary
         public bool? IsBreerderLicenseUpload { get; set; }
         public string? Phone { get; set; }
         public new string? Email { get; set; }
+        public string? ListingEmail { get; set; }
         public string? BreerderName { get; set; }
         public int TypeOfCat { get; set; }
         public string? CatType { get; set; }

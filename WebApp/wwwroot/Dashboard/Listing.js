@@ -250,7 +250,17 @@ function GetAllListings() {
 
             // Initialize DataTable
             var table = $('#TableApprovalListing').DataTable({
-                "order": [[0, "desc"]]
+                "order": [[8, 'desc']], // Assuming the createdOn column is the 9th column (index 8)
+                "columnDefs": [
+                    {
+                        "targets": 8, // Index of the createdOn column
+                        "type": "date",
+                        "render": function (data, type, row) {
+                            // Convert the date format to something sortable
+                            return moment(data, "DD - MMMM - YYYY").format("YYYY-MM-DD");
+                        }
+                    }
+                ]
             });
 
             // Apply custom filtering for dropdowns

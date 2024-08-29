@@ -700,13 +700,13 @@
                                             {
                                                 <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.Username</a></p>
                                             }
-                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.ContactNo))
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Phone))
                                             {
-                                                <p><i class="ti-tablet"></i><a href="tel:@Model.data.Listing.ContactNo">@Model.data.Listing.ContactNo</a></p>
+                                                <p><i class="ti-tablet"></i><a href="tel:@Model.data.Listing.Phone">@Model.data.Listing.Phone</a></p>
                                             }
-                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Email))
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.ListingEmail))
                                             {
-                                                <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.Email</a></p>
+                                                <p><i class="ti-email"></i><a href="mailto:@Model.data.Listing.Email">@Model.data.Listing.ListingEmail</a></p>
                                             }
                                             
                                         </div>
