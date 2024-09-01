@@ -13,10 +13,12 @@ namespace WebApi.IRepositories
 
         object GetAllDropdowns(int Id);
 
+        public void IncrementViewCount(int listingId);
         Listing IsViewPedigreeAllowed(Listing obj);
 
 
         List<Package> CheckListingShowValidation(int userId, int id);
+        Listing RequestListingPrice(int listingID, int userID);
         List<CatTypes> GetAllCatType();
 
 

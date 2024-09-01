@@ -28,6 +28,14 @@ namespace WebApp.Controllers
             return data;
 
         }
+        public async Task<object> GetSidebarAdvertisments(int Id)
+        {
+            string content = "";
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetSidebarAdvertisments/" + Id, content, HttpContext);
+
+            return data;
+
+        }
 
 
         [HttpPost]

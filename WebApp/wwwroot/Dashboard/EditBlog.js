@@ -11,21 +11,27 @@ $(document).ready(function () {
     $('#summernote').summernote({
         height:650
     });
-
     var urlParams = new URLSearchParams(window.location.search);
-
-    GetAllBlogCategories();
-
     var Id = urlParams.get("Id");
+    (async function () {
+        try {
+            await GetAllBlogCategories();
+            await EditBlogById(Id);
+            
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
 
-    if (Id) {
+    
 
-      EditBlogById(Id);
+    
 
-    }
+    
 })
 
-function GetAllBlogCategories() {
+async function GetAllBlogCategories() {
     postRequest('/Dashboard/GetAllBlogCategories', null, function (res) {
 
         if (res.status == 200) {
@@ -36,7 +42,7 @@ function GetAllBlogCategories() {
                 $.each(res.data, function (i, v) {
 
                     $("#blogCategory").append(`
-                      <option value="${v.id}">${v.categoryName}</option>
+                      <option value="${v.categoryId}">${v.categoryName}</option>
                       `);
 
                 });
@@ -45,6 +51,7 @@ function GetAllBlogCategories() {
             $('#blogCategory').select2({
                 placeholder: "Select Category"
             });
+           
         }
         if (res.status == 304) {
 
@@ -105,7 +112,7 @@ function GetAllBlogCategories() {
     });
 }
 
-function EditBlogById(Id) {
+async function EditBlogById(Id) {
     postRequest('/Dashboard/BlogEditById?Id='+Id, null, function (res) {
         ShowPreloader();
         if (res.status == 200) {
@@ -128,11 +135,15 @@ function EditBlogById(Id) {
                 $('#HDID').val(res.data.blogID);
                 $('#title').val(res.data.title);
                 $('#shortdescription').val(res.data.shortDescription);
-                $('#blogCategory').val(res.data.blogCategoryId); // Assuming this is the category field
+                // Set the value for the Select2 element
+                $('#blogCategory').val(res.data.blogCategoryId).trigger('change'); // Assuming this is the category field
                 $('#featureImage').attr("src", baseApiUrl + res.data.featureImagePath);
 
                 // Populate Summernote editor
                 $('#summernote').summernote("code", res.data.content);
+
+                // Set the value for the Select2 element
+                $('#blogCategory').val(res.data.blogCategoryId).trigger('change');
             }
 
         }

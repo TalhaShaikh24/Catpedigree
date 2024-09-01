@@ -6,6 +6,7 @@ namespace WebApi.IRepositories
     {
 
         List<PaidAdvertisementsForView>  GetHomeAdvertisments(int Id);
+        List<PaidAdvertisementsForView> GetSidebarAdvertisments(int Id);
         List<AdvertisementPackage> GetAdvertisementPackage();
 
         UserAdvertisementPackage BuyAdvertisementPackage(UserAdvertisementPackage obj);

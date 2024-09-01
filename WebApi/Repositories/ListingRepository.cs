@@ -172,7 +172,16 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetVetandRimmedHomePageListings]", parameters);
             return data;
         }
-		public List<CatTypes> GetAllCatType()
+		public Listing RequestListingPrice(int listingID, int userID)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("UserID", userID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("ListingID", listingID, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Get<Listing>(@"[dbo].[sp_RequestListingPrice]", parameters);
+            return data;
+        }
+      public List<CatTypes> GetAllCatType()
         {
             DynamicParameters parameters = new DynamicParameters();
 
@@ -191,6 +200,18 @@ namespace WebApi.Repositories
             return data;
         }
 
+        
+
+        public void IncrementViewCount(int listingId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@ListingId", listingId, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Get<Listing>(@"[sp_IncrementViewCount]", parameters);
+
+        }
+        
         public Listing IsViewPedigreeAllowed(Listing obj)
         {
             DynamicParameters parameters = new DynamicParameters();

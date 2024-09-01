@@ -30,7 +30,7 @@ function GetAllBlogCategories() {
 
                     
                     $("#blogCategory").append(`
-                      <option value="${v.id}">${v.categoryName}</option>
+                      <option value="${v.categoryId}">${v.categoryName}</option>
                       `);
 
                 });

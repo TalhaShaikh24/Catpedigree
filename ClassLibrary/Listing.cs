@@ -22,6 +22,7 @@ namespace ClassLibrary
         public string? ListingEmail { get; set; }
         public string? BreerderName { get; set; }
         public int TypeOfCat { get; set; }
+        public int ViewCount { get; set; }
         public string? CatType { get; set; }
         public new bool? ZoologicalNumber { get; set; }
         public string? Gender { get; set; }

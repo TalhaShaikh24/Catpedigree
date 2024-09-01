@@ -67,11 +67,15 @@ button:focus {
     font-size: 15px !important;
     color: #aeaeae !important;
 }
+button{
+    cursor:pointer!important;
+}
 
 i,
 span,
 a {
-  display: inline-block; }
+    display: inline-block;
+}
 
 h1,
 h2,
@@ -2803,8 +2807,10 @@ h3.title {
   box-shadow: 0px 0px 10px 0px rgba(36, 37, 51, 0.08);
   background-color: #fff;
   padding: 20px 30px 25px; }
-  .listing-grid-item-two .listing-content h3.title {
-    margin-bottom: 5px; }
+    .listing-grid-item-two .listing-content h3.title {
+        text-transform: capitalize;
+        margin-bottom: 5px;
+    }
   .listing-grid-item-two .listing-content p {
     margin-bottom: 15px; }
   .listing-grid-item-two .listing-content span.phone-meta {
@@ -4691,10 +4697,12 @@ h3.title {
     background-color: transparent;
     padding: 0; }
     .sidebar-widget-area .widget.newsletter-widget .newsletter-widget-wrap {
-      position: relative;
-      padding: 75px 60px 80px;
-      text-align: center;
-      z-index: 1; }
+        position: relative;
+        padding: 0;
+        height: 500px;
+        text-align: center;
+        z-index: 1;
+     }
       .sidebar-widget-area .widget.newsletter-widget .newsletter-widget-wrap:after {
         position: absolute;
         top: 0;

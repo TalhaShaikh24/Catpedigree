@@ -208,6 +208,14 @@ namespace WebApp.Controllers
 
 
 		[HttpPost]
+        public Task<object> RequestListingPrice(int listingID)
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttp(BaseUrl, "api/Listing/RequestListingPrice/" + listingID, content, HttpContext);
+        }
+        
+        [HttpPost]
         public Task<object> GetAllCatType()
         {
             string content = "";

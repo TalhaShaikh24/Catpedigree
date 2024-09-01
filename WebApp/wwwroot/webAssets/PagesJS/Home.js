@@ -71,6 +71,10 @@ function GetTopPageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
+                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                            Request Price
+                                            <span class="spinner-btn"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -175,6 +179,10 @@ function GetVetRimmedPageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
+                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                            Request Price
+                                            <span class="spinner-btn"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -290,6 +298,10 @@ function GetHomePageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
+                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                            Request Price
+                                            <span class="spinner-btn"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -625,6 +637,100 @@ function BuyPackage(pkgId) {
     });
 }
 
+
+function RequestListingPrice(listingID) {
+    // Get the button element
+    var button = $('button[onclick="RequestListingPrice(' + listingID + ')"]');
+    var spinner = button.find('.spinner-btn');
+
+    // Show spinner and hide button text
+    button.prop('disabled', true); // Disable button to prevent multiple clicks
+    spinner.show();
+    postRequest('/Listing/RequestListingPrice?listingID=' + listingID, null, function (res) {
+
+        // Hide spinner and enable button
+        spinner.hide();
+        button.prop('disabled', false);
+        if (res.status == 200 && res.data != null) {
+
+            // Call the function to show the modal
+            showModal(res.data);
+
+
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+
+// Function to open modal and display data
+function showModal(data) {
+    const modalContent = `
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Listing Email:</strong> ${data.listingEmail}</li>
+                    <li class="list-group-item"><strong>Phone:</strong> ${data.phone}</li>
+                    <li class="list-group-item"><strong>Breerder Name:</strong> ${data.breerderName}</li>
+                    <li class="list-group-item"><strong>Author:</strong> ${data.firstname}</li>
+                    <li class="list-group-item"><strong>Email:</strong> ${data.email}</li>
+                </ul>
+            `;
+    document.getElementById('modal-content').innerHTML = modalContent;
+    $('#dataModal').modal('show');
+}
 function postRequest(url, requestData, handledata) {
     $.ajax({
         type: 'POST',

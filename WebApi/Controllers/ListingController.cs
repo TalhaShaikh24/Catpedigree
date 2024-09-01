@@ -461,7 +461,52 @@ namespace WebApi.Controllers
 
         }
 
-         [HttpPost("GetAllCatType")]
+        [HttpPost("RequestListingPrice/{listingID}")]
+        public Response RequestListingPrice(int listingID)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                var userId = claimDTO?.UserId ?? 0;  // Use 0 if claimDTO is null
+
+                var res = _listing.RequestListingPrice(listingID, userId);
+
+                response.Token = claimDTO != null ? TokenManager.GenerateToken(claimDTO) : null;
+
+                if (res != null)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.ResponseMsg = "Data fetched successfully!";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(404);  // Assuming 404 for not found, adjust if needed
+                    response.ResponseMsg = "No data found for the given listing ID.";
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = claimDTO != null ? TokenManager.GenerateToken(claimDTO) : null;
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = claimDTO != null ? TokenManager.GenerateToken(claimDTO) : null;
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+        }
+
+        [HttpPost("GetAllCatType")]
         public Response GetAllCatType()
         {
             
@@ -628,6 +673,9 @@ namespace WebApi.Controllers
 
                 obj.CreatedBy = claimDTO?.UserId ?? 0;
                 obj.Id = Id;
+
+                // Increment the view count
+                _listing.IncrementViewCount(Id);
 
                 // Additional logic here, if needed, using the currency parameter
 

@@ -82,6 +82,10 @@ async function loadMore() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
+                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                            Request Price
+                                            <span class="spinner-btn"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -168,6 +172,10 @@ async function filteringSearch() {
                              <ul>
                                  <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                              </ul>
+                             <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                 Request Price
+                                 <span class="spinner-btn"></span>
+                             </button>
                          </div>
                      </div>
                  </div>
@@ -204,6 +212,7 @@ function updateCountDisplay() {
 document.addEventListener('DOMContentLoaded', () => {
     baseApiUrl = $("#baseApiUrl").val();
     loadMore();
+    GetSidebarAdvertisments();
 });
 
 
@@ -286,6 +295,144 @@ function GetAllCatType() {
     });
 }
 
+
+function GetSidebarAdvertisments() {
+    postRequest('/Advertisement/GetSidebarAdvertisments/' + 2, null, function (res) {
+        if (res.status == 200) {
+            if (res.data != null && res.data.length > 0) {
+                $('.sidebar-hide').hide();
+                var $imageElement = $('#advertisement-image');
+                var imageUrls = res.data.map(item => baseApiUrl + item.paidAdvertisments.replace(/\\/g, '/'));
+                var currentIndex = 0;
+
+                function showNextImage() {
+                    $imageElement.attr('src', imageUrls[currentIndex])
+                        .removeClass('show');
+
+                    setTimeout(() => {
+                        $imageElement.addClass('show');
+                    }, 50); // Small delay to ensure the image loads and transition applies
+
+                    currentIndex = (currentIndex + 1) % imageUrls.length;
+                }
+
+                // Start the image rotation
+                showNextImage();
+                setInterval(showNextImage, 3000); // Change image every 3 seconds
+            }
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: res.status == 600 ? "warning" : "error"
+            });
+        }
+    });
+}
+
+function SingleListing(ListId) {
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+
+    window.location.href = `/Listing/SingleListing?listingId=${ListId}&currency=${curr}`;
+
+
+
+}
+
+
+function RequestListingPrice(listingID) {
+    // Get the button element
+    var button = $('button[onclick="RequestListingPrice(' + listingID + ')"]');
+    var spinner = button.find('.spinner-btn');
+
+    // Show spinner and hide button text
+    button.prop('disabled', true); // Disable button to prevent multiple clicks
+    spinner.show();
+    postRequest('/Listing/RequestListingPrice?listingID=' + listingID, null, function (res) {
+
+        // Hide spinner and enable button
+        spinner.hide();
+        button.prop('disabled', false);
+        if (res.status == 200 && res.data != null) {
+
+            // Call the function to show the modal
+            showModal(res.data);
+
+
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+}
+
+// Function to open modal and display data
+function showModal(data) {
+    const modalContent = `
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Listing Email:</strong> ${data.listingEmail}</li>
+                    <li class="list-group-item"><strong>Phone:</strong> ${data.phone}</li>
+                    <li class="list-group-item"><strong>Breerder Name:</strong> ${data.breerderName}</li>
+                    <li class="list-group-item"><strong>Author:</strong> ${data.firstname}</li>
+                    <li class="list-group-item"><strong>Email:</strong> ${data.email}</li>
+                </ul>
+            `;
+    document.getElementById('modal-content').innerHTML = modalContent;
+    $('#dataModal').modal('show');
+}
 
 function postRequest(url, requestData, handledata) {
     $.ajax({

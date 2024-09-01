@@ -1,7 +1,7 @@
 ﻿
 var WaterMarkURL = "";
 $(document).ready(function () {
-
+    $('.loader-gallery').show();
     //$(".gallery").magnificPopup({
     //    delegate: "a",
     //    type: "image",
@@ -28,7 +28,6 @@ function GetAllGallery() {
     postRequest("/Listing/GetAllGallary", null, function (res) {
 
         if (res.status == 200) {
-
             $.each(res.data, function (index, imageData) {
                 // Create the <a> tag with appropriate attributes
                 const $a = $('<a></a>')
@@ -57,14 +56,20 @@ function GetAllGallery() {
                     itemSelector: '.grid-item',
                     percentPosition: true,
                     columnWidth: '.grid-sizer'
+                }).promise().done(function () {
+                    // Hide the loader after a 3-second delay
+                    setTimeout(function () {
+                        // Hide the preloader after Masonry layout is done
+                        $('.loader-gallery').hide();
+                        $('.grid').css({
+                            "visibility":"visible"
+                        });
+                    }, 3000);
+                    
                 });
             });
 
-
-            $('.grid-sizer, .grid-item ').css({
-                
-                "width": "32.333%"
-            });
+            
     
         }
         if (res.status == 304) {
