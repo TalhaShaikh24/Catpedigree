@@ -26,8 +26,16 @@ let baseApiUrl = "";
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
-    getAll()
+    getAll();
+
 })
+
+$(document).on('click','#scrollToPricing',function () {
+    // Scroll to the div with ID 'target'
+    $('html, body').animate({
+        scrollTop: $('#targetPricing').offset().top
+    }, 1000); // Duration in milliseconds
+});
 
 function getAll() {
 

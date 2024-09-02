@@ -17,6 +17,26 @@ namespace WebApp.Controllers
         {
             return View();
         } 
+        public IActionResult Advertising()
+        {
+            return View();
+        } 
+        public IActionResult Enhancement()
+        {
+            return View();
+        } 
+        public IActionResult CatteryBanners()
+        {
+            return View();
+        } 
+        public IActionResult BusinessAdvertising()
+        {
+            return View();
+        }
+        public IActionResult HowToPaceYourListing()
+        {
+            return View();
+        }
         public IActionResult WhyCatPedigree()
         {
             return View();
@@ -132,6 +152,18 @@ namespace WebApp.Controllers
             return View();
         }
         public IActionResult FelineFood()
+        {
+            return View();
+        }
+        public IActionResult FelineCare()
+        {
+            return View();
+        }  
+        public IActionResult PaymentOptions()
+        {
+            return View();
+        }  
+        public IActionResult UsefulLinks()
         {
             return View();
         }

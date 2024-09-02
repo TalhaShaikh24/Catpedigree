@@ -1,0 +1,404 @@
+﻿<style>
+section, .section {
+    color: #212529;
+    background-color: #ffffff;
+    padding: 60px 0;
+    scroll-margin-top: 98px;
+    overflow: clip;
+}
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    position: relative;
+}
+.section-title h2:before {
+    margin: 0 15px 10px 0;
+}
+.section-title h2:before, .section-title h2:after {
+    content: "";
+    width: 50px;
+    height: 2px;
+    background: #e84545;
+    display: inline-block;
+}
+.section-title h2:after {
+    margin: 0 0 10px 15px;
+}
+.section-title {
+    text-align: center;
+    /* padding-bottom: 60px; */
+    position: relative;
+}
+.features .features-item h3 {
+    font-weight: 700;
+    font-size: 26px;
+}
+.features .features-item .image-stack {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(12, 1fr);
+}
+.features .features-item .image-stack .stack-front {
+    grid-row: 1;
+    grid-column: 1 / span 8;
+    margin-top: 66%;
+    width: 60%;
+    z-index: 2;
+}
+
+.features .features-item img {
+    border: 6px solid #ff344f;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+.features .features-item .image-stack .stack-back {
+    grid-column: 4 / -1;
+    grid-row: 1;
+    width: 100%;
+    z-index: 1;
+}
+
+.features .features-item img {
+    border: 6px solid #ff344f;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+.features .features-item+.features-item {
+    margin-top: 60px;
+}
+.features .features-item {
+    color: color-mix(in srgb, var(--default-color), transparent 20%);
+}
+.features .features-item .features-img-bg img {
+   
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.features .features-item img {
+    border: 6px solid #ff344f;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+.features .features-item h3 {
+    font-weight: 700;
+    font-size: 26px;
+}
+.features .features-item ul li {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+.features .features-item ul i {
+    font-size: 20px;
+    padding-right: 4px;
+    color: #e84545;
+}
+@@media (max-width: 1199px) {
+    section, .section {
+        scroll-margin-top: 64px;
+    }
+}
+    
+</style>
+<!--====== Start Hero Section ======-->
+<section class="hero-area p-0">
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="page-title">
+                        <h1 class="title">Advertising</h1>
+                        <ul class="breadcrumbs-link">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">Advertising</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== End Hero Section ======-->
+<section id="features" class="features section  pt-75 pb-0">
+
+    <!-- Section Title -->
+    <div class="container section-title pb-5 aos-init aos-animate" data-aos="fade-up">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="section-title mb-0 text-center pb-0 wow fadeInUp"
+                     style="visibility: visible; animation-name: fadeInUp; padding-bottom: 10px;">
+                    <span class="sub-title">CatPedigreeWorld´s</span>
+                    <h2>Advertising</h2>
+                    <p>
+                        Increase your reach, establish trust, and build credibility with your potential clients.
+                        By advertising your cattery, you can directly boost bookings and, in turn, grow your
+                        revenue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4 align-items-center features-item" style="row-gap: 30px;">
+            <div class="col-lg-5 order-1-class justify-content-center flex-column aos-init aos-animate"
+                 data-aos="fade-up">
+                <h3>How can we help you?</h3>
+                <ul>
+                    <li>
+                        <i class="bi bi-check"></i> <span>
+                            At CatPedigreeWorld, we provide catteries worldwide with
+                            the opportunity to showcase their adorable kittens to a global audience, expanding their
+                            reach and facilitating the sale of their carefully bred offspring. Additionally, we
+                            offer an unprecedented service for researching and verifying pedigrees from other
+                            catteries to assist in acquiring new bloodlines for your breeding program. Listings
+                            (Advertisements) on CatPedigreeWorld are a fantastic way to showcase your cattery's
+                            kittens..
+                        </span>
+                    </li>
+                    <li>
+                        <i class="bi bi-check"></i><span>
+                            We're not just a platform; we're a vibrant community passionately uniting catteries and
+                            potential cat owners. Our mission is to simplify the process of finding the perfect
+                            pedigreed cat while supporting catteries in showcasing their exceptional breeds to a
+                            global audience. By joining us, you're not merely listing your business; you're
+                            embracing an opportunity to elevate your brand in the eyes of an engaged, enthusiastic,
+                            and wide-reaching audience.
+                        </span>
+                    </li>
+
+                </ul>
+                <a href="/packages/Pricing" class="main-btn icon-btn text-center d-block">
+                    Already Convinced? Checkout our Package
+                    deals
+                </a>
+            </div>
+            <div class="col-lg-7  order-2-class d-flex align-items-center aos-init aos-animate" data-aos="zoom-out"
+                 data-aos-delay="100">
+                <div class="image-stack">
+                    <img src="~/webassets/images/elements/step-18.jpg" alt="" class="stack-front">
+                    <img src="~/webassets/images/elements/step-19.jpg" alt="" class="stack-back">
+                </div>
+            </div>
+        </div><!-- Features Item -->
+
+
+
+
+
+    </div>
+
+</section>
+<!--====== Start Pricing Section ======-->
+<!-- new-section -->
+<section class="features-area pb-0">
+    <div class="features-wrapper-two bg_cover pt-4 ">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-title mb-0  pb-2 text-center mb-50 wow fadeInUp"
+                         style="visibility: visible; animation-name: fadeInUp;">
+                        <span class="sub-title">Working Process</span>
+                        <h2 style="color: black;">How It Works</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInDown"
+                         style="visibility: visible; animation-name: fadeInDown; border: 1px solid #121416; background: #121416; box-shadow: rgb(255, 52, 79) 5px 5px;">
+                        <div class="icon">
+                            <i class="flaticon-avatar"></i>
+                        </div>
+                        <div class="content1">
+                            <h4 style="color: white;">Banners</h4>
+                            <p style="color: white;">
+                                Showcase your cattery or business with a banner on our website.
+                            </p>
+                            <button class="btn btn-danger mt-3" style="color: white;">Learn more</button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInUp" data-wow-delay="20ms"
+                         style="visibility: visible; animation-delay: 20ms; animation-name: fadeInUp; background: #121416; box-shadow: rgb(255, 52, 79) 5px 5px;">
+                        <div class="icon">
+                            <i class="flaticon-star"></i>
+                        </div>
+                        <div class="content1">
+                            <h4 style="color: white;">Video</h4>
+                            <p style="color: white;">
+                                We are proud to be the first in the world to offer video promotion for your Cattery.
+                            </p>
+                            <button class="btn btn-danger mt-3" style="color: white;">Learn more</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="features-item features-item-one mb-40 wow fadeInDown"
+                         style="visibility: visible; animation-name: fadeInDown; background: #121416; box-shadow: rgb(255, 52, 79) 5px 5px;">
+                        <div class="icon">
+                            <i class="flaticon-calendar"></i>
+                        </div>
+                        <div class="content1">
+                            <h4 style="color: white;">Enhancements</h4>
+                            <p style="color: white;">
+                                Elevate your advertisements and listings with a variety of attractive design
+                                features.
+                            </p>
+                            <button class="btn btn-danger mt-3" style="color: white;">Learn more</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="testimonial-area  pb-80">
+    <div class="container">
+        <div class="testimonial-wrapper-two">
+            <div class="row no-gutters">
+                <div class="col-lg-6">
+                    <div class="testimonial-content-box bg_cover wow fadeInRight"
+                         style="background-image: url(/webassets/images/bg/testimonial-bg-3.jpg;); visibility: visible; animation-name: fadeInRight;">
+                        <div class="section-title section-title-left pb-1">
+                            <span class="sub-title">Listings</span>
+                            <h2 style="line-height: 40px; margin-bottom: 0px;">
+                                On CatPedigreeWorld we use Listings
+                                as the currency of our website.
+                            </h2>
+                        </div>
+                        <p style="border-left: 8px solid #ffd74e;
+    padding-left: 16px;">
+                            Listings can be utilized across various sections including Kittens for sale, Relocation,
+                            Pedigrees, and Studmales. By using a listing, you gain access to view pedigrees and
+                            advertise your cattery or kittens for a specific duration.
+                        </p>
+                        <h4 style="font-weight: 700;font-size: 19px;">Advertisement Duration:</h4>
+                        <ul>
+                            <li> <i class="bi bi-check"></i> Kittens for sale: 60 Days</li>
+                            <li> <i class="bi bi-check"></i>Relocation: 120 Days</li>
+                            <li> <i class="bi bi-check"></i> Studmales: 365 Days</li>
+                        </ul>
+                        <p style="border-left: 8px solid #ffd74e;
+    padding-left: 16px;">
+                            Many catteries opt for our fantastic Package Deals instead of purchasing listings individually
+                            for €7.50.
+                        </p>
+
+                        <button class="btn btn-danger mt-4">Checkout Out our great package deals</button>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="img-slider">
+                        <img src="~/webassets/images/elements/step-21.jpg" alt="img">
+                        <img src="~/webassets/images/elements/step-22.png" alt="img">
+                        <img src="~/webassets/images/elements/step-23.jpg" alt="img">
+                        <img src="~/webassets/images/elements/step-24.jpg" alt="img">
+                        <img src="~/webassets/images/elements/step-16.jpeg" alt="img">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- new-sec-end -->
+
+<section class="testimonial-area  pb-80 pt-0">
+    <div class="container">
+        <div class="testimonial-wrapper-two">
+            <div class="row no-gutters">
+                <div class="col-lg-6">
+                    <img src="~/webassets/images/elements/young kittens on a billboard.jpeg" alt="img" style="border: 4px solid red;">
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="testimonial-content-box bg_cover wow fadeInRight justify-content-center align-items-center d-flex flex-column"
+                         style="background-image: url(/webassets/images/bg/testimonial-bg-3.jpg); visibility: visible; animation-name: fadeInRight;">
+                        <div class="section-title section-title-left pb-1">
+                            <span class="sub-title">Banners</span>
+
+                        </div>
+                        <p style="border-left: 8px solid #ffd74e;
+    padding-left: 16px;">In addition to listings and enhancements, you can also promote your cattery with a Banner.</p>
+
+                        <p style="border-left: 8px solid #ffd74e;
+    padding-left: 16px;">
+                            For just €10 a year, you have the opportunity to showcase your Cattery Banner on
+                            Catpedigreeworld's Banners section. Just inform us of the breed you would like to
+                            highlight with your banner.
+                        </p>
+                        <h5 class="mt-4">Your banner can be up to 600 x 200 pixels in size and will be featured on our website for a full year.</h5>
+                        <button class="btn btn-danger mt-4">Yes I want to buy category banner now</button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+<!-- Accordion section -->
+<section class="Myaccordion pt-0 ">
+    <div class="container">
+        <h4 class="text-center" style="color: #ED334F;">FAQ</h4>
+        <h3 class="text-center pb-3">Frequently Asked Questions</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    I would like to upgrade my plain. Is this possible?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <p>Unfortunately, upgrading your current Advertisement package is not an option at this time. However, you can always purchase an additional package, which will be added to your account without losing any listings from your original package.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Is VAT included in the price?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <p>VAT will be calculated and added during checkout.  </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Do i need to buy complete new package when i have used all the top listings or other enhancement in my package.
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <p>No, that won't be necessary. Just add the enhancement of your choice to your Listing and you can pay for it separately.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Accordion section end -->
