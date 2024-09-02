@@ -159,6 +159,9 @@ namespace WebApi.Repositories
 
             parameters.Add("IsSterilization", obj.IsSterilization, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("CatteryName", obj.CatteryName, DbType.String, ParameterDirection.Input);
+            parameters.Add("PhoneCode", obj.PhoneCode, DbType.String, ParameterDirection.Input);
+            parameters.Add("latitude", obj.latitude, DbType.String, ParameterDirection.Input);
+            parameters.Add("longitude", obj.longitude, DbType.String, ParameterDirection.Input);
 
 
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);

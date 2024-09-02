@@ -72,6 +72,11 @@ namespace ClassLibrary
         public string? Currency { get; set; }
         public string? Reason { get; set; }
         public DateTime? FirstApprovedOn { get; set; }
+        public string? PhoneCode { get; set; }
+
+        
+        public string? latitude { get; set; }
+        public string? longitude { get; set; }
     }
 
 	//public class ListingFilters

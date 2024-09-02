@@ -1,6 +1,8 @@
 ﻿var filesToUpload = [];
 
 let baseApiUrl = "";
+let latitude = "";
+let longitude = "";
 $(document).ready(function () {
     $("html, body").animate({ scrollTop: 0 }, "slow");
 
@@ -14,7 +16,70 @@ $(document).ready(function () {
         separateDialCode: true,
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
     });
+
+
+    initAutocomplete();
+    onPlaceChanged();
 })
+
+
+
+
+
+function initAutocomplete() {
+    const input = document.getElementById('Location');
+    debugger;
+    autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Set up the dropdown element
+    dropdown = document.getElementById('places-dropdown');
+
+    // Listen for place selection
+    autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+function onPlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+    }
+
+    const addressComponents = place.address_components;
+    let city = "";
+    let state = "";
+    let country = "";
+
+    debugger;
+
+
+    // Extracting latitude and longitude
+    latitude = place.geometry.location.lat();
+    longitude = place.geometry.location.lng();
+
+
+    for (const component of addressComponents) {
+        const types = component.types;
+        if (types.includes("locality")) {
+            city = component.long_name;
+        }
+        if (types.includes("administrative_area_level_1")) {
+            state = component.short_name;
+        }
+        if (types.includes("country")) {
+            country = component.long_name;
+        }
+    }
+
+    // Log city, state, and country
+
+  
+    $("#State").val(state);
+    $("#City").val(city);
+
+
+}
+
 
 $("#FeaturedFile").on('change', function (e) {
 
@@ -592,6 +657,17 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
     formData.append("CatteryName", $('#CatteryName').val());
 
+    // Get the selected country data
+    let selectedCountryData = $("#Phone").intlTelInput("getSelectedCountryData");
+
+    // Extract the ISO2 country code
+    let countryCode = selectedCountryData.iso2;
+
+
+
+    formData.append('PhoneCode', countryCode);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
         if (res.status == 200) {
