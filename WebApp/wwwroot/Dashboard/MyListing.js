@@ -2,7 +2,8 @@
 var FeaturedFileUpload = null;
 var PedigreeFileUpload = null;
 let baseApiUrl = "";
-
+let latitude = "";
+let longitude = "";
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
@@ -510,6 +511,13 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
 
+                debugger;
+                let countryCode = res.data.phoneCode;
+
+                // Set the country code to change the flag and dial code
+                $("#Phone").intlTelInput("setCountry", countryCode);
+                latitude = res.data.latitude;
+                longitude = res.data.longitude;
 
                 //update code changes 
                 if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
@@ -923,7 +931,14 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
     formData.append("CatteryName", $('#CatteryName').val());
+    let selectedCountryData = $("#Phone").intlTelInput("getSelectedCountryData");
 
+    // Extract the ISO2 country code
+    let countryCode = selectedCountryData.iso2;
+    debugger;
+    formData.append('PhoneCode', countryCode);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
         if (res.status == 200) {

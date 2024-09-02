@@ -697,6 +697,9 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.IsSterilization.ToString()), "IsSterilization");
                 multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
                 multiContent.Add(new StringContent(obj.CatteryName ?? ""), "CatteryName");
+                multiContent.Add(new StringContent(obj.PhoneCode ?? ""), "PhoneCode");
+                multiContent.Add(new StringContent(obj.latitude ?? ""), "latitude");
+                multiContent.Add(new StringContent(obj.longitude ?? ""), "longitude");
 
 
                 if (obj.GalleryImageFiles != null)

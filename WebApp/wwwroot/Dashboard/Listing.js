@@ -2,7 +2,8 @@
 var FeaturedFileUpload = null;
 var PedigreeFileUpload = null;
 let baseApiUrl = "";
-
+let latitude = "";
+let longitude = "";
 
 $(document).ready(function () {
 
@@ -26,7 +27,67 @@ $(document).ready(function () {
         separateDialCode: true,
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
     });
+
+
 });
+
+
+$('#UpdateListingModal').on('shown.bs.modal', function () {
+    setTimeout(function () {
+        initAutocomplete(); // Initialize autocomplete after a slight delay
+    }, 100);
+});
+
+var autocomplete;
+
+function initAutocomplete() {
+    var input = document.getElementById('Location');
+    if (input) {
+        autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', onPlaceChanged);
+    } else {
+        console.error('Location input not found.');
+    }
+}
+
+function onPlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+    }
+
+    const addressComponents = place.address_components;
+    let city = "";
+    let state = "";
+    let country = "";
+
+    // Extracting latitude and longitude
+    const latitude = place.geometry.location.lat();
+    const longitude = place.geometry.location.lng();
+
+    for (const component of addressComponents) {
+        const types = component.types;
+        if (types.includes("locality")) {
+            city = component.long_name;
+        }
+        if (types.includes("administrative_area_level_1")) {
+            state = component.short_name;
+        }
+        if (types.includes("country")) {
+            country = component.long_name;
+        }
+    }
+
+    // Log city, state, and country
+    console.log('City:', city);
+    console.log('State:', state);
+    console.log('Country:', country);
+
+    $("#State").val(state);
+    $("#City").val(city);
+}
+
 
 
 function GetAllDropdowns() {
@@ -635,6 +696,12 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $('#GalleryFilesAppend').empty();
                 $("#PedigreeImageViewAppend").empty();
                 $('#FeaturedImageAppend').empty();
+                let countryCode = res.data.phoneCode;
+
+                // Set the country code to change the flag and dial code
+                $("#Phone").intlTelInput("setCountry", countryCode);
+                latitude = res.data.latitude;
+                longitude = res.data.longitude;
 
                 if (res.data.pedigreeFilePath) {
 
@@ -781,6 +848,8 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
             }
 
             $("#UpdateListingModal").modal("show");
+         
+
         }
         if (res.status == 304) {
 
@@ -1045,7 +1114,15 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
     formData.append("CatteryName", $('#CatteryName').val());
+    // Get the selected country data
+    let selectedCountryData = $("#Phone").intlTelInput("getSelectedCountryData");
 
+    // Extract the ISO2 country code
+    let countryCode = selectedCountryData.iso2;
+    debugger;
+    formData.append('PhoneCode', countryCode);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
         if (res.status == 200) {
