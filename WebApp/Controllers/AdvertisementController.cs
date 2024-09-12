@@ -74,7 +74,7 @@ namespace WebApp.Controllers
 		{
 			var content = "";
 
-			return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
+			return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
 
 		}
 	}

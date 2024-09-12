@@ -1,6 +1,6 @@
 ﻿
 var WaterMarkURL = "";
-var watermarkImageSrc = "/webassets/images/watermarks/cat-pedigree-world-logo.png";
+var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
 $(document).ready(function () {
 
     $(".gallery").magnificPopup({
@@ -45,7 +45,7 @@ $("#UploadWaterMark").change(function () {
 $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWidth, #watermarkOpacity').on('change keyup', function () {
     var mainImageSrc = $("#mainImage").attr("value");
     //var watermarkImageSrc = WaterMarkURL;
-    var watermarkImageSrc = "/webassets/images/watermarks/cat-pedigree-world-logo.png";
+    var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
 
     Promise.all([
         loadImage(mainImageSrc),

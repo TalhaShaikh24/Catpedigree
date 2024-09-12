@@ -41,11 +41,14 @@
     <link rel="stylesheet" href="~/webassets/css/default.css">
     <!--====== Style css ======-->
     <link rel="stylesheet" href="~/webassets/css/style.css">
+    <link href="~/webassets/css/about5.css" rel="stylesheet" />
     <!--====== BoxIcon css ======-->
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
     <link href="~/webassets/css/sweetalert2.css" rel="stylesheet" />
+
+    @* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&callback=initMap" async defer></script> *@
 
     <!-- Include Google Translate API -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -508,7 +511,7 @@
                                                         <li><a href="@Url.Action("VideoPlans","VideoPackages")">Video Promotion</a></li>
                                                         <li><a href="@Url.Action("CatteryBanners","Home")">Cattery Banners</a></li>
                                                         <li><a href="@Url.Action("BusinessAdvertising","Home")">Business Advertising</a></li>
-                                                        <li><a href="@Url.Action("how-to-pace-your-listing","Home")">How to place listings</a></li>
+                                                        <li><a href="@Url.Action("HowtoPlaceYourListing","Home")">How to place listings</a></li>
                                                     </ul>
                                                     <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
                                                 </li>
@@ -692,8 +695,8 @@
                             <div class="copyright-link">
                                 <ul>
                                     <li><a href="@Url.Action("Terms","Home")">Terms & Conditions</a> | 
-                                        <a href="@Url.Action("Terms","Home")">Privacy Policy</a> | 
-                                        <a href="@Url.Action("Terms","Home")">Cookies Policy</a>
+                                        <a href="@Url.Action("Privacy","Home")">Privacy Policy</a> | 
+                                        <a href="@Url.Action("CookiePolicies","Home")">Cookies Policy</a>
                                     </li>
                                 </ul>
                             </div>
@@ -713,7 +716,7 @@
         </div>
 
         <div class="data">
-            <p>This website use cookies to help you have a superior and more relevant browsing experience on the website. <a href="#"> Read more...</a></p>
+            <p>This website use cookies to help you have a superior and more relevant browsing experience on the website. <a href="@Url.Action("CookiePolicies","Home")"> Read more...</a></p>
         </div>
 
         <div class="buttonsCookies">
@@ -763,6 +766,15 @@
     <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/145049748.js"></script>
     <!-- End of HubSpot Embed Code -->
     <script type="text/javascript">
+        let infoWindow;
+        let map;
+        let markers = [];
+
+    </script>
+    <script type="text/javascript">
+
+
+
 
         $(document).on('click', '.google_translate_element', function (event) {
             event.preventDefault();
@@ -1021,6 +1033,7 @@
 
 
         $(document).ready(function () {
+
             // Initialize currency and select options
             GetFooterAdvertisments();
 

@@ -1,107 +1,5 @@
-﻿<style>
-section, .section {
-    color: #212529;
-    background-color: #ffffff;
-    padding: 60px 0;
-    scroll-margin-top: 98px;
-    overflow: clip;
-}
-.section-title h2 {
-    font-size: 32px;
-    font-weight: 700;
-    position: relative;
-}
-.section-title h2:before {
-    margin: 0 15px 10px 0;
-}
-.section-title h2:before, .section-title h2:after {
-    content: "";
-    width: 50px;
-    height: 2px;
-    background: #e84545;
-    display: inline-block;
-}
-.section-title h2:after {
-    margin: 0 0 10px 15px;
-}
-.section-title {
-    text-align: center;
-    /* padding-bottom: 60px; */
-    position: relative;
-}
-.features .features-item h3 {
-    font-weight: 700;
-    font-size: 26px;
-}
-.features .features-item .image-stack {
-    display: grid;
-    position: relative;
-    grid-template-columns: repeat(12, 1fr);
-}
-.features .features-item .image-stack .stack-front {
-    grid-row: 1;
-    grid-column: 1 / span 8;
-    margin-top: 66%;
-    width: 60%;
-    z-index: 2;
-}
-
-.features .features-item img {
-    border: 6px solid #ff344f;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
-}
-.features .features-item .image-stack .stack-back {
-    grid-column: 4 / -1;
-    grid-row: 1;
-    width: 100%;
-    z-index: 1;
-}
-
-.features .features-item img {
-    border: 6px solid #ff344f;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
-}
-
-.features .features-item+.features-item {
-    margin-top: 60px;
-}
-.features .features-item {
-    color: color-mix(in srgb, var(--default-color), transparent 20%);
-}
-.features .features-item .features-img-bg img {
-   
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.features .features-item img {
-    border: 6px solid #ff344f;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
-}
-.features .features-item h3 {
-    font-weight: 700;
-    font-size: 26px;
-}
-.features .features-item ul li {
-    padding-bottom: 10px;
-    display: flex;
-    align-items: flex-start;
-}
-.features .features-item ul i {
-    font-size: 20px;
-    padding-right: 4px;
-    color: #e84545;
-}
-@@media (max-width: 1199px) {
-    section, .section {
-        scroll-margin-top: 64px;
-    }
-}
-    
-</style>
+﻿
+<link href="~/webassets/css/pricing.css" rel="stylesheet" />   
 <!--====== Start Hero Section ======-->
 <section class="hero-area p-0">
     <div class="breadcrumbs-wrapper">
@@ -109,7 +7,7 @@ section, .section {
             <div class="row">
                 <div class="col-lg-8">
                     <div class="page-title">
-                        <h1 class="title">Advertising</h1>
+                        <h3 class="title mb-3" style="max-width: 589px;">We always aim to create a safe environment for both breeders and customers.</h3>
                         <ul class="breadcrumbs-link">
                             <li><a href="index.html">Home</a></li>
                             <li class="active">Advertising</li>
@@ -121,21 +19,17 @@ section, .section {
     </div>
 </section>
 <!--====== End Hero Section ======-->
-<section id="features" class="features section  pt-75 pb-0">
+<section id="features" class="features section  pt-5 pb-0">
 
     <!-- Section Title -->
     <div class="container section-title pb-5 aos-init aos-animate" data-aos="fade-up">
         <div class="row justify-content-center">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="section-title mb-0 text-center pb-0 wow fadeInUp"
                      style="visibility: visible; animation-name: fadeInUp; padding-bottom: 10px;">
                     <span class="sub-title">CatPedigreeWorld´s</span>
                     <h2>Advertising</h2>
-                    <p>
-                        Increase your reach, establish trust, and build credibility with your potential clients.
-                        By advertising your cattery, you can directly boost bookings and, in turn, grow your
-                        revenue.
-                    </p>
+                    <p>Increase your reach, establish trust, and build credibility with potential clients. By advertising your cattery, you can directly boost bookings and, in turn, grow your revenue.</p>
                 </div>
             </div>
         </div>
@@ -144,23 +38,23 @@ section, .section {
     <div class="container">
 
         <div class="row gy-4 align-items-center features-item" style="row-gap: 30px;">
-            <div class="col-lg-5 order-1-class justify-content-center flex-column aos-init aos-animate"
+            <div class="col-lg-6 order-1-class justify-content-center flex-column aos-init aos-animate"
                  data-aos="fade-up">
                 <h3>How can we help you?</h3>
                 <ul>
                     <li>
-                        <i class="bi bi-check"></i> <span>
+                        <i class="bi bi-arrow-bar-right" style="color: black;"></i> <span>
                             At CatPedigreeWorld, we provide catteries worldwide with
                             the opportunity to showcase their adorable kittens to a global audience, expanding their
                             reach and facilitating the sale of their carefully bred offspring. Additionally, we
-                            offer an unprecedented service for researching and verifying pedigrees from other
+                            offer an unparalleled service for researching and verifying pedigrees from other
                             catteries to assist in acquiring new bloodlines for your breeding program. Listings
-                            (Advertisements) on CatPedigreeWorld are a fantastic way to showcase your cattery's
-                            kittens..
+                            (Advertisements) on CatPedigreeWorld are a  excellent way to showcase your cattery's
+                            kittens.
                         </span>
                     </li>
                     <li>
-                        <i class="bi bi-check"></i><span>
+                        <i class="bi bi-arrow-bar-right" style="color: black;"></i><span>
                             We're not just a platform; we're a vibrant community passionately uniting catteries and
                             potential cat owners. Our mission is to simplify the process of finding the perfect
                             pedigreed cat while supporting catteries in showcasing their exceptional breeds to a
@@ -171,16 +65,16 @@ section, .section {
                     </li>
 
                 </ul>
-                <a href="/packages/Pricing" class="main-btn icon-btn text-center d-block">
+                <button class="main-btn icon-btn text-center d-block">
                     Already Convinced? Checkout our Package
                     deals
-                </a>
+                </button>
             </div>
-            <div class="col-lg-7  order-2-class d-flex align-items-center aos-init aos-animate" data-aos="zoom-out"
+            <div class="col-lg-6  order-2-class d-flex align-items-center aos-init aos-animate" data-aos="zoom-out"
                  data-aos-delay="100">
                 <div class="image-stack">
-                    <img src="~/webassets/images/elements/step-18.jpg" alt="" class="stack-front">
-                    <img src="~/webassets/images/elements/step-19.jpg" alt="" class="stack-back">
+                    <img src="/webassets/images/elements/step-01.jpeg" alt="" class="stack-front">
+                    <img src="/webassets/images/elements/step-01.jpeg" alt="" class="stack-back">
                 </div>
             </div>
         </div><!-- Features Item -->
@@ -194,7 +88,7 @@ section, .section {
 </section>
 <!--====== Start Pricing Section ======-->
 <!-- new-section -->
-<section class="features-area pb-0">
+<section class="features-area pt-4 pb-0">
     <div class="features-wrapper-two bg_cover pt-4 ">
         <div class="container">
             <div class="row justify-content-center">
@@ -214,7 +108,7 @@ section, .section {
                             <i class="flaticon-avatar"></i>
                         </div>
                         <div class="content1">
-                            <h4 style="color: white;">Banners</h4>
+                            <h4 style="color: white !important;">Banners</h4>
                             <p style="color: white;">
                                 Showcase your cattery or business with a banner on our website.
                             </p>
@@ -258,49 +152,41 @@ section, .section {
         </div>
     </div>
 </section>
-<section class="testimonial-area  pb-80">
-    <div class="container">
+<section class="testimonial-area pt-4 pb-0 " style="background-image: linear-gradient(rgba(77, 79, 95, 1), rgba(77, 79, 95, 1)) !important;">
+    <div class="container py-5">
         <div class="testimonial-wrapper-two">
             <div class="row no-gutters">
-                <div class="col-lg-6">
+                <div class="col-lg-6 order-1-class pr-lg-2 d-flex align-items-center justify-content-center">
                     <div class="testimonial-content-box bg_cover wow fadeInRight"
-                         style="background-image: url(/webassets/images/bg/testimonial-bg-3.jpg;); visibility: visible; animation-name: fadeInRight;">
-                        <div class="section-title section-title-left pb-1">
-                            <span class="sub-title">Listings</span>
-                            <h2 style="line-height: 40px; margin-bottom: 0px;">
-                                On CatPedigreeWorld we use Listings
-                                as the currency of our website.
-                            </h2>
+                         style="background-image: none !important; visibility: visible; animation-name: fadeInRight;">
+                        <div class="section-title section-title-left pb-1" style="text-align: start !important; margin-bottom: 17px;">
+                            <span class="sub-title mb-0" style="color: white !important;">Listings</span>
+                            <h4 style="line-height: 30px; margin-bottom: 0;">At CatPedigreeWorld, we use Listings as the currency of our website.</h4>
                         </div>
-                        <p style="border-left: 8px solid #ffd74e;
-    padding-left: 16px;">
-                            Listings can be utilized across various sections including Kittens for sale, Relocation,
-                            Pedigrees, and Studmales. By using a listing, you gain access to view pedigrees and
-                            advertise your cattery or kittens for a specific duration.
+                        <p style="border-left: 8px solid white; font-family: 'Roboto', sans-serif; font-weight: 500; padding-left: 16px;">
+                            Listings can be used across various sections, including Kittens for Sale, Relocation, Pedigrees, and Studmales. By using a listing, you gain access to view pedigrees and advertise your cattery or kittens for a specific duration.
                         </p>
-                        <h4 style="font-weight: 700;font-size: 19px;">Advertisement Duration:</h4>
-                        <ul>
-                            <li> <i class="bi bi-check"></i> Kittens for sale: 60 Days</li>
-                            <li> <i class="bi bi-check"></i>Relocation: 120 Days</li>
-                            <li> <i class="bi bi-check"></i> Studmales: 365 Days</li>
+                        <h4 class="mt-2" style="font-weight: 700; font-size: 19px;">Advertisement Duration:</h4>
+                        <ul class="mb-3">
+                            <li> <i class="bi bi-arrow-bar-right"></i> Kittens for Sale: 60 Days</li>
+                            <li> <i class="bi bi-arrow-bar-right"></i> Relocation: 120 Days</li>
+                            <li> <i class="bi bi-arrow-bar-right"></i> Studmales: 365 Days</li>
                         </ul>
-                        <p style="border-left: 8px solid #ffd74e;
-    padding-left: 16px;">
-                            Many catteries opt for our fantastic Package Deals instead of purchasing listings individually
-                            for €7.50.
+                        <p style="border-left: 8px solid white; font-family: 'Roboto', sans-serif; font-weight: 500; padding-left: 16px;">
+                            Many catteries opt for our excellent Package Deals instead of purchasing listings individually for €7.50.
                         </p>
 
-                        <button class="btn btn-danger mt-4">Checkout Out our great package deals</button>
-
+                        <button class="btn btn-danger mt-4">Check Out Our Great Package Deals</button>
                     </div>
                 </div>
-                <div class="col-lg-6">
+
+                <div class="col-lg-6 order-2-class d-flex justify-content-center flex-column">
                     <div class="img-slider">
-                        <img src="~/webassets/images/elements/step-21.jpg" alt="img">
-                        <img src="~/webassets/images/elements/step-22.png" alt="img">
-                        <img src="~/webassets/images/elements/step-23.jpg" alt="img">
-                        <img src="~/webassets/images/elements/step-24.jpg" alt="img">
-                        <img src="~/webassets/images/elements/step-16.jpeg" alt="img">
+                        <img src="/webassets/images/elements/step-21.jpg" alt="img">
+                        <img src="/webassets/images/elements/step-22.png" alt="img">
+                        <img src="/webassets/images/elements/step-23.jpg" alt="img">
+                        <img src="/webassets/images/elements/step-24.jpg" alt="img">
+                        <img src="/webassets/images/elements/step-45.jpg" alt="img">
 
                     </div>
                 </div>
@@ -311,43 +197,567 @@ section, .section {
 </section>
 <!-- new-sec-end -->
 
-<section class="testimonial-area  pb-80 pt-0">
+<section class="testimonial-area pt-5">
     <div class="container">
         <div class="testimonial-wrapper-two">
             <div class="row no-gutters">
                 <div class="col-lg-6">
-                    <img src="~/webassets/images/elements/young kittens on a billboard.jpeg" alt="img" style="border: 4px solid red;">
+                    <img src="/webassets/images/elements/young kittens on a billboard.jpeg" alt="img" style="border: 4px solid black;">
                 </div>
-                <div class="col-lg-6 ">
+                <div class="col-lg-6 pl-lg-2 d-flex justify-content-center align-items-center">
                     <div class="testimonial-content-box bg_cover wow fadeInRight justify-content-center align-items-center d-flex flex-column"
-                         style="background-image: url(/webassets/images/bg/testimonial-bg-3.jpg); visibility: visible; animation-name: fadeInRight;">
+                         style="background-image: none !important; visibility: visible; animation-name: fadeInRight;">
                         <div class="section-title section-title-left pb-1">
-                            <span class="sub-title">Banners</span>
-
+                            <span class="sub-title" style="color: black !important;">Banners</span>
                         </div>
-                        <p style="border-left: 8px solid #ffd74e;
-    padding-left: 16px;">In addition to listings and enhancements, you can also promote your cattery with a Banner.</p>
-
-                        <p style="border-left: 8px solid #ffd74e;
-    padding-left: 16px;">
-                            For just €10 a year, you have the opportunity to showcase your Cattery Banner on
-                            Catpedigreeworld's Banners section. Just inform us of the breed you would like to
-                            highlight with your banner.
+                        <p style="border-left: 8px solid black; color: black !important; padding-left: 16px;">
+                            In addition to listings and enhancements, you can also promote your cattery with a banner.
                         </p>
-                        <h5 class="mt-4">Your banner can be up to 600 x 200 pixels in size and will be featured on our website for a full year.</h5>
-                        <button class="btn btn-danger mt-4">Yes I want to buy category banner now</button>
-
+                        <p class="my-3" style="border-left: 8px solid black; color: black !important; padding-left: 16px;">
+                            For just €10 a year, you have the opportunity to showcase your Cattery Banner in CatPedigreeWorld's Banners section. Just let us know the breed you would like to highlight with your banner.
+                        </p>
+                        <p class="my-3" style="border-left: 8px solid black; color: black !important; padding-left: 16px;">
+                            Your banner can be up to 600 x 200 pixels in size and will be featured on our website for a full year.
+                        </p>
+                        <button class="btn btn-danger mt-4">Yes, I want to buy a category banner now</button>
                     </div>
                 </div>
+
 
             </div>
 
         </div>
     </div>
+</section>
+<section class="dnd-section pb-0 pt-4 d-none" id="pricing">
+    <div class="container">
+        <h2 class="text-center mb-5">Pricing</h2>
+        <div class="row pricing-table-slider">
+            <div class="col-3">
+                <div class="pricing-table advertising">
+
+
+                    <h3>Starter*</h3>
+                    <p class="price">
+                        Now for €30** / <span>year</span>
+                    </p>
+                    <p class="description">
+                        Key Features:
+                    </p>
+
+                    <div class="accordion">
+
+                        <div class="option">
+                            <input type="checkbox" id="Starter*-1" class="toggle">
+                            <label class="title1" for="Starter*-1">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle1_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> 5 Listings
+                            </label>
+                            <div class="content">
+                                <p>
+                                    Can be used in the following sections: Kittens for sale, Relocation, Pedigrees
+                                    and Studmales
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Starter*-2" class="toggle">
+                            <label class="title1" for="Starter*-2">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle2_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Listings are valid for 365 days*
+                            </label>
+                            <div class="content">
+                                <p>Counted from day of purchase</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Starter*-3" class="toggle">
+                            <label class="title1" for="Starter*-3">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle3_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Free Pedigree Uploads
+                            </label>
+                            <div class="content">
+                                <p>Pedigrees are free to upload into your account.</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Starter*-4" class="toggle">
+                            <label class="title1" for="Starter*-4">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle4_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 2 Rimmed photos
+                            </label>
+                            <div class="content">
+                                <p>You´ll receive 2 Rimmed photo´s to use in your Listing for free</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="?hsLang=en">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-3">
+                <div class="pricing-table advertising">
+
+
+                    <h3>Medium*</h3>
+                    <p class="price">
+                        Now for €50** / <span>year</span>
+                    </p>
+                    <p class="description">
+                        Key Features:
+                    </p>
+
+                    <div class="accordion">
+
+                        <div class="option">
+                            <input type="checkbox" id="Medium*-1" class="toggle">
+                            <label class="title1" for="Medium*-1">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle1_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> 10 + 2 Free Listings
+                            </label>
+                            <div class="content">
+                                <p>
+                                    Can be used in the following sections: Kittens for sale, Relocation, Pedigrees
+                                    and Studmales
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Medium*-2" class="toggle">
+                            <label class="title1" for="Medium*-2">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle2_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Listings are valid for 365 days*
+                            </label>
+                            <div class="content">
+                                <p>Counted from day of purchase</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Medium*-3" class="toggle">
+                            <label class="title1" for="Medium*-3">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle3_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Free Pedigree Uploads
+                            </label>
+                            <div class="content">
+                                <p>Pedigrees are free to upload into your account.</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Medium*-4" class="toggle">
+                            <label class="title1" for="Medium*-4">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle4_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 5 Rimmed &amp; 5 Bold photos
+                            </label>
+                            <div class="content">
+                                <p>You´ll receive 5 Rimmed &amp; 5 Bold photo´s to use in your Listing for free</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="?hsLang=en">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-3">
+                <div class="pricing-table advertising">
+
+                    <div class="ribbon ribbon-top-right"><span>Best selling</span></div>
+
+
+                    <h3>Premium*</h3>
+                    <p class="price">
+                        Now for €75** / <span>year</span>
+                    </p>
+                    <p class="description">
+                        Key Features:
+                    </p>
+
+                    <div class="accordion">
+
+                        <div class="option">
+                            <input type="checkbox" id="Premium*-1" class="toggle">
+                            <label class="title1" for="Premium*-1">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle1_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> 15 + 5 Free Listings
+                            </label>
+                            <div class="content">
+                                <p>
+                                    Can be used in the following sections: Kittens for sale, Relocation, Pedigrees
+                                    and Studmales
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Premium*-2" class="toggle">
+                            <label class="title1" for="Premium*-2">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle2_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Listings are valid for 365 days*
+                            </label>
+                            <div class="content">
+                                <p>Counted from day of purchase</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Premium*-3" class="toggle">
+                            <label class="title1" for="Premium*-3">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle3_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Free Pedigree Uploads
+                            </label>
+                            <div class="content">
+                                <p>Pedigrees are free to upload into your account.</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Premium*-4" class="toggle">
+                            <label class="title1" for="Premium*-4">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle4_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 10 Rimmed &amp; 10 Bold photos
+                            </label>
+                            <div class="content">
+                                <p>
+                                    You´ll receive 10 Rimmed &amp; 10 Bold photo´s to use in your Listing for free
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Premium*-5" class="toggle">
+                            <label class="title1" for="Premium*-5">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle5_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 2 Top Listings
+                            </label>
+                            <div class="content">
+                                <p>You´ll receive 2 Top Listings to use with your Listing for free</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="?hsLang=en">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-3">
+                <div class="pricing-table advertising">
+
+
+                    <h3>Unlimited*</h3>
+                    <p class="price">
+                        Now for €100** / <span>year</span>
+                    </p>
+                    <p class="description">
+                        Key Features:
+                    </p>
+
+                    <div class="accordion">
+                        <div class="option">
+                            <input type="checkbox" id="Unlimited-1" class="toggle">
+                            <label class="title1" for="Unlimited-1">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle1_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span>
+                                Unlimited Listings
+                            </label>
+                            <div class="content">
+                                <p>
+                                    Can be used in the following sections: Kittens for sale, Relocation, Pedigrees
+                                    and Studmales
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Unlimited-2" class="toggle">
+                            <label class="title1" for="Unlimited-2">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle2_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span>
+                                Listings are valid for 365 days*
+                            </label>
+                            <div class="content">
+                                <p>Counted from day of purchase</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Unlimited*-3" class="toggle">
+                            <label class="title1" for="Unlimited*-3">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle3_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Free Pedigree Uploads
+                            </label>
+                            <div class="content">
+                                <p>Pedigrees are free to upload into your account.</p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Unlimited*-4" class="toggle">
+                            <label class="title1" for="Unlimited*-4">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle4_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 15 Rimmed &amp; 15 Bold photos
+                            </label>
+                            <div class="content">
+                                <p>
+                                    You´ll receive 15 Rimmed &amp; 15 Bold photo´s to use in your Listing for free
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <input type="checkbox" id="Unlimited*-5" class="toggle">
+                            <label class="title1" for="Unlimited*-5">
+                                <span class="green">
+                                    <span id="hs_cos_wrapper_widget_1724084820212_"
+                                          class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon"
+                                          style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             aria-hidden="true">
+                                            <g id="check-circle5_layer">
+                                                <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </span> Bonus: 5 Top Listings
+                            </label>
+                            <div class="content">
+                                <p>You´ll receive 5 Top Listings to use with your Listing for free</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="?hsLang=en">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a class="main-btn mt-5" style="font-size: 20px;">
+                    No i don't want a package <br>
+                    <span style="font-size: 15px;">I'll pay €7,50 per Listing</span>
+            </a>
+        </div>
     </div>
 </section>
+<!--====== End Pricing Section ======-->
 <!-- Accordion section -->
-<section class="Myaccordion pt-0 ">
+<section class="Myaccordion pt-4 pb-4 ">
     <div class="container">
         <h4 class="text-center" style="color: #ED334F;">FAQ</h4>
         <h3 class="text-center pb-3">Frequently Asked Questions</h3>
@@ -358,7 +768,7 @@ section, .section {
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    I would like to upgrade my plain. Is this possible?
+                                    I would like to upgrade my plan, Is this possible?
                                 </a>
                             </h4>
                         </div>
@@ -386,7 +796,7 @@ section, .section {
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h4 class="panel-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Do i need to buy complete new package when i have used all the top listings or other enhancement in my package.
+                                    Do i need to buy completely new package when i have used all the top listings or other enhancement in my package.
                                 </a>
                             </h4>
                         </div>

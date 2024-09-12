@@ -4,9 +4,27 @@ const pageSize = 8;
 let varTotalCount = 0;
 let varCurrentCount = 0;
 
+
+
+
 $(document).ready(function () {
-    GetAllCatType();
-})
+    baseApiUrl = $("#baseApiUrl").val();
+    (async function () {
+        try {
+            await initMap();
+            // Global variable for the info window
+            infoWindow = new google.maps.InfoWindow();
+            await loadMore();;
+            await GetSidebarAdvertisments();
+            await GetAllCatType();
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
+}); 
+
+
 
 // Get the URL parameters
 let urlParams = new URLSearchParams(window.location.search);
@@ -16,9 +34,16 @@ let keyword = urlParams.get('keyword');
 let categoryId = Number(urlParams.get('categoryId'));
 let listingLocation = urlParams.get('listingLocation');
 
+function initMap() {
+    // Initialize the map centered on New York with a default zoom level
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 48.7758459, lng: 9.1829321 }, // New York coordinates
+        zoom: 13
+    });
+}
+
 async function loadMore() {
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
-
 
     var obj = {
         PageNumber: pageNumber,
@@ -28,9 +53,6 @@ async function loadMore() {
         Location: listingLocation,
         Currency: curr
     }
-
-
-    
 
     const response = await fetch('/Listing/GetAllListingByFilters', {
         method: 'POST',
@@ -46,56 +68,55 @@ async function loadMore() {
         varTotalCount = totalCount;
         varCurrentCount = currentCount;
 
-        // $('#appendListings').empty();
         $.each(listings, function (index, item) {
-
             var html = `
-                            <div class="col-lg-4 col-md-6 col-sm-12" >
-                                <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
-                                <div class="listing-thumbnail">
-                                    ${item.videoPath && item.videoPath.trim() !== "" ?
-                                        `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
-                                             <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
-                                                 <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                                 ${item.price && item.price !== "" ?
-                                                    `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                                                    ''}
-                                             </div>
-                                         </div>` :
-                                        `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
-                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                         ${item.price && item.price !== "" ?
-                                            `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                                            ''}
-                                         </a>`
-                                    }
-                                </div>
-                                <div class="listing-content">
-                                    <div class="title d-flex justify-content-between align-items-center mb-10">
-                                        <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
+                        <div class="listing-thumbnail">
+                            ${item.videoPath && item.videoPath.trim() !== "" ?
+                    `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
+                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
+                                        <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                        ${item.price && item.price !== "" ?
+                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                        ''}
                                     </div>
-                                    <h3 class="title">
-                                        <a onclick="SingleListing(${item.id})">${item.title}</a>
-                                    </h3>
-                                    <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
-                                    <div class="listing-meta">
-                                        <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
-                                        </ul>
-                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
-                                            Request Price
-                                            <span class="spinner-btn"></span>
-                                        </button>
-                                    </div>
-                                </div>
+                                </div>` :
+                    `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
+                                    <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                    ${item.price && item.price !== "" ?
+                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
+                        ''}
+                                </a>`
+                }
+                        </div>
+                        <div class="listing-content">
+                            <div class="title d-flex justify-content-between align-items-center mb-10">
+                                <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
                             </div>
-                            </div>`;
+                            <h3 class="title">
+                                <a onclick="SingleListing(${item.id})">${item.title}</a>
+                            </h3>
+                            <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
+                            <div class="listing-meta">
+                                <ul>
+                                    <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                </ul>
+                                <button type="button" class="d-none btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                    Request Price
+                                    <span class="spinner-btn"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
             $('#appendListings').append(html);
             $("#load-more").show();
+
+            // Add marker to the map with listing HTML
+            addMarker(item.latitude, item.longitude, item.title, html);
         });
-
-
-
 
         var selectedCurrency = localStorage.getItem('cur');
         updatePrices(selectedCurrency);
@@ -106,11 +127,53 @@ async function loadMore() {
         if (varCurrentCount >= varTotalCount) {
             document.getElementById('load-more').style.display = 'none';
         }
-    }
-    else {
+    } else {
         $('#appendListings').append(`<h4>No Listing found..</h4>`);
     }
 }
+
+
+function addMarker(lat, lng, title, listingHtml) {
+    // Define the URL for your custom marker image
+    const customIconUrl = '/webassets/images/cat_logo_icon.png'; // Replace with your image URL
+    // Define the size for the custom marker image
+    const markerSize = new google.maps.Size(50, 50); // Adjust width and height as needed
+
+    const marker = new google.maps.Marker({
+        position: { lat: parseFloat(lat), lng: parseFloat(lng) },
+        map: map,
+        title: title
+    });
+
+    markers.push(marker);
+
+    // Update the listingHtml to replace col-lg-4 col-md-6 col-sm-12 with col-12
+    const updatedListingHtml = listingHtml.replace(/col-lg-4 col-md-6 col-sm-12/g, 'col-12').replace('featured-btn price','featured-btn price d-none');
+
+    google.maps.event.addListener(marker, 'mouseover', function () {
+        infoWindow.setContent(updatedListingHtml);
+        infoWindow.open(map, marker);
+    });
+
+    google.maps.event.addListener(infoWindow, 'domready', function () {
+        const iwOuter = $('.gm-style-iw');
+
+        iwOuter.on('mouseenter', function () {
+            infoWindow.setOptions({ disableAutoPan: true });
+        });
+
+        iwOuter.on('mouseleave', function () {
+            infoWindow.close();
+        });
+    });
+}
+
+// Close info window when clicking outside of it
+document.addEventListener('click', function (event) {
+    if (!$(event.target).closest('.gm-style-iw').length && !$(event.target).closest('.gm-style').length) {
+        infoWindow.close();
+    }
+});
 
 async function filteringSearch() {
 
@@ -172,7 +235,7 @@ async function filteringSearch() {
                              <ul>
                                  <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                              </ul>
-                             <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                             <button type="button" class="d-none btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
                                  Request Price
                                  <span class="spinner-btn"></span>
                              </button>
@@ -209,11 +272,7 @@ function updateCountDisplay() {
     countDisplay.textContent = `${varCurrentCount}/${varTotalCount}`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    baseApiUrl = $("#baseApiUrl").val();
-    loadMore();
-    GetSidebarAdvertisments();
-});
+
 
 
 function GetAllCatType() {

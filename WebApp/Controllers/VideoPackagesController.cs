@@ -28,7 +28,7 @@ namespace WebApp.Controllers
             }
 
             string content = "";
-            return HttpClientUtility.CustomHttp(BaseUrl, "api/VideoPackages/GetAllVideoPackages/" + currency, content, HttpContext);
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/VideoPackages/GetAllVideoPackages/" + currency, content, HttpContext);
         }
            
         

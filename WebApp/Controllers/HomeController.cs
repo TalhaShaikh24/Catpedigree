@@ -33,7 +33,7 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public IActionResult HowToPaceYourListing()
+        public IActionResult HowToPlaceYourListing()
         {
             return View();
         }
@@ -59,6 +59,10 @@ namespace WebApp.Controllers
             return View();
         }
         public IActionResult Terms()
+        {
+            return View();
+        } 
+        public IActionResult CookiePolicies()
         {
             return View();
         }  

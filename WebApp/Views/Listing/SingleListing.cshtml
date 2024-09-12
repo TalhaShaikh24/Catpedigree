@@ -696,9 +696,9 @@
                                         <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                         <h4 class="widget-title">Contact Info</h4>
                                         <div class="info-list">
-                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Username))
+                                            @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.CatteryName))
                                             {
-                                                <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.Username</a></p>
+                                                <p><i class="ti-user"></i><a href="javascript:void(0)">@Model.data.Listing.CatteryName</a></p>
                                             }
                                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.Phone))
                                             {

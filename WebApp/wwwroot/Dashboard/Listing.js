@@ -290,6 +290,7 @@ function GetAllListings() {
 
                 $("#AppendApprovalListing").append(`
                     <tr>
+                        <td>${v.id}</td>
                         <td>${statusIcon}</td>
                         <td>${v.title}</td>
                         <td>${v.email}</td>

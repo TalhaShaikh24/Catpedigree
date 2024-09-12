@@ -126,11 +126,11 @@ body {
         }
 
     .pricingTable.blue {
-        --main-color: #37474f;
+        --main-color: #37474f!important;
     }
 
     .pricingTable.magenta {
-        --main-color: #971F45;
+        --main-color: #971F45!important;
     }
 
 @media only screen and (max-width: 990px) {

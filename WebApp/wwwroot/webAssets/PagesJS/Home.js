@@ -71,7 +71,7 @@ function GetTopPageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
-                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                        <button type="button" class="d-none btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
                                             Request Price
                                             <span class="spinner-btn"></span>
                                         </button>
@@ -179,7 +179,7 @@ function GetVetRimmedPageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
-                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                        <button type="button" class="d-none btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
                                             Request Price
                                             <span class="spinner-btn"></span>
                                         </button>
@@ -298,7 +298,7 @@ function GetHomePageListings() {
                                         <ul>
                                             <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
                                         </ul>
-                                        <button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
+                                        <button type="button" class="d-none btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
                                             Request Price
                                             <span class="spinner-btn"></span>
                                         </button>
