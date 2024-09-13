@@ -153,11 +153,7 @@ a {
     text-decoration: none;
 }
 
-.container {
-    display: block;
-    width: 1200px;
-    margin: auto;
-}
+
 code {
     font-family: monospace;
     color: #2d2d2d;

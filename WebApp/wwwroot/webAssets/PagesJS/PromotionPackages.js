@@ -27,7 +27,7 @@ let baseApiUrl = "";
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
-    getAll()
+    //getAll()
 })
 
 function getAll() {
@@ -93,7 +93,7 @@ function getAll() {
 
 
                 var selectedCurrency = localStorage.getItem('cur');
-                updatePrices(selectedCurrency);
+               // updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -227,7 +227,7 @@ function GetPromotionCost(pkgId) {
 
 
             var selectedCurrency = localStorage.getItem('cur');
-            updatePrices(selectedCurrency);
+            //updatePrices(selectedCurrency);
         }
         if (res.status == 304) {
 

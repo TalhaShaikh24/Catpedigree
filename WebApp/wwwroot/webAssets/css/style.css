@@ -12,28 +12,32 @@ html {
 html, body {
     height: 100%;
     margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 /* custom css */
 
-/* For WebKit-based browsers (Chrome, Safari) */
-::-webkit-scrollbar {
-    width: 10px; /* Width of the scrollbar */
-}
+@media only screen and (min-width:768px) {
 
-::-webkit-scrollbar-track {
-    background: black; /* Color of the track */
-    border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #ff344f; /* Color of the thumb */
-    border-radius: 10px;
-}
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555; /* Color of the thumb on hover */
+     /*For WebKit-based browsers (Chrome, Safari) */
+    ::-webkit-scrollbar {
+        width: 10px; 
     }
 
+    ::-webkit-scrollbar-track {
+        background: black;  
+        border-radius: 0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ff344f;   
+        border-radius: 10px;
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;  
+        }
+}
 
 
 * {
@@ -373,7 +377,7 @@ body {
     overflow-x: hidden;
 }
 
-@media screen and( max-width: 500px) {
+@media screen and (max-width: 500px) {
     .over-hide {
         overflow: hidden;
     }
@@ -501,6 +505,9 @@ textarea.form_control {
     .section-title h2 {
         font-size: 28px;
         line-height: 40px;
+    }
+    a.brand-logo {
+        width: 164px !important;
     }
 }
 
@@ -1627,7 +1634,7 @@ button {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    /*right: 0;*/
     z-index: 999;
     -webkit-animation: sticky 1.2s;
     animation: sticky 1.2s;

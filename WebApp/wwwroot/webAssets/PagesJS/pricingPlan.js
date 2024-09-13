@@ -84,7 +84,7 @@ function getAllPackages() {
 
 
                 var selectedCurrency = localStorage.getItem('cur');
-                updatePrices(selectedCurrency);
+                //updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {

@@ -182,6 +182,12 @@ $("#SubmitReview").click(function () {
                 }
 
             }
+            $("#Comment").val('');
+            $.toast({
+                text: 'Comment has been submitted',
+                showHideTransition: 'slide',
+                icon: 'success'
+            })
         }
         if (res.status == 304) {
 

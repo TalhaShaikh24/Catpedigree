@@ -55,6 +55,9 @@
     <!-- Include Google Translate API -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
+        section.hero-area {
+            padding-top: 0px;
+        }
         .currency-dropdown {
             display: inline-block;
             position: relative;
@@ -431,7 +434,7 @@
             </div>
         </div>
     </header>
-    <header class="header-area header-area-three transparent-header ">
+    <header class="header-area header-area-three transparent-header">
         <div class="header-top">
             <div class="container-fluid">
                 <div class="row align-items-center">
@@ -441,9 +444,9 @@
                                 <li><span>Follow us:</span></li>
                                 <li><a href="https://www.facebook.com/catpedigreeworld"><i class="fab fa-facebook-f" style="color:#4267B2"></i></a></li>
                                 <li><a href="https://www.instagram.com/catpedigreeworld?utm_source=qr&igsh=MW9vNGx1ZzV3cXFreA=="><i class="fab fa-instagram" style="color:#C13584"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter" style="color:#1DA1F2"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube" style="color:#FF0000"></i></a></li>
-                                <li><a href="#"><i class="fab fa-tiktok" style="color:#000000"></i></a></li>
+                                <li class="d-none"><a href="#"><i class="fab fa-twitter" style="color:#1DA1F2"></i></a></li>
+                                <li class="d-none"><a href="#"><i class="fab fa-youtube" style="color:#FF0000"></i></a></li>
+                                <li><a href="https://www.tiktok.com/@@catpedigreeworld?_t=8pdP6LaoLRp&_r=1"><i class="fab fa-tiktok" style="color:#000000"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -488,12 +491,12 @@
             <div class="container-fuild" style="margin: 0px 50px;">
                 <div class="primary-menu">
                     <div class="row align-items-center">
-                        <div class="col-md-2">
+                        <div class="col-lg-2 col-5">
                             <div class="site-branding">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-lg-7 col-2">
                             <div class="nav-menu">
                                 <div class="navbar-close"><i class="ti-close"></i></div>
                                 <nav class="main-menu d-flex justify-content-center">
@@ -523,7 +526,7 @@
                                         <li class="menu-item">
                                             <a href="">Cats & Kittens</a>
                                             <ul class="sub-menu">
-                                                <li><a href="@Url.Action("Kittens","Home")">Kittens</a></li>
+                                                <li><a href="@Url.Action("catMediation","Home")">Kittens</a></li>
                                                 <li><a href="@Url.Action("Relocation","Home")">Relocation</a></li>
                                                 <li><a href="@Url.Action("Studs","Home")">Studs</a></li>
                                                 <li><a href="@Url.Action("PedigreeService","Home")">Pedigrees</a></li>
@@ -617,7 +620,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="widget about-widget mb-40 wow fadeInUp" data-wow-delay="10ms">
+                            <div class="widget about-widget mb-40  fadeInUp" data--delay="10ms">
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img style="width:75%" src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                                 <div>
                                     <h6 class="text-white mb-2 mt-4">CAT PEDIGREE WORLD</h6>
