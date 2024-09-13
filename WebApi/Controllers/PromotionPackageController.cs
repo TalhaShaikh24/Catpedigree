@@ -118,7 +118,14 @@ namespace WebApi.Controllers
                 if (p > 0)
                 {
 
-                    if (p == 15)
+                    // need to change the PriceID becuase of video package 
+                    if (p == 3)
+                    {
+
+                        priceId = _PriceID15;
+
+                    }
+                     if (p == 15)
                     {
 
                         priceId = _PriceID15;
