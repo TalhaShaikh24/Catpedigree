@@ -202,9 +202,9 @@ $("#SubmitReview").click(function () {
         if (res.status == 401) {
 
             Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
+                title: "Unauthorized",
+                text: "You must login to submit comment",
+                icon: "warning"
             })
         }
         if (res.status == 403) {

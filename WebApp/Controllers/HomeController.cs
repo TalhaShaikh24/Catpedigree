@@ -17,6 +17,10 @@ namespace WebApp.Controllers
         {
             return View();
         } 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }  
         public IActionResult Advertising()
         {
             return View();

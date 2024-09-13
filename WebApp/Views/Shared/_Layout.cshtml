@@ -42,6 +42,8 @@
     <!--====== Style css ======-->
     <link rel="stylesheet" href="~/webassets/css/style.css">
     <link href="~/webassets/css/about5.css" rel="stylesheet" />
+    <!--====== Toast Alert css ======-->
+    <link href="~/webassets/css/toats.css" rel="stylesheet" />
     <!--====== BoxIcon css ======-->
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
 
@@ -550,7 +552,7 @@
                                             <ul class="sub-menu">
                                                 <li><a href="">Breeders FAQ</a></li>
                                                 <li><a href="">General FAQ</a></li>
-                                                <li><a href="">About us</a></li>
+                                                <li><a href="@Url.Action("AboutUs","Home")">About us</a></li>
                                                 <li><a href="@Url.Action("WhatDoWeDo","Home")">Why are we unique</a></li>
                                             </ul>
                                         </li>
@@ -758,6 +760,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/intlTelInput.min.js"></script>
     <!--====== Wow js ======-->
     <script src="~/webassets/js/wow.min.js"></script>
+    <!--====== Toast Alert css ======-->
+    <script src="~/webassets/js/toasts.js"></script>
     <!--====== Main js ======-->
     <script src="~/webassets/js/main.js"></script>
     <script src="~/webassets/js/sweetalert2.min.js"></script>

@@ -241,6 +241,52 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost("AddComment")]
+        public Response AddComment([FromBody] Comment obj)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                obj.UserId = claimDTO.UserId;
+
+
+                var res = _repository.AddComment(obj);
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.ResponseMsg = "Comment Create Successfuly!";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
 
 
 

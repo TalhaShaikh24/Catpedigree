@@ -28,7 +28,7 @@ let packageID = 0;
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
-    getAllPackages()
+    //getAllPackages()
 })
 
 function getAllPackages() {
@@ -176,7 +176,7 @@ $("#makepayment").click(function () {
 
     }
     postRequest('/Packages/BuyPackage', obj, function (res) {
-
+        debugger
         if (res.status == 200) {
             $(".preloader").hide()
             if (res.data != null) {

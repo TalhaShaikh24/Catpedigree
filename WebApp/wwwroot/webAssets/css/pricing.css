@@ -1,6 +1,7 @@
 .dnd-section {
     background-color: rgba(255, 255, 255, 1.0);
 }
+
 .pricing-table {
     border: 1px solid #ddd;
     padding: 0 10px;
@@ -9,6 +10,7 @@
     height: 100%;
     min-height: 750px;
 }
+
 #hs_cos_wrapper_widget_1724084820212 .pricing-table h3 {
     color: rgba(255, 122, 89, 1.0);
 }
@@ -19,6 +21,7 @@
     margin: 20px 0;
     text-align: center;
 }
+
 #hs_cos_wrapper_widget_1724084820212 .pricing-table .price {
     color: rgba(39, 36, 36, 1.0);
 }
@@ -29,6 +32,7 @@
     margin: 0;
     text-align: center;
 }
+
 #hs_cos_wrapper_widget_1724084820212 .pricing-table .description, #hs_cos_wrapper_widget_1724084820212 .pricing-table ul.list-features li {
     color: rgba(0, 0, 0, 1.0);
 }
@@ -36,6 +40,7 @@
 .pricing-table .description {
     text-align: center;
 }
+
 .accordion {
     margin: 3em auto 4em;
     max-width: 30em;
@@ -60,20 +65,20 @@
     position: relative;
 }
 
-.title1:after, .title1:before {
-    background-color: #7a7572;
-    content: "";
-    height: .75em;
-    position: absolute;
-    right: 1.25em;
-    top: 1.25em;
-    width: 2px;
-    transition: transform 0.2s ease;
-}
+    .title1:after, .title1:before {
+        background-color: #7a7572;
+        content: "";
+        height: .75em;
+        position: absolute;
+        right: 1.25em;
+        top: 1.25em;
+        width: 2px;
+        transition: transform 0.2s ease;
+    }
 
-.title1:after {
-    transform: rotate(90deg);
-}
+    .title1:after {
+        transform: rotate(90deg);
+    }
 
 .content {
     background-color: #fff;
@@ -95,12 +100,15 @@
     background-color: rgba(102, 0, 0, 1.0);
     color: rgba(255, 255, 255, 1.0);
 }
-.toggle:checked+.title1, .toggle:checked+.title1+.content {
+
+.toggle:checked + .title1, .toggle:checked + .title1 + .content {
     box-shadow: 3px 3px 6px #ddd, -3px 3px 6px #ddd;
 }
+
 .title1 span.green {
     fill: green;
 }
+
 .title1 span {
     border-radius: 100%;
     content: "";
@@ -109,10 +117,12 @@
     position: absolute;
     width: 20px;
 }
+
 .pricing-table .button-pt:hover {
     background-color: #000;
     transition: 0.5s ease-out;
 }
+
 .pricing-table .button-pt {
     background: #ED334F;
     color: #fff;
@@ -133,10 +143,12 @@
     position: absolute;
     width: 100%;
 }
+
 .pricing-table .ribbon-top-right {
     right: -10px;
     top: -10px;
 }
+
 .pricing-table .ribbon {
     height: 120px;
     overflow: hidden;
@@ -144,17 +156,21 @@
     width: 120px;
     z-index: 10;
 }
+
 #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:before, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:after, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:after, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:before {
     border: 5px solid rgba(102, 0, 0, 1.0);
 }
+
 .pricing-table .ribbon-top-right:before {
     left: 0;
     top: 0;
 }
+
 .pricing-table .ribbon-top-right:after, .pricing-table .ribbon-top-right:before {
     border-right-color: transparent;
     border-top-color: transparent;
 }
+
 .pricing-table .ribbon:after, .pricing-table .ribbon:before {
     border: 5px solid #c52025;
     content: "";
@@ -162,13 +178,14 @@
     position: absolute;
     z-index: -1;
 }
- 
+
 
 .pricing-table .ribbon-top-right span {
     left: -34px;
     top: 18px;
     transform: rotate(45deg);
 }
+
 .pricing-table .ribbon span {
     background-color: #c52025;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
@@ -183,6 +200,7 @@
     text-transform: uppercase;
     width: 225px;
 }
+
 #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:before, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:after, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:after, #hs_cos_wrapper_widget_1724084820212 .pricing-table .ribbon:before {
     border: 5px solid rgba(102, 0, 0, 1.0);
 }
@@ -207,125 +225,144 @@
     padding-bottom: 10px;
     position: relative;
 }
-.pricing-table ul.list-features li span.green {
-    fill: green;
-}
 
-.pricing-table ul.list-features li span {
-    border-radius: 100%;
-    content: "";
-    height: 20px;
-    left: -15px;
-    position: absolute;
-    width: 20px;
-}
+    .pricing-table ul.list-features li span.green {
+        fill: green;
+    }
 
-.pricing-table ul.list-features li span {
-    border-radius: 100%;
-    content: "";
-    height: 20px;
-    left: -15px;
-    position: absolute;
-    width: 20px;
-}
+    .pricing-table ul.list-features li span {
+        border-radius: 100%;
+        content: "";
+        height: 20px;
+        left: -15px;
+        position: absolute;
+        width: 20px;
+    }
+
+    .pricing-table ul.list-features li span {
+        border-radius: 100%;
+        content: "";
+        height: 20px;
+        left: -15px;
+        position: absolute;
+        width: 20px;
+    }
+
 @media screen and (max-width:768px) {
     .breeds {
-      min-height: 838px !important;
+        min-height: 838px !important;
     }
 }
+
 @media screen and (max-width:426px) {
     .breeds {
-      min-height: 723px !important;
+        min-height: 723px !important;
     }
 }
+
 @media screen and (max-width:1440px) {
     .enhancement {
-      min-height: 600px !important;
+        min-height: 600px !important;
     }
 }
+
 @media screen and (max-width:768px) {
     .enhancement {
-      min-height: 748px !important;
+        min-height: 748px !important;
     }
 }
+
 @media screen and (max-width:426px) {
     .enhancement {
-      min-height: 556px !important;
+        min-height: 556px !important;
     }
 }
 
 @media screen and (max-width:768px) {
     .advertising {
-      min-height: 846px !important;
+        min-height: 846px !important;
     }
 }
+
 @media screen and (max-width:426px) {
     .advertising {
-      min-height: 750px !important;
+        min-height: 750px !important;
     }
 }
+
 @media screen and (max-width:1440px) {
     .kittens {
-      min-height: 682px !important;
+        min-height: 682px !important;
     }
 }
+
 @media screen and (max-width:768px) {
     .kittens {
-      min-height: 783px !important;
+        min-height: 783px !important;
     }
 }
+
 @media screen and (max-width:426px) {
     .kittens {
-      min-height: 591px !important;
+        min-height: 591px !important;
     }
 }
+
 @media screen and (max-width:768px) {
     .pedigree {
-      min-height: 844px !important;
+        min-height: 844px !important;
     }
 }
+
 @media screen and (max-width:426px) {
     .pedigree {
-      min-height: 635px !important;
+        min-height: 635px !important;
     }
 }
+
 @media screen and (max-width:320px) {
     .pedigree {
-      min-height: 749px !important;
+        min-height: 749px !important;
     }
 }
+
 .testimonial-content-box {
     background-image: linear-gradient(rgba(77, 79, 95, 1), rgba(77, 79, 95, 1)) !important;
 }
-.testimonial-content-box  p{
-    color: white !important;
-    display: flex;
-}
-.testimonial-content-box  p> i {
-    color: white !important;
-}
-.testimonial-content-box .section-title h2,h5,h4,ul,.sub-title {
-    color: white !important;
-}
- 
-.testimonial-content-box  >.section-title h2:after {
-    content: "";
-    width: 50px;
-    height: 2px;
-    background: white !important;
-    display: inline-block;
-}
-.testimonial-content-box  > .section-title h2::before {
-    content: "";
-    width: 50px;
-    height: 2px;
-    background: white !important;
-    display: inline-block;
-}
 
-.testimonial-wrapper-two >  .col-lg-6 > img {
+    .testimonial-content-box p {
+        color: white !important;
+        display: flex;
+    }
+
+        .testimonial-content-box p > i {
+            color: white !important;
+        }
+
+    .testimonial-content-box .section-title h2, h5, h4, ul, .sub-title {
+        color: white !important;
+    }
+
+    .testimonial-content-box > .section-title h2:after {
+        content: "";
+        width: 50px;
+        height: 2px;
+        background: white !important;
+        display: inline-block;
+    }
+
+    .testimonial-content-box > .section-title h2::before {
+        content: "";
+        width: 50px;
+        height: 2px;
+        background: white !important;
+        display: inline-block;
+    }
+
+.testimonial-wrapper-two > .col-lg-6 > img {
     height: 100% !important;
 }
+
 .features span {
     color: black !important;
 }

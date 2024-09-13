@@ -1,5 +1,5 @@
 ﻿section, .section {
-    color: #212529;
+    color: #4D4F5F;
     background-color: #ffffff;
     padding: 60px 0;
     scroll-margin-top: 98px;
@@ -54,7 +54,7 @@
     }
 
 .features .features-item img {
-    border: 6px solid #ff344f;
+    border: 6px solid #4D4F5F;
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
@@ -66,7 +66,7 @@
 }
 
 .features .features-item img {
-    border: 6px solid #ff344f;
+    border: 6px solid #4D4F5F;
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
@@ -87,7 +87,7 @@
     }
 
     .features .features-item img {
-        border: 6px solid #ff344f;
+        border: 6px solid #4D4F5F;
         box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
     }
 
