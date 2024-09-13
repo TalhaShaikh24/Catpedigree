@@ -34,7 +34,7 @@ function getAll() {
 
 
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
-    debugger;
+
     postRequest('/PromotionPackage/GetAllPromotionPackages/' + curr, null, function (res) {
 
         if (res.status == 200) {
@@ -78,11 +78,11 @@ function getAll() {
                             <p class="mx-4 mb-4">${item.description}</p>
                             <h4 class="mb-4">Promotion costs:</h4>
                              <ul class="pricing-content" id="costs${item.promotionPackagesID}">
-                               ${costs.map(cost => `<li>${cost.daysNumber} days +  <span class='price'></span>  ${cost.cost}</li>`).join('')}
+                               ${ item.name == "Video" ? costs.map(cost => `<li>  <span class='price'></span>  ${cost.cost}</li>`).join('') :  costs.map(cost => `<li>${cost.daysNumber} days +  <span class='price'></span>  ${cost.cost}</li>`).join('')}
                             </ul>
 
                             <div class="pricingTable-signup">
-                                <a href="javascript:void(0)" class="buypackage" data-packageid="${item.promotionPackagesID}" >Buy Now</a>
+                                <a href="javascript:void(0)" class="buypackage"  data-packagetitle="${item.name}" data-packageid="${item.promotionPackagesID}" >Buy Now</a>
                            
                                 </div>
                         </div>
@@ -169,12 +169,23 @@ $(document).on('click', '.buypackage', function () {
 
      Promotionpackageid = $(this).attr('data-packageid');
 
+
+    var packagetitle = $(this).attr('data-packagetitle');
+
     $("#costslist").empty();
 
+    if (packagetitle == "Video") {
+
+
+        $("#paymentModal").modal('show');
+    }
+
+    else {
+    
     
    GetPromotionCost(Promotionpackageid);
 
-
+    }
 
 
 
@@ -283,15 +294,6 @@ function GetPromotionCost(pkgId) {
 
 $("#BuyPP").click(function () {
 
-
-
-    $("#paymentModal").modal('show');
-   // BuypromotionPackage(Promotionpackageid)
-
-})
-
-
-$("#makepayment").click(function () {
     if ($('input[name="inlineRadioOptions"]:checked').val() == undefined) {
 
         Swal.fire({
@@ -304,7 +306,16 @@ $("#makepayment").click(function () {
 
     }
 
+    $("#paymentModal").modal('show');
+   // BuypromotionPackage(Promotionpackageid)
 
+})
+
+
+$("#makepayment").click(function () {
+ 
+
+    debugger
     var expireDate = $('#cc-exp').val();
     // Parse the expire date
     var expireMonth = '';
@@ -313,7 +324,7 @@ $("#makepayment").click(function () {
     var obj = {
         PromotionPackagesID: Number(Promotionpackageid),
 
-        Days: parseInt($('input[name="inlineRadioOptions"]:checked').val()),
+        Days: $('input[name="inlineRadioOptions"]:checked').val() == undefined? 0: parseInt($('input[name="inlineRadioOptions"]:checked').val()),
         CardNumber: $("#cc-number").val(),
         expireMonth: parseInt(parts[0]),
         expireYear: parseInt(parts[1]),

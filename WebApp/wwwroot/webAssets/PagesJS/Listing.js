@@ -397,7 +397,7 @@ $(document).on('change', '#VideoFile', function (e) {
                                     allowEscapeKey: true,
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.open("/VideoPackages/VideoPlans", "_blank");
+                                        window.open("/promotionpackage", "_blank");
                                     }
                                 });
                             }
