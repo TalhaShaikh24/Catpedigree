@@ -47,6 +47,13 @@
         roles=userinfo.RoleIds;
 
 }
+    else
+    {
+        // This part of the layout will be visible to unauthenticated users
+        <div>
+            <p>You need to <a href="/Home/Login">login</a> to access more features.</p>
+        </div>
+    }
 }
 
 <!DOCTYPE html>

@@ -9,8 +9,30 @@ $(document).ready(function () {
     });
 
     $('#summernote').summernote({
-        height:650
+        height: 650,
+        callbacks: {
+            onImageUpload: function (files) {
+                uploadImage(files[0]);
+            }
+        }
     });
+    function uploadImage(file) {
+        let formData = new FormData();
+        formData.append('file', file);
+
+        fetch(`/Dashboard/UploadBlogImage`, {  // Adjust the URL to match the API endpoint
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                let imageUrl = data.data;  // Assuming your server responds with the image URL
+                $('#summernote').summernote('insertImage', imageUrl);
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+    }
     var urlParams = new URLSearchParams(window.location.search);
     var Id = urlParams.get("Id");
     (async function () {

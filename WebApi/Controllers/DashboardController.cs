@@ -3179,6 +3179,84 @@ namespace WebApi.Controllers
 
         }
 
+        //UploadImage
+        [HttpPost("UploadBlogImage")]
+        public async Task<Response> UploadBlogImage(IFormFile file)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+
+            try
+            {
+                // Validate the token
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null)
+                {
+                    response = CustomStatusResponse.GetResponse(401);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Unauthorized: Invalid token.";
+                    return response;
+                }
+
+                // Check if the file is null or empty
+                if (file == null || file.Length == 0)
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "File is empty.";
+                    response.Data = null;
+                    return response;
+                }
+
+                // Define the path for saving the file
+                var uploadsFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "UploadBLogs");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+                // Generate a unique file name if the file already exists
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var fileExtension = Path.GetExtension(file.FileName);
+                var newFileName = file.FileName;
+                var filePath = Path.Combine(uploadsFolderPath, newFileName);
+                int count = 1;
+
+                while (System.IO.File.Exists(filePath))
+                {
+                    newFileName = $"{fileName}_{count}{fileExtension}";
+                    filePath = Path.Combine(uploadsFolderPath, newFileName);
+                    count++;
+                }
+
+                // Save the file asynchronously
+                using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Construct the URL
+                var fileUrlPath = Path.Combine("UploadBLogs", newFileName).Replace(Path.DirectorySeparatorChar, '/');
+                string imageUrl = $"{BaseUrl.TrimEnd('/')}/{fileUrlPath}";
+
+                // Prepare success response
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = imageUrl;
+                response.ResponseMsg = "File uploaded successfully!";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                // Log exception details here if needed
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = $"An error occurred: {ex.Message}";
+                return response;
+            }
+        }
 
 
 

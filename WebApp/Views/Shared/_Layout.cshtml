@@ -510,10 +510,10 @@
                                                 <li class="menu-item has-children">
                                                     <a href="">Advertising</a>
                                                     <ul class="sub-menu">
-                                                        <li><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
-                                                        <li><a href="@Url.Action("Advertising","Home")">Advertising</a></li>
+                                                        <li class="d-none"><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
+                                                        <li class="d-none"><a href="@Url.Action("Advertising","Home")">Advertising</a></li>
                                                         <li><a href="@Url.Action("Enhancement","Home")">Enhancement</a></li>
-                                                        <li><a href="@Url.Action("VideoPlans","VideoPackages")">Video Promotion</a></li>
+                                                        <li class="d-none"><a href="@Url.Action("VideoPlans","VideoPackages")">Video Promotion</a></li>
                                                         <li><a href="@Url.Action("CatteryBanners","Home")">Cattery Banners</a></li>
                                                         <li><a href="@Url.Action("BusinessAdvertising","Home")">Business Advertising</a></li>
                                                         <li><a href="@Url.Action("HowtoPlaceYourListing","Home")">How to place listings</a></li>
@@ -582,7 +582,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-lg-3 col-5">
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
                                     @if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson)))
@@ -1055,6 +1055,8 @@
             $("#currency").niceSelect('destroy');
             $("#currency").niceSelect();
             $("#currency").change();
+
+           
         });
 
         function GetFooterAdvertisments() {
@@ -1198,5 +1200,9 @@
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+         document.documentElement.style.overflowX = 'hidden'; // For the <html> element
+    </script>
 </body>
 </html>

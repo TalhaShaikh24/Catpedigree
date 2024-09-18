@@ -1,18 +1,39 @@
 ﻿let baseApiUrl = "";
 $(document).ready(function () {
-
-    baseApiUrl = $("#baseApiUrl").val();
-
-    
+    const baseApiUrl = $("#baseApiUrl").val();
 
     $('#summernote').summernote({
-        height:650
+        height: 650,
+        callbacks: {
+            onImageUpload: function (files) {
+                uploadImage(files[0]);
+            }
+        }
     });
 
+    function uploadImage(file) {
+        let formData = new FormData();
+        formData.append('file', file);
 
+        fetch(`/Dashboard/UploadBlogImage`, {  // Adjust the URL to match the API endpoint
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                let imageUrl = data.data;  // Assuming your server responds with the image URL
+                $('#summernote').summernote('insertImage', imageUrl);
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+    }
+
+    // Call your functions to get categories and blogs
     GetAllBlogCategories();
     GetAllAdminBLogs();
-})
+});
+
 
 
 
@@ -382,7 +403,7 @@ function BlogDeleteById(Id) {
 
 }
 
-    $("#Btn_BlogSubmit").click(function () {
+$("#Btn_BlogSubmit").click(function () {
 
 
         let formData = new FormData();

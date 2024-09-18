@@ -394,6 +394,57 @@ namespace WebApp.HttpMethods
                     return null;
             }
         }
+        public static async Task<object> CustomHttpBlogFileDashboard(string baseUrl, string url, IFormFile file, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(baseUrl);
+
+                // Set the authorization header if it exists in the cookies
+
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                }
+
+
+                var multiContent = new MultipartFormDataContent();
+
+                if (file != null)
+                {
+
+                    multiContent.Add(new StreamContent(file.OpenReadStream()), "file", file.FileName);
+                }
+
+               
+
+                // Send the HTTP request
+                HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+
+                    return responseBody;
+
+                }
+                else
+                    return null;
+            }
+        }
 
 
 

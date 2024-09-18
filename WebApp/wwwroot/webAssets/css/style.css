@@ -13,7 +13,7 @@ html, body {
     height: 100%;
     margin: 0;
     max-width: 100%;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 /* custom css */
 
@@ -1634,11 +1634,24 @@ button {
     position: fixed;
     top: 0;
     left: 0;
-    /*right: 0;*/
+    right: 0;
     z-index: 999;
     -webkit-animation: sticky 1.2s;
     animation: sticky 1.2s;
 }
+@media only screen and (max-width:768px){
+    /* Sticky Header */
+    .header-navigation.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: unset;
+        z-index: 999;
+        -webkit-animation: sticky 1.2s;
+        animation: sticky 1.2s;
+    }
+}
+
 
 .header-area-two .header-navigation {
     padding: 15px 0;

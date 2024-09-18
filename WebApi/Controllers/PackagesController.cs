@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mollie.Api.Models;
+using Stripe;
+using Stripe.Checkout;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Repositories;
@@ -21,6 +23,8 @@ namespace WebApi.Controllers
         private readonly string _PriceID50 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
+        // This is your Stripe CLI webhook secret for testing your endpoint locally.
+        const string endpointSecret = "whsec_5faaa8f893e8ee04fe332d778da9a4b4807614c9f57791447440cfdcb58bca33";
 
 
 
@@ -221,17 +225,10 @@ namespace WebApi.Controllers
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
-
                     response.ResponseMsg = "Package has been assigned successfully!";
-
-
                     response.Token = TokenManager.GenerateToken(claimDTO);
-
-
                 }
                 return response;
-
-
 
             }
             catch (DbException ex)
@@ -250,9 +247,89 @@ namespace WebApi.Controllers
             }
 
         }
+       
+        
+        //public class CheckoutSessionRequest
+        //{
+        //    public string PriceId { get; set; }
+        //}
 
+        //[HttpPost("create-checkout-session")]
+        //public async Task<IActionResult> CreateCheckoutSession([FromBody] CheckoutSessionRequest request)
+        //{
+        //    var options = new SessionCreateOptions
+        //    {
+        //        PaymentMethodTypes = new List<string> { "card" },
+        //        LineItems = new List<SessionLineItemOptions>
+        //    {
+        //        new SessionLineItemOptions
+        //        {
+        //            Price = request.PriceId,
+        //            Quantity = 1,
+        //        },
+        //    },
+        //        Mode = "subscription",
+        //        AllowPromotionCodes = true,
+        //        SuccessUrl = "https://localhost:7297/success?session_id={CHECKOUT_SESSION_ID}",
+        //        CancelUrl = "https://localhost:7297/cancel",
+        //    };
 
+        //    var service = new SessionService();
+        //    Session session = await service.CreateAsync(options);
 
+        //    return Ok(new { id = session.Id });
+        //}
+
+        //// Success endpoint to confirm payment
+        //[HttpGet("success")]
+        //public IActionResult Success(string session_id)
+        //{
+        //    // You can fetch the session details to confirm the payment
+        //    var service = new SessionService();
+        //    var session = service.Get(session_id);
+
+        //    if (session.PaymentStatus == "paid")
+        //    {
+        //        // Handle success, such as updating the database or showing confirmation to the user
+        //        return Ok("Payment successful!");
+        //    }
+
+        //    return BadRequest("Payment not confirmed.");
+        //}
+
+        //// Cancel endpoint to handle failed/canceled payment
+        //[HttpGet("cancel")]
+        //public IActionResult Cancel()
+        //{
+        //    return BadRequest("Payment was canceled.");
+        //}
+
+        //[HttpPost("webhook")]
+        //public async Task<IActionResult> webhook()
+        //{
+        //    var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+        //    try
+        //    {
+        //        var stripeEvent = EventUtility.ConstructEvent(json,
+        //            Request.Headers["Stripe-Signature"], endpointSecret);
+
+        //        // Handle the event
+        //        if (stripeEvent.Type == Events.PaymentIntentSucceeded)
+        //        {
+        //        }
+        //        // ... handle other event types
+        //        else
+        //        {
+        //            Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+        //        }
+
+        //        return Ok();
+        //    }
+        //    catch (StripeException e)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
     }
 }

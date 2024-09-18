@@ -18,11 +18,21 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
         public IActionResult Index()
         {
+            var userJson = HttpContext.Request.Cookies["user"];
+            var authorizationCookie = HttpContext.Request.Cookies["authorization"];
+
+            if (userJson == null || authorizationCookie == null)
+            {
+                TempData["SessionTimeoutMessage"] = "Your session has been expired. Please log in again.";
+                return RedirectToAction("Login", "Home");
+            }
+
             return View();
         }
 
-		
-		[Route("Dashboard/Users")]
+
+
+        [Route("Dashboard/Users")]
         public IActionResult Users()
         {
             return View();
@@ -877,6 +887,17 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteReplyId/" + Id, "", HttpContext);
 
         }
+
+
+        [HttpPost]
+        [Route("Dashboard/UploadBlogImage")]
+        public Task<object> UploadBlogImage(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttpBlogFileDashboard(BaseUrl, "api/Dashboard/UploadBlogImage", file, HttpContext);
+
+        }
+
         #endregion
 
 
