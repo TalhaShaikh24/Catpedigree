@@ -168,21 +168,47 @@
         ]
     });
     //===== Slick slider js
-    $('.pricing-table-slider').slick({
+    // $('.pricing-table-slider').slick({
+    // 	dots: true,
+    // 	arrows: false,
+    //     infinite: false,
+    // 	autoplaySpeed: 1500,
+    //     // autoplay: true,
+    // 	slidesToShow: 4,
+    //     // slidesToScroll: 1,
+    //     prevArrow: '<div class="prev"><i class="ti-arrow-left"></i></div>',
+    // 	nextArrow: '<div class="next"><i class="ti-arrow-right"></i></div>',
+    //     responsive: [
+    //         {
+    //             breakpoint: 1199,
+    //             settings: {
+    //                 slidesToShow: 3
+    //             }
+    //         },
+    //         {
+    //             breakpoint: 767,
+    //             settings: {
+    //                 slidesToShow: 1
+    //             }
+    //         }
+    //     ]
+    // });
+    // images slider
+    $('.img-slider').slick({
         dots: true,
         arrows: false,
-        infinite: false,
-        autoplaySpeed: 1500,
-        // autoplay: true,
-        slidesToShow: 4,
+        infinite: true,
+        autoplaySpeed: 1600,
+        autoplay: true,
+        slidesToShow: 1,
         // slidesToScroll: 1,
-        prevArrow: '<div class="prev"><i class="ti-arrow-left"></i></div>',
-        nextArrow: '<div class="next"><i class="ti-arrow-right"></i></div>',
+
+
         responsive: [
             {
                 breakpoint: 1199,
                 settings: {
-                    slidesToShow: 3
+                    slidesToShow: 1
                 }
             },
             {
@@ -193,17 +219,15 @@
             }
         ]
     });
-    // images slider
-    $('.img-slider').slick({
-        dots: false,
-        arrows: true,
+    $('.new-img-slider').slick({
+        dots: true,
+        arrows: false,
         infinite: true,
         autoplaySpeed: 1600,
         autoplay: true,
         slidesToShow: 1,
         // slidesToScroll: 1,
-        prevArrow: '<div class="prev"><i class="ti-arrow-left"></i></div>',
-        nextArrow: '<div class="next"><i class="ti-arrow-right"></i></div>',
+
 
         responsive: [
             {

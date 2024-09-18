@@ -183,6 +183,18 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        public IActionResult BreedersFaqs()
+        {
+            return View();
+        }
+        public IActionResult GeneralFaqs()
+        {
+            return View();
+        }
+        public IActionResult WhyAreWeUnique()
+        {
+            return View();
+        }
 
 
         public IActionResult Advertisementpackages()
