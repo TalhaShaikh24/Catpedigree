@@ -369,7 +369,7 @@ $(document).on('change', '#VideoFile', function (e) {
             if (duration > maxDuration) {
                 Swal.fire({
                     title: "Warning",
-                    text: "The video is too long. Maximum allowed duration is " + maxDuration + " seconds.",
+                    text: "The video is too long. Maximum allowed duration is " + maxDuration + " seconds. And should not be more than 30mbs",
                     icon: "warning",
                     showCancelButton: false,
                     confirmButtonColor: "#3085d6",
