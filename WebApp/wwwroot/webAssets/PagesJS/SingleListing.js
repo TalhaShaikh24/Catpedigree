@@ -4,6 +4,8 @@ $(document).ready(function () {
     var selectedCurrency = localStorage.getItem('cur')
     debugger;
     SinglePriceListing(selectedCurrency);
+
+
 })
 
 $(".btnChoosePkg").click(function () {
@@ -109,5 +111,27 @@ function postRequest(url, requestData, handledata) {
                 dangerMode: true,
             })
         }
+    });
+}
+
+
+function initMap() {
+    var latitude = parseFloat($("#lat").val());  // Latitude
+    var longitude = parseFloat($("#long").val());  // Longitude
+
+    // The location of the place
+    var location = { lat: latitude, lng: longitude };
+
+    // Create a map centered on the location
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: location
+    });
+
+    // Add a marker with a custom label
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        //label: 'NYC'  // Custom label
     });
 }
