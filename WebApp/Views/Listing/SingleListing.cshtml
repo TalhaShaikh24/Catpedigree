@@ -367,6 +367,10 @@
             color: #fff;
         }
 
+    #map {
+        height: 250px;
+        width: 300px;
+    }
 </style>
 
 <!--====== Start breadcrumbs Section ======-->
@@ -726,7 +730,7 @@
                                         </ul>
                                     </div>
                                     <div class="contact-map mt-5">
-                                        <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                                        <div id="map"></div>
                                     </div>
                                 </div>
                             </div>
@@ -818,9 +822,16 @@
 
 
     </div>
+
+    <input type="hidden" id="lat" value="@Model.data.Listing.latitude" />
+    <input type="hidden" id="long" value="@Model.data.Listing.longitude" />
+
 </section><!--====== End Listing Details Section ======-->
 
 
 <script src="~/webassets/js/sweetalert2.min.js"></script>
+<!-- Include Google Maps JavaScript API -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&callback=initMap"></script>
+
 
 <script src="~/webassets/pagesjs/SingleListing.js"></script>
