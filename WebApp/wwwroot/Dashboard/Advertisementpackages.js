@@ -118,7 +118,7 @@ function getAll() {
                             </span> Your Advertisement on every page of our website
                         </li>
                     </ul>
-                    <a href="javascript:void(0)" class="buypackage"ata-packageid="${item.advertisementPackageID}">
+                    <a href="javascript:void(0)" class="buypackage"data-packageid="${item.advertisementPackageID}">
                         <p class="button-pt">
                             BUY NOW!
                         </p>
@@ -300,6 +300,8 @@ $(document).on('click', '.buypackage', function () {
 
 
 
+    debugger;
+
 
 
 
@@ -311,8 +313,6 @@ $(document).on('click', '.buypackage', function () {
 
     AdvertisementPackageID = $(this).attr('data-packageid');
 
- 
-        
 
 
 
@@ -335,6 +335,7 @@ $("#makepayment").click(function () {
         expireYear: parseInt(parts[1]),
         cvc: $("#cc-cvc").val()
     }
+    debugger;
     postRequest('/Dashboard/BuyAdvertisementPackage', obj, function (res) {
 
         if (res.status == 200) {
