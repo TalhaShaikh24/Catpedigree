@@ -26,7 +26,7 @@ let baseApiUrl = "";
 $(document).ready(function () {
    // ShowPreloader();
     baseApiUrl = $("#baseApiUrl").val();
-   // getAll()
+     getAll()
 })
 
 function getAll() {
@@ -68,25 +68,67 @@ function getAll() {
 
                     var colorClasses = ['blue', 'magenta']; // Define your color classes
                     var colorClass = colorClasses[index % colorClasses.length]; // Cycle through the color classes
-                    var html = `
-                    <div class="col-md-4 col-sm-6 mb-5">
-                        <div class="pricingTable ${colorClass}">
-                            <div class="pricingTable-header">
-                                <h3 class="title">${item.advertisementPackageName}</h3>
-                            </div>
-                            
-                            <p class="mx-4 mb-4">${item.advertisementPackageType}</p>
-                            <h4 class="mb-4">Costs:</h4>
-                             <ul class="pricing-content" id="costs${item.advertisementPackageID}">
-                               <li>${item.numberOfAdvertisement} Number of Advertisement + <span class="price"></span>  ${item.advertisementPackageCost}</li>
-                            </ul>
 
-                            <div class="pricingTable-signup">
-                                <a href="javascript:void(0)" class="buypackage" data-packageid="${item.advertisementPackageID}" >Buy Now</a>
-                           
-                                </div>
-                        </div>
-                    </div>
+                    //<div class="col-md-4 col-sm-6 mb-5">
+                    //    <div class="pricingTable ${colorClass}">
+                    //        <div class="pricingTable-header">
+                    //            <h3 class="title">${item.advertisementPackageName}</h3>
+                    //        </div>
+
+                    //        <p class="mx-4 mb-4">${item.advertisementPackageType}</p>
+                    //        <h4 class="mb-4">Costs:</h4>
+                    //        <ul class="pricing-content" id="costs${item.advertisementPackageID}">
+                    //            <li>${item.numberOfAdvertisement} Number of Advertisement + <span class="price"></span>  ${item.advertisementPackageCost}</li>
+                    //        </ul>
+
+                    //        <div class="pricingTable-signup">
+                    //            <a href="javascript:void(0)" class="buypackage" data-packageid="${item.advertisementPackageID}" >Buy Now</a>
+
+                    //        </div>
+                    //    </div>
+                    //</div>
+                    var html = `
+                
+                    <div class="col-12 col-md-4 ">
+                        <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>${item.advertisementPackageName}</h3>
+                   
+                        <ul class="pricing-content" id="costs${item.advertisementPackageID}">
+                           <span class="pricess">From</span>  <span class="price"></span>    <span class="pricess">    ${item.advertisementPackageCost} </span>  <span > / Month</span>
+                         </ul>
+
+
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> Your Advertisement on every page of our website
+                        </li>
+                    </ul>
+                    <a href="javascript:void(0)" class="buypackage"ata-packageid="${item.advertisementPackageID}">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+                </div>
+
+                
+
             `;
                     $('#AdvertisementpackagesContainer').append(html);
                 });
