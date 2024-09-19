@@ -37,7 +37,7 @@ function GetAllBlogCategories() {
                         <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
                         <td>
                           <div style="display: flex; justify-content: start; align-items: center;">
-                            <button class="btn btn-info btn-md mx-2" title="Edit" id="EditCategory" data-id="${v.id}" data-name="${v.categoryName}" data-description="${v.description}"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-info btn-md mx-2" title="Edit" id="EditCategory" data-id="${v.categoryId}" data-name="${v.categoryName}" data-description="${v.description}"><i class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-danger btn-md mx-2" title="Delete" onclick="DeleteBlogCategory(${v.id})"><i class="fa fa-trash"></i></button>
                           </div>
                         </td>

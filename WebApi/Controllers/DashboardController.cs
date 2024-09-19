@@ -239,7 +239,9 @@ namespace WebApi.Controllers
                 if (res != null)
                 {
 
-                    response.Data = res;
+                    claimDTO.ProfilePicPath = res.ProfilePicPath;
+
+                    response.Data = claimDTO;
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data Update successfully!";
 

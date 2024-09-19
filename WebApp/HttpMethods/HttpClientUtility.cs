@@ -146,9 +146,15 @@ namespace WebApp.HttpMethods
 
                         httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
 
+                        var objUser = new
+                        {
+                            dataObj = deserializedResponse.Data,
+                        };
+
+                        httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(objUser), cookieOptions);
                         return responseBody;
 
-                    }
+                        }
                     else
                         return null;
                 }
@@ -537,6 +543,8 @@ namespace WebApp.HttpMethods
                                 };
 
                                 httpContext.Response.Cookies.Append("authorization", obj.Token == null ? "" : obj.Token, cookieOptions);
+
+
                                 httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(obj.Data), cookieOptions);
 
                                 return response;
@@ -749,6 +757,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? ""), "PromotionPackageId");
                 multiContent.Add(new StringContent(obj.CatteryName ?? ""), "CatteryName");
                 multiContent.Add(new StringContent(obj.PhoneCode ?? ""), "PhoneCode");
+                multiContent.Add(new StringContent(obj.CountryDialCode ?? ""), "CountryDialCode");
                 multiContent.Add(new StringContent(obj.latitude ?? ""), "latitude");
                 multiContent.Add(new StringContent(obj.longitude ?? ""), "longitude");
 

@@ -127,7 +127,7 @@
 }
 
 .pricing-table .button-pt {
-    background-color: rgba(102, 0, 0, 1.0);
+    background-color: #ff344f;
     color: #fff;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -190,7 +190,7 @@
 }
 
 .pricing-table .ribbon span {
-    background-color: rgba(102, 0, 0, 1.0);
+    background-color: #ff344f;
     color: rgba(255, 255, 255, 1.0);
     box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
     display: block;

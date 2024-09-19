@@ -113,6 +113,7 @@ namespace WebApi.Repositories
             parameters.Add("PromotionPackageId", obj.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("CatteryName", obj.CatteryName, DbType.String, ParameterDirection.Input);
             parameters.Add("PhoneCode", obj.PhoneCode, DbType.String, ParameterDirection.Input);
+            parameters.Add("CountryDialCode", obj.CountryDialCode, DbType.String, ParameterDirection.Input);
             parameters.Add("latitude", obj.latitude, DbType.String, ParameterDirection.Input);
             parameters.Add("longitude", obj.longitude, DbType.String, ParameterDirection.Input);
 

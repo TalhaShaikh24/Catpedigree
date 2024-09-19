@@ -63,7 +63,7 @@ h6 i {
 }
 
 .bg-img {
-    background-image: url('../../assets/images/elements/bg-img.png');
+    background-image: url('/webassets/images/elements/bg-img.png');
     background-position: center center !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -71,7 +71,7 @@ h6 i {
     padding-bottom: 165px;
 }
 .bg-img-2 {
-    background-image: url('../../assets/images/elements/bg-img-2.png') !important;
+    background-image: url('/webassets/images/elements/bg-img-2.png') !important;
     padding-top: 150px ;
     padding-bottom: 150px;
 }

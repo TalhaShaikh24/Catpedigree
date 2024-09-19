@@ -24,9 +24,9 @@ var AdvertisementPackageID = 0;
 
 let baseApiUrl = "";
 $(document).ready(function () {
-    ShowPreloader();
+   // ShowPreloader();
     baseApiUrl = $("#baseApiUrl").val();
-    getAll()
+   // getAll()
 })
 
 function getAll() {
@@ -35,7 +35,7 @@ function getAll() {
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 
     debugger;
-    postRequest('/Dashboard/GetAdvertisementPackage/' + curr, null, function (res) {
+    postRequest('/Dashboard/GetAdvertisementPackagesDashboard/' + curr, null, function (res) {
 
         if (res.status == 200) {
             HidePreloader();

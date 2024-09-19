@@ -15,6 +15,10 @@
     .pricingTable .title {
         font-size: 22px !important;
     }
+
+    .breadcrumbs-wrapper:after {
+        background: url(/webassets/images/elements/cate-3.jpg) no-repeat center !important;
+    }
 </style>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -221,7 +225,7 @@
                             We also offer the possibility to have your brand or product promoted in one of our custom
                             written blog posts, for this please contact us.
                         </h6>
-                        <button class="main-btn mt-4"><a href="contact2.html">contact us</a></button>
+                        <button class="main-btn mt-4"><a href="@Url.Action("Contact","Home")">contact us</a></button>
 
                     </div>
 
@@ -275,7 +279,7 @@
                         placed on the website.
                     </h6>
                     <button class="main-btn mt-4" style="border: 1px solid white;">
-                        <a href="contact2.html">
+                        <a href="@Url.Action("Contact","Home")">
                             Yes! I want to Advertise my
                             Business
                         </a>
@@ -406,9 +410,9 @@
 
                     </ul>
 
-                    <a href="?hsLang=en">
+                    <a href="@Url.Action("Contact","Home")">
                         <p class="button-pt">
-                            BUY NOW!
+                            Contact us
                         </p>
                     </a>
                 </div>
@@ -547,7 +551,8 @@
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                              aria-labelledby="headingThree">
                             <div class="panel-body">
-                                <p>Your Advertisement will be placed at ******* </p>
+                                <p>Your advertisement placement will depend on the package you choose. 
+                                    It can appear in various locations, including the sidebar, footer, banner, and main page, ensuring optimal visibility based on your selected option. </p>
                             </div>
                         </div>
                     </div>

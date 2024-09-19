@@ -233,22 +233,23 @@ function GetAllMyListings() {
 
 
                     $("#AppendMyListings").append(`
-                    <tr>
-                        <td>${v.id}</td>
-                        <td>${statusIcon}</td>
-                        <td>${v.title}</td>
-                        <td>${v.email}</td>
-                        <td>${v.catType}</td>
-                        <td>${v.categoryName}</td>
-                        <td>${v.packageName}</td>
-                        <td>${v.promotionName}</td>
-                        <td>${v.isActive}</td>
-                        <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
-                        <td style="display: flex; justify-content: space-evenly; align-items: center;">
-                            <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button> 
-                            <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>`);
+        <tr>
+            <td>${v.id}</td>
+            <td>${statusIcon}</td>
+            <td>${v.title}</td>
+            <td>${v.email}</td>
+            <td>${v.catType}</td>
+            <td>${v.categoryName}</td>
+            <td>${v.packageName}</td>
+            <td>${v.promotionName}</td>
+            <td>${v.isActive}</td>
+            <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
+            <td style="display: flex; justify-content: space-evenly; align-items: center;">
+                <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
+                <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+    `);
                 });
 
 
@@ -257,7 +258,7 @@ function GetAllMyListings() {
                     "order": [[8, 'desc']], // Assuming the createdOn column is the 9th column (index 8)
                     "columnDefs": [
                         {
-                            "targets": 8, // Index of the createdOn column
+                            "targets": 9, // Index of the createdOn column
                             "type": "date",
                             "render": function (data, type, row) {
                                 // Convert the date format to something sortable
@@ -504,8 +505,14 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Phone").val(res.data.phone);
                 $("#Email").val(res.data.email);
                 $("#BreerderName").val(res.data.breerderName);
-                $('#check1').prop("Checked", !res.data.isBreerderLicenseUpload);
-                $('#check2').prop("Checked", !res.data.isBreerderLicenseUpload);
+                // Assuming res.data.isBreerderLicenseUpload is a boolean
+                if (res.data.isBreerderLicenseUpload) {
+                    $('#check3').prop("checked", true); // Set "I've already uploaded" to checked
+                    $('#check2').prop("checked", false); // Uncheck the other option
+                } else {
+                    $('#check2').prop("checked", true); // Set "I will upload" to checked
+                    $('#check3').prop("checked", false); // Uncheck the other option
+                }
                 $("#ZoologicalNumber").prop("checked", res.data.zoologicalNumber);
                 if (res.data.isVaccinated) $('input[name="IsVaccinated"][value="1"]').prop('checked', true); else $('input[name="IsVaccinated"][value="0"]').prop('checked', true);
                 $("#Price").val(res.data.price);

@@ -123,20 +123,14 @@ $(document).on('change', '#appendBlogCategories', function (event) {
     loadBlogs($(this).val(), $(this).find("#keywordFilter").val());
     
 })
-$('.tagcloud a').on('click', function (event) {
-    event.preventDefault(); // Prevent default link behavior
-    console.log($(this).text()); // Print the text of the clicked tag
-});
-$(document).on('click', '.tagcloud a', function (event) {
-    
+
+// Handle tag selection event
+$('#tagSelect').on('change', function () {
+    let selectedTags = $(this).val(); // Get selected tags
     pageNumber = 1;
     $('#appendBlogs').empty(); // Clear previous blogs
-
-    event.preventDefault(); // Prevent default link behavior
-
-    loadBlogs("", $(this).find("#keywordFilter").val(), $(this).text());
-    
-})
+    loadBlogs("", "", selectedTags.join(','));
+});
 
 
 
@@ -257,18 +251,11 @@ function GetAllDistinctTags() {
             if (res.data != null) {
 
 
-                $.each(res.data, function (i, v) {
+                let tags = res.data.map(tag => `<option value="${tag.tags}">${tag.tags}</option>`);
+                $("#tagSelect").append(tags);
 
-                    $("#appendTags").append(`
-                    <a class="tag-cloud-link">${v.tags}</a>
-                      `);
 
-                });
-
-                $('#blogTags').select2({
-                    tags: true,
-                    placeholder: "Enter Tags"
-                });
+                $("#tagSelect").niceSelect('update');
             }
         }
         if (res.status == 304) {

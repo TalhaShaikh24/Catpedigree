@@ -1,12 +1,14 @@
 ﻿using ClassLibrary;
 using ClassLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using WebApp.HttpMethods;
 
 namespace WebApp.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
+    [ServiceFilter(typeof(SessionCheckAttribute))] // Apply the filter
     public class HomeController : Controller
     {
 
@@ -16,16 +18,32 @@ namespace WebApp.Areas.Dashboard.Controllers
             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
 
         }
-        public IActionResult Index()
+
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             var userJson = HttpContext.Request.Cookies["user"];
             var authorizationCookie = HttpContext.Request.Cookies["authorization"];
 
             if (userJson == null || authorizationCookie == null)
             {
-                TempData["SessionTimeoutMessage"] = "Your session has been expired. Please log in again.";
-                return RedirectToAction("Login", "Home");
+                TempData["SessionTimeoutMessage"] = "Your session has expired. Please log in again.";
+                context.Result = RedirectToAction("Login", "Home");
             }
+
+            base.OnActionExecuting(context);
+        }
+
+       
+        public IActionResult Index()
+        {
+            //var userJson = HttpContext.Request.Cookies["user"];
+            //var authorizationCookie = HttpContext.Request.Cookies["authorization"];
+
+            //if (userJson == null || authorizationCookie == null)
+            //{
+            //    TempData["SessionTimeoutMessage"] = "Your session has been expired. Please log in again.";
+            //    return RedirectToAction("Login", "Home");
+            //}
 
             return View();
         }
@@ -481,8 +499,8 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        [Route("Dashboard/GetAdvertisementPackage/{currency}")]
-        public Task<object> GetAdvertisementPackage(string currency)
+        [Route("Dashboard/GetAdvertisementPackagesDashboard/{currency}")]
+        public Task<object> GetAdvertisementPackagesDashboard(string currency)
         {
             if (currency==null)
             {
@@ -491,7 +509,7 @@ namespace WebApp.Areas.Dashboard.Controllers
             }
             var content = "";
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackage/"+ currency, content, HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/GetAdvertisementPackagesDashboard/"+ currency, content, HttpContext);
 
         }
 

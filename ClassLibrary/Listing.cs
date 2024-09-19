@@ -73,6 +73,7 @@ namespace ClassLibrary
         public string? Reason { get; set; }
         public DateTime? FirstApprovedOn { get; set; }
         public string? PhoneCode { get; set; }
+        public string? CountryDialCode { get; set; }
 
         
         public string? latitude { get; set; }

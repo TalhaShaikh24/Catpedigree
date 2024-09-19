@@ -39,11 +39,12 @@ namespace WebApi.Controllers
                 else
                 { 
 
+
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = new
                     {
-                        DataObj = claimDTO,
+                        dataObj = claimDTO,
                     };
                     return response;
                 }

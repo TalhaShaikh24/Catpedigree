@@ -14,6 +14,7 @@ builder.Services.AddSession(options =>
 builder.Configuration.AddJsonFile("appsettings.json");
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddScoped<SessionCheckAttribute>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

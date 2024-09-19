@@ -662,10 +662,12 @@ $("#Btn_Post_Listing").click(function () {
 
     // Extract the ISO2 country code
     let countryCode = selectedCountryData.iso2;
+    let countryDialCode = "+" + selectedCountryData.dialCode;
 
-
+    debugger;
 
     formData.append('PhoneCode', countryCode);
+    formData.append('CountryDialCode', countryDialCode);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
     FilePostRequest('/Listing/AddListting', formData, function (res) {

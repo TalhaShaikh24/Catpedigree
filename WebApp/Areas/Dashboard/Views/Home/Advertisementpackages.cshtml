@@ -4,9 +4,89 @@
     ViewData["Title"] = "Advertisementpackages";
     Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .pricing-table-slider {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
 
-<link href="~/webassets/css/pricingplan.css" rel="stylesheet" />
+    .pricing-table {
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        position: relative;
+        transition: all .3s linear;
+        height: 100%;
+        min-height: 260px;
+    }
 
+        .pricing-table h3 {
+            color: rgba(255, 122, 89, 1.0) !important;
+            font-size: 2.5em;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pricing-table .price {
+            font-size: 3em;
+            color: black;
+            line-height: 1.5em;
+            margin: 0;
+            text-align: center;
+        }
+
+            .pricing-table .price span {
+                font-size: .5em !important;
+            }
+
+        .pricing-table ul.list-features {
+            list-style: none;
+            padding-left: 20px;
+            margin: 30px 0 70px;
+        }
+
+            .pricing-table ul.list-features li {
+                border-bottom: 1px solid #ddd;
+                font-size: 1.2em;
+                color: black !important;
+                margin: 0 20px 10px;
+                padding-bottom: 10px;
+                position: relative;
+            }
+
+                .pricing-table ul.list-features li span.green {
+                    fill: green;
+                }
+
+                .pricing-table ul.list-features li span {
+                    border-radius: 100%;
+                    content: "";
+                    height: 20px;
+                    left: -15px;
+                    position: absolute;
+                    width: 20px;
+                }
+
+        .pricing-table .button-pt {
+            background-color: #ff344f;
+            color: #fff;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            font-size: 1.5em;
+            height: 50px;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            bottom: 0;
+            justify-content: center;
+            left: 0;
+            margin: 0;
+            position: absolute;
+            width: 100%;
+        }
+</style>
 
 
 <!--====== SweetAlert css ======-->
@@ -114,7 +194,207 @@
 </div>
 
 
-<section class="fioxen-add-listing pt-120 pb-120 mt-60">
+<section class="dnd-section  pt-5" id="pricing">
+    <div class="container pt-2">
+        <h2 class="text-center mb-5">Check out our advertising possibilities</h2>
+        <div class="row pricing-table-slider" style="row-gap: 30px;">
+            <div class="col-12 col-md-4 ">
+                <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>Footer Ad</h3>
+                    <p class="price">
+                        From €50* / <span>month</span>
+                    </p>
+
+
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> Your Advertisement on every page of our website
+                        </li>
+                    </ul>
+                    <a href="javascript:void(0)" class="buypackage" data-packageid="3">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-12 col-md-4 ">
+                <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>Sidebar Ad</h3>
+                    <p class="price">
+                        From €75* / <span>month</span>
+                    </p>
+
+
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> Your Advertisement on all Search pages
+                        </li>
+                    </ul>
+
+                    <a href="javascript:void(0)" class="buypackage" data-packageid="2">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-12 col-md-4 ">
+
+                <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>Sponsored Blog Post</h3>
+                    <p class="price">
+                        Contact us
+                    </p>
+
+
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span>Your brand promoted in a customised Blog
+                        </li>
+
+
+
+                    </ul>
+
+                    <a href="@Url.Action("Contact","Home")">
+                        <p class="button-pt">
+                            Contact us
+                        </p>
+                    </a>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4 ">
+                <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>Homepage Ad</h3>
+                    <p class="price">
+                        From €100* / <span>month</span>
+                    </p>
+
+
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> Your advertisement on the Homepage
+                        </li>
+                    </ul>
+
+                    <a href="?hsLang=en">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="pricing-table" style="min-height: 435px;">
+
+
+                    <h3>Video Ad-on</h3>
+                    <p class="price">
+                        From €150* / <span>month</span>
+                    </p>
+                    <ul class="list-features">
+
+                        <li>
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724520991266_"
+                                      class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style=""
+                                      data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle1_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> Only possible as Add-on for the Homepage Ad
+                        </li>
+
+
+
+                    </ul>
+
+                    <a href="javascript:void(0)" class="buypackage" data-packageid="4">
+                        <p class="button-pt">
+                            BUY NOW!
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--====== End Pricing Section ======-->
+
+@* <section class="fioxen-add-listing pt-120 pb-120 mt-60">
     <div class="container-fluid">
         <div class="demo">
             <div class="container">
@@ -127,7 +407,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> *@
 <!--====== SweetAlerts js ======-->
 
 @section Scripts {

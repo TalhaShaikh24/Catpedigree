@@ -508,7 +508,7 @@
                                                 <li><a href="@Url.Action("BreederMediation","Home")">Breeder Mediation</a></li>
                                                 <li><a href="@Url.Action("PedigreeService","Home")">Pedigree Service</a></li>
                                                 <li class="menu-item has-children">
-                                                    <a href="">Advertising</a>
+                                                    <a href="#">Advertising</a>
                                                     <ul class="sub-menu">
                                                         <li class="d-none"><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
                                                         <li><a href="@Url.Action("Advertising","Home")">Advertising</a></li>
@@ -521,27 +521,18 @@
                                                     <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
                                                 </li>
                                                 <li><a href="@Url.Action("Coaching","Home")">Coaching</a></li>
-                                                <li class="menu-item has-children">
-                                                    <a href="">FAQS</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="">Breeders FAQ</a></li>
-                                                        <li><a href="">General FAQ</a></li>
-                                                        <li><a href="@Url.Action("AboutUs","Home")">About us</a></li>
-                                                        <li><a href="@Url.Action("WhyAreWeUnique","Home")">Why are we unique</a></li>
-                                                    </ul>
-                                                    <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
-                                                </li>
+                                                
                                             </ul>
                                         </li>
                                         <li class="menu-item">
                                             <a href="">Cats & Kittens</a>
                                             <ul class="sub-menu">
-                                                <li><a href="@Url.Action("catMediation","Home")">Kittens</a></li>
-                                                <li><a href="@Url.Action("Relocation","Home")">Relocation</a></li>
-                                                <li><a href="@Url.Action("Studs","Home")">Studs</a></li>
-                                                <li><a href="@Url.Action("PedigreeService","Home")">Pedigrees</a></li>
+                                                <li><a href="@Url.Action("ViewListings", "Listing", new { categoryId = 4 })">Kittens</a></li>
+                                                <li><a href="@Url.Action("ViewListings", "Listing", new { categoryId = 3 })">Relocation</a></li>
+                                                <li><a href="@Url.Action("ViewListings", "Listing", new { categoryId = 2 })">Studs</a></li>
+                                                <li><a href="@Url.Action("ViewListings", "Listing", new { categoryId = 1 })">Pedigrees</a></li>
                                                 <li><a href="@Url.Action("catMediation","Home")">Kitten Mediation</a></li>
-                                                <li><a href="@Url.Action("CatteryBanners","Home")">Cattery Banners</a></li>
+                                                <li><a href="@Url.Action("CatteryBannersAdvertising","Home")">Cattery Banners</a></li>
                                             </ul>
                                         </li>
                                         <li class="menu-item">
@@ -561,7 +552,16 @@
                                         </li>
                                         <li class="menu-item"><a href="@Url.Action("Index","Blog")">Blogs</a></li>
                                         <li class="menu-item"><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
-                                        <li class="menu-item"><a href="@Url.Action("Contact","Home")">Contact</a></li>
+                                        <li class="menu-item has-children">
+                                            <a href="@Url.Action("Contact","Home")">Contact</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="@Url.Action("BreedersFaqs","Home")">Breeders FAQ</a></li>
+                                                <li><a href="@Url.Action("GeneralFaqs","Home")">General FAQ</a></li>
+                                                <li><a href="@Url.Action("AboutUs","Home")">About us</a></li>
+                                                <li><a href="@Url.Action("WhyAreWeUnique","Home")">Why are we unique</a></li>
+                                            </ul>
+                                            <span class="dd-trigger"><i class="ti-arrow-down"></i></span>
+                                        </li>
                                         @{
                                             if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
                                             {
@@ -652,9 +652,8 @@
                                     <li><a href="@Url.Action("ViewListings","Listing")">Explore</a></li>
                                     <li><a href="@Url.Action("Index","Blog")">Blogs</a></li>
                                     <li><a href="@Url.Action("Gallery","Home")">Gallery</a></li>
-                                    <li><a href="@Url.Action("PedigreeInfo","Home")">Pedigree Services</a></li>
                                     <li><a href="@Url.Action("Breeds","Home")">Breeds</a></li>
-                                    <li><a href="@Url.Action("Pricing","packages")">Pricing</a></li>
+                                    <li><a href="@Url.Action("Advertising","Home")">Pricing</a></li>
                                 </ul>
                             </div>
                         </div>

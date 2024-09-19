@@ -110,6 +110,64 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("GetAdvertisementPackagesDashboard/{currency}")]
+        public async Task<Response> GetAdvertisementPackagesDashboard(string currency)
+        {
+
+            Register claimDTO = null;
+            Response response = new Response();
+            try
+            {
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAdvertisementPackage();
+
+                if (res != null)
+                {
+
+                    if (res.Count>0)
+                    {
+                        decimal rate = await _currencyConverterService.GetExchangeRate("EUR", currency);
+
+                        foreach (var (item, index) in res.Select((item, index) => (item, index)))
+                        {
+
+                            res[index].AdvertisementPackageCost = Math.Round(item.AdvertisementPackageCost * rate,2);
+
+
+                        }
+
+
+
+                    }
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    response.ResponseMsg = "Data Fatched successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+        }
+
         [HttpPost("GetAdvertisementPackage/{currency}")]
         public async Task<Response> GetAdvertisementPackage(string currency)
         {
@@ -162,6 +220,8 @@ namespace WebApi.Controllers
                 return response;
             }
         }
+
+        
 
 
         [HttpPost("BuyAdvertisementPackage")]

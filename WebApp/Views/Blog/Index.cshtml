@@ -1,4 +1,5 @@
-﻿<style>
+﻿<link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<style>
     body{
         background: #f5f6f778;
     }
@@ -87,10 +88,11 @@
 
                     <div class="widget categories-widget mb-30 wow fadeInUp">
                         <h4 class="widget-title">Tags</h4>
-                        <div class="tagcloud" id="appendTags" style="display: flex; flex-wrap: wrap; margin-bottom: -.5rem; ">
-                            
-                        </div>
+                        <select id="tagSelect" style="width: 100%;">
+                            <option id="tagSelectOption" value="-1 selected" disabled>Choose Tag</option>
+                        </select>
                     </div>
+
                    
                 </div>
             </div>
@@ -101,6 +103,7 @@
 
 
 @section Scripts {
-
+  
+    <script src="~/plugins/select2/js/select2.js"></script>
     <script src="~/webAssets/PagesJS/Blog.js"></script>
 }

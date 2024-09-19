@@ -32,6 +32,10 @@ namespace WebApp.Controllers
         public IActionResult CatteryBanners()
         {
             return View();
+        }  
+        public IActionResult CatteryBannersAdvertising()
+        {
+            return View();
         } 
         public IActionResult BusinessAdvertising()
         {
