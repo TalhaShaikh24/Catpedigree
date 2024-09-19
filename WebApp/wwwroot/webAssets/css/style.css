@@ -7512,3 +7512,11 @@ span.status {
     .section-title h2:before {
         margin: 0 15px 10px 0;
     }
+
+
+@media screen and (max-width:600px) and (min-width:280px) {
+    .img-slider {
+        height: 290px !important;
+    }
+}
+
