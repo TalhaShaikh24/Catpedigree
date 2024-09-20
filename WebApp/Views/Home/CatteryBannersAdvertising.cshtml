@@ -11,7 +11,55 @@
         background-color: #eaeaea !important;
     }
 
+
+    .banner-item {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+        .banner-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .banner-item:hover {
+            transform: scale(1.05);
+        }
+
+            .banner-item:hover img {
+                transform: scale(1.1);
+            }
+
+    .banner-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .banner-item:hover .banner-overlay {
+        opacity: 1;
+    }
 </style>
+<!-- Hero Area -->
 <section class="hero-area py-0">
     <div class="hero-wrapper-three bg_cover" style="padding-top:60px; padding-bottom: 70px;">
         <div class="container">
@@ -22,12 +70,55 @@
 
                         <h1 class="wow fadeInUp" data-wow-delay=".30s" style="font-size: 44px; font-weight: 800; color:#222222!important">CatPedigreeWorld´s</h1>
                         <h2 class="wow fadeInDown" data-wow-delay=".50s" style="color:#ff0201!important">Cattery Banners</h2>
-                        <p class="wow fadeInDown text-white mt-50" data-wow-delay=".50s" style="line-height:28px; color:#425b76!important; font-size:24px">
+                        <p class="wow fadeInDown text-white mt-50" data-wow-delay=".50s" style="line-height:28px; color:#425b76!important; font-size:26px; font-weight:900">
                             Coming Soon! Get in Touch
                         </p>
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Banners Section -->
+<section class="container my-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center container mb-4">
+                <h2 class="pt-3 lines" style="font-size: 40px; font-style: normal; font-weight: 700; font-family: 'Poppins', sans-serif !important; color: #222222 !important; text-decoration: none; line-height: 42px;">Banners Showcase</h2>
+                <br>
+                <p>Explore our collection of stunning banners!</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Banner 1 -->
+        <div class="col-md-6 mb-4">
+            <div class="banner-item">
+                <img src="https://via.placeholder.com/600x200" alt="Banner 1">
+                <div class="banner-overlay">Banner 1</div>
+            </div>
+        </div>
+        <!-- Banner 2 -->
+        <div class="col-md-6 mb-4">
+            <div class="banner-item">
+                <img src="https://via.placeholder.com/600x200" alt="Banner 2">
+                <div class="banner-overlay">Banner 2</div>
+            </div>
+        </div>
+        <!-- Banner 3 -->
+        <div class="col-md-6 mb-4">
+            <div class="banner-item">
+                <img src="https://via.placeholder.com/600x200" alt="Banner 3">
+                <div class="banner-overlay">Banner 3</div>
+            </div>
+        </div>
+        <!-- Banner 4 -->
+        <div class="col-md-6 mb-4">
+            <div class="banner-item">
+                <img src="https://via.placeholder.com/600x200" alt="Banner 4">
+                <div class="banner-overlay">Banner 4</div>
             </div>
         </div>
     </div>

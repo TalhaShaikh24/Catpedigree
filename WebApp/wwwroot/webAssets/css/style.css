@@ -25,6 +25,7 @@ body {
     font-weight: 400 !important;
     line-height: 18px !important;
     background-color: rgba(255, 255, 255, 1.0) !important;
+    overflow-x:hidden;
 }
 /* custom css */
 
@@ -1622,6 +1623,7 @@ button {
 .header-area-three .header-navigation.sticky {
     padding: 15px 0;
     background-color: #0d0d0d;
+    display:none;
 }
 
 @-webkit-keyframes sticky {
@@ -7513,7 +7515,17 @@ span.status {
         margin: 0 15px 10px 0;
     }
 
+.hero-content-heading {
+    font-size: 44px;
+    font-weight: 800;
+    color: #222222 !important
+}
 
+@media only screen and (max-width:768px) {
+    .hero-content-heading {
+        font-size: 24px !important;
+    }
+}
 @media screen and (max-width:600px) and (min-width:280px) {
     .img-slider {
         height: 290px !important;
