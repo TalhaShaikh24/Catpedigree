@@ -519,7 +519,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
 
-
                 debugger;
 
                 $("#FTMother").val(res.data.familyTreeMother);
