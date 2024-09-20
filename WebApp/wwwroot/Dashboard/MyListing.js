@@ -519,6 +519,17 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
 
+
+
+
+                $("#FTMother").val(res.data.familyTreeMother);
+                $("#FTFather").val(res.data.familyTreeFather);
+                $("#MotherTested").val(res.data.fatherTested);
+                $("#FatherTested").val(res.data.motherTested);
+                let dateOfBirth = new Date(res.data.dateofBirth).toISOString().split('T')[0];
+                $("#DataOFBirth").val(dateOfBirth);
+
+
                 debugger;
                 let countryCode = res.data.phoneCode;
 
@@ -947,6 +958,19 @@ $("#Btn_Update_Listing").click(function () {
     formData.append('PhoneCode', countryCode);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
+
+
+    //Advertisement 
+
+    formData.append('FamilyTreeMother', $("#FTMother").val());
+    formData.append('FamilyTreeFather', $("#FTFather").val());
+    formData.append('MotherTested', $("#MotherTested").val());
+
+
+    formData.append('FatherTested', $("#FatherTested").val());
+
+    formData.append('DateofBirth', $("#DataOFBirth").val());
+
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
         if (res.status == 200) {

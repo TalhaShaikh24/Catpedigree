@@ -117,6 +117,17 @@ namespace WebApi.Repositories
             parameters.Add("latitude", obj.latitude, DbType.String, ParameterDirection.Input);
             parameters.Add("longitude", obj.longitude, DbType.String, ParameterDirection.Input);
 
+            parameters.Add("FamilyTreeMother", obj.FamilyTreeMother, DbType.String, ParameterDirection.Input);
+
+            parameters.Add("FamilyTreeFather", obj.FamilyTreeFather, DbType.String, ParameterDirection.Input);
+
+            parameters.Add("FatherTested", obj.FatherTested, DbType.String, ParameterDirection.Input);
+
+            parameters.Add("MotherTested", obj.MotherTested, DbType.String, ParameterDirection.Input);
+
+            parameters.Add("DateofBirth", obj.DateofBirth, DbType.Date, ParameterDirection.Input);
+
+
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);
             return data;
         }
