@@ -299,7 +299,7 @@ function GetAllListings() {
                         <td>${v.packageName}</td>
                         <td>${v.promotionName}</td>
                         <td>${v.isActive}</td>
-                        <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
+                        <td>${moment(v.createdOn).format("DD-MMM-YYYY")}</td>
                         <td style="display: flex; justify-content: space-evenly; align-items: center;">
                             <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-success btn-xs p-2 mx-1" onclick="UpdateListingStatus(${v.id}, 'Approve');" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -312,14 +312,14 @@ function GetAllListings() {
 
             // Initialize DataTable
             var table = $('#TableApprovalListing').DataTable({
-                "order": [[8, 'desc']], // Assuming the createdOn column is the 9th column (index 8)
+                "order": [[9, 'desc']], // Assuming the createdOn column is the 9th column (index 8)
                 "columnDefs": [
                     {
-                        "targets": 8, // Index of the createdOn column
+                        "targets": p, // Index of the createdOn column
                         "type": "date",
                         "render": function (data, type, row) {
                             // Convert the date format to something sortable
-                            return moment(data, "DD - MMMM - YYYY").format("YYYY-MM-DD");
+                            return moment(data, "DD - MMM - YYYY").format("YYYY-MM-DD");
                         }
                     }
                 ]

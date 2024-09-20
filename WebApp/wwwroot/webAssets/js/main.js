@@ -199,10 +199,10 @@
         arrows: false,
         infinite: true,
         autoplaySpeed: 1600,
-        autoplay: true,
+        autoplay: false,
         slidesToShow: 1,
-        // slidesToScroll: 1,
-
+        slidesToScroll: 1,
+        adaptiveHeight: true, // This helps to adapt height to the content
 
         responsive: [
             {
@@ -212,13 +212,26 @@
                 }
             },
             {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 1
+                }
+            },
+            {
                 breakpoint: 767,
+                settings: {
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 480,
                 settings: {
                     slidesToShow: 1
                 }
             }
         ]
     });
+
     $('.new-img-slider').slick({
         dots: true,
         arrows: false,

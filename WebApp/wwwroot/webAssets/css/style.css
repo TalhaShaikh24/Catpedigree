@@ -1572,7 +1572,8 @@ button {
 }
 
     .header-area-three .header-navigation .main-menu ul > li.has-children > a:after {
-        color: #ff344f;
+        /*color: #ff344f;*/
+        color: #fff;
     }
 
     .header-area-three .header-navigation .main-menu ul > li.has-children > a.active:after {
@@ -1899,6 +1900,10 @@ button {
         background-color: rgba(17, 20, 41, 0.75);
         z-index: -1;
     }
+    .hero-wrapper-light:after {
+       
+        background-color: #eaeaea !important;
+    }
 
     .hero-wrapper-three .hero-content h1 {
         margin-bottom: 20px;
@@ -1970,9 +1975,11 @@ button {
     }
 
     .breadcrumbs-wrapper:after {
-        right: 0;
-        background: url(../images/elements/step-40.jpeg) no-repeat center;
-        background-size: cover;
+        right: -30px;
+        background: url(../images/elements/cat_bg_4.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
     }
 
 @media (max-width: 991px) {
@@ -7021,7 +7028,7 @@ span.status {
 #accordion:before {
     content: "";
     width: 1px;
-    height: 80%;
+    height: 90%;
     background: #550527;
     position: absolute;
     top: 20px;
