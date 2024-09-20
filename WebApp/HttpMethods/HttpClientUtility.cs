@@ -760,8 +760,19 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.CountryDialCode ?? ""), "CountryDialCode");
                 multiContent.Add(new StringContent(obj.latitude ?? ""), "latitude");
                 multiContent.Add(new StringContent(obj.longitude ?? ""), "longitude");
+                
+                multiContent.Add(new StringContent(obj.FamilyTreeMother ?? ""), "FamilyTreeMother");
+                multiContent.Add(new StringContent(obj.FamilyTreeFather ?? ""), "FamilyTreeFather");
+                multiContent.Add(new StringContent(obj.MotherTested ?? ""), "MotherTested");
+                multiContent.Add(new StringContent(obj.FatherTested ?? ""), "FatherTested");
+                multiContent.Add(new StringContent(obj.DateofBirth.ToString() ?? ""), "DateofBirth");
 
 
+                multiContent.Add(new StringContent(obj.FamilyTreeMother ?? ""), "FamilyTreeMother");
+                multiContent.Add(new StringContent(obj.FamilyTreeFather ?? ""), "FamilyTreeFather");
+                multiContent.Add(new StringContent(obj.MotherTested ?? ""), "MotherTested");
+                multiContent.Add(new StringContent(obj.FatherTested ?? ""), "FatherTested");
+                multiContent.Add(new StringContent(obj.DateofBirth.ToString() ?? ""), "DateofBirth");
                 if (obj.GalleryImageFiles != null)
                 {
                     foreach (var item in obj.GalleryImageFiles)

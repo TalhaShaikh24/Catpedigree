@@ -78,6 +78,17 @@ namespace ClassLibrary
         
         public string? latitude { get; set; }
         public string? longitude { get; set; }
+
+
+        public string? FamilyTreeMother { get; set; }
+        
+        public string? FamilyTreeFather { get; set; }
+        
+        public string? MotherTested { get; set; }
+        
+        public string? FatherTested { get; set; }
+        
+
     }
 
 	//public class ListingFilters
