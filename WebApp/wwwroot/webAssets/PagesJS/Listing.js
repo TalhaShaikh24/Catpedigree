@@ -670,6 +670,22 @@ $("#Btn_Post_Listing").click(function () {
     formData.append('CountryDialCode', countryDialCode);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
+
+    //Advertisement 
+
+    formData.append('FamilyTreeMother', $("#FTMother").val());
+    formData.append('FamilyTreeFather', $("#FTFather").val());
+    formData.append('MotherTested', $("#MotherTested").val());
+
+
+    formData.append('FatherTested', $("#FatherTested").val());
+
+    formData.append('DateofBirth', $("#DataOFBirth").val());
+
+
+
+
+
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
         if (res.status == 200) {

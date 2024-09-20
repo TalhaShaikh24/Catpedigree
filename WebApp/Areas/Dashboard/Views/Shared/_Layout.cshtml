@@ -415,6 +415,15 @@
                                         </a>
                                     </li>
                                 }
+                                if (displayedMenus.Add("AssignUserPromotionPackagesToUser"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("AssignUserPromotionPackagesToUser","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignUserPromotionPackagesToUser"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>Assign Promotion Packages</p>
+                                        </a>
+                                    </li>
+                                }
 
                                 if (displayedMenus.Add("Media"))
                                 {
