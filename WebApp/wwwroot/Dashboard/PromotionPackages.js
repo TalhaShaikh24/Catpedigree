@@ -30,7 +30,7 @@ function GetAllDropdowns() {
                     });
                 }
                 else {
-                    $("#PromotionPackage").append(`<option value="-1" disabled>You have no Promotion Package</option>`);
+                    $("#PromotionPackage").append(`<option value="-1" disabled>You don't have any Promotion Package</option>`);
                 }
 
                 $.each(res.data.item2, function (i, v) {

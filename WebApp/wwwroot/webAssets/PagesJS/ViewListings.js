@@ -43,7 +43,7 @@ function initMap() {
 }
 
 async function loadMore() {
-    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur');
 
     var obj = {
         PageNumber: pageNumber,
@@ -52,87 +52,105 @@ async function loadMore() {
         Keyword: keyword,
         Location: listingLocation,
         Currency: curr
-    }
+    };
 
-    const response = await fetch('/Listing/GetAllListingByFilters', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(obj)
-    });
-    const data = await response.json();
+    // Show the skeleton loader
+    $('#skeleton-loader').show();
+    $('#appendListings').hide(); // Optionally hide existing listings
 
-    if (data.data) {
-        const { listings, totalCount, currentCount } = data.data;
-        varTotalCount = totalCount;
-        varCurrentCount = currentCount;
-
-        $.each(listings, function (index, item) {
-            var html = `
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
-                        <div class="listing-thumbnail">
-                            ${item.videoPath && item.videoPath.trim() !== "" ?
-                    `<div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
-                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
-                                        <a href="/Listing/SingleListing?listingId=${item.id}" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
-                                        ${item.price && item.price !== "" ?
-                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                        ''}
-                                    </div>
-                                </div>` :
-                    `<a href="/Listing/SingleListing?listingId=${item.id}" class="w-100">
-                                    <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                    ${item.price && item.price !== "" ?
-                        `<span class="featured-btn price" data-price="${item.price}">${item.price}</span>` :
-                        ''}
-                                </a>`
-                }
-                        </div>
-                        <div class="listing-content">
-                            <div class="title d-flex justify-content-between align-items-center mb-10">
-                                <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
-                            </div>
-                            <h3 class="title">
-                                <a onclick="SingleListing(${item.id})">${item.title}</a>
-                            </h3>
-                            <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
-                            <div class="listing-meta">
-                                <ul>
-                                    <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
-                                </ul>
-                                ${item.isPriceRequest ?
-                                    `<button type="button" class="btn btn-secondary w-100 mt-3" style="font-weight:bold!important;" onclick="RequestListingPrice(${item.id})">
-                                         Request Price
-                                         <span class="spinner-btn"></span>
-                                     </button>` :
-                                ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            $('#appendListings').append(html);
-            $("#load-more").show();
-
-            // Add marker to the map with listing HTML
-            addMarker(item.latitude, item.longitude, item.title, html);
+    try {
+        const response = await fetch('/Listing/GetAllListingByFilters', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
         });
+        const data = await response.json();
 
-        var selectedCurrency = localStorage.getItem('cur');
-        updatePrices(selectedCurrency);
+        // Hide the skeleton loader
+        $('#skeleton-loader').hide();
+        $('#appendListings').show(); // Show listings area again
 
-        pageNumber++;
-        updateCountDisplay();
+        if (data.data) {
+            const { listings, totalCount, currentCount } = data.data;
+            varTotalCount = totalCount;
+            varCurrentCount = currentCount;
 
-        if (varCurrentCount >= varTotalCount) {
-            document.getElementById('load-more').style.display = 'none';
+            $.each(listings, function (index, item) {
+                var html = `
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="listing-item listing-grid-item-two mb-30 ${item.promotionName}">
+                            <div class="listing-thumbnail">
+                                ${item.videoPath && item.videoPath.trim() !== "" ? `
+                                    <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
+                                        <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
+                                            <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
+                                                <i class="flaticon-play-button"></i>
+                                            </a>
+                                            ${item.isPriceRequest === true || item.price == "0" ? `
+                                                <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
+                                            ` : `
+                                                <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                            `}
+                                        </div>
+                                    </div>
+                                ` : `
+                                    <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
+                                        <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
+                                        ${item.isPriceRequest === true || item.price == "0" ? `
+                                            <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
+                                        ` : `
+                                            <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
+                                        `}
+                                    </a>
+                                `}
+                            </div>
+                            <div class="listing-content">
+                                <div class="title d-flex justify-content-between align-items-center mb-10">
+                                    <span class="status st-close category_name" style="height:24px;">${item.categoryName}</span>
+                                </div>
+                                <h3 class="title">
+                                    <a onclick="SingleListing(${item.id})">${item.title}</a>
+                                </h3>
+                                <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
+                                <div class="listing-meta">
+                                    <ul>
+                                        <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                $('#appendListings').append(html);
+                $("#load-more").show();
+
+                // Add marker to the map with listing HTML
+                addMarker(item.latitude, item.longitude, item.title, html);
+            });
+
+            var selectedCurrency = localStorage.getItem('cur');
+            updatePrices(selectedCurrency);
+
+            pageNumber++;
+            updateCountDisplay();
+
+            if (varCurrentCount >= varTotalCount) {
+                document.getElementById('load-more').style.display = 'none';
+            }
+        } else {
+            $('#appendListings').append(`<h4>No Listing found..</h4>`);
         }
-    } else {
-        $('#appendListings').append(`<h4>No Listing found..</h4>`);
+    } catch (error) {
+        console.error("Error fetching listings:", error);
+        // Handle error accordingly
+        $('#skeleton-loader').hide();
+        $('#appendListings').show();
+        $('#appendListings').append(`<h4>Error loading listings. Please try again later.</h4>`);
     }
 }
+
 
 
 function addMarker(lat, lng, title, listingHtml) {
@@ -274,16 +292,13 @@ function updateCountDisplay() {
     countDisplay.textContent = `${varCurrentCount}/${varTotalCount}`;
 }
 
-
-
-
 function GetAllCatType() {
     postRequest('/Listing/GetAllCatType', null, function (res) {
 
         if (res.status == 200) {
 
             if (res.data != null) {
-
+                debugger;
                 $.each(res.data, function (i, v) {
 
                     $("#appendCatTypes").after(`
@@ -355,7 +370,6 @@ function GetAllCatType() {
         }
     });
 }
-
 
 function GetSidebarAdvertisments() {
     postRequest('/Advertisement/GetSidebarAdvertisments/' + 2, null, function (res) {

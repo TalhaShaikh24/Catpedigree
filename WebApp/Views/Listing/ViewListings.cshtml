@@ -2,6 +2,7 @@
 
 <style>
 
+
     .newsletter-widget-wrap {
         position: relative;
         width: 100%; /* Adjust width as needed */
@@ -58,6 +59,29 @@
     .close {
         opacity: inherit;
     }
+
+
+
+    .skeleton-item .skeleton-content {
+    background-color: #e0e0e0;
+    height: 400px; /* Adjust as necessary */
+    margin: 0px;
+    border-radius: 14px;
+    animation: pulse 1.5s infinite;
+}
+
+@@keyframes pulse {
+    0% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}
+
 </style>
 
 <!-- Add this to your HTML file -->
@@ -184,6 +208,29 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="listing-search-filter mb-40">
+                                <div id="skeleton-loader" class="row" style="display: none; row-gap:26px">
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content"></div>
+                                    </div>
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content"></div>
+                                    </div>
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content"></div>
+                                    </div>
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content"></div>
+                                    </div>
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content m-2"></div>
+                                    </div>
+                                    <div class="col-lg-4 skeleton-item">
+                                        <div class="skeleton-content"></div>
+                                    </div>
+                                    <!-- Add more skeleton items as needed -->
+                                </div>
+
+
                                 <div class="row" id="appendListings">
                                 </div>
                             </div>

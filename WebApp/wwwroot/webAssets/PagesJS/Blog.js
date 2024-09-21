@@ -61,7 +61,7 @@ async function loadBlogs(paramBlogCategoryId = "", paramKeywordFilter = "", tag 
                         <a href="javascript:void(0);" class="cat-btn">${moment(blog.createdOn).format("DD-MMMM-YYYY")}</a>
                         <div class="post-meta">
                             <ul>
-                                <li><span><i class="ti-bookmark-alt"></i><a href="javascript:void(0);">${blog.blogCategoryName}</a></span></li>
+                               <li><span><i class="ti-bookmark-alt"></i><a href="javascript:void(0);">${blog.blogCategoryName || 'Uncategorized'}</a></span></li>
                                 <li><span><i class="ti-comments-smiley"></i><a href="javascript:void(0);">${blog.commentsCount} Comment</a></span></li>
                                 <li><span><i class="ti-id-badge"></i><a href="javascript:void(0);">By admin</a></span></li>
                             </ul>

@@ -452,9 +452,29 @@
                                     </h2>
                                     <!-- Price -->
                                     <div class="rtcl-price-wrap price-in-mobile">
-                                        <div class="rtcl-price price-type-fixed"><span class="rtcl-price-amount amount"><bdi class="pricesingle">£<span class="rtcl-price-currencySymbol" data-price='@Model.data.Listing.Price'>@Model.data.Listing.Price</span></bdi></span></div>
+                                        @if (@Model.data.Listing.IsPriceRequest || @Model.data.Listing.Price == 0)
+                                        {
+                                            <span class="featured-btn price" data-price="600" style="
+                                               
+                                                font-size: 20px;
+                                                font-family: 'Asap Condensed', sans-serif !important;
+                                                font-weight: bold;
+                                                background-color: #ff344f;">
+                                                <a href="mailto:@Model.data.Listing.ListingEmail">Request Price</a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <div class="rtcl-price price-type-fixed">
+                                                <span class="rtcl-price-amount amount">
+                                                    <bdi class="pricesingle">£<span class="rtcl-price-currencySymbol" data-price='@Model.data.Listing.Price'>@Model.data.Listing.Price</span></bdi>
+                                                </span>
+                                            </div>
+                                        }
+                                       
                                     </div>
                                 </div>
+
                                 <div class="meta-list">
                                     <!-- Meta data -->
                                     <div class="rtcl-listing-meta">

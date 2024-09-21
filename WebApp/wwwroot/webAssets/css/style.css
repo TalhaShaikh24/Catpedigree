@@ -1165,7 +1165,9 @@ button {
         transform: rotate3d(0, 0, 1, -45deg);
         top: -8px;
     }
-
+nav.main-menu.d-flex.justify-content-center ul{
+    margin:0px;
+}
 .header-navigation .navbar-close {
     position: absolute;
     top: 0;
@@ -1969,7 +1971,7 @@ button {
     position: relative;
     z-index: 1;
     background-image: linear-gradient(rgb(77, 79, 95), rgb(77, 79, 95));
-    padding: 125px 0 100px;
+    padding: 180px 0 140px;
 }
 
     .breadcrumbs-wrapper:after, .breadcrumbs-wrapper:before {
@@ -1981,11 +1983,11 @@ button {
     }
 
     .breadcrumbs-wrapper:after {
-        right: -30px;
+        right: 0;
         background: url(../images/elements/cat_bg_4.jpg);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: contain;
+        background-size: cover;
     }
 
 @media (max-width: 991px) {
@@ -5949,7 +5951,7 @@ h3.title {
     border-radius: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    margin-top: -85px;
+    margin-top: 2x;
     background-color: #fff;
     -webkit-box-shadow: 1.545px 4.755px 18.8px 1.2px rgba(30, 33, 62, 0.06);
     box-shadow: 1.545px 4.755px 18.8px 1.2px rgba(30, 33, 62, 0.06);
