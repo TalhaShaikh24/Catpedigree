@@ -100,5 +100,11 @@ namespace ClassLibrary
     }
 
 
+    public class DataObj
+    {
+        public Register? dataObj { get; set; }
+    }
+
+
 
 }

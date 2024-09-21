@@ -192,11 +192,6 @@ $(document).ready(function () {
                 formData.append('BreederLicense', breederLicense);
             }
 
-
-
-
-
-
             $.ajax({
                 url: '/Account/RegisterUser',
                 type: 'POST',
