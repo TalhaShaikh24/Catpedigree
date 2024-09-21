@@ -328,6 +328,8 @@ $(document).on('change', '#VideoFile', function (e) {
     var maxSizeMB = 30 * 1024 * 1024; // 30 MB in bytes
     var maxDuration = 30; // Max duration in seconds
 
+   
+
     if (file) {
         // Check file size
         var fileSizeMB = file.size / (1024 * 1024); // Convert size to MB
@@ -378,11 +380,16 @@ $(document).on('change', '#VideoFile', function (e) {
                 });
                 e.target.value = null;
             } else {
+                // Video is available
+                $Step3nextButton = $('#step-3 button[onclick="nextStep()"]');
+                $Step3nextButton.prop('disabled', true);// Disable button
                 // Proceed with your existing postRequest call if the video duration is valid
                 postRequest('/VideoPackages/VideoAvailablity', null, function (res) {
                     if (res.status == 200) {
                         if (res.data != null) {
                             if (res.data) {
+                                // Video is available
+                                $Step3nextButton.prop('disabled', false); // Enable button
                                 // Video is available
                             } else {
                                 e.target.value = null;
@@ -397,8 +404,10 @@ $(document).on('change', '#VideoFile', function (e) {
                                     allowEscapeKey: true,
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.open("/promotionpackage", "_blank");
+                                        $Step3nextButton.prop('disabled', false); // Disable button
+                                        redirectToVideoPackage();
                                     }
+                                    
                                 });
                             }
                         }
@@ -534,6 +543,9 @@ $('#showpromotionpackage').change(function () {
     }
 });
 
+function redirectToVideoPackage() {
+    window.open("/Home/Enhancement", "_blank");
+}
 
 
 function GetAllCategoriesByPackageId(pkgId) {
@@ -653,6 +665,7 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("IsVaccinated", 0);
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
+    formData.append("IsPriceRequest", $('input[name="IsPriceRequest"]:checked').val() == "1" ? true : false);
     formData.append("Price", $('#Price').val());
     formData.append("PromotionPackageId", Number($('#PromotionPackageId').val()));
     formData.append("CatteryName", $('#CatteryName').val());
@@ -681,6 +694,7 @@ $("#Btn_Post_Listing").click(function () {
     formData.append('FatherTested', $("#FatherTested").val());
 
     formData.append('DateofBirth', $("#DataOFBirth").val());
+    formData.append('PartOfAssociation', $("#PartOfAssociation").val());
 
 
 

@@ -750,6 +750,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.Description ?? ""), "Description");
                 multiContent.Add(new StringContent(obj.Weigth.ToString() ?? ""), "Weigth");
                 multiContent.Add(new StringContent(obj.Price.ToString() ?? ""), "Price");
+                multiContent.Add(new StringContent(obj.IsPriceRequest.ToString() ?? ""), "IsPriceRequest");
                 multiContent.Add(new StringContent(obj.Color ?? ""), "Color");
                 multiContent.Add(new StringContent(obj.IsVaccinated.ToString()), "IsVaccinated");
                 multiContent.Add(new StringContent(obj.IsCastration.ToString()), "IsCastration");
@@ -773,6 +774,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.MotherTested ?? ""), "MotherTested");
                 multiContent.Add(new StringContent(obj.FatherTested ?? ""), "FatherTested");
                 multiContent.Add(new StringContent(obj.DateofBirth.ToString() ?? ""), "DateofBirth");
+                multiContent.Add(new StringContent(obj.PartOfAssociation.ToString() ?? ""), "PartOfAssociation");
                 if (obj.GalleryImageFiles != null)
                 {
                     foreach (var item in obj.GalleryImageFiles)

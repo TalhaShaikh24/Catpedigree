@@ -479,12 +479,14 @@ namespace WebApi.Controllers
                 if (res != null)
                 {
                     response = CustomStatusResponse.GetResponse(200);
+                    response.Token = claimDTO != null ? TokenManager.GenerateToken(claimDTO) : null;
                     response.Data = res;
                     response.ResponseMsg = "Data fetched successfully!";
                 }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(404);  // Assuming 404 for not found, adjust if needed
+                    response.Token = claimDTO != null ? TokenManager.GenerateToken(claimDTO) : null;
                     response.ResponseMsg = "No data found for the given listing ID.";
                 }
                 return response;
@@ -761,11 +763,13 @@ namespace WebApi.Controllers
             catch (DbException ex)
             {
                 response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
             }
             catch (Exception ex)
             {
                 response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
             }
 

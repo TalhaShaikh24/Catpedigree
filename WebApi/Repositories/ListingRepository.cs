@@ -97,6 +97,7 @@ namespace WebApi.Repositories
             parameters.Add("Description", obj.Description, DbType.String, ParameterDirection.Input);
             parameters.Add("Weigth", obj.Weigth, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("Price", obj.Price, DbType.Decimal, ParameterDirection.Input);
+            parameters.Add("IsPriceRequest", obj.IsPriceRequest, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("Color", obj.Color, DbType.String, ParameterDirection.Input);
             parameters.Add("IsVaccinated", obj.IsVaccinated, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("IsCastration", obj.IsCastration, DbType.Boolean, ParameterDirection.Input);
@@ -126,6 +127,7 @@ namespace WebApi.Repositories
             parameters.Add("MotherTested", obj.MotherTested, DbType.String, ParameterDirection.Input);
 
             parameters.Add("DateofBirth", obj.DateofBirth, DbType.Date, ParameterDirection.Input);
+            parameters.Add("PartOfAssociation", obj.PartOfAssociation, DbType.Date, ParameterDirection.Input);
 
 
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_AddListing]", parameters);

@@ -383,6 +383,15 @@
         {
             @if (@Model.status == 200 && @Model.data.Listing != null)
             {
+                @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.latitude))
+                {
+                    <input type="hidden" id="lat" value="@Model.data.Listing.latitude" />
+
+                }
+                @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.longitude))
+                {
+                    <input type="hidden" id="long" value="@Model.data.Listing.longitude" />
+                }
                 <div class="row mt-20">
                     @if (@Model.data.Listing != null)
                     {
@@ -527,7 +536,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                    Specific Details
+                                                    Details
                                                 </button>
                                             </h2>
                                             <!--  Inner Sidebar -->
@@ -619,7 +628,7 @@
                                                 </h2>
                                                 <!--  Inner Sidebar -->
                                                 <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
-                                                    <div class="rtcl-listing-description">
+                                                    <div class="rtcl-listing-description mt-40">
                                                         <p>@Model.data.Listing.Description</p>
                                                     </div>
                                                 </div>
@@ -629,14 +638,14 @@
                                 </div>
                             }
 
-                            @* Other Details *@
+                            @* Advertisement Details *@
                             <div class="rtcl-single-listing-details custom-fields-box">
                                 <div class="rtcl-main-content-wrapper">
                                     <div class="accordion accordion-flush" id="petslist-content-accordion">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                    Other Details
+                                                    Advertisemnent Details
                                                 </button>
                                             </h2>
                                             <!--  Inner Sidebar -->
@@ -655,15 +664,26 @@
                                                         <span>Placed On:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Listing.FirstApprovedOn
+                                                        @(Model.data.Listing.FirstApprovedOn == null ? "never" : Model.data.Listing.FirstApprovedOn.Value.ToString("dd-MMM-yyyy").ToLower())
                                                     </span>
+
                                                 </li>
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-expireOn">
                                                     <span class="cfp-label">
                                                         <span>Expiry:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @(Model.data.Listing.ExpiryDate == null ? "never" : Model.data.Listing.ExpiryDate)
+                                                        @(Model.data.Listing.ExpiryDate == null ? "never" : Model.data.Listing.ExpiryDate.Value.ToString("dd-MMM-yyyy").ToLower())
+                                                    </span>
+
+                                                </li>
+                                                
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>In Category:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @Model.data.Listing.CategoryName
                                                     </span>
                                                 </li>
                                                 <li class="list-group-item rtcl-field-text rtcl-field-slug-views">
@@ -674,15 +694,73 @@
                                                         @Model.data.Listing.ViewCount
                                                     </span>
                                                 </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @* Specific Details *@
+                            <div class="rtcl-single-listing-details custom-fields-box">
+                                <div class="rtcl-main-content-wrapper">
+                                    <div class="accordion accordion-flush" id="petslist-content-accordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    Specific Details
+                                                </button>
+                                            </h2>
+                                            <!--  Inner Sidebar -->
+                                            <ul class="list-group custom-field-wrapper">
                                                 <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
                                                     <span class="cfp-label">
-                                                        <span>In Category:</span>
+                                                        <span>Pedigree Name Mother:</span>
                                                     </span>
                                                     <span class="cfp-value">
-                                                        @Model.data.Listing.CategoryName
+                                                        @(string.IsNullOrEmpty(Model.data.Listing.FamilyTreeMother) ? "N/A" : Model.data.Listing.FamilyTreeMother)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>Pedigree Name Father:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(string.IsNullOrEmpty(Model.data.Listing.FamilyTreeFather) ? "N/A" : Model.data.Listing.FamilyTreeFather)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>Father Tested:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(string.IsNullOrEmpty(Model.data.Listing.FatherTested) ? "N/A" : Model.data.Listing.FatherTested)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>Mother Tested:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(string.IsNullOrEmpty(Model.data.Listing.MotherTested) ? "N/A" : Model.data.Listing.MotherTested)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>Part Of Association:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(string.IsNullOrEmpty(Model.data.Listing.PartOfAssociation) ? "N/A" : Model.data.Listing.PartOfAssociation)
+                                                    </span>
+                                                </li>
+                                                <li class="list-group-item rtcl-field-radio rtcl-field-slug-category">
+                                                    <span class="cfp-label">
+                                                        <span>Date of Birth:</span>
+                                                    </span>
+                                                    <span class="cfp-value">
+                                                        @(Model.data.Listing.DateofBirth.HasValue ? Model.data.Listing.DateofBirth.Value.ToString("dd-MMM-yyyy").ToLower() : "N/A")
                                                     </span>
                                                 </li>
                                             </ul>
+
                                         </div>
                                     </div>
                                 </div>
@@ -798,7 +876,7 @@
                     </div>
                     <div class="col-md-12 mt-20">
                         <div class="cta-content-box fadeInRight text-center">
-                            <a href="/Packages/Pricing" class="main-btn icon-btn text-center">Buy Package</a>
+                            <a href="@Url.Action("Advertising","Home")" class="main-btn icon-btn text-center">Buy Package</a>
                         </div>
                     </div>
                 </div>
@@ -813,7 +891,7 @@
                 </div>
                 <div class="col-md-12 mt-20">
                     <div class="cta-content-box fadeInRight text-center">
-                        <a href="/Packages/Pricing" class="main-btn icon-btn text-center">Buy Package</a>
+                        <a href="@Url.Action("Advertising","Home")" class="main-btn icon-btn text-center">Buy Package</a>
                     </div>
                 </div>
             </div>
@@ -822,9 +900,7 @@
 
 
     </div>
-
-    <input type="hidden" id="lat" value="@Model.data.Listing.latitude" />
-    <input type="hidden" id="long" value="@Model.data.Listing.longitude" />
+  
 
 </section><!--====== End Listing Details Section ======-->
 

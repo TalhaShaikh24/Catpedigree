@@ -49,6 +49,7 @@ namespace ClassLibrary
         public DateTime? ExpiryDate { get; set; }
         public int TotalCount { get; set; }
         public decimal Price { get; set; }
+        public bool IsPriceRequest { get; set; }
         public decimal Weigth { get; set; } = 0;
         public bool IsVaccinated { get; set; }
         public bool IsCastration { get; set; }
@@ -87,6 +88,7 @@ namespace ClassLibrary
         public string? MotherTested { get; set; }
         
         public string? FatherTested { get; set; }
+        public string? PartOfAssociation { get; set; }
         
 
     }

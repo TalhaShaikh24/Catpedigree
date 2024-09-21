@@ -315,7 +315,7 @@ function GetAllListings() {
                 "order": [[9, 'desc']], // Assuming the createdOn column is the 9th column (index 8)
                 "columnDefs": [
                     {
-                        "targets": p, // Index of the createdOn column
+                        "targets": 9, // Index of the createdOn column
                         "type": "date",
                         "render": function (data, type, row) {
                             // Convert the date format to something sortable
@@ -679,16 +679,41 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Phone").val(res.data.phone);
                 $("#Email").val(res.data.email);
                 $("#BreerderName").val(res.data.breerderName);
-                $('#check1').prop("Checked", !res.data.isBreerderLicenseUpload);
-                $('#check2').prop("Checked", !res.data.isBreerderLicenseUpload);
+                // Assuming res.data.isBreerderLicenseUpload is a boolean
+                if (res.data.isBreerderLicenseUpload) {
+                    $('#check3').prop("checked", true); // Set "I've already uploaded" to checked
+                    $('#check2').prop("checked", false); // Uncheck the other option
+                } else {
+                    $('#check2').prop("checked", true); // Set "I will upload" to checked
+                    $('#check3').prop("checked", false); // Uncheck the other option
+                }
                 $("#ZoologicalNumber").prop("checked", res.data.zoologicalNumber);
                 if (res.data.isVaccinated) $('input[name="IsVaccinated"][value="1"]').prop('checked', true); else $('input[name="IsVaccinated"][value="0"]').prop('checked', true);
                 $("#Price").val(res.data.price);
                 $("#Weigth").val(res.data.weigth);
                 $("#Color").val(res.data.color);
 
+                debugger;
+
+                $("#FTMother").val(res.data.familyTreeMother);
+                $("#FTFather").val(res.data.familyTreeFather);
+                $("#MotherTested").val(res.data.fatherTested);
+                $("#FatherTested").val(res.data.motherTested);
+                let dateOfBirth = new Date(res.data.dateofBirth).toISOString().split('T')[0];
+                $("#DataOFBirth").val(dateOfBirth);
+                $("#PartOfAssociation").val(res.data.partOfAssociation);
+
+
+                debugger;
+                let countryCode = res.data.phoneCode;
+
+                // Set the country code to change the flag and dial code
+                $("#Phone").intlTelInput("setCountry", countryCode);
+                latitude = res.data.latitude;
+                longitude = res.data.longitude;
 
                 //update code changes 
+                if (res.data.isPriceRequest) $('input[name="IsPriceRequest"][value="1"]').prop('checked', true); else $('input[name="IsPriceRequest"][value="0"]').prop('checked', true);
                 if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
                 if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
 
@@ -697,12 +722,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $('#GalleryFilesAppend').empty();
                 $("#PedigreeImageViewAppend").empty();
                 $('#FeaturedImageAppend').empty();
-                let countryCode = res.data.phoneCode;
-
-                // Set the country code to change the flag and dial code
-                $("#Phone").intlTelInput("setCountry", countryCode);
-                latitude = res.data.latitude;
-                longitude = res.data.longitude;
 
                 if (res.data.pedigreeFilePath) {
 
@@ -849,8 +868,6 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
             }
 
             $("#UpdateListingModal").modal("show");
-         
-
         }
         if (res.status == 304) {
 
@@ -1112,10 +1129,10 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Price", $('#Price').val());
 
     //update code changes 
+    formData.append("IsPriceRequest", $('input[name="IsPriceRequest"]:checked').val() == "1" ? true : false);
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
     formData.append("CatteryName", $('#CatteryName').val());
-    // Get the selected country data
     let selectedCountryData = $("#Phone").intlTelInput("getSelectedCountryData");
 
     // Extract the ISO2 country code
@@ -1124,6 +1141,20 @@ $("#Btn_Update_Listing").click(function () {
     formData.append('PhoneCode', countryCode);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
+
+
+    //Advertisement 
+
+    formData.append('FamilyTreeMother', $("#FTMother").val());
+    formData.append('FamilyTreeFather', $("#FTFather").val());
+    formData.append('MotherTested', $("#MotherTested").val());
+
+
+    formData.append('FatherTested', $("#FatherTested").val());
+
+    formData.append('DateofBirth', $("#DataOFBirth").val());
+    formData.append('PartOfAssociation', $("#PartOfAssociation").val());
+
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
         if (res.status == 200) {
@@ -1144,6 +1175,7 @@ $("#Btn_Update_Listing").click(function () {
                 });
 
                 $("#UpdateListingModal").modal("hide");
+                GetAllListings();
 
             }
         }

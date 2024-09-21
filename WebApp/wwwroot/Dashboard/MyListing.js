@@ -527,6 +527,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#FatherTested").val(res.data.motherTested);
                 let dateOfBirth = new Date(res.data.dateofBirth).toISOString().split('T')[0];
                 $("#DataOFBirth").val(dateOfBirth);
+                $("#PartOfAssociation").val(res.data.partOfAssociation);
 
 
                 debugger;
@@ -538,6 +539,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 longitude = res.data.longitude;
 
                 //update code changes 
+                if (res.data.isPriceRequest) $('input[name="IsPriceRequest"][value="1"]').prop('checked', true); else $('input[name="IsPriceRequest"][value="0"]').prop('checked', true);
                 if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
                 if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
 
@@ -946,6 +948,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Price", $('#Price').val());
 
     //update code changes 
+    formData.append("IsPriceRequest", $('input[name="IsPriceRequest"]:checked').val() == "1" ? true : false);
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);
     formData.append("IsSterilization", $('input[name="IsSterilization"]:checked').val() == "1" ? true : false);
     formData.append("CatteryName", $('#CatteryName').val());
@@ -969,6 +972,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append('FatherTested', $("#FatherTested").val());
 
     formData.append('DateofBirth', $("#DataOFBirth").val());
+    formData.append('PartOfAssociation', $("#PartOfAssociation").val());
 
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
@@ -990,7 +994,7 @@ $("#Btn_Update_Listing").click(function () {
                 });
 
                 $("#UpdateListingModal").modal("hide");
-
+              
             }
         }
         if (res.status == 304) {

@@ -534,6 +534,12 @@ button {
     text-transform: uppercase;
     overflow: hidden;
 }
+    .main-btn:disabled {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed !important;
+        opacity: 0.6;
+    }
 
     .main-btn:hover {
         color: #fff;
