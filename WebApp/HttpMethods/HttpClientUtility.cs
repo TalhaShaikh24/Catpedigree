@@ -734,6 +734,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.CategoryId.ToString() ?? ""), "CategoryId");
                 multiContent.Add(new StringContent(obj.Id.ToString() ?? "0"), "Id");
                 multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
+                multiContent.Add(new StringContent(obj.Country ?? ""), "Country");
                 multiContent.Add(new StringContent(obj.Location ?? ""), "Location");
                 multiContent.Add(new StringContent(obj.State ?? ""), "State");
                 multiContent.Add(new StringContent(obj.City ?? ""), "City");

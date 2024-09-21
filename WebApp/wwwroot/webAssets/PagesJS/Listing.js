@@ -76,6 +76,7 @@ function onPlaceChanged() {
   
     $("#State").val(state);
     $("#City").val(city);
+    $("#Country").val(country);
 
 
 }
@@ -647,6 +648,7 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("VideoFile", $("#VideoFile")[0].files[0]);
     formData.append("CategoryId", Number($("#Category").val()));
     formData.append("Title", $("#Title").val());
+    formData.append("Country", $("#Country").val());
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());

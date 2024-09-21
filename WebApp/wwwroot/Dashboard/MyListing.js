@@ -499,6 +499,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#TypeOfCat").val(res.data.typeOfCat);
                 $("#Age").val(res.data.age);
                 $("#Description").val(res.data.description);
+                $("#Country").val(res.data.country);
                 $("#Location").val(res.data.location);
                 $("#State").val(res.data.state);
                 $("#City").val(res.data.city);
@@ -932,6 +933,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("CategoryId", $("#Category").val());
     formData.append("Id", $("#HDID").val());
     formData.append("Title", $("#Title").val());
+    formData.append("Country", $("#Country").val());
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());

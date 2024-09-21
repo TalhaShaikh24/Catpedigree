@@ -84,6 +84,7 @@ namespace WebApi.Repositories
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Title", obj.Title, DbType.String, ParameterDirection.Input);
+            parameters.Add("Country", obj.Country, DbType.String, ParameterDirection.Input);
             parameters.Add("Location", obj.Location, DbType.String, ParameterDirection.Input);
             parameters.Add("State", obj.State, DbType.String, ParameterDirection.Input);
             parameters.Add("City", obj.City, DbType.String, ParameterDirection.Input);
