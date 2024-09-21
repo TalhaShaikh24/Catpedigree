@@ -210,16 +210,17 @@ function GetPromotionCost(pkgId) {
 
 
                 for (var i = 0; i < res.data.length; i++) {
+                    var daysText = res.data[i].daysNumber === 0 ? "For the duration of your advertisement" : `${res.data[i].daysNumber} days`;
 
                     $("#costslist").append(` 
-                    <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1${res.data[i].promotionCostID}" value="${res.data[i].promotionCostID}">
-                 <label class="form-check-label" for="inlineRadio1${res.data[i].promotionCostID}">${res.data[i].daysNumber} days - <span class="price"></span> ${res.data[i].cost}  </label>
-                    </div>
-                    <br/>
-      `);
-
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1${res.data[i].promotionCostID}" value="${res.data[i].promotionCostID}">
+                            <label class="form-check-label" for="inlineRadio1${res.data[i].promotionCostID}">${daysText} - <span class="price"></span> ${res.data[i].cost + " €"}  </label>
+                        </div>
+                        <br/>
+                    `);
                 }
+
                 $('#exampleModalCenter').modal('show');
 
             }
