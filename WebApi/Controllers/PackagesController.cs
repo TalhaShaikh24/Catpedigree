@@ -247,89 +247,178 @@ namespace WebApi.Controllers
             }
 
         }
-       
-        
-        //public class CheckoutSessionRequest
-        //{
-        //    public string PriceId { get; set; }
-        //}
 
-        //[HttpPost("create-checkout-session")]
-        //public async Task<IActionResult> CreateCheckoutSession([FromBody] CheckoutSessionRequest request)
-        //{
-        //    var options = new SessionCreateOptions
-        //    {
-        //        PaymentMethodTypes = new List<string> { "card" },
-        //        LineItems = new List<SessionLineItemOptions>
-        //    {
-        //        new SessionLineItemOptions
-        //        {
-        //            Price = request.PriceId,
-        //            Quantity = 1,
-        //        },
-        //    },
-        //        Mode = "subscription",
-        //        AllowPromotionCodes = true,
-        //        SuccessUrl = "https://localhost:7297/success?session_id={CHECKOUT_SESSION_ID}",
-        //        CancelUrl = "https://localhost:7297/cancel",
-        //    };
 
-        //    var service = new SessionService();
-        //    Session session = await service.CreateAsync(options);
+        public class CheckoutSessionRequest
+        {
+            public string PriceId { get; set; }
+        }
 
-        //    return Ok(new { id = session.Id });
-        //}
+        [HttpPost("create-checkout-session")]
+        public async Task<IActionResult> CreateCheckoutSession([FromBody] CheckoutSessionRequest request)
+        {
+            if (string.IsNullOrEmpty(request.PriceId))
+            {
+                return BadRequest("PriceId is required.");
+            }
 
-        //// Success endpoint to confirm payment
-        //[HttpGet("success")]
-        //public IActionResult Success(string session_id)
-        //{
-        //    // You can fetch the session details to confirm the payment
-        //    var service = new SessionService();
-        //    var session = service.Get(session_id);
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                Price = request.PriceId,
+                Quantity = 1,
+            },
+        },
+                Mode = "subscription",
+                AllowPromotionCodes = true,
+                SuccessUrl = "http://localhost:7297/success?session_id={CHECKOUT_SESSION_ID}", // Use http for local
+                CancelUrl = "http://localhost:7297/cancel",
+            };
 
-        //    if (session.PaymentStatus == "paid")
-        //    {
-        //        // Handle success, such as updating the database or showing confirmation to the user
-        //        return Ok("Payment successful!");
-        //    }
+            var service = new SessionService();
+            Session session;
 
-        //    return BadRequest("Payment not confirmed.");
-        //}
+            try
+            {
+                session = await service.CreateAsync(options);
+            }
+            catch (StripeException e)
+            {
+                
+                return StatusCode(500, "An error occurred while creating the checkout session.");
+            }
 
-        //// Cancel endpoint to handle failed/canceled payment
-        //[HttpGet("cancel")]
-        //public IActionResult Cancel()
-        //{
-        //    return BadRequest("Payment was canceled.");
-        //}
+            return Ok(new { id = session.Id });
+        }
 
-        //[HttpPost("webhook")]
-        //public async Task<IActionResult> webhook()
-        //{
-        //    var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-        //    try
-        //    {
-        //        var stripeEvent = EventUtility.ConstructEvent(json,
-        //            Request.Headers["Stripe-Signature"], endpointSecret);
 
-        //        // Handle the event
-        //        if (stripeEvent.Type == Events.PaymentIntentSucceeded)
-        //        {
-        //        }
-        //        // ... handle other event types
-        //        else
-        //        {
-        //            Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
-        //        }
+        // Success endpoint to confirm payment
+        [HttpGet("success")]
+        public IActionResult Success(string session_id)
+        {
+            // You can fetch the session details to confirm the payment
+            var service = new SessionService();
+            var session = service.Get(session_id);
 
-        //        return Ok();
-        //    }
-        //    catch (StripeException e)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+            if (session.PaymentStatus == "paid")
+            {
+                // Handle success, such as updating the database or showing confirmation to the user
+                return Ok("Payment successful!");
+            }
+
+            return BadRequest("Payment not confirmed.");
+        }
+
+        // Cancel endpoint to handle failed/canceled payment
+        [HttpGet("cancel")]
+        public IActionResult Cancel()
+        {
+            return BadRequest("Payment was canceled.");
+        }
+
+
+
+        [HttpPost("webhook")]
+        public async Task<IActionResult> Webhook()
+        {
+            // Read the request body
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            Console.WriteLine($"Webhook JSON: {json}"); // Log the raw JSON payload
+
+            Event stripeEvent;
+
+            try
+            {
+                // Construct the event
+                stripeEvent = EventUtility.ConstructEvent(
+                    json,
+                    Request.Headers["Stripe-Signature"],
+                    endpointSecret, // Ensure this matches your Stripe CLI setup
+                      throwOnApiVersionMismatch: false
+                );
+
+                Console.WriteLine($"Received event: {stripeEvent.Type}"); // Log the event type
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine($"Stripe error: {e.Message}");
+                return BadRequest("Invalid signature or error processing the event.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error processing webhook: {e.Message}");
+                return BadRequest("Error processing webhook.");
+            }
+
+            // Handle the event
+            Console.WriteLine($"Handling event type: {stripeEvent.Type}"); // Log before switch
+            switch (stripeEvent.Type)
+            {
+                case Events.PaymentIntentSucceeded:
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    await HandlePaymentSucceeded(paymentIntent);
+                    break;
+
+                case Events.InvoicePaymentSucceeded:
+                    var invoice = stripeEvent.Data.Object as Invoice;
+                    await HandleInvoicePaymentSucceeded(invoice);
+                    break;
+
+                default:
+                    Console.WriteLine($"Unhandled event type: {stripeEvent.Type}");
+                    break;
+            }
+
+            return Ok();
+        }
+
+        private async Task HandlePaymentSucceeded(PaymentIntent paymentIntent)
+        {
+            // Extract necessary data from the payment intent
+            var customerId = paymentIntent.CustomerId;
+            var amount = paymentIntent.AmountReceived;
+            var currency = paymentIntent.Currency;
+            var paymentStatus = paymentIntent.Status;
+
+            // Here, you would typically save the data to your database
+            // For example:
+            var paymentRecord = new 
+            {
+                CustomerId = customerId,
+                Amount = amount,
+                Currency = currency,
+                Status = paymentStatus,
+                PaymentDate = DateTime.UtcNow // Save the current date
+            };
+
+           
+        }
+
+        private async Task HandleInvoicePaymentSucceeded(Invoice invoice)
+        {
+            // Extract necessary data from the invoice
+            var customerId = invoice.CustomerId;
+            var subscriptionId = invoice.SubscriptionId;
+            var amountPaid = invoice.AmountPaid;
+            var currency = invoice.Currency;
+            var paymentStatus = invoice.Status; // This will usually be "paid" if the payment succeeded
+
+            // Create a record for the payment in your database
+            var invoiceRecord = new 
+            {
+                CustomerId = customerId,
+                SubscriptionId = subscriptionId,
+                AmountPaid = amountPaid,
+                Currency = currency,
+                Status = paymentStatus,
+                PaymentDate = DateTime.UtcNow // Save the current date and time
+            };
+
+           }
 
     }
 }
