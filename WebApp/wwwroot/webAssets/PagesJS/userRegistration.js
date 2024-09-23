@@ -46,9 +46,9 @@ $(document).ready(function () {
             },
             contactNo: {
                 required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 15
+                pattern: /^\+?\d{1,3}?\d{10,15}$/, // Allows optional country code
+                minlength: 10, // Adjust based on actual digit count required after country code
+                maxlength: 15 // Adjust based on the total length of the number
             },
             datepicker: {
                 required: true,

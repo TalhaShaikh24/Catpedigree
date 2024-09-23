@@ -245,14 +245,15 @@ function GetDatatable() {
 
                 $.each(res.data, function (i, v) {
                     $('#packagesAssignedtable').DataTable().row.add([
-                        //v.userId,
+                        // v.userId,
                         v.username,
-                        v.promotionPackageName,
+                        v.promotionPackageName.replace('(0 Days)', ''), // Replacing (0 Days) with an empty string
                         v.subscriptionDate,
                         v.createdOn,
-                        //v.price
+                        // v.price
                     ]).draw();
                 });
+
 
 
             }

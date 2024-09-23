@@ -38,3 +38,9 @@ p {
     line-height: 34px ;
     margin-bottom: 9px;
 }
+
+@media only screen and (max-width:768px) {
+    h3 {
+        font-size: 20px!important;
+    }
+}

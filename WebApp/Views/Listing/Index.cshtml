@@ -45,7 +45,13 @@
     from, to { border-color: transparent; }
     50% { border-color: #ff344f; } /* Cursor color matching text */
 }
-
+@@media only screen and (max-width:768px){
+        .typing-text {
+            white-space: unset;
+            animation: unset;
+            border-right:none;
+        }
+    }
 
 </style>
 
@@ -60,13 +66,13 @@
                             <h4 class="title">General Information</h4>
                             <div class="row">
                                 <div class="col-lg-12 mb-4 text-right">
-                                    <a href="@Url.Action("Enhancement","Home")#pricing" class="font-weight-bold" style="font-style:italic!important;color: #ff344f;" target="_blank">Want to buy Promotion Package?</a>
+                                    <a href="@Url.Action("Enhancement","Home")#pricing" class="font-weight-bold" style="font-style:italic!important;color: #ff344f;" target="_blank">Do you want to buy a Promotion Package?</a>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="single-checkbox d-flex">
                                         <input type="checkbox" id="showpromotionpackage" name="showpromotionpackage">
                                         <label for="showpromotionpackage" class="mb-5">
-                                            <strong class="typing-text">Do you want promote of your list?</strong>
+                                            <strong class="typing-text">Do you want a promotion of your listing?</strong>
                                         </label>
                                     </div>
                                 </div>
@@ -99,7 +105,7 @@
                                     <div class="form_group">
                                         <label>Title</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="Title" placeholder="Title" name="name" required value="TestTitle">
+                                            <input type="text" class="form_control" id="Title" placeholder="Title" name="name" required value="">
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +125,7 @@
                                     <div class="form_group">
                                         <label>Cattery Name</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="CatteryName" placeholder="Title" name="name" value="Cattery Name">
+                                            <input type="text" class="form_control" id="CatteryName" placeholder="Title" name="name" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +257,7 @@
                                         <label class="d-block">DESCRIPTION (Optional) </label>
 
                                         <div class="form_group">
-                                            <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value="Test Description"></textarea>
+                                            <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value=""></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +272,7 @@
                                     <div class="form_group">
                                         <label>Pedigree name mother</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother"  value="FTMother">
+                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother"  value="">
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +281,7 @@
                                     <div class="form_group">
                                         <label>Pedigree name father</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="FTFather" placeholder="Title" name="FTFather" value="FTFather">
+                                            <input type="text" class="form_control" id="FTFather" placeholder="Title" name="FTFather" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -283,7 +289,7 @@
                                     <div class="form_group">
                                         <label>Mother tested</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="MotherTested" placeholder="Title" name="MotherTested" value="MotherTested">
+                                            <input type="text" class="form_control" id="MotherTested" placeholder="Title" name="MotherTested" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -291,7 +297,7 @@
                                     <div class="form_group">
                                         <label>Father tested</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="FatherTested" placeholder="Title" name="FatherTested" value="FatherTested">
+                                            <input type="text" class="form_control" id="FatherTested" placeholder="Title" name="FatherTested" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +331,7 @@
 
                         <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
                             <h4 class="title">Listing Images</h4>
-                            <p>Click here or drop files to upload</p>
+                            <p class="d-none">Click here or drop files to upload</p>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form_group file-input-two">
@@ -450,7 +456,7 @@
                                     <div class="form_group">
                                         <label>City</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="City" placeholder="City" name="name" required value="TestCity">
+                                            <input type="text" class="form_control" id="City" placeholder="City" name="name" required value="">
                                         </div>
                                     </div>
                                 </div>
@@ -477,7 +483,7 @@
                                     <div class="form_group">
                                         <label>CONTACT EMAIL</label>
                                         <div class="form_group">
-                                            <input type="text" id="Email" class="form_control" placeholder="EMAIL" name="name" value="Khasnainali8@gmail.com">
+                                            <input type="text" id="Email" class="form_control" placeholder="EMAIL" name="name" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +492,7 @@
                                     <div class="form_group">
                                         <label>BREEDER'S NAME</label>
                                         <div class="form_group">
-                                            <input type="text" id="BreerderName" class="form_control" placeholder="BREEDER'S NAME" name="name" value="TestBreerderName">
+                                            <input type="text" id="BreerderName" class="form_control" placeholder="BREEDER'S NAME" name="name" value="">
                                         </div>
                                     </div>
                                 </div>

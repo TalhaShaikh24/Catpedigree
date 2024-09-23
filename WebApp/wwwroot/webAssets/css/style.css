@@ -1916,6 +1916,14 @@ nav.main-menu.d-flex.justify-content-center ul{
     .hero-wrapper-three .hero-content h1 {
         margin-bottom: 20px;
     }
+    @media only screen and (max-width:768px){
+        h1.wow.fadeInUp.hero-content-heading ~ p {
+            font-size: 18px !important;
+        }
+        .breadcrumbs-wrapper {
+            padding: 60px 0 60px!important;
+        }
+    }
 
     .hero-wrapper-three .hero-content h3 {
         font-weight: 500;
