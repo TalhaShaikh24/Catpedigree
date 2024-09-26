@@ -1,5 +1,6 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Mollie.Api.Models;
 using Stripe;
@@ -55,10 +56,14 @@ namespace WebApi.Controllers
 
                     for (int i = 0; i < res.Count; i++)
                     {
-                        for (int j = 0; j < res[i].promotionCosts.Count; j++)
+                        decimal cost;
+                        if (Decimal.TryParse(res[i].Costs, out cost))
                         {
-                            res[i].promotionCosts[j].Cost= Math.Round((decimal)(res[i].promotionCosts[j].Cost * rate), 2);
+                            res[i].Costs = Math.Round(cost * rate, 2).ToString();
                         }
+                       
+
+
 
                     }
                     

@@ -46,6 +46,27 @@ namespace WebApi.Repositories
             return data;
         }
 
+
+        public async Task<UserPackages> BuyPackageAsync(string UserID, string PackageID, string stripeSubscriptionId)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserID", UserID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@PackageID", PackageID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@SubscriptionDate", DateTime.Now, DbType.String, ParameterDirection.Input);
+            // Calculate expiry date by adding 365 days to the subscription date
+            DateTime? expiryDate = DateTime.Now.AddDays(365);
+            parameters.Add("@ExpiryDate", expiryDate, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsActive", true, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsExpired", false, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", UserID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", stripeSubscriptionId, DbType.String, ParameterDirection.Input);
+
+            var data = await  _dapper.GetAsync<UserPackages>(@"[sp_BuyPackage]", parameters);
+
+            return data;
+        }
+
         public UserPackages AssignPackage(UserPackages obj)
         {
             DynamicParameters parameters = new DynamicParameters();

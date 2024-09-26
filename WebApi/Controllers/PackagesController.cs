@@ -113,7 +113,7 @@ namespace WebApi.Controllers
                 obj.UserID = claimDTO.UserId;
 
 
-                int p = _accountRepository.checkPackagesValidations(claimDTO.UserId, obj.PackageID, "Listing");
+                int p = _accountRepository.checkPackagesValidations(claimDTO.UserId, obj.PackageID, "pricing");
 
 
                 if (p>0)
@@ -383,6 +383,7 @@ namespace WebApi.Controllers
             var amount = paymentIntent.AmountReceived;
             var currency = paymentIntent.Currency;
             var paymentStatus = paymentIntent.Status;
+            
 
             // Here, you would typically save the data to your database
             // For example:

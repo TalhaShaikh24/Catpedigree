@@ -14,6 +14,9 @@ namespace WebApi.DBManager
     {
         DbConnection GetDbconnection();
         T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
+        Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
         List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         //Dapper.SqlMapper.GridReader GetMultiple(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, object obj);
         int Execute(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
