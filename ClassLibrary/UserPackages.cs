@@ -21,6 +21,8 @@ namespace ClassLibrary
         public int? ExtraListingCount { get; set; }
         public bool? IsUnlimited { get; set; }
         public int? RemainingListings { get; set; }
+
+        public string? PricingPackageDetails { get; set; }
     }
 
     public class UserPackages : Common

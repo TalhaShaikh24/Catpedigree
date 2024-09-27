@@ -18,5 +18,15 @@ namespace ClassLibrary
         public string? ApiKey { get; set; }
         public string? ApiUrl { get; set; }
     }
-   
+
+    public class CheckoutSessionRequest
+    {
+        public string? PriceId { get; set; }
+        public string? packageType { get; set; }
+
+        public int PurchasedProductID { get; set; }
+
+        public int? Days { get; set; }
+    }
+
 }

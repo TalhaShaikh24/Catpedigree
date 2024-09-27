@@ -25,9 +25,6 @@ namespace WebApi.Repositories
         public List<PromotionPackages> GetAllPromotionPackages()
         {
 
-            List<PromotionPackages> promotionPackages = new List<PromotionPackages>();
-
-            PromotionPackages promotion = new PromotionPackages();
 
             DynamicParameters parameters = new DynamicParameters();
 
@@ -35,27 +32,27 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<PromotionPackages>(@"[sp_GetAllPromotionPackages]", parameters);
 
 
-            List<PromotionCost> promotionCosts = new List<PromotionCost>();
+            //List<PromotionCost> promotionCosts = new List<PromotionCost>();
 
 
-            foreach (var item in data)
-            {
-                promotionCosts = JsonConvert.DeserializeObject<List<PromotionCost>>(item.Costs);
+            //foreach (var item in data)
+            //{
+            //    promotionCosts = JsonConvert.DeserializeObject<List<PromotionCost>>(item.Costs);
 
-                promotion = item;
+            //    promotion = item;
 
-                promotion.promotionCosts=promotionCosts;
+            //    promotion.promotionCosts=promotionCosts;
 
 
 
-                promotionPackages.Add(promotion);
+            //    promotionPackages.Add(promotion);
 
-            }
+            //}
 
             
 
 
-            return promotionPackages;
+            return data;
         }
 
         public PromotionPackages BuyPromotionPackage(PromotionPackages obj)
@@ -76,6 +73,30 @@ namespace WebApi.Repositories
             parameters.Add("@stripeSubscriptionId", obj.stripeSubscriptionId, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Get<PromotionPackages>(@"[sp_BuyPromotionPackage]", parameters);
+
+            return data;
+
+
+        }
+        public async Task<PromotionPackages> BuyPromotionPackageAsync(string UserID, string PackageID, string stripeSubscriptionId , int Days)
+        
+            {
+
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserID", UserID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@PromotionPackagesID", PackageID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@SubscriptionDate", DateTime.Now, DbType.String, ParameterDirection.Input);
+            // Calculate expiry date by adding 365 days to the subscription date
+            DateTime? expiryDate = DateTime.Now.AddDays(365);
+            parameters.Add("@ExpiryDate", expiryDate, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Days", Days, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@IsActive", true, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsExpired", false, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", UserID, DbType.String, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", stripeSubscriptionId, DbType.String, ParameterDirection.Input);
+
+            var data = await _dapper.GetAsync<PromotionPackages>(@"[sp_BuyPromotionPackage]", parameters);
 
             return data;
 

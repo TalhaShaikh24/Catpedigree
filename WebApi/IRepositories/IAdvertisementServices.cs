@@ -10,8 +10,10 @@ namespace WebApi.IRepositories
         List<AdvertisementPackage> GetAdvertisementPackage();
 
         UserAdvertisementPackage BuyAdvertisementPackage(UserAdvertisementPackage obj);
+        public  Task<UserAdvertisementPackage> BuyAdvertisementPackage(string UserId, string AdvertisementPackageID, string stripeSubscriptionId);
 
-        
+
+
         AdvertisementPackageAndUserPackages userAdvertisementPackages(int UserID);
 
         List<UserAdvertisementPackage> GetallUserAdvertisementForApprovals();

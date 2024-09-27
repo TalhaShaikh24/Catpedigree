@@ -31,6 +31,10 @@ namespace ClassLibrary
 
         public string? stripeSubscriptionId { get; set; }
 
+        public int? PPCID { get; set; }
+
+        public string? Details { get; set; }
+
     }
 
     public class PromotionCost:Common {

@@ -10,5 +10,6 @@ namespace WebApi.IRepositories
 
         List<PromotionCost> GetPromotionCost(int id);
 
+        public  Task<PromotionPackages> BuyPromotionPackageAsync(string UserID, string PackageID, string stripeSubscriptionId, int Days);
     }
 }

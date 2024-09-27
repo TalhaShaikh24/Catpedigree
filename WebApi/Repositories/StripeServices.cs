@@ -1,5 +1,6 @@
 ﻿using ClassLibrary;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
@@ -7,6 +8,7 @@ using Stripe.Forwarding;
 using System.Data;
 using WebApi.DBManager;
 using WebApi.IRepositories;
+using static WebApi.Controllers.PackagesController;
 
 namespace WebApi.Repositories
 {
@@ -281,6 +283,51 @@ namespace WebApi.Repositories
             return data;
         }
 
+        // New Stripe Implementation
+
+        public class CheckoutSessionRequest
+        {
+            public string PriceId { get; set; }
+        }
+
+
+        public async  Task<string> CreateCheckoutSession([FromBody] CheckoutSessionRequest request)
+        {
       
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                Price = request.PriceId,
+                Quantity = 1,
+            },
+        },
+                Mode = "subscription",
+                AllowPromotionCodes = true,
+                SuccessUrl = "http://localhost:7297/success?session_id={CHECKOUT_SESSION_ID}", // Use http for local
+                CancelUrl = "http://localhost:7297/cancel",
+            };
+
+            var service = new SessionService();
+            Session session;
+
+            try
+            {
+                session = await service.CreateAsync(options);
+            }
+            catch (StripeException e)
+            {
+
+                return e.Message;
+            }
+
+            return session.Id;
+        }
+
+
+
     }
 }

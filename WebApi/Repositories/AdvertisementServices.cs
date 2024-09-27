@@ -46,6 +46,17 @@ namespace WebApi.Repositories
             parameters.Add("@stripeSubscriptionId", obj.stripeSubscriptionId, DbType.String, ParameterDirection.Input);
             var data = _dapper.Get<UserAdvertisementPackage>(@"[dbo].[sp_BuyAdvertisementPackage]", parameters);
             return data;
+        }    
+        
+        public async Task<UserAdvertisementPackage> BuyAdvertisementPackage(string UserId, string AdvertisementPackageID, string stripeSubscriptionId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserID",  UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@AdvertisementPackageID", AdvertisementPackageID, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CreatedBy", UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@stripeSubscriptionId", stripeSubscriptionId, DbType.String, ParameterDirection.Input);
+            var data = await _dapper.GetAsync<UserAdvertisementPackage>(@"[dbo].[sp_BuyAdvertisementPackage]", parameters);
+            return data;
         }
 
         public List<AdvertisementPackage> GetAdvertisementPackage()

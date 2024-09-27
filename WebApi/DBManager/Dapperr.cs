@@ -75,6 +75,20 @@ namespace WebApi.DBManager
             db.Close();
             return res;
         }
+        public async Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
+        {
+            // Use SqlConnection directly since it supports OpenAsync
+            using (var db = new SqlConnection(Connectionstring))
+            {
+                await db.OpenAsync(); // Open the connection asynchronously
+
+                // Execute the query asynchronously
+                var result = await db.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType, commandTimeout: 90);
+
+                return result;
+            }
+        }
+
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {

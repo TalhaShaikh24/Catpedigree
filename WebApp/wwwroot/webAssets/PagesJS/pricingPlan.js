@@ -1,24 +1,24 @@
 ﻿
-$(function ($) {
-    $('[data-numeric]').payment('restrictNumeric');
-    $('.cc-number').payment('formatCardNumber');
-    $('.cc-exp').payment('formatCardExpiry');
-    $('.cc-cvc').payment('formatCardCVC');
-    $.fn.toggleInputError = function (erred) {
-        this.parent('.form-group').toggleClass('has-error', erred);
-        return this;
-    };
-    $('form').submit(function (e) {
-        e.preventDefault();
-        var cardType = $.payment.cardType($('.cc-number').val());
-        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
-        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
-        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
-        $('.cc-brand').text(cardType);
-        $('.validation').removeClass('text-danger text-success');
-        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
-    });
-});
+//$(function ($) {
+//    $('[data-numeric]').payment('restrictNumeric');
+//    $('.cc-number').payment('formatCardNumber');
+//    $('.cc-exp').payment('formatCardExpiry');
+//    $('.cc-cvc').payment('formatCardCVC');
+//    $.fn.toggleInputError = function (erred) {
+//        this.parent('.form-group').toggleClass('has-error', erred);
+//        return this;
+//    };
+//    $('form').submit(function (e) {
+//        e.preventDefault();
+//        var cardType = $.payment.cardType($('.cc-number').val());
+//        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
+//        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
+//        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
+//        $('.cc-brand').text(cardType);
+//        $('.validation').removeClass('text-danger text-success');
+//        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+//    });
+//});
 
 
 
@@ -28,7 +28,7 @@ let packageID = 0;
 $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
-    //getAllPackages()
+    getAllPackages()
 })
 
 function getAllPackages() {
@@ -37,11 +37,11 @@ function getAllPackages() {
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 
     postRequest('/Packages/GetAllPackages/' + curr, null, function (res) {
-
+        debugger;
         if (res.status == 200) {
 
             if (res.data != null) {
-
+                debugger
                 $.each(res.data, function (index, item) {
                     var categories = [];
                     if (item.categoryNames.includes(',')) {
@@ -53,32 +53,51 @@ function getAllPackages() {
                     }
                     var colorClasses = ['blue', 'magenta']; // Define your color classes
                     var colorClass = colorClasses[index % colorClasses.length]; // Cycle through the color classes
+                    var pricingPackageDetails = JSON.parse(item.pricingPackageDetails) ;
+
                     var html = `
-                    <div class="col-md-4 col-sm-6 mb-5">
-                        <div class="pricingTable ${colorClass}">
-                            <div class="pricingTable-header">
-                                <h3 class="title">${item.name}</h3>
-                            </div>
-                            <div class="price-value">
-                                <span class="amount price" data-price='${item.price.toFixed(2)}'>${item.price.toFixed(2)}</span>
-                            </div>
-                            <h4 class="mb-4">Key Features:</h4>
-                            <ul class="pricing-content">
-                                <li>Advertising Limit: ${item.isUnlimited == true ? 'UNLIMITED' : item.allowedListings}</li>
-                                <li>Expiry Time: ${item.duration} Days</li>
-                            </ul>
-                            <h4 class="mb-4">Categories:</h4>
-                            <ul class="pricing-content">
-                               ${categories.map(category => `<li>${category}</li>`).join('')}
-                            </ul>
-                            <p class="mx-4 mb-4">${item.description}</p>
-                            <div class="pricingTable-signup">
-                                <a href="javascript:void(0)"  onClick="Payment(${item.packageID})">Buy Now</a>
-                            </div>
+                <div class="col-12 col-lg-3">
+                    <div class="pricing-table pedigree">
+                        <h3>${item.name}*</h3>
+                        <p class="price">Now for € ${item.price.toFixed(2)}** / <span>year</span></p>
+                        <p class="description">Key Features:</p>
+                        <div class="accordion">
+            `;
+                    // Loop through pricingPackageDetails to add the dynamic headings and descriptions
+                    $.each(pricingPackageDetails, function (detailIndex, detailItem) {
+                        html += `
+                    <div class="option">
+                        <input type="checkbox" id="Starter*-${detailIndex + 1}_${item.packageID}" class="toggle">
+                        <label class="title1" for="Starter*-${detailIndex + 1}_${item.packageID}">
+                            <span class="green">
+                                <span id="hs_cos_wrapper_widget_1724084820212_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                        <g id="check-circle${detailIndex + 1}_layer">
+                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </span> ${detailItem.Headings}
+                        </label>
+                        <div class="content">
+                            <p>${detailItem.Descriptions}</p>
                         </div>
                     </div>
+                `;
+                    });
+
+                    // Close the HTML structure
+                    html += `
+                        </div>
+                        <button class="button" type="button" onClick="Payment(${item.packageID})">
+                            <p class="button-pt">BUY NOW!</p>
+                        </button>
+                    </div>
+                </div>
             `;
-                    $('#pricingContainer').append(html);
+
+
+                    $('.pricing-table-slider').append(html);
                 });
 
 
@@ -150,7 +169,91 @@ function getAllPackages() {
 function Payment(pkgId) {
     packageID = Number(pkgId);
 
-    $("#paymentModal").modal('show');
+
+
+
+    var obj = {
+        PurchasedProductID: Number(packageID),
+        PriceId: 'price_1PWKweKR3yBF1l8fXM3cjclV',
+        packageType: 'pricing',
+        
+
+    }
+    postRequest('/Payment/createcheckoutsession', obj, function (res) {
+        debugger
+        if (res.status == 200) {
+            $(".preloader").hide()
+            if (res.data != null) {
+
+
+                packageID = 0;
+
+
+                const sessionId = res.data.id;
+                const stripe = Stripe('pk_test_51M9O4qKR3yBF1l8fXy3z9Vvtnn8A5e4frQt5lJgfpPOBcBMx6ZZFG93mpFCWgN0EjYXL0l7ioxvtSA07AJzUUOJX00XWJkik2w'); // Replace with your Publishable Key
+                stripe.redirectToCheckout({ sessionId });
+
+            
+            }
+        }
+        if (res.status == 304) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+            $(".preloader").hide()
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+ //   $("#paymentModal").modal('show');
 
 
 }

@@ -70,12 +70,18 @@ namespace WebApp.Controllers
 
 
 
-        public Task<object> GetAdvertisementPackage()
-		{
-			var content = "";
+      
+        public Task<object> GetAdvertisementPackage(string currency)
+        {
+            if (currency == null)
+            {
+                currency = "EUR";
+            }
 
-			return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetAdvertisementPackage", content, HttpContext);
 
-		}
-	}
+            string content = "";
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetAdvertisementPackage/" + currency, content, HttpContext);
+        }
+
+    }
 }
