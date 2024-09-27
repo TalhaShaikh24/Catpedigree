@@ -407,8 +407,8 @@
                                     @{
                                         <!-- Show the feature image -->
                                         <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail item-1">
-                                            <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.FeatureImagePath">
-                                                <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail w-100" alt="" decoding="async" title="">
+                                            <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath">
+                                                <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail w-100" alt="" decoding="async" title="">
                                             </a>
                                         </div>
                                     }
@@ -420,8 +420,8 @@
                                         @foreach (var imagePath in @Model.data.Listing.GallaryImagesPath.Replace(" ", "").Split(','))
                                         {
                                             <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                                <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@imagePath">
-                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@imagePath" class="w-100 attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                                <a class="listing-popup-btn w-100" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath">
+                                                    <img loading="lazy" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@imagePath" class="w-100 attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                                 </a>
                                             </div>
                                         }
@@ -514,8 +514,8 @@
                                                     </button>
                                                 </h2>
                                                 <div class="listing-play-box mb-30 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center" style="border-radius:14px; height:350px; background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
-                                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
+                                                    <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center" style="border-radius:14px; height:350px; background-image: url('@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.FeatureImagePath.Replace("\\", "/")');">
+                                                        <a href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.VideoPath.Replace("\\", "/")" target="_blank" class="video-popup"><i class="flaticon-play-button"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -538,8 +538,8 @@
                                                     </button>
                                                 </h2>
                                                 <div class="listing-gallery-item photoswip-item image-size-rtcl-thumbnail">
-                                                    <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.PedigreeFilePath">
-                                                        <img loading="lazy" height="500" style="object-fit:cover;" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.PedigreeFilePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                                    <a class="listing-popup-btn" data-fancybox="gallery" href="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.PedigreeFilePath">
+                                                        <img loading="lazy" height="500" style="object-fit:cover;" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.PedigreeFilePath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                                     </a>
                                                 </div>
                                             </div>
@@ -798,7 +798,7 @@
 
                                 <div class="contact-info-widget-wrap">
                                     <div class="contact-info-content pt-0">
-                                        <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl2").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
+                                        <img loading="lazy" style="width:150px;aspect-ratio:1;border-radius:50%" src="@Configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value@Model.data.Listing.ProfilePicPath" class="attachment-rtcl-thumbnail size-rtcl-thumbnail" alt="" decoding="async" title="">
                                         <h4 class="widget-title">Contact Info</h4>
                                         <div class="info-list">
                                             @if (!string.IsNullOrWhiteSpace(@Model.data.Listing.CatteryName))
