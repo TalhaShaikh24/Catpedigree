@@ -5924,7 +5924,8 @@ h3.title {
 
     .blog-post-item-three .entry-content .cat-btn {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        text-transform:capitalize!important;
     }
 
         .blog-post-item-three .entry-content .cat-btn i {

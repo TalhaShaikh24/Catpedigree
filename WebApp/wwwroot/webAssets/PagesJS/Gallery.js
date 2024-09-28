@@ -25,7 +25,7 @@ $(document).ready(function () {
 
 function GetAllGallery() {
 
-    postRequest("/Listing/GetAllGallary", null, function (res) {
+    postRequest("/Gallery/GetAllGallery", null, function (res) {
 
         if (res.status == 200) {
             $.each(res.data, function (index, imageData) {

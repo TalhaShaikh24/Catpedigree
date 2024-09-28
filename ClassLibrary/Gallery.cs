@@ -18,4 +18,12 @@ namespace ClassLibrary
 
 
     }
+
+    public class GalleryRequest
+    {
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+    }
+
+
 }

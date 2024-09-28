@@ -76,7 +76,7 @@ function GetTopPageListings() {
                                 <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                 <div class="listing-meta">
                                     <ul>
-                                        <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                        <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ function GetVetRimmedPageListings() {
                                     <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -319,7 +319,7 @@ function GetHomePageListings() {
                                     <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
-                                            <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -412,7 +412,7 @@ function GetHomePageBlogs() {
                                     <div class="post-date"><a href="#">${moment(item.createdOn).format("DD")}<span>${moment(item.createdOn).format("MMMM")}</span></a></div>
                                 </div>
                                 <div class="entry-content">
-                                    <a href="#" class="cat-btn"><i class="ti-bookmark-alt"></i>Tours & Travel</a>
+                                    <a href="#" class="cat-btn"><i class="ti-bookmark-alt"></i>${item.blogCategoryName || 'Uncategorized'}</a>
                                     <h3 class="title">
                                         <a href="/Blog/BlogDetails?Id=${item.blogID}">
                                             ${item.title}
