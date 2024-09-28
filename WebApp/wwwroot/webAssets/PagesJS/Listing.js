@@ -662,7 +662,11 @@ $("#Btn_Post_Listing").click(function () {
     formData.append("Age", $("#Age").val());
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val() == 'true' ? true : false);
     formData.append("ZoologicalNumber", $('input[type=checkbox][id=ZoologicalNumber]:checked').val() == 'true' ? true : false);
-    formData.append("Description", $("#Description").val());
+
+    // Handle new lines in Description
+    let description = $("#Description").val().replace(/\n/g, "<br>"); // Convert new lines to <br>
+    formData.append("Description", description);
+
     formData.append("Color", $("#Color").val());
     formData.append("IsVaccinated", 0);
     formData.append("IsCastration", $('input[name="IsCastration"]:checked').val() == "1" ? true : false);

@@ -116,7 +116,7 @@ async function loadMore() {
                                 <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                 <div class="listing-meta">
                                     <ul>
-                                        <li><span><i class="ti-location-pin"></i>${item.location}, ${item.state}</span></li>
+                                        <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
                                     </ul>
                                 </div>
                             </div>

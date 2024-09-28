@@ -485,8 +485,25 @@
                                             </li>
                                             <li class="rt-location">
                                                 <i class="ti-location-pin"></i>
-                                                <a href="">@Model.data.Listing.Location</a><span class="rtcl-delimiter">,</span> <a href="">@Model.data.Listing.City</a>
+                                                @{
+                                                    var locationParts = new List<string>
+                                                    {
+                                                    Model.data.Listing.Location,
+                                                    Model.data.Listing.City,
+                                                    Model.data.Listing.State,
+                                                    Model.data.Listing.Country
+                                                    }.Where(part => !string.IsNullOrEmpty(part)).ToList();
+                                                }
+                                                @for (int i = 0; i < locationParts.Count; i++)
+                                                {
+                                                    <a href="">@locationParts[i]</a>
+                                                    @if (i < locationParts.Count - 1)
+                                                    {
+                                                        <span class="rtcl-delimiter">, </span>
+                                                    }
+                                                }
                                             </li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -649,7 +666,7 @@
                                                 <!--  Inner Sidebar -->
                                                 <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#petslist-content-accordion">
                                                     <div class="rtcl-listing-description mt-40">
-                                                        <p>@Model.data.Listing.Description</p>
+                                                        <p>@Html.Raw(Model.data.Listing.Description)</p>
                                                     </div>
                                                 </div>
                                             </div>
