@@ -137,21 +137,21 @@ namespace WebApi.Controllers
                 stripeEvent = EventUtility.ConstructEvent(
                     json,
                     Request.Headers["Stripe-Signature"],
-                    endpointSecret // Ensure this matches your Stripe CLI setup
-                   
+                    endpointSecret, // Ensure this matches your Stripe CLI setup
+                    throwOnApiVersionMismatch: false
                 );
 
-             
+                Console.WriteLine($"Received event: {stripeEvent.Type}"); // Log the event type
             }
             catch (StripeException e)
             {
-                
-                return BadRequest("abcd");
+                Console.WriteLine($"Stripe error: {e.Message}");
+                return BadRequest("Invalid signature or error processing the event.");
             }
             catch (Exception e)
             {
-                
-                return BadRequest(e.Message);
+                Console.WriteLine($"Error processing webhook: {e.Message}");
+                return BadRequest("Error processing webhook.");
             }
 
             Console.WriteLine($"Handling event type: {stripeEvent.Type}"); // Log before switch
@@ -168,7 +168,15 @@ namespace WebApi.Controllers
                         var invoiceService = new InvoiceService();
                         var invoice1 = await invoiceService.GetAsync(checkoutSession.InvoiceId);
 
-                       
+                        // Now extract the metadata from the invoice
+                        if (invoice1.Metadata.TryGetValue("package_type", out var packageTypePI1))
+                        {
+                            Console.WriteLine($"Package Type from PaymentIntent Invoice: {packageTypePI1}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("package_type not found in invoice metadata from PaymentIntent.");
+                        }
                         // Safely access metadata from the payment intent
                         if (checkoutSession != null &&
                         checkoutSession.Metadata.TryGetValue("package_type", out var packageTypePI) &&
