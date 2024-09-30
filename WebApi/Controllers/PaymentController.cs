@@ -145,16 +145,16 @@ namespace WebApi.Controllers
             }
             catch (StripeException e)
             {
-                Console.WriteLine($"Stripe error: {e.Message}");
-                return BadRequest("Invalid signature or error processing the event.");
+               
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error processing webhook: {e.Message}");
-                return BadRequest("Error processing webhook.");
+               
+                return BadRequest(e.Message);
             }
 
-            Console.WriteLine($"Handling event type: {stripeEvent.Type}"); // Log before switch
+            
             switch (stripeEvent.Type)
             {
                 case Events.CheckoutSessionCompleted:
@@ -168,15 +168,7 @@ namespace WebApi.Controllers
                         var invoiceService = new InvoiceService();
                         var invoice1 = await invoiceService.GetAsync(checkoutSession.InvoiceId);
 
-                        // Now extract the metadata from the invoice
-                        if (invoice1.Metadata.TryGetValue("package_type", out var packageTypePI1))
-                        {
-                            Console.WriteLine($"Package Type from PaymentIntent Invoice: {packageTypePI1}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("package_type not found in invoice metadata from PaymentIntent.");
-                        }
+                       
                         // Safely access metadata from the payment intent
                         if (checkoutSession != null &&
                         checkoutSession.Metadata.TryGetValue("package_type", out var packageTypePI) &&
