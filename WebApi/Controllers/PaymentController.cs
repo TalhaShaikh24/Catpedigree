@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        const string endpointSecret = "whsec_QN8qq0OG9QbhnkNfbMz0WgpLVsBXaOpc";
+        const string endpointSecret = "whsec_Rmx84o0UTloyWmtp5ZsDkZb4W12y3j3Z";
 
 
 
@@ -137,24 +137,24 @@ namespace WebApi.Controllers
                 stripeEvent = EventUtility.ConstructEvent(
                     json,
                     Request.Headers["Stripe-Signature"],
-                    endpointSecret, // Ensure this matches your Stripe CLI setup
-                    throwOnApiVersionMismatch: false
+                    endpointSecret // Ensure this matches your Stripe CLI setup
+                   
                 );
 
-                Console.WriteLine($"Received event: {stripeEvent.Type}"); // Log the event type
+             
             }
             catch (StripeException e)
             {
-               
-                return BadRequest(e.Message);
+                
+                return BadRequest("abcd");
             }
             catch (Exception e)
             {
-               
+                
                 return BadRequest(e.Message);
             }
 
-            
+            Console.WriteLine($"Handling event type: {stripeEvent.Type}"); // Log before switch
             switch (stripeEvent.Type)
             {
                 case Events.CheckoutSessionCompleted:
