@@ -13,6 +13,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+
           private readonly IPackagesRepository _repository;
         private readonly IPromotionPackageRepository _promotionPackageRepository;
         private readonly IStripeServices _stripeServices;
@@ -23,7 +24,7 @@ namespace WebApi.Controllers
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        const string endpointSecret = "whsec_5faaa8f893e8ee04fe332d778da9a4b4807614c9f57791447440cfdcb58bca33";
+        const string endpointSecret = "whsec_QN8qq0OG9QbhnkNfbMz0WgpLVsBXaOpc";
 
 
 
@@ -35,7 +36,7 @@ namespace WebApi.Controllers
 
         public PaymentController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration,IAccountRepository accountRepository, ICurrencyConverterService currencyConverterService,
             IPromotionPackageRepository promotionPackageRepository
-, IAdvertisementServices advertisementServices
+            ,IAdvertisementServices advertisementServices
 
             )
         {
@@ -68,24 +69,24 @@ namespace WebApi.Controllers
                 {
                     PaymentMethodTypes = new List<string> { "card" },
                     LineItems = new List<SessionLineItemOptions>
-    {
-        new SessionLineItemOptions
-        {
-            Price = request.PriceId,
-            Quantity = 1,
-        },
-    },
+                    {
+                        new SessionLineItemOptions
+                        {
+                            Price = request.PriceId,
+                            Quantity = 1,
+                        },
+                    },
                     Mode = "subscription",
                     AllowPromotionCodes = true,
-                    SuccessUrl = "http://localhost:7297/success?session_id={CHECKOUT_SESSION_ID}",
-                    CancelUrl = "http://localhost:7297/cancel",
+                    SuccessUrl = webUrl+"dashboard?session_id={CHECKOUT_SESSION_ID}",
+                    CancelUrl = webUrl + "dashboard",
                     Metadata = new Dictionary<string, string>
-    {
-        { "package_type", request.packageType },
-        { "PurchasedProductID", request.PurchasedProductID.ToString() },
-        { "user_id", claimDTO.UserId.ToString() },
-          { "Days", request.Days.ToString() },
-    },
+                    {
+                        { "package_type", request.packageType },
+                        { "PurchasedProductID", request.PurchasedProductID.ToString() },
+                        { "user_id", claimDTO.UserId.ToString() },
+                        { "Days", request.Days.ToString() },
+                    },
                 };
 
                 var service = new SessionService();

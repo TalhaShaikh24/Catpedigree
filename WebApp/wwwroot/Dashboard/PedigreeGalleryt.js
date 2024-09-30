@@ -1,4 +1,4 @@
-﻿
+﻿var watermarkRatio = 0.3; // Set the ratio (% of the main image width)
 var WaterMarkURL = "";
 var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
 $(document).ready(function () {
@@ -67,7 +67,8 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
         ctx.drawImage(mainImage, 0, 0);
         // ctx.crossOrigin = true;
 
-        var watermarkWidth = parseInt($('#watermarkWidth').val()) || watermarkImage.width;
+        // Calculate watermark size based on the main image size
+        var watermarkWidth = mainImage.width * watermarkRatio; // 10% of the main image width
         var aspectRatio = watermarkImage.width / watermarkImage.height;
         var watermarkHeight = watermarkWidth / aspectRatio;
         var watermarkOpacity = parseFloat($('#watermarkOpacity').val());
@@ -135,7 +136,22 @@ $('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWid
     });
 });
 
+function downloadImage(url) {
+    // Create a temporary <a> element
+    var link = document.createElement('a');
+    link.href = url;
+    link.target = "_blank";
+    link.download = url.substring(url.lastIndexOf('/') + 1); // Extract the file name from the URL
 
+    // Append the <a> element to the body
+    document.body.appendChild(link);
+
+    // Trigger a click on the link
+    link.click();
+
+    // Remove the <a> element from the document
+    document.body.removeChild(link);
+}
 function GetAllGellary() {
 
     postRequest("/Dashboard/GetPedigreeGallery", null, function (res) {
@@ -160,9 +176,13 @@ function GetAllGellary() {
                                                     <div class="Watermarkbutton">
                                                                 <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
                                                         </div>
+                                                        <div class="DownloadButton">
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="downloadImage('${v.filePath}')">Download</button>
+                                                        </div>
                                                 </div>`);
 
             });
+
 
 
             $('.thumb').hover(
@@ -174,7 +194,6 @@ function GetAllGellary() {
                 },
 
             );
-
         }
         if (res.status == 304) {
 
@@ -353,8 +372,8 @@ $(document).on("click", "#ShowModalWatermark", function () {
                             <figure>
                              <img id="mainImage" class="img-fluid " src="${ImageUrl}" value="${ImageUrl}" alt="${filename}">
                             </figure>
-                         </a>`)
-
+                         </a>`);
+   
 
 })
 
@@ -515,6 +534,101 @@ $("#btn-saveGallery").click(function () {
                     text: res.responseMsg,
                     icon: "success"
                 });
+
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+
+        });
+
+    }
+    else {
+
+        Swal.fire({
+            title: "Warning",
+            text: "Please Select Gallery Images",
+            icon: "warning"
+        })
+
+    }
+
+});
+
+
+$("#btn-deleteGallery").click(function () {
+    debugger;
+    var checkedValues = [];
+    $(".CheckBoxSelection input[type='checkbox']:checked").each(function () {
+        checkedValues.push($(this).val());
+    });
+
+    if (checkedValues.length > 0) {
+        postRequest("/Dashboard/DeleteSelectedPedigreePath/" + encodeURIComponent(checkedValues.join(",")), null, function (res) {
+
+            if (res.status == 200) {
+
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+                GetAllGellary();
 
             }
             if (res.status == 304) {

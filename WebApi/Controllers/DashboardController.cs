@@ -1135,6 +1135,74 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost("replaceBreederLicenseFile")]
+        public async Task<Response> BreederLicense(IFormFile file)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null)
+                    return CustomStatusResponse.GetResponse(401);
+
+                if (file == null || file.Length == 0)
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.ResponseMsg = "File is empty";
+                    response.Data = null;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    return response;
+                }
+                else
+                {
+                    var filePath = Path.Combine("Profile", file.FileName);
+                    string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
+
+                    // Check if the file already exists
+                    if (System.IO.File.Exists(FullFilePath))
+                    {
+                        // Delete the existing file
+                        System.IO.File.Delete(FullFilePath);
+                    }
+
+
+
+
+                    // Save the new file
+                    using (var stream = new FileStream(FullFilePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+
+
+
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = file.FileName;
+                    response.ResponseMsg = "File replaced successfully!";
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                return response;
+            }
+        }
+
 
 
 
@@ -1508,6 +1576,7 @@ namespace WebApi.Controllers
             }
 
         }
+       
         [HttpPost("DeleteSelectedMediaPath/{Path}")]
         public Response DeleteSelectedMediaPath(string Path)
         {
@@ -1564,6 +1633,144 @@ namespace WebApi.Controllers
                     response.ResponseMsg = "Gallery Deleted successfully!";
 
                 }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+        [HttpPost("DeleteSelectedPedigreePath/{Path}")]
+        public Response DeleteSelectedPedigreePath(string Path)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                string[] filepaths = Path.Split(',');
+
+
+                for (int i = 0; i < filepaths.Length; i++)
+                {
+                    filepaths[i] = filepaths[i].Replace("%2F", "\\");
+                  
+
+                }
+
+
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+               
+                    foreach (var item in filepaths)
+                    {
+                  
+                        string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath,"UploadImages", item);
+                     
+
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+
+            
+
+
+                    }
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = "Success";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Gallery Deleted successfully!";
+
+                
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+        
+        [HttpPost("DeleteSelectedBreederLicensePath/{Path}")]
+        public Response DeleteSelectedBreederLicensePath(string Path)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                string[] filepaths = Path.Split(',');
+
+
+                for (int i = 0; i < filepaths.Length; i++)
+                {
+                    filepaths[i] = filepaths[i].Replace("%2F", "\\");
+                  
+
+                }
+
+
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+               
+                    foreach (var item in filepaths)
+                    {
+                  
+                        string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath,"Profile", item);
+                     
+
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+
+            
+
+
+                    }
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = "Success";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Gallery Deleted successfully!";
+
+                
                 return response;
 
             }

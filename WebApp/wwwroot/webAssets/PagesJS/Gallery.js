@@ -51,22 +51,21 @@ function GetAllGallery() {
             });
 
             // Initialize Masonry layout after images are loaded
+            // Initialize Masonry layout after images are loaded
             var $grid = $('.grid').imagesLoaded(function () {
                 $grid.masonry({
                     itemSelector: '.grid-item',
                     percentPosition: true,
                     columnWidth: '.grid-sizer'
-                }).promise().done(function () {
-                    // Hide the loader after a 3-second delay
-                    setTimeout(function () {
-                        // Hide the preloader after Masonry layout is done
-                        $('.loader-gallery').hide();
-                        $('.grid').css({
-                            "visibility":"visible"
-                        });
-                    }, 3000);
-                    
                 });
+
+                // Hide the loader after a 3-second delay
+                setTimeout(function () {
+                    $('.loader-gallery').fadeOut(); // Use fadeOut for a smoother effect
+                    $('.grid').css({
+                        "visibility": "visible"
+                    });
+                }, 3000);
             });
 
             

@@ -43,7 +43,21 @@
         transition: 0.3s;
     }
 
+    .DownloadButton {
+        position: absolute;
+        bottom: 25px;
+        left: 15px;
+        display: none;
+        opacity: 0.6;
+        transition: 0.3s;
+    }
+
     .thumb:hover > .Watermarkbutton {
+        display: block;
+        opacity: 1
+    }
+
+    .thumb:hover > .DownloadButton {
         display: block;
         opacity: 1
     }
@@ -80,12 +94,34 @@
 
 <section class="container-fluid">
 
+    <div class="row bg-white mb-4 p-3 d-flex align-items-baseline">
+
+        <div class="SelectAll my-2 mr-5">
+            <input type="checkbox" id="masterCheckbox">
+            <strong class="ml-3" style="font-size: 20px;">Select All</strong>
+        </div>
+
+
+        <div class="my-2 d-flex">
+            <input type="button" id="btn-saveGallery" style="display:none" class="btn btn-info btn-md px-4" value="Save Gallery" />
+            <input type="button" id="btn-deleteGallery" class="btn btn-danger btn-md px-4 ml-3" value="Delete Gallery" />
+        </div>
+    </div>
+
+
+    <div class="row gallery">
+    </div>
+</section>
+
+<section class="container-fluid">
+
     
 
 
     <div class="row gallery">
     </div>
 </section>
+
 
 
 <div class="modal fade" id="WaterMarkModal">

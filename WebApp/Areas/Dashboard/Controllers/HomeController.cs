@@ -293,6 +293,14 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpreplaceFileDashboard(BaseUrl, "api/Dashboard/replaceFile", file, HttpContext);
 
         }
+        [HttpPost]
+        [Route("Dashboard/replaceBreederLicenseFile")]
+        public Task<object> replaceBreederLicenseFile(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttpreplaceFileDashboard(BaseUrl, "api/Dashboard/replaceBreederLicenseFile", file, HttpContext);
+
+        }
 
         [HttpPost]
         [Route("Dashboard/replaceFileGallery")]
@@ -380,12 +388,29 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
-          [HttpPost]
+         [HttpPost]
         [Route("Dashboard/DeleteSelectedMediaPath/{Path}")]
         public Task<object> DeleteSelectedMediaPath(string Path)
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedMediaPath/" + Path, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/DeleteSelectedPedigreePath/{Path}")]
+        public Task<object> DeleteSelectedPedigreePath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedPedigreePath/" + Path, "", HttpContext);
+
+        }
+        [HttpPost]
+        [Route("Dashboard/DeleteSelectedBreederLicensePath/{Path}")]
+        public Task<object> DeleteSelectedBreederLicensePath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedBreederLicensePath/" + Path, "", HttpContext);
 
         }
 
