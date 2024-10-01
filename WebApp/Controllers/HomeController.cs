@@ -21,6 +21,10 @@ namespace WebApp.Controllers
         {
             return View();
         }  
+        public IActionResult Thankyou()
+        {
+            return View();
+        } 
         public IActionResult Advertising()
         {
             return View();

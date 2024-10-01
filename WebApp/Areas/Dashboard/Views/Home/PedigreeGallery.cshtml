@@ -138,7 +138,7 @@
                         <form id="watermarkForm" class="border p-4 rounded shadow-sm">
                             <h4 class="mb-4">Watermark Settings</h4>
 
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="UploadWaterMark">Upload Watermark:</label>
                                 <input type="file" class="form-control-file" id="UploadWaterMark">
                             </div>
@@ -146,6 +146,7 @@
                             <div class="form-group">
                                 <label for="position">Position:</label>
                                 <select class="form-control" id="position" name="position">
+                                    <option value="-1" disabled selected>Select Position</option>
                                     <option value="top-left">Top Left</option>
                                     <option value="top-center">Top Center</option>
                                     <option value="top-right">Top Right</option>

@@ -3,6 +3,11 @@ var WaterMarkURL = "";
 var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
 $(document).ready(function () {
 
+
+    $('#WaterMarkModal').on('hidden.bs.modal', function () {
+        $('#position').prop('selectedIndex', 0); // Reset to the first option
+    });
+
     $(".gallery").magnificPopup({
         delegate: "a",
         type: "image",

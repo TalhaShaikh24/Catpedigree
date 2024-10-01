@@ -1,0 +1,27 @@
+﻿<style>
+    .thank-you-area{
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 1000px;
+        margin: 100px auto;
+    }
+    @@media only screen and (max-width:768px)
+    {
+        .thank-you-area {
+            max-width: 250px!important;
+        }
+       
+    }
+    
+</style>
+<section class="thank-you-area py-5 m-100" style="background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 100px auto;">
+    <div class="container text-center">
+        <h2 style="color: #2c3e50; font-size: 36px; font-weight: bold;">Thank You for Your Purchase!</h2>
+        <p style="font-size: 20px;color: #34495e;margin-top: 20px;line-height: 26px;">We truly appreciate your support! Your advertisement package is now active, helping you find the perfect homes for your cats.</p>
+        <p style="font-size: 18px; color: #7f8c8d; margin-top: 15px;">If you have any questions or need assistance, don’t hesitate to reach out!</p>
+        <a href="@Url.Action("Index","Home")" class="main-btn mt-4" style="padding: 10px 20px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer;">
+           Go to Home
+        </a>
+    </div>
+</section>

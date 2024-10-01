@@ -213,13 +213,23 @@ function Payment(pkgId) {
             })
         }
         if (res.status == 401) {
-            $(".preloader").hide()
+            $(".preloader").hide();
             Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
+                title: "info",
+                text: "You need to login to purchase the package.",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Log In",
+                cancelButtonText: "Cancel",
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to the login page
+                    window.location.href = '/Home/login'; // Update with your login URL
+                }
+            });
         }
+
         if (res.status == 403) {
             $(".preloader").hide()
             Swal.fire(res.responseMsg, {

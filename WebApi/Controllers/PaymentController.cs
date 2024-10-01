@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        const string endpointSecret = "whsec_Rmx84o0UTloyWmtp5ZsDkZb4W12y3j3Z";
+        const string endpointSecret = "whsec_FpWM26SV3xYE8Q0JxmPmiNKOvTmbSIhS";
 
 
 
@@ -78,7 +78,7 @@ namespace WebApi.Controllers
                     },
                     Mode = "subscription",
                     AllowPromotionCodes = true,
-                    SuccessUrl = webUrl+"dashboard?session_id={CHECKOUT_SESSION_ID}",
+                    SuccessUrl = webUrl+ "home/thankyou?session_id={CHECKOUT_SESSION_ID}",
                     CancelUrl = webUrl + "dashboard",
                     Metadata = new Dictionary<string, string>
                     {
