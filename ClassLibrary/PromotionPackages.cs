@@ -35,6 +35,8 @@ namespace ClassLibrary
 
         public string? Details { get; set; }
 
+        public int? PackageCount {  get; set; } 
+
     }
 
     public class PromotionCost:Common {
