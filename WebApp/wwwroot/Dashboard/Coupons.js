@@ -14,7 +14,7 @@ $(document).ready(function () {
             },
             CouponsDays: {
                 required: true,
-                number: true
+                date: true  // Using jQuery Validate's date validation
             }
         },
         messages: {
@@ -28,8 +28,8 @@ $(document).ready(function () {
                 max: "The percentage cannot exceed 100."
             },
             CouponsDays: {
-                required: "Please enter the number of coupon days.",
-                number: "Please enter a valid number for coupon days."
+                required: "Please enter a valid coupon expiration date.",
+                date: "Please enter a valid date for coupon expiration."
             }
         },
         errorElement: "p",
@@ -94,9 +94,13 @@ function GetAllDropdowns() {
                     $("#UserId").append(`<option value="${v.userId}" data-email=${v.email} >${v.firstname} (${v.lastname})</option>`);
                 });
 
+                $('#UserId').selectpicker();
 
+                // Remove the first option (index 0) if it is "Select User"
+                $('#UserId option').eq(0).remove(); // Change index if needed
 
-
+                // Refresh the selectpicker to update UI
+                $('#UserId').selectpicker('refresh');
 
             }
         }
@@ -163,9 +167,19 @@ function GetAllDropdowns() {
 
 
 
+var selectedEmails = [];
+$('#UserId').on('changed.bs.select', function () {
+   
 
+    // Loop through selected options
+    $(this).find('option:selected').each(function () {
+        // Get the data-email attribute
+        var email = $(this).data('email');
+        selectedEmails.push(email);
+    });
 
-
+    console.log(selectedEmails); // Output the emails array
+});
 
 $("#save").click(function () {
 
@@ -179,13 +193,14 @@ $("#save").click(function () {
        
             var obj = {
 
-                DiscountPercentage: Number($("#CouponCodePertentage").val()),
-                UserId: $("#UserId").val(),
-                CouponCode: "",
-                UserName: "",
-                CouponName: $("#Name").val(),
-                CouponsDays: $("#CouponsDays").val()
-
+                amountOff: $("#CouponCodePertentage").val(),
+              
+              
+                Currency:"eur",
+        
+                Name: $("#Name").val(),
+                ExpiresAt: $("#CouponsDays").val(),
+                AllowedUsers: selectedEmails
 
             }
             postRequest('/Dashboard/AddCouponsCodes', obj, function (res) {

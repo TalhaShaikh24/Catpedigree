@@ -326,8 +326,142 @@ namespace WebApi.Repositories
 
             return session.Id;
         }
+        ///  New Coupon Code
 
 
 
+        // Create Coupon
+        public async Task<Coupon> CreateCouponAsync(string couponName, long amountOff, string currency, List<string> userEmails, DateTime? expiresAt = null)
+        {
+            var options = new CouponCreateOptions
+            {
+                Name = couponName, // Same name for coupon and promotion code
+                PercentOff = Convert.ToDecimal(amountOff),
+                Currency = currency,
+
+            };
+
+
+            // Check if userEmails is provided and not empty
+            if (userEmails != null && userEmails.Count > 0)
+            {
+                options.Metadata = new Dictionary<string, string>
+              {
+                  { "allowed_users", string.Join(",", userEmails) } // Store the list of allowed users as metadata
+              };
+            }
+
+            var service = new CouponService();
+            var coupon = await service.CreateAsync(options);
+
+            return coupon;
+        }
+
+        // Create Promotion Code with Coupon
+        public async Task<PromotionCode> CreatePromotionCodeAsync(string couponId, string promotionCodeName, List<string> userEmails, DateTime? expiresAt = null)
+        {
+            var options = new PromotionCodeCreateOptions
+            {
+                Coupon = couponId, // Reference the coupon ID
+                Code = promotionCodeName, // Same name as coupon
+                
+                ExpiresAt = expiresAt?.ToUniversalTime(), // Optional expiry date for the promotion code
+            };
+
+            // Check if userEmails is provided and not empty
+            if (userEmails != null && userEmails.Count > 0)
+            {
+                options.Metadata = new Dictionary<string, string>
+              {
+                  { "allowed_users", string.Join(",", userEmails) } // Store the list of allowed users as metadata
+              };
+                      }
+
+            var service = new PromotionCodeService();
+            var promotionCode = await service.CreateAsync(options);
+
+            return promotionCode;
+        }
+
+        // Combine both Coupon and Promotion Code creation with allowed users
+        public async Task<PromotionCode> CreateCouponAndPromotionCodeAsync(string name, long amountOff, string currency, List<string> userEmails, DateTime? expiresAt = null)
+        {
+            // First, create the coupon
+            var coupon = await CreateCouponAsync(name, amountOff, currency, userEmails, expiresAt);
+
+            // Then, create the promotion code using the coupon ID
+            var promotionCode = await CreatePromotionCodeAsync(coupon.Id, name, userEmails, expiresAt);
+
+            return promotionCode;
+        }
+
+       
+    public async Task<List<PromotionCodeDto>> GetAllCouponsAsync()
+        {
+            var promotionCodeService = new PromotionCodeService();
+            var promotionCodeOptions = new PromotionCodeListOptions
+            {
+                Limit = 100 // Max is 100
+            };
+
+            var promotionCodes = new List<PromotionCodeDto>();
+            var list = await promotionCodeService.ListAsync(promotionCodeOptions);
+
+            // Filter the list based on Active property
+            var filteredList = list.Where(x => x.Active).ToList();
+
+            // Create a new StripeList from the filtered list
+            var newList = new Stripe.StripeList<Stripe.PromotionCode>
+            {
+                Data = filteredList,
+               
+            };
+
+            // Create a dictionary to hold coupon details for quick access
+            var couponService = new CouponService();
+            var couponDetails = new Dictionary<string, Coupon>();
+
+            foreach (var promoCode in newList.Data)
+            {
+                // Fetch coupon details if not already fetched
+                if (!couponDetails.ContainsKey(promoCode.Coupon.Id))
+                {
+                    var coupon = await couponService.GetAsync(promoCode.Coupon.Id);
+                    couponDetails[coupon.Id] = coupon;
+                }
+
+                // Add to the result list
+                var couponInfo = couponDetails[promoCode.Coupon.Id];
+                promotionCodes.Add(new PromotionCodeDto
+                {
+                    Id = promoCode.Id,
+                    IsActive = promoCode.Active,
+                    Code = promoCode.Code,
+                    ExpiresAt = promoCode.ExpiresAt,
+                    AmountOff = couponInfo.AmountOff,
+                    PercentOff = couponInfo.PercentOff,
+                    Currency = couponInfo.Currency,
+                    Name = couponInfo.Name,
+                    Metadata = promoCode.Metadata,
+                    CoupenCodeID= couponInfo.Id,
+                });
+            }
+
+            return promotionCodes;
+        }
+        public async Task DeleteCouponAsync(string couponId)
+        {
+           
+                // Deleting the coupon by ID
+                var couponService = new CouponService();
+                await couponService.DeleteAsync(couponId);
+
+           
+
+              
+               
+            
+            
+        }
     }
 }

@@ -13,7 +13,7 @@ function GetAllListings() {
         if (res.status == 200) {
 
             if (res.data != null) {
-
+                debugger;
                 // Destroy existing DataTable instance if it exists
                 if ($.fn.DataTable.isDataTable('#TableCoupensCodesListing')) {
                     $('#TableCoupensCodesListing').DataTable().clear().destroy();
@@ -27,18 +27,16 @@ function GetAllListings() {
 
                 // Iterate over the response data and add rows to the DataTable
                 $.each(res.data, function (i, v) {
+                    debugger;
                     table.row.add([
-                        v.couponCode,
-                        v.discountPercentage + '%',
-                        v.userName,
-                        v.couponsDays,
+                        String(v.code),
+                        v.percentOff + '%',
                         v.isActive,
-                        v.isExpired,
-                        v.usedBy,
-                        v.createdOn,
+                        
+                      moment(v.expiresAt).format("DD - MMMM - YYYY"),
                         `<div style="width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
-            <button type="button" class="btn btn-danger btn-xs p-2" title="Delete" onclick="UpdateExpireStatus(${v.couponID});"><i class="fa fa-trash" aria-hidden="true"></i></button>
-            <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateActiveStatus(${v.couponID});"><i class="fa fa-clock" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-danger btn-xs p-2" title="Delete" onclick="UpdateExpireStatus('${v.coupenCodeID}');"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          
          </div>`
                     ]);
                 });

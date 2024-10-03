@@ -17,6 +17,10 @@ namespace WebApi.IRepositories
         string CreateDiscountCoupon( decimal discountPercentage,string CouponName, int? customDays);
 
         int AddCouponsCodes(CouponCodes obj);
-
+          Task<Coupon> CreateCouponAsync(string couponName, long amountOff, string currency, List<string> userEmails, DateTime? expiresAt = null);
+          Task<PromotionCode> CreatePromotionCodeAsync(string couponId, string promotionCodeName,  List<string> userEmails, DateTime? expiresAt = null);
+        Task<PromotionCode> CreateCouponAndPromotionCodeAsync(string name, long amountOff, string currency,  List<string> userEmails, DateTime? expiresAt = null);
+         Task<List<PromotionCodeDto>> GetAllCouponsAsync();
+        Task DeleteCouponAsync(string couponId);
     }
 }

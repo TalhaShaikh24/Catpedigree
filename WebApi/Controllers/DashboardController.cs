@@ -2195,7 +2195,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost("IsExpireCoupens/{Id}")]
-        public Response IsExpireCoupens(int Id)
+        public Response IsExpireCoupens(string Id)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -2205,17 +2205,14 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.IsExpireCoupens(Id);
-
-                if (res > 0)
-                {
+                   _stripeServices.DeleteCouponAsync(Id);
 
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Data = res;
+                    response.Data = "success";
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Code has been Deleted successfully!";
 
-                }
+              
                 return response;
 
             }

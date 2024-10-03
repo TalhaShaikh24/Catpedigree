@@ -6,6 +6,7 @@ using WebApi.IRepositories;
 using ClassLibrary;
 using WebApi.Utility;
 using System.Data.Common;
+using WebApi.Repositories;
 
 namespace WebApi.Controllers
 {
@@ -225,6 +226,77 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-   
-     }
+
+        [HttpPost("create-coupon-and-promo")]
+        public async Task<Response> CreateCouponAndPromotionCode([FromBody] CouponAndPromotionRequest request)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+            try
+            {
+
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+
+                // Call the service to create both the coupon and the promotion code with specific user assignments
+                var promotionCode = await _stripeServices.CreateCouponAndPromotionCodeAsync(
+                request.Name,
+                request.AmountOff,
+                request.Currency,
+            
+                request.AllowedUsers,
+                request.ExpiresAt
+            );
+
+                if (promotionCode != null)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = promotionCode;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "";
+                }
+                return response;
+            }
+            catch (Exception ex) {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+          //  return Ok(promotionCode);
+        }
+
+        [HttpPost("GetAllCoupons")]
+        public async Task<Response> GetAllCoupons()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+            try
+            {
+
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                var coupons = await _stripeServices.GetAllCouponsAsync();
+
+                response = CustomStatusResponse.GetResponse(200);
+                response.Data = coupons;
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = "";
+
+                return response;    
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+             
+        }
+    }
 }

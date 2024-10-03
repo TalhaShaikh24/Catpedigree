@@ -581,10 +581,10 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
         [HttpPost("Dashboard/AddCouponsCodes")]
-        public Task<object> AddCouponsCodes([FromBody] CouponCodes obj)
+        public Task<object> AddCouponsCodes([FromBody] CouponAndPromotionRequest obj)
         {
             string content = JsonConvert.SerializeObject(obj);
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AddCouponsCodes", content, HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Payment/create-coupon-and-promo", content, HttpContext);
         }
 
 
@@ -599,13 +599,13 @@ namespace WebApp.Areas.Dashboard.Controllers
         public Task<object> GetCouponCodes()
         {
             string content = "";
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetCouponCodes", content, HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Payment/GetAllCoupons", content, HttpContext);
         }
         
         [HttpPost]
         [Route("Dashboard/IsExpireCoupens")]
 
-        public Task<object> IsExpireCoupens(int Id)
+        public Task<object> IsExpireCoupens(string Id)
         {
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/IsExpireCoupens/" + Id, "", HttpContext);
