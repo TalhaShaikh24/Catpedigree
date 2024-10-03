@@ -21,8 +21,6 @@ function GetAllDropdowns() {
 
                 $("#Listing").empty();
               
-
-                
             
                 if (res.data.item1.length > 0) {
                     $.each(res.data.item1, function (i, v) {
@@ -37,10 +35,7 @@ function GetAllDropdowns() {
                     $("#Listing").append(`<option value="${v.id}">${v.title}</option>`);
                 });
 
-
-
                 $('select').niceSelect('update');
-
 
             }
         }
