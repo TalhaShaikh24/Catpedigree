@@ -33,14 +33,14 @@ function GetTopPageListings() {
     postRequest('/Listing/GetTopPageListings/' + curr, null, function (res) {
 
         if (res.status == 200) {
-
+            debugger;
             if (res.data.length > 0) {
 
                 $.each(res.data, function (index, item) {
 
                     var html = `
                     <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="listing-item listing-grid-item-two mb-30">
+                        <div class="listing-item listing-grid-item-two mb-30 ${item.propertiestoShow}" >
                             <div class="listing-thumbnail">
                                 ${item.videoPath && item.videoPath.trim() !== "" ? `
                                     <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
@@ -73,7 +73,7 @@ function GetTopPageListings() {
                                 <h3 class="title">
                                     <a onclick="SingleListing(${item.id})">${item.title}</a>
                                 </h3>
-                                <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
+                                <p class="text_limit_2 d-none">${item.description}</p>
                                 <div class="listing-meta">
                                     <ul>
                                         <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
