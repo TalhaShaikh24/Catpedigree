@@ -19,7 +19,7 @@ namespace WebApi.IRepositories
         List<UserAdvertisementPackage> GetallUserAdvertisementForApprovals();
 
 
-        UserAdvertisementPackage UpdateUserAdvertisementStatus(int Id, string Status);
+        UserAdvertisementPackage UpdateUserAdvertisementStatus(int Id, string Status, string Reason);
 
         Task<UtilizePurchasedAdvertisementPackage> utilizePurchasedAdvertisementPackageAsync(UtilizePurchasedAdvertisementPackage obj);
     }

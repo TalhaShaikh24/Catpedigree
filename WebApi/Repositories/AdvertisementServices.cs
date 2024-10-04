@@ -77,12 +77,13 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public UserAdvertisementPackage UpdateUserAdvertisementStatus(int Id, string Status)
+        public UserAdvertisementPackage UpdateUserAdvertisementStatus(int Id, string Status, string Reason)
         {
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Status", Status, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Reason", Reason, DbType.String, ParameterDirection.Input);
 
 
             var data = _dapper.Update<UserAdvertisementPackage>(@"dbo.[sp_UpdateUserAdvertisementStatus]", parameters);

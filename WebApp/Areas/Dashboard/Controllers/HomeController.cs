@@ -470,10 +470,10 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         [HttpPost]
         [Route("Dashboard/UserAdvertisementStatus")]
-        public Task<object> UserAdvertisementStatus(int Id, string Status)
+        public Task<object> UserAdvertisementStatus(int Id, string Status, string Reason = null)
         {
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/UpdateUserAdvertisementStatus?Id=" + Id + "&Status=" + Status, "", HttpContext);
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/UpdateUserAdvertisementStatus?Id=" + Id + "&Status=" + Status + "&Reason=" + Reason, "", HttpContext);
         }
 
 

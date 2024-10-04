@@ -13,6 +13,7 @@ namespace WebApi.Controllers
     public class AdvertisementController : ControllerBase
     {
         private readonly IAdvertisementServices _repository;
+        private readonly IEmailRepository _emailRepository;
 
         private readonly IAccountRepository _accountRepository;
 
@@ -26,9 +27,10 @@ namespace WebApi.Controllers
         private readonly string _PriceID75 = "price_1PWKweKR3yBF1l8fXM3cjclV";
         private readonly string _PriceID100 = "price_1PWKweKR3yBF1l8fXM3cjclV";
 
-        public AdvertisementController(IAdvertisementServices repository, IAccountRepository accountRepository, IStripeServices stripeServices, ICurrencyConverterService currencyConverterService)
+        public AdvertisementController(IAdvertisementServices repository, IAccountRepository accountRepository, IStripeServices stripeServices, ICurrencyConverterService currencyConverterService, IEmailRepository emailRepository)
         {
             _repository = repository;
+            _emailRepository = emailRepository;
             _accountRepository = accountRepository;
             _stripeServices = stripeServices;
             _currencyConverterService = currencyConverterService;
@@ -399,7 +401,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost("UpdateUserAdvertisementStatus")]
-        public Response UpdateUserAdvertisementStatus(int Id, string Status)
+        public Response UpdateUserAdvertisementStatus(int Id, string Status, string Reason = null)
         {
             Register claimDTO = null;
             Response response = new Response();
@@ -410,7 +412,7 @@ namespace WebApi.Controllers
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
 
-                var res = _repository.UpdateUserAdvertisementStatus(Id,Status);
+                var res = _repository.UpdateUserAdvertisementStatus(Id,Status,Reason);
 
                 if (res != null)
                 {
@@ -419,6 +421,13 @@ namespace WebApi.Controllers
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Data Saved successfully!";
+
+                    // Send email if the status is "Reject"
+                    if (Status == "Reject")
+                    {
+                        _emailRepository.SendRejectionEmail(res.Email, Reason);
+                        //SendRejectionEmail(res.Email, Reason); // Assuming res has an Email property
+                    }
 
                 }
                 return response;

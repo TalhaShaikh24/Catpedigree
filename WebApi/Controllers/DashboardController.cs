@@ -17,6 +17,7 @@ namespace WebApi.Controllers
     {
         private string BaseUrl = "";
         private readonly IDashboardRepository _repository;
+        private readonly IEmailRepository _emailRepository;
 
         private readonly IStripeServices _stripeServices;
         private readonly IConfiguration _configuration;
@@ -28,9 +29,10 @@ namespace WebApi.Controllers
 
 
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices)
+        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices,IEmailRepository emailRepository)
         {
             _repository = repository;
+            _emailRepository = emailRepository;
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
 
@@ -581,7 +583,8 @@ namespace WebApi.Controllers
                     // Send email if the status is "Reject"
                     if (Status == "Reject")
                     {
-                        SendRejectionEmail(res.Email, Reason); // Assuming res has an Email property
+                        _emailRepository.SendRejectionEmail(res.Email, Reason);
+                        //SendRejectionEmail(res.Email, Reason); // Assuming res has an Email property
                     }
 
                     return response;
