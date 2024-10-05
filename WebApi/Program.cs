@@ -18,10 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowAll",
+        options.AddPolicy("AllowMultipleOrigins",
             builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins("https://catpedigreeworld.com", "http://catpedigreeworld.com", "https://localhost:7297", "http://localhost:7297")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             });
@@ -68,7 +68,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowAll");
+app.UseCors("AllowMultipleOrigins");
+//app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthorization();

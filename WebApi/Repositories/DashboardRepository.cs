@@ -174,6 +174,7 @@ namespace WebApi.Repositories
 
             parameters.Add("DateofBirth", obj.DateofBirth, DbType.Date, ParameterDirection.Input);
             parameters.Add("PartOfAssociation", obj.PartOfAssociation, DbType.String, ParameterDirection.Input);
+            parameters.Add("Website", obj.Website, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Insert<Listing>(@"[dbo].[sp_UpdateMyListing]", parameters);
             return data;

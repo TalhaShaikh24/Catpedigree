@@ -770,6 +770,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.DateofBirth.ToString() ?? ""), "DateofBirth");
 
                 multiContent.Add(new StringContent(obj.PartOfAssociation ?? ""), "PartOfAssociation");
+                multiContent.Add(new StringContent(obj.Website ?? ""), "Website");
                 if (obj.GalleryImageFiles != null)
                 {
                     foreach (var item in obj.GalleryImageFiles)

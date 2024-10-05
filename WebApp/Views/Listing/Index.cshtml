@@ -210,11 +210,11 @@
                                         <label class="d-block">Price On Request</label>
                                         <div class="form_group my-3" style="display: flex;align-items: baseline;">
                                             <div class="single-checkbox d-flex mr-4">
-                                                <input type="radio" id="IsPriceRequestYes" name="IsPriceRequest" value="1" checked>
+                                                <input type="radio" id="IsPriceRequestYes" name="IsPriceRequest" value="1">
                                                 <label for="IsPriceRequestYes"><span>Yes</span></label>
                                             </div>
                                             <div class="single-checkbox d-flex mr-4">
-                                                <input type="radio" id="IsPriceRequestNo" name="IsPriceRequest" value="0">
+                                                <input type="radio" id="IsPriceRequestNo" name="IsPriceRequest" checked value="0">
                                                 <label for="IsPriceRequestNo"><span>No</span></label>
                                             </div>
                                         </div>
@@ -345,7 +345,7 @@
                                             <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
 
                                             <div class="form_group">
-                                                <input type="file" id="FeaturedFile" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                                <input type="file" id="FeaturedFile" accept="image/*" class="form_control bg-white pt-4" required style="opacity:1!important">
                                             </div>
                                         </div>
 
@@ -363,7 +363,7 @@
                                             <label class="d-block" style="line-height: 20px; font-weight:900">Other Listing Images (OPTIONAL)</label>
 
                                             <div class="form_group">
-                                                <input type="file" multiple id="Gallery_Files" class="form_control bg-white pt-4" style="opacity:1!important">
+                                                <input type="file" multiple id="Gallery_Files" accept="image/*" class="form_control bg-white pt-4" style="opacity:1!important">
                                             </div>
                                         </div>
 
@@ -405,7 +405,7 @@
                                             <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
                                             <small> Post video of your beloved kittens</small>
                                             <div class="form_group">
-                                                <input type="file" id="VideoFile" class="form_control bg-white pt-4" accept="video/*" style="opacity:1!important">
+                                                <input type="file" id="VideoFile"  class="form_control bg-white pt-4" accept="video/*" style="opacity:1!important">
 
                                             </div>
                                         </div>
@@ -493,6 +493,15 @@
                                         <label>BREEDER'S NAME</label>
                                         <div class="form_group">
                                             <input type="text" id="BreerderName" class="form_control" placeholder="BREEDER'S NAME" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <div class="form_group">
+                                        <label>Website Url</label>
+                                        <div class="form_group">
+                                            <input type="text" id="Website" class="form_control" placeholder="Website Url" name="Website" value="">
                                         </div>
                                     </div>
                                 </div>

@@ -704,6 +704,7 @@ $("#Btn_Post_Listing").click(function () {
 
     formData.append('DateofBirth', $("#DataOFBirth").val());
     formData.append('PartOfAssociation', $("#PartOfAssociation").val());
+    formData.append('Website', $("#Website").val());
 
 
 

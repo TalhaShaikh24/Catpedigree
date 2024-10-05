@@ -90,6 +90,7 @@ namespace ClassLibrary
         
         public string? FatherTested { get; set; }
         public string? PartOfAssociation { get; set; }
+        public string? Website { get; set; }
         
 
     }

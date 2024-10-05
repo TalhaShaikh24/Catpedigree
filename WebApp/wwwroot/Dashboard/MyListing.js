@@ -287,10 +287,10 @@ function GetAllMyListings() {
                         var categoryName = $('#filterCategoryName').val();
                         var packageName = $('#filterPackageName').val();
 
-                        var rowStatus = $(table.row(dataIndex).node()).find('td:eq(0) span').text().trim();
-                        var rowCatType = data[3] || '';
-                        var rowCategoryName = data[4] || '';
-                        var rowPackageName = data[5] || '';
+                        var rowStatus = $(table.row(dataIndex).node()).find('td:eq(1) span').text().trim();
+                        var rowCatType = data[4] || '';
+                        var rowCategoryName = data[5] || '';
+                        var rowPackageName = data[6] || '';
 
                         if ((status === '' || rowStatus === status) &&
                             (catType === '' || rowCatType === catType) &&
@@ -519,7 +519,14 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Gender").val(res.data.gender);
                 $("#TypeOfCat").val(res.data.typeOfCat);
                 $("#Age").val(res.data.age);
-                $("#Description").val(res.data.description);
+
+                var apiDescription = res.data.description;
+                // Replace <br> with newline characters
+                var formattedDescription = apiDescription.replace(/<br>/g, "\n");
+                // Set the formatted value in the textarea
+                $('#Description').val(formattedDescription);
+
+
                 $("#Country").val(res.data.country);
                 $("#Location").val(res.data.location);
                 $("#State").val(res.data.state);
@@ -550,6 +557,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 let dateOfBirth = new Date(res.data.dateofBirth).toISOString().split('T')[0];
                 $("#DataOFBirth").val(dateOfBirth);
                 $("#PartOfAssociation").val(res.data.partOfAssociation);
+                $("#Website").val(res.data.website);
 
 
                 debugger;
@@ -886,7 +894,7 @@ $("#Category").change(function (e) {
                                     <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
                                     <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
                                     <div class="form_group">
-                                        <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
+                                        <input type="file" accept="image/*" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
                                         <div class="w-100" id="PedigreeImageViewAppend"></div>
                                     </div>
                                 </div>
@@ -967,7 +975,11 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Age", $("#Age").val());
     formData.append("IsBreerderLicenseUpload", $('input[type=radio][name=IsBreerderLicenseUpload]:checked').val());
     formData.append("ZoologicalNumber", $("#ZoologicalNumber").val());
-    formData.append("Description", $("#Description").val());
+
+    // Handle new lines in Description
+    let description = $("#Description").val().replace(/\n/g, "<br>"); // Convert new lines to <br>
+    formData.append("Description", description);
+
     formData.append("Price", $('#Price').val());
 
     //update code changes 
@@ -996,6 +1008,7 @@ $("#Btn_Update_Listing").click(function () {
 
     formData.append('DateofBirth', $("#DataOFBirth").val());
     formData.append('PartOfAssociation', $("#PartOfAssociation").val());
+    formData.append('Website', $("#Website").val());
 
     FilePostRequest('/Dashboard/UpdateListing', formData, function (res) {
 
