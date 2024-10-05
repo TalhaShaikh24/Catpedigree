@@ -43,19 +43,21 @@ function getAllPackages() {
             if (res.data != null) {
                 debugger
                 $.each(res.data, function (index, item) {
-                    var categories = [];
-                    if (item.categoryNames.includes(',')) {
-                        categories = item.categoryNames.split(',').map(function (category) {
-                            return category.trim();
-                        });
-                    } else {
-                        categories.push(item.categoryNames.trim());
-                    }
-                    var colorClasses = ['blue', 'magenta']; // Define your color classes
-                    var colorClass = colorClasses[index % colorClasses.length]; // Cycle through the color classes
-                    var pricingPackageDetails = JSON.parse(item.pricingPackageDetails) ;
 
-                    var html = `
+                    if (item.name != "SINGLE") {
+                        var categories = [];
+                        if (item.categoryNames.includes(',')) {
+                            categories = item.categoryNames.split(',').map(function (category) {
+                                return category.trim();
+                            });
+                        } else {
+                            categories.push(item.categoryNames.trim());
+                        }
+                        var colorClasses = ['blue', 'magenta']; // Define your color classes
+                        var colorClass = colorClasses[index % colorClasses.length]; // Cycle through the color classes
+                        var pricingPackageDetails = JSON.parse(item.pricingPackageDetails);
+
+                        var html = `
                 <div class="col-12 col-lg-3">
                     <div class="pricing-table pedigree">
                         <h3>${item.name}*</h3>
@@ -63,9 +65,9 @@ function getAllPackages() {
                         <p class="description">Key Features:</p>
                         <div class="accordion">
             `;
-                    // Loop through pricingPackageDetails to add the dynamic headings and descriptions
-                    $.each(pricingPackageDetails, function (detailIndex, detailItem) {
-                        html += `
+                        // Loop through pricingPackageDetails to add the dynamic headings and descriptions
+                        $.each(pricingPackageDetails, function (detailIndex, detailItem) {
+                            html += `
                     <div class="option">
                         <input type="checkbox" id="Starter*-${detailIndex + 1}_${item.packageID}" class="toggle">
                         <label class="title1" for="Starter*-${detailIndex + 1}_${item.packageID}">
@@ -84,10 +86,10 @@ function getAllPackages() {
                         </div>
                     </div>
                 `;
-                    });
+                        });
 
-                    // Close the HTML structure
-                    html += `
+                        // Close the HTML structure
+                        html += `
                         </div>
                         <button class="button" type="button" onClick="Payment(${item.packageID})">
                             <p class="button-pt">BUY NOW!</p>
@@ -97,7 +99,18 @@ function getAllPackages() {
             `;
 
 
-                    $('.pricing-table-slider').append(html);
+                        $('.pricing-table-slider').append(html);
+                    }
+                    else {
+
+                        $("#singleLisitngPackage").append(`    
+                        <button type="button" class="main-btn mt-5 " style="font-size: 20px;" onClick="Payment(${item.packageID})">
+                            I'll rather buy my listings <br>
+                        <span style="font-size: 15px;">separate for €7,50 per Listing</span>
+                        </button>`);
+                    }
+
+               
                 });
 
 

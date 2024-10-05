@@ -248,7 +248,7 @@ function GetAllDropdowns() {
                 debugger;
                 if (res.data.item4.length > 0) {
                     $.each(res.data.item4, function (i, v) {
-                        $("#PromotionPackageId").append(`<option value="${v.promotionPackagesID}">${v.name}</option>`);
+                        $("#PromotionPackageId").append(`<option value="${v.promotionPackagesID}">${v.name}  - (${v.packageCount})</option>`);
                     });
                 }
                 else {
