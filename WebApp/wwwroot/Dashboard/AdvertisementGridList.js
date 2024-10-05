@@ -30,12 +30,12 @@ function GetAllListings() {
                         <td>${v.numberOfAdvertisement}</td>
                         <td>${v.status}</td>
                         <td>${v.username}</td>
-                        <td>${v.createdOn}</td>
-                        <td style="width: 115px; display: flex; justify-content: space-evenly; align-items: center;">
-                            <button type="button" onclick="UpdateListingStatus(${v.userAdvertisementPackageID}, 'Approve');" title="Approve" class="btn btn-success btn-xs p-2"><i class="fa fa-check" aria-hidden="true"></i></button>
-                            <button type="button" class="btn btn-danger btn-xs p-2" title="Reject" onclick="openRejectionModal(${v.userAdvertisementPackageID});"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                            <button type="button" class="btn btn-info btn-xs p-2" title="Pending" onclick="UpdateListingStatus(${v.userAdvertisementPackageID}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
-                            <button type="button" class="btn btn-primary btn-xs p-2" title="View" onclick='openViewDetailsModal(${JSON.stringify(v).replace(/'/g, "\\'")});'><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <td>${moment(v.createdOn).format("DD-MMM-YYYY")}</td>
+                        <td style="width:auto; display: flex; justify-content: space-evenly; align-items: center;">
+                            <button type="button" onclick="UpdateListingStatus(${v.userAdvertisementPackageID}, 'Approve');" title="Approve" class="mx-1 btn btn-success btn-xs p-2"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            <button type="button" class="mx-1 btn btn-danger btn-xs p-2" title="Reject" onclick="openRejectionModal(${v.userAdvertisementPackageID});"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                            <button type="button" class="mx-1 btn btn-info btn-xs p-2" title="Pending" onclick="UpdateListingStatus(${v.userAdvertisementPackageID}, 'Pending');"><i class="fa fa-clock" aria-hidden="true"></i></button>
+                            <button type="button" class="mx-1 btn btn-primary btn-xs p-2" title="View" onclick='openViewDetailsModal(${JSON.stringify(v).replace(/'/g, "\\'")});'><i class="fa fa-eye" aria-hidden="true"></i></button>
                         </td>
                     </tr>`);
                 });

@@ -26,6 +26,9 @@ namespace WebApi.Controllers
 
         private readonly string _galleryimagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadGallery");
 
+        
+        private readonly string _breederlicensePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Profile");
+
 
 
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -892,15 +895,25 @@ namespace WebApi.Controllers
 
                 foreach (var item in res)
                 {
-                    string fileName = Path.GetFileName(item);
-                    galleries.Add(new Gallery
+
+
+                     string fileName = Path.GetFileName(item);
+                    string fullPath = Path.Combine(_imagesPath, fileName).Replace("\\", "/");
+
+
+                    // Check if the file exists
+                    if (System.IO.File.Exists(fullPath))
                     {
+                        galleries.Add(new Gallery
+                        {
 
 
-                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
-                        FileName = fileName,
-                        FilePath = $"{BaseUrl}UploadImages/{fileName}?v={DateTime.UtcNow.Ticks}"
-                    });
+                            Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                            FileName = fileName,
+                            FilePath = $"{BaseUrl}UploadImages/{fileName}?v={DateTime.UtcNow.Ticks}"
+                        });
+                    }
+                   
 
 
 
@@ -939,7 +952,6 @@ namespace WebApi.Controllers
         [HttpPost("GetAllBreederLicense")]
         public Response GetAllBreederLicense()
         {
-
             Response response = new Response();
             Register claimDTO = null;
             try
@@ -948,32 +960,28 @@ namespace WebApi.Controllers
 
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-
-
-
                 var res = _repository.GetAllBreederLicense();
-
-
                 List<Gallery> galleries = new List<Gallery>();
-
 
                 foreach (var item in res)
                 {
                     string fileName = Path.GetFileName(item);
-                    galleries.Add(new Gallery
+                    string fullPath = Path.Combine(_breederlicensePath, fileName).Replace("\\", "/");
+
+
+                    // Check if the file exists
+                    if (System.IO.File.Exists(fullPath))
                     {
-
-
-                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
-                        FileName = fileName,
-                        FilePath = $"{BaseUrl}Profile/{fileName}?v={DateTime.UtcNow.Ticks}"
-                    });
-
-
-
+                        galleries.Add(new Gallery
+                        {
+                            Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                            FileName = fileName,
+                            FilePath = $"{BaseUrl}Profile/{fileName}?v={DateTime.UtcNow.Ticks}"
+                        });
+                    }
                 }
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
+                if (galleries.Count == 0) return CustomStatusResponse.GetResponse(320);
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
@@ -984,23 +992,20 @@ namespace WebApi.Controllers
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
-
                 response.ResponseMsg = ex.Message;
                 response.Token = TokenManager.GenerateToken(claimDTO);
-
                 return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
+
 
         [HttpPost("GetAllVideosGallery")]
         public Response GetAllVideosGallery()

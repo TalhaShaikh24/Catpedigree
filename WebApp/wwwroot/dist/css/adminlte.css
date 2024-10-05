@@ -4357,10 +4357,13 @@ input[type="button"].btn-block {
   border-radius: 0.25rem;
 }
 
+.nav.nav-pills.nav-sidebar{
+    padding-bottom:40px;
+}
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #007bff;
+    color: #fff;
+    background-color: #007bff;
 }
 
 .nav-fill > .nav-link,

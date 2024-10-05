@@ -118,7 +118,7 @@ function getAll() {
             </div>`;
 
 
-                $('.pricing-table-slider').append(html);
+               // $('.pricing-table-slider').append(html);
                 var selectedCurrency = localStorage.getItem('cur');
                // updatePrices(selectedCurrency);
             }

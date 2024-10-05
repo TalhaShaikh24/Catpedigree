@@ -85,7 +85,7 @@ async function loadMore() {
                                 ${item.videoPath && item.videoPath.trim() !== "" ? `
                                     <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
                                         <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
-                                            <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
+                                            <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
                                                 <i class="flaticon-play-button"></i>
                                             </a>
                                             ${item.isPriceRequest === true || item.price == "0" ? `
@@ -96,7 +96,7 @@ async function loadMore() {
                                         </div>
                                     </div>
                                 ` : `
-                                    <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
+                                    <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
                                         ${item.isPriceRequest === true || item.price == "0" ? `
                                             <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
@@ -241,7 +241,7 @@ async function filteringSearch() {
                                 ${item.videoPath && item.videoPath.trim() !== "" ? `
                                     <div class="listing-play-box wow fadeInUp" style="height: 100%; visibility: visible; animation-name: fadeInUp;">
                                         <div class="play-content bg_cover text-center d-flex align-items-center justify-content-center h-100" style="border-radius:14px; background-image: url('${baseApiUrl + item.featureImagePath}');">
-                                            <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
+                                            <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
                                                 <i class="flaticon-play-button"></i>
                                             </a>
                                             ${item.isPriceRequest === true || item.price == "0" ? `
@@ -252,7 +252,7 @@ async function filteringSearch() {
                                         </div>
                                     </div>
                                 ` : `
-                                    <a href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
+                                    <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
                                         ${item.isPriceRequest === true || item.price == "0" ? `
                                             <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>

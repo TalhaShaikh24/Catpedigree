@@ -248,12 +248,11 @@ function GetDatatable() {
                         // v.userId,
                         v.username,
                         v.promotionPackageName.replace('(0 Days)', ''), // Replacing (0 Days) with an empty string
-                    
-                        moment(v.subscriptionDate).format("DD - MMMM - YYYY") ,
-                        moment(v.createdOn).format("DD - MMMM - YYYY") ,
+                        moment(v.subscriptionDate).format("DD-MMM-YYYY"),
+                        moment(v.createdOn).format("DD-MMM-YYYY"),
                         // v.price
                     ]).draw();
-                });
+                });ssss
 
 
 

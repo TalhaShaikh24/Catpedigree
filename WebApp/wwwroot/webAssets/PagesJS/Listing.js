@@ -628,6 +628,9 @@ function redirectToHome() {
 
 $("#Btn_Post_Listing").click(function () {
 
+    $Btn_Post_Listing = $('#Btn_Post_Listing');
+    $Btn_Post_Listing.prop('disabled', true);
+
     debugger
     $(".preloader").show();
     let formData = new FormData();
@@ -729,17 +732,21 @@ $("#Btn_Post_Listing").click(function () {
                 window.location.href ="/Dashboard/MyListing"
 
             }
+            $Btn_Post_Listing.prop('disabled', false);
         }
         if (res.status == 304) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
                 icon: "error"
             })
+
         }
         if (res.status == 305) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -748,6 +755,7 @@ $("#Btn_Post_Listing").click(function () {
         }
         if (res.status == 401) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -756,6 +764,7 @@ $("#Btn_Post_Listing").click(function () {
         }
         if (res.status == 403) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire(res.responseMsg, {
                 icon: "error",
                 title: "Error"
@@ -763,6 +772,7 @@ $("#Btn_Post_Listing").click(function () {
         }
         if (res.status == 320) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -771,6 +781,7 @@ $("#Btn_Post_Listing").click(function () {
         }
         if (res.status == 500) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
@@ -779,6 +790,7 @@ $("#Btn_Post_Listing").click(function () {
         }
         if (res.status == 600) {
             $(".preloader").hide();
+            $Btn_Post_Listing.prop('disabled', false);
             Swal.fire({
                 title: "Warning",
                 text: res.responseMsg,

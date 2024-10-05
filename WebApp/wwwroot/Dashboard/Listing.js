@@ -110,14 +110,14 @@ function GetAllDropdowns() {
 
                 $("#PromotionPackageId").empty();
 
-                $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+               // $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
                 $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
 
-                $.each(res.data.item3, function (i, v) {
-                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
-                });
+                //$.each(res.data.item3, function (i, v) {
+                //    $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+                //});
 
                 $.each(res.data.item2, function (i, v) {
                     $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
@@ -288,6 +288,14 @@ function GetAllListings() {
                     statusIcon = '<span class="badge badge-warning">Pending</span>';
                 }
 
+               
+                // Check if promotionName is not null or undefined, then create badges
+                var promotionBadges = (v.promotionName && v.promotionName.trim()) ?
+                    v.promotionName.split(',').map(function (promotion) {
+                        return `<span class="badge badge-primary">${promotion.trim()}</span>`;
+                    }).join(' ') :
+                    '<span class="badge badge-secondary">No Promotion</span>'; // Fallback message
+
                 $("#AppendApprovalListing").append(`
                     <tr>
                         <td>${v.id}</td>
@@ -297,7 +305,7 @@ function GetAllListings() {
                         <td>${v.catType}</td>
                         <td>${v.categoryName}</td>
                         <td>${v.packageName}</td>
-                        <td>${v.promotionName}</td>
+                        <td>${promotionBadges}</td>
                         <td>${v.isActive}</td>
                         <td>${moment(v.createdOn).format("DD-MMM-YYYY")}</td>
                         <td style="display: flex; justify-content: space-evenly; align-items: center;">
@@ -309,6 +317,7 @@ function GetAllListings() {
                         </td>
                     </tr>`);
             });
+
 
             // Initialize DataTable
             var table = $('#TableApprovalListing').DataTable({
@@ -525,7 +534,7 @@ function UpdateListingStatus(id, status, reason = "") {
 
 
 $(document).on("click", "#btn_Listing_Delete", function (e) {
-    const listingId = Number(e.currentTarget.dataset.id);
+    let listingId = Number(e.currentTarget.dataset.id);
 
     // Show confirmation dialog
     Swal.fire({
@@ -667,7 +676,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
 
                 $("#HDID").val(res.data.id);
-                $("#PackageId").val(res.data.packageId);
+                $("#PackageId").val(res.data.packageName).attr("data-id", res.data.packageId);
                 $("#Title").val(res.data.title);
                 $("#Gender").val(res.data.gender);
                 $("#TypeOfCat").val(res.data.typeOfCat);
@@ -1118,7 +1127,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());
-    formData.append("PackageId", $("#PackageId").val());
+    formData.append("PackageId", $("#PackageId").data("id"));
     formData.append("Gender", $("#Gender").val());
     formData.append("Phone", $("#Phone").val());
     formData.append("Email", $("#Email").val());

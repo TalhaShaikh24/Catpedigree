@@ -48,14 +48,14 @@ function GetAllDropdowns() {
 
                 $("#PromotionPackageId").empty();
 
-                $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+                //$("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
                 $("#Category").append(`<option value="-1" disabled selected>Select Category</option>`);
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
                 $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
 
-                $.each(res.data.item3, function (i, v) {
-                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
-                });
+                //$.each(res.data.item3, function (i, v) {
+                //    $("#PackageId").append(`<option value="${v.packageID}">${v.name}</option>`);
+                //});
 
                 $.each(res.data.item2, function (i, v) {
                     $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
@@ -231,25 +231,32 @@ function GetAllMyListings() {
                         statusIcon = '<span class="badge badge-warning">Pending</span>';
                     }
 
+                    // Check if promotionName is not null or undefined, then create badges
+                    var promotionBadges = (v.promotionName && v.promotionName.trim()) ?
+                        v.promotionName.split(',').map(function (promotion) {
+                            return `<span class="badge badge-primary">${promotion.trim()}</span>`;
+                        }).join(' ') :
+                        '<span class="badge badge-secondary">No Promotion</span>'; // Fallback message
+
 
                     $("#AppendMyListings").append(`
-        <tr>
-            <td>${v.id}</td>
-            <td>${statusIcon}</td>
-            <td>${v.title}</td>
-            <td>${v.email}</td>
-            <td>${v.catType}</td>
-            <td>${v.categoryName}</td>
-            <td>${v.packageName}</td>
-            <td>${v.promotionName}</td>
-            <td>${v.isActive}</td>
-            <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
-            <td style="display: flex; justify-content: space-evenly; align-items: center;">
-                <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
-                <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
-            </td>
-        </tr>
-    `);
+                        <tr>
+                            <td>${v.id}</td>
+                            <td>${statusIcon}</td>
+                            <td>${v.title}</td>
+                            <td>${v.email}</td>
+                            <td>${v.catType}</td>
+                            <td>${v.categoryName}</td>
+                            <td>${v.packageName}</td>
+                            <td>${promotionBadges}</td>
+                            <td>${v.isActive}</td>
+                            <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
+                            <td style="display: flex; justify-content: space-evenly; align-items: center;">
+                                <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
+                                <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `);
                 });
 
 
@@ -367,77 +374,91 @@ function populateFilterOptions(selector, options, key) {
 }
 $(document).on("click", "#btn_Listing_Delete", function (e) {
 
-    postRequest('/Dashboard/DeleteListingById?Id=' + Number(e.currentTarget.dataset.id), null, function (res) {
 
-        if (res.status == 200) {
+    let listingId = Number(e.currentTarget.dataset.id)
+    // Show confirmation dialog
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            postRequest('/Dashboard/DeleteListingById?Id=' + listingId, null, function (res) {
 
-            Swal.fire({
-                title: "Success",
-                text: res.responseMsg,
-                icon: "success"
-            })
-            GetAllMyListings();
+                if (res.status == 200) {
 
-        }
-        if (res.status == 304) {
+                    Swal.fire({
+                        title: "Success",
+                        text: res.responseMsg,
+                        icon: "success"
+                    })
+                    GetAllMyListings();
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
+                }
+                if (res.status == 304) {
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 305) {
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 401) {
 
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 403) {
+
+                    Swal.fire(res.responseMsg, {
+                        icon: "error",
+                        title: "Error"
+                    });
+                }
+                if (res.status == 320) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 500) {
+
+                    Swal.fire({
+                        title: "Error",
+                        text: res.responseMsg,
+                        icon: "error"
+                    })
+                }
+                if (res.status == 600) {
+
+                    Swal.fire({
+                        title: "Warning",
+                        text: res.responseMsg,
+                        icon: "warning"
+                    })
+
+                }
             });
         }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
-        }
     });
-
-
 })
 
 
@@ -463,7 +484,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
 
         if (res.status == 200) {
-
+            debugger;
             if (res.data != null) {
 
                 if (res.data.status == "Approve") {
@@ -493,7 +514,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
 
 
                 $("#HDID").val(res.data.id);
-                $("#PackageId").val(res.data.packageId);
+                $("#PackageId").val(res.data.packageName).attr("data-id", res.data.packageId);
                 $("#Title").val(res.data.title);
                 $("#Gender").val(res.data.gender);
                 $("#TypeOfCat").val(res.data.typeOfCat);
@@ -937,7 +958,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());
-    formData.append("PackageId", $("#PackageId").val());
+    formData.append("PackageId", $("#PackageId").data("id"));
     formData.append("Gender", $("#Gender").val());
     formData.append("Phone", $("#Phone").val());
     formData.append("Email", $("#Email").val());
