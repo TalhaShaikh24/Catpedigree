@@ -24,7 +24,7 @@ function GetAllDropdowns() {
             
                 if (res.data.item1.length > 0) {
                     $.each(res.data.item1, function (i, v) {
-                        $("#PromotionPackage").append(`<option value="${v.promotionPackagesID}">${v.name} - (${v.packageCount})</option>`);
+                        $("#PromotionPackage").append(`<option value="${v.promotionPackagesID}">${v.name}  (${v.packageCount})</option>`);
                     });
                 }
                 else {

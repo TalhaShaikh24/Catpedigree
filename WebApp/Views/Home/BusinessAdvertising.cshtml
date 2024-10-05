@@ -19,6 +19,16 @@
     .breadcrumbs-wrapper:after {
         background-image: url(/webassets/images/elements/cat_bg_1.jpg);
     }
+
+    .disabled {
+        pointer-events: none; /* Disable clicks */
+        opacity: 0.5; /* Change appearance */
+        cursor: not-allowed !important;
+    }
+
+    .disabled-current .button-pt {
+        background-color: #333 !important;
+    }
 </style>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

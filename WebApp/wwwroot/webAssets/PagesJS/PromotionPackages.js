@@ -79,8 +79,9 @@ function getAll() {
                     }).join('')} <!-- Dynamically generate the list of features -->
             </ul>
 
-            <a href="javascript:void(0)" class="buypackage" data-packagetitle="${item.name}" data-days="${item.ppcid}" data-packageid="${item.promotionPackagesID}">
+            <a href="javascript:void(0)" class="buypackage" data-packagetitle="${item.name}" data-days="${item.ppcid}" data-packageid="${item.promotionPackagesID}" data-priceid="${item.priceId}">
                 <p class="button-pt">BUY NOW!</p>
+                
             </a>
         </div>
     </div>
@@ -113,7 +114,8 @@ function getAll() {
                     
                     <a href="#"><p class="button-pt">
                       Package Deals!
-                      </p></a>
+                      </p>
+                      </a>
                   </div>
             </div>`;
 
@@ -191,16 +193,23 @@ function BuypromotionPackage(pkgId) {
 $(document).on('click', '.buypackage', function () {
 
 
-   
+
+    var $this = $(this); // Cache the current button
+    Promotionpackageid = $this.attr('data-packageid');
+    var packagetitle = $this.attr('data-packagetitle');
+    var days = $this.attr('data-days');
+    var priceId = $this.data("priceid");
 
 
-     Promotionpackageid = $(this).attr('data-packageid');
+    // Disable all buttons
+    $('.buypackage').addClass('disabled').off('click');
 
+    // Disable only the clicked button
+    $this.addClass('disabled-current').off('click');
+    $this.find('.button-pt').text('Processing...'); // Change button text
 
-    var packagetitle = $(this).attr('data-packagetitle');
-    var days = $(this).attr('data-days');
     debugger;
-    Payment(Promotionpackageid, days);
+    Payment(Promotionpackageid, days, priceId);
 
    // $("#costslist").empty();
 
@@ -476,7 +485,7 @@ function postRequest(url, requestData, handledata) {
 
 
 
-function Payment(pkgId, days) {
+function Payment(pkgId, days,priceId) {
     packageID = Number(pkgId);
 
 
@@ -485,7 +494,7 @@ function Payment(pkgId, days) {
 
     var obj = {
         PurchasedProductID: Number(packageID),
-        PriceId: 'price_1PWKweKR3yBF1l8fXM3cjclV',
+        PriceId: priceId,
         packageType: 'PromotionPackage',
         Days: Number(days)
 
@@ -572,6 +581,11 @@ function Payment(pkgId, days) {
             })
 
         }
+    }).always(function () {
+        // Re-enable all buttons
+        $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
+            // Re-bind click event for future use
+        });
     });
     //   $("#paymentModal").modal('show');
 

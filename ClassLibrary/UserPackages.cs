@@ -23,6 +23,7 @@ namespace ClassLibrary
         public int? RemainingListings { get; set; }
 
         public string? PricingPackageDetails { get; set; }
+        public string? PriceId { get; set; }
     }
 
     public class UserPackages : Common

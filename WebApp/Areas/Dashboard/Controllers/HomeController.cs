@@ -476,6 +476,15 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/UpdateUserAdvertisementStatus?Id=" + Id + "&Status=" + Status + "&Reason=" + Reason, "", HttpContext);
         }
 
+        [HttpPost]
+        [Route("Dashboard/DeleteAdvertisingById")]
+        public Task<object> DeleteAdvertisingById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Advertisement/DeleteAdvertisingById/" + Id, "", HttpContext);
+
+        }
+
 
         [HttpPost]
         [Route("Dashboard/GetAllListings")]

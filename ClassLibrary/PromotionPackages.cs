@@ -36,6 +36,7 @@ namespace ClassLibrary
         public string? Details { get; set; }
 
         public int? PackageCount {  get; set; } 
+        public string? PriceId {  get; set; } 
 
     }
 

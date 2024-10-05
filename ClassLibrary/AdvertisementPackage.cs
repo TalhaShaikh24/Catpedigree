@@ -18,6 +18,7 @@ namespace ClassLibrary
         public int CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public int ModifiedBy { get; set; }
+        public string? PriceId { get; set; }
     }
 
     public class UserAdvertisementPackage: AdvertisementPackage
@@ -28,6 +29,7 @@ namespace ClassLibrary
         public DateTime SubscriptionDate { get; set; }
         public DateTime ExpireDate { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public bool IsExpired { get; set; }
         public string? Status { get; set; }
         public int ApprovedBy { get; set; }

@@ -58,40 +58,40 @@ function getAllPackages() {
                         var pricingPackageDetails = JSON.parse(item.pricingPackageDetails);
 
                         var html = `
-                <div class="col-12 col-lg-3">
-                    <div class="pricing-table pedigree">
-                        <h3>${item.name}*</h3>
-                        <p class="price">Now for € ${item.price.toFixed(2)}** / <span>year</span></p>
-                        <p class="description">Key Features:</p>
-                        <div class="accordion">
-            `;
+                            <div class="col-12 col-lg-3">
+                                <div class="pricing-table pedigree">
+                                    <h3>${item.name}*</h3>
+                                    <p class="price">Now for € ${item.price.toFixed(2)}** / <span>year</span></p>
+                                    <p class="description">Key Features:</p>
+                                    <div class="accordion">
+                        `;
                         // Loop through pricingPackageDetails to add the dynamic headings and descriptions
                         $.each(pricingPackageDetails, function (detailIndex, detailItem) {
                             html += `
-                    <div class="option">
-                        <input type="checkbox" id="Starter*-${detailIndex + 1}_${item.packageID}" class="toggle">
-                        <label class="title1" for="Starter*-${detailIndex + 1}_${item.packageID}">
-                            <span class="green">
-                                <span id="hs_cos_wrapper_widget_1724084820212_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
-                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
-                                        <g id="check-circle${detailIndex + 1}_layer">
-                                            <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </span> ${detailItem.Headings}
-                        </label>
-                        <div class="content">
-                            <p>${detailItem.Descriptions}</p>
-                        </div>
-                    </div>
-                `;
+                                <div class="option">
+                                    <input type="checkbox" id="Starter*-${detailIndex + 1}_${item.packageID}" class="toggle">
+                                    <label class="title1" for="Starter*-${detailIndex + 1}_${item.packageID}">
+                                        <span class="green">
+                                            <span id="hs_cos_wrapper_widget_1724084820212_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon">
+                                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                                                    <g id="check-circle${detailIndex + 1}_layer">
+                                                        <path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </span> ${detailItem.Headings}
+                                    </label>
+                                    <div class="content">
+                                        <p>${detailItem.Descriptions}</p>
+                                    </div>
+                                </div>
+                            `;
                         });
 
                         // Close the HTML structure
                         html += `
                         </div>
-                        <button class="button" type="button" onClick="Payment(${item.packageID})">
+                        <button class="button" type="button" onClick="Payment(${item.packageID}, '${item.priceId}')">
                             <p class="button-pt">BUY NOW!</p>
                         </button>
                     </div>
@@ -104,9 +104,9 @@ function getAllPackages() {
                     else {
 
                         $("#singleLisitngPackage").append(`    
-                        <button type="button" class="main-btn mt-5 " style="font-size: 20px;" onClick="Payment(${item.packageID})">
+                        <button type="button" class="main-btn mt-5 " style="font-size: 20px;" onClick="Payment(${item.packageID}, '${item.priceId}')">
                             I'll rather buy my listings <br>
-                        <span style="font-size: 15px;">separate for €7,50 per Listing</span>
+                        <span style="font-size: 15px;" class="mx-2"> separate for €7,50 per Listing</span>
                         </button>`);
                     }
 
@@ -179,7 +179,7 @@ function getAllPackages() {
 }
 
 
-function Payment(pkgId) {
+function Payment(pkgId,priceId) {
     packageID = Number(pkgId);
 
 
@@ -187,7 +187,7 @@ function Payment(pkgId) {
 
     var obj = {
         PurchasedProductID: Number(packageID),
-        PriceId: 'price_1PWKweKR3yBF1l8fXM3cjclV',
+        PriceId: priceId,
         packageType: 'pricing',
         
 

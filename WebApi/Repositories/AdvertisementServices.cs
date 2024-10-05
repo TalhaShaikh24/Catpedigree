@@ -90,6 +90,17 @@ namespace WebApi.Repositories
 
             return data;
         }
+        public UserAdvertisementPackage DeleteAdvertisingById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+
+
+            var data = _dapper.Update<UserAdvertisementPackage>(@"dbo.[sp_DeleteAdvertisingById]", parameters);
+
+            return data;
+        }
 
         public AdvertisementPackageAndUserPackages userAdvertisementPackages(int UserID)
         {

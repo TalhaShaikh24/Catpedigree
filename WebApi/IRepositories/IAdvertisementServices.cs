@@ -20,6 +20,7 @@ namespace WebApi.IRepositories
 
 
         UserAdvertisementPackage UpdateUserAdvertisementStatus(int Id, string Status, string Reason);
+        UserAdvertisementPackage DeleteAdvertisingById(int Id);
 
         Task<UtilizePurchasedAdvertisementPackage> utilizePurchasedAdvertisementPackageAsync(UtilizePurchasedAdvertisementPackage obj);
     }

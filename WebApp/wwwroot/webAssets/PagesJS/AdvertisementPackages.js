@@ -108,7 +108,7 @@ function getAll() {
                 </li>
             </ul>
 
-            <a href="javascript:void(0)" class="buypackage" data-packageid="${item.advertisementPackageID}">
+            <a href="javascript:void(0)" class="buypackage" data-packageid="${item.advertisementPackageID}" data-priceid="${item.priceId}">
                 <p class="button-pt">
                     BUY NOW!
                 </p>
@@ -328,8 +328,23 @@ function BuypromotionPackage(pkgId) {
 
 
 $(document).on('click', '.buypackage', function () {
-    AdvertisementPackageID = $(this).attr('data-packageid');
-    Payment(AdvertisementPackageID)
+
+    var $this = $(this); // Cache the current button
+    AdvertisementPackageID = $this.attr('data-packageid');
+  
+   
+    var priceId = $this.data("priceid");
+
+
+    // Disable all buttons
+    $('.buypackage').addClass('disabled').off('click');
+
+    // Disable only the clicked button
+    $this.addClass('disabled-current').off('click');
+    $this.find('.button-pt').text('Processing...'); // Change button text
+
+
+    Payment(AdvertisementPackageID, priceId)
 
     //$.ajax({
     //    type: 'POST',
@@ -583,14 +598,14 @@ function GetPromotionCost(pkgId) {
 
 //})
 
-function Payment(pkgId) {
+function Payment(pkgId, priceId) {
     packageID = Number(pkgId);
 
 
 
     var obj = {
         PurchasedProductID: Number(packageID),
-        PriceId: 'price_1PWKweKR3yBF1l8fXM3cjclV',
+        PriceId: priceId,
         packageType: 'Advertisement'
 
 
@@ -677,6 +692,11 @@ function Payment(pkgId) {
             })
 
         }
+    }).always(function () {
+        // Re-enable all buttons
+        $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
+            // Re-bind click event for future use
+        });
     });
     //   $("#paymentModal").modal('show');
 
