@@ -1,8 +1,11 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using WebApp;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load maintenance mode setting from appsettings.json
+var isMaintenanceMode = builder.Configuration.GetValue<bool>("MaintenanceMode");
 
 builder.Services.AddSession(options =>
  {
@@ -49,5 +52,7 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
 
+// Use the MaintenanceMiddleware
+app.UseMiddleware<MaintenanceMiddleware>(isMaintenanceMode);
 
 app.Run();

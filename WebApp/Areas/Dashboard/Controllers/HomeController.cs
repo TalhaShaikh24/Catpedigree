@@ -92,11 +92,6 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
-
-
-
-
-
         public IActionResult AddCategory()
         {
             return View();
@@ -333,11 +328,6 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
-
-
-
-
-
         [HttpPost]
         [Route("Dashboard/GetAllDashboard")]
         public Task<object> GetAllDashboard()
@@ -522,15 +512,16 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+
         [HttpPost]
         [Route("Dashboard/Assgin_PromotionPackage_to_List")]
-        public Task<object> Assgin_PromotionPackage_to_List([FromBody] Listing obj)
+        public Task<object> Assgin_PromotionPackage_to_List([FromForm] Listing obj)
         {
-            var content = JsonConvert.SerializeObject(obj);
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/Assgin_PromotionPackage_to_List", content, HttpContext);
+            return HttpClientUtility.CustomHttpPromotionalPackageDashboard(BaseUrl, "api/Dashboard/Assgin_PromotionPackage_to_List", obj, HttpContext);
 
         }
+
 
         [HttpPost]
         [Route("Dashboard/GetAdvertisementPackagesDashboard/{currency}")]

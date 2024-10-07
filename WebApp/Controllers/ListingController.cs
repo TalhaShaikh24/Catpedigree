@@ -222,6 +222,13 @@ namespace WebApp.Controllers
 
             return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetAllCatType", content, HttpContext);
         }
+        [HttpPost]
+        public Task<object> GetAllListingMarkers()
+        {
+            string content = "";
+
+            return HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Listing/GetAllListingMarkers", content, HttpContext);
+        }
 
 
         [HttpPost]

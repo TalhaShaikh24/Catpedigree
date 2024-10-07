@@ -159,7 +159,61 @@ namespace WebApp.HttpMethods
                         return null;
                 }
         }
-        public static async Task<object> CustomHttpIfileDashboardUserUpdate(string baseUrl, string url, Register obj, HttpContext httpContext)
+        
+            public static async Task<object> CustomHttpPromotionalPackageDashboard(string baseUrl, string url, Listing obj, HttpContext httpContext)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    // Set the authorization header if it exists in the session
+                    //if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                    //    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                    var multiContent = new MultipartFormDataContent();
+
+                    
+                    multiContent.Add(new StringContent(obj.PromotionPackageId.ToString() ?? null), "PromotionPackageId");
+                    multiContent.Add(new StringContent(obj.Id.ToString() ?? ""), "Id");
+
+                   
+
+                    if (obj.VideoFile != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.VideoFile.OpenReadStream()), "VideoFile", obj.VideoFile.FileName);
+                    }
+
+                    HttpResponseMessage Res = await client.PostAsync(url, multiContent);
+
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        var response = Res.Content.ReadAsStringAsync().Result;
+                        var result = JsonConvert.DeserializeObject<Response>(response);
+                        //httpContext.Session.SetString("authorization", result?.Token == null ? "" : result.Token);
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", result?.Token == null ? "" : result?.Token, cookieOptions);
+                        return response;
+                    }
+                    else
+                        return null;
+                }
+
+            }
+
+            public static async Task<object> CustomHttpIfileDashboardUserUpdate(string baseUrl, string url, Register obj, HttpContext httpContext)
         {
             using (var client = new HttpClient())
             {

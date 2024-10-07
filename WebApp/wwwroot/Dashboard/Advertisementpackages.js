@@ -118,7 +118,7 @@ function getAll() {
                             </span> Your Advertisement on every page of our website
                         </li>
                     </ul>
-                    <a href="javascript:void(0)" class="buypackage"data-packageid="${item.advertisementPackageID}">
+                    <a href="javascript:void(0)" class="buypackage"data-packageid="${item.advertisementPackageID}" data-priceid="${item.priceId}">
                         <p class="button-pt">
                             BUY NOW!
                         </p>
@@ -132,6 +132,22 @@ function getAll() {
             `;
                     $('#AdvertisementpackagesContainer').append(html);
                 });
+
+                // Disable the last three buttons and apply the disabled class
+                $('.pricing-table-slider .pricing-table').slice(-3).find('.buypackage').addClass('disabled').css('pointer-events', 'none');
+
+                // Change the text and href for the last button
+                $('.pricing-table-slider .pricing-table').last().find('.buypackage')
+                    .removeClass('disabled buypackage') // Remove the disabled class for this button
+                    .css('pointer-events', 'auto') // Enable pointer events
+                    .attr('href', '/Home/Contact') // Set the href
+                    .removeAttr('data-packageid data-priceid')
+                    .find('.button-pt').text('CONTACT US!'); // Set button text
+
+                // Set the text for the 2nd last and 3rd last buttons to "COMING SOON"
+                $('.pricing-table-slider .pricing-table').slice(-3, -1).find('.button-pt').text('COMING SOON');
+                $('.pricing-table-slider .pricing-table').slice(-2, -1).find('.button-pt').text('COMING SOON');
+
 
                 debugger;
                 var selectedCurrency = localStorage.getItem('cur');
@@ -296,22 +312,22 @@ function BuypromotionPackage(pkgId) {
 
 
 $(document).on('click', '.buypackage', function () {
+    var $this = $(this); // Cache the current button
+    AdvertisementPackageID = $this.attr('data-packageid');
 
 
+    var priceId = $this.data("priceid");
 
 
-    debugger;
+    // Disable all buttons
+    $('.buypackage').addClass('disabled').off('click');
+
+    // Disable only the clicked button
+    $this.addClass('disabled-current').off('click');
+    $this.find('.button-pt').text('Processing...'); // Change button text
 
 
-
-
-
-
-
-    $("#paymentModal").modal('show');
-
-
-    AdvertisementPackageID = $(this).attr('data-packageid');
+    Payment(AdvertisementPackageID, priceId)
 
 
 
@@ -508,6 +524,110 @@ function GetPromotionCost(pkgId) {
 
 //})
 
+function Payment(pkgId, priceId) {
+    packageID = Number(pkgId);
+
+
+
+    var obj = {
+        PurchasedProductID: Number(packageID),
+        PriceId: priceId,
+        packageType: 'Advertisement'
+
+
+    }
+    postRequest('/Payment/createcheckoutsession', obj, function (res) {
+        debugger
+        if (res.status == 200) {
+            $(".preloader").hide()
+            if (res.data != null) {
+
+
+                packageID = 0;
+
+                AdvertisementPackageID = 0;
+                const sessionId = res.data.id;
+                const stripe = Stripe('pk_live_51PVfov01TMUk2T9ME9mDuNZzwrWYZiBS6AIMT6BJNVuNmBFDtFzaakRUqjboF1ocoVUsjlSbVfvrrR0CjU0X9bgk00KXjfXToL'); // Replace with your Publishable Key
+                stripe.redirectToCheckout({ sessionId });
+
+
+            }
+        }
+        if (res.status == 304) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+            $(".preloader").hide();
+            Swal.fire({
+                title: "info",
+                text: "You need to login as business advertiser to purchase the package.",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Log In",
+                cancelButtonText: "Cancel",
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to the login page
+                    window.location.href = '/Home/login'; // Update with your login URL
+                }
+            });
+        }
+        if (res.status == 403) {
+            $(".preloader").hide()
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+            $(".preloader").hide()
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+
+        // Re-enable all buttons
+        $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
+            // Re-bind click event for future use
+        });
+        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text
+    });
+
+
+}
 
 
 

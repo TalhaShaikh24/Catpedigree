@@ -48,7 +48,7 @@ function GetTopPageListings() {
                                             <a  onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
                                                 <i class="flaticon-play-button"></i>
                                             </a>
-                                            ${item.isPriceRequest === true || item.price == "0" ? `
+                                            ${item.isPriceRequest === true ? `
                                                 <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
                                             ` : `
                                                 <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
@@ -58,7 +58,7 @@ function GetTopPageListings() {
                                 ` : `
                                     <a  onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
                                         <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                        ${item.isPriceRequest === true || item.price == "0" ? `
+                                        ${item.isPriceRequest === true ? `
                                             <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
                                         ` : `
                                             <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
@@ -291,7 +291,7 @@ function GetHomePageListings() {
                                                 <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" target="_blank" class="video-popup">
                                                     <i class="flaticon-play-button"></i>
                                                 </a>
-                                                ${item.isPriceRequest === true || item.price == "0" ? `
+                                                ${item.isPriceRequest === true ? `
                                                     <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
                                                 ` : `
                                                     <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
@@ -301,7 +301,7 @@ function GetHomePageListings() {
                                     ` : `
                                         <a onclick = "SingleListing(${item.id})"}" href="${item.price && item.price !== "" ? `/Listing/SingleListing?listingId=${item.id}` : '#'}" class="w-100">
                                             <img src="${baseApiUrl + item.featureImagePath}" alt="Listing Image">
-                                            ${item.isPriceRequest === true || item.price == "0" ? `
+                                            ${item.isPriceRequest === true ? `
                                                 <span class="featured-btn" onclick="RequestListingPrice(${item.id})">Request Price</span>
                                             ` : `
                                                 <span class="featured-btn price" data-price="${item.price}">${item.price}</span>
@@ -738,23 +738,32 @@ function RequestListingPrice(listingID) {
 
 // Function to open modal and display data
 function showModal(data) {
-    const modalContent = `
-        <ul class="list-group">
-            <li class="list-group-item"><strong>Listing Email:</strong> ${data.listingEmail}</li>
-            
-        </ul>
-    `;
+    //const modalContent = `
+    //    <ul class="list-group">
+    //        <li class="list-group-item"><strong>Listing Email:</strong> ${data.listingEmail}</li>
 
-    document.getElementById('modal-content').innerHTML = modalContent;
+    //    </ul>
+    //`;
 
-    // Update the footer with the buttons
-    const modalFooter = `
-        <button type="button" class="btn btn-primary" onclick="location.href='mailto:${data.listingEmail}'">Send Email</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    `;
+    //document.getElementById('modal-content').innerHTML = modalContent;
 
-    document.querySelector('#dataModal .modal-footer').innerHTML = modalFooter;
-    $('#dataModal').modal('show');
+    //// Update the footer with the buttons
+    //const modalFooter = `
+    //    <button type="button" class="btn btn-primary" onclick="location.href='mailto:${data.listingEmail}'">Send Email</button>
+    //    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    //`;
+
+    //document.querySelector('#dataModal .modal-footer').innerHTML = modalFooter;
+    //$('#dataModal').modal('show');
+
+
+
+    // Create the mailto link with the email address
+    const mailtoLink = `mailto:${data.listingEmail}`;
+
+    // Open the mail client directly
+    window.location.href = mailtoLink;
+
 }
 
 function postRequest(url, requestData, handledata) {

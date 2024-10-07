@@ -20,6 +20,7 @@ namespace WebApi.IRepositories
         List<Package> CheckListingShowValidation(int userId, int id);
         Listing RequestListingPrice(int listingID, int userID);
         List<CatTypes> GetAllCatType();
+        List<Listing> GetAllListingMarkers();
 
 
 

@@ -9,7 +9,7 @@ namespace WebApi.IRepositories
 
         object GetListing_ProdictionPackages(int id);
 
-        public Listing Assgin_PromotionPackage_to_List(Listing listing);
+        public Task<Listing> Assgin_PromotionPackage_to_List(Listing listing);
         List<Listing> GetAllMyListings(int Id);
         List<Listing> GetAllListings();
         

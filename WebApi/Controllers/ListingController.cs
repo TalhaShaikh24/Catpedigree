@@ -545,6 +545,43 @@ namespace WebApi.Controllers
 
         }
 
+         [HttpPost("GetAllListingMarkers")]
+        public Response GetAllListingMarkers()
+        {
+            
+            Response response = new Response();
+
+            try
+            {
+                
+                var res = _listing.GetAllListingMarkers();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.ResponseMsg = "Data fetched successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
 
 
         [HttpPost("VideoAvailablity/{Id}")]

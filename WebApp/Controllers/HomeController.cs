@@ -13,6 +13,10 @@ namespace WebApp.Controllers
             _logger = logger;
         }
 
+        public IActionResult Maintenance()
+        {
+            return View();
+        } 
         public IActionResult Index()
         {
             return View();

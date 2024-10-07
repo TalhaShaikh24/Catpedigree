@@ -1,8 +1,26 @@
-﻿<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&callback=initMap" async defer></script>
+﻿@* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&callback=initMap" async defer></script> *@
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA"></script>
 
 <style>
 
+    .badge {
+        display: inline-block;
+        padding: .25em .4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
 
+    .badge-red {
+        color: #fff;
+        background-color: #ff344f;
+    }
     .newsletter-widget-wrap {
         position: relative;
         width: 100%; /* Adjust width as needed */
@@ -137,9 +155,9 @@
 <!--====== End Map Section ======-->
 <!--====== Start Listing Section ======-->
 <section class="listing-list-area pt-120 pb-90">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="sidebar-widget-area">
                     <div class="widget search-listing-widget mb-30 wow fadeInUp">
                         <h4 class="widget-title">Filter Search</h4>
@@ -203,7 +221,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-6">
                 <div class="listing-list-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
@@ -239,6 +257,45 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sidebar-widget-area">
+                    
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <h4 class="widget-title">Advertisement</h4>
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
+                            <i class="flaticon-email-1 sidebar-hide"></i>
+                            <h3 class="sidebar-hide">
+                                Place Your Ad Here
+                            </h3>
+                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                        </div>
+                    </div>
+                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <h4 class="widget-title">Advertisement</h4>
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
+                            <i class="flaticon-email-1 sidebar-hide"></i>
+                            <h3 class="sidebar-hide">
+                                Place Your Ad Here
+                            </h3>
+                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                        </div>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <h4 class="widget-title">Advertisement</h4>
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
+                            <i class="flaticon-email-1 sidebar-hide"></i>
+                            <h3 class="sidebar-hide">
+                                Place Your Ad Here
+                            </h3>
+                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

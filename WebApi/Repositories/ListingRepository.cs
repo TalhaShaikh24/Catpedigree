@@ -207,6 +207,13 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<CatTypes>(@"[dbo].[sp_GetAllCatType]", parameters);
             return data;
         }
+       public List<Listing> GetAllListingMarkers()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllListingMarkers]", parameters);
+            return data;
+        }
       
         public object GetAllDropdowns(int Id)
         {

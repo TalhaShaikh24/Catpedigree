@@ -145,6 +145,26 @@ function getAll() {
                     $('.pricing-table-slider').append(html);
                 });
 
+
+                // Disable the last three buttons and apply the disabled class
+                $('.pricing-table-slider .pricing-table').slice(-3).find('.buypackage').addClass('disabled').css('pointer-events', 'none');
+
+                // Change the text and href for the last button
+                $('.pricing-table-slider .pricing-table').last().find('.buypackage')
+                    .removeClass('disabled buypackage') // Remove the disabled class for this button
+                    .css('pointer-events', 'auto') // Enable pointer events
+                    .attr('href', '/Home/Contact') // Set the href
+                    .removeAttr('data-packageid data-priceid')
+                    .find('.button-pt').text('CONTACT US!'); // Set button text
+
+                // Set the text for the 2nd last and 3rd last buttons to "COMING SOON"
+                $('.pricing-table-slider .pricing-table').slice(-3, -1).find('.button-pt').text('COMING SOON');
+                $('.pricing-table-slider .pricing-table').slice(-2, -1).find('.button-pt').text('COMING SOON');
+
+
+
+
+
                 debugger;
                 var selectedCurrency = localStorage.getItem('cur');
                 SinglePriceListing(selectedCurrency);
@@ -621,7 +641,7 @@ function Payment(pkgId, priceId) {
 
                 AdvertisementPackageID = 0;
                 const sessionId = res.data.id;
-                const stripe = Stripe('pk_test_51M9O4qKR3yBF1l8fXy3z9Vvtnn8A5e4frQt5lJgfpPOBcBMx6ZZFG93mpFCWgN0EjYXL0l7ioxvtSA07AJzUUOJX00XWJkik2w'); // Replace with your Publishable Key
+                const stripe = Stripe('pk_live_51PVfov01TMUk2T9ME9mDuNZzwrWYZiBS6AIMT6BJNVuNmBFDtFzaakRUqjboF1ocoVUsjlSbVfvrrR0CjU0X9bgk00KXjfXToL'); // Replace with your Publishable Key
                 stripe.redirectToCheckout({ sessionId });
 
 
@@ -692,13 +712,13 @@ function Payment(pkgId, priceId) {
             })
 
         }
-    }).always(function () {
+
         // Re-enable all buttons
         $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
             // Re-bind click event for future use
         });
+        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text
     });
-    //   $("#paymentModal").modal('show');
 
 
 }

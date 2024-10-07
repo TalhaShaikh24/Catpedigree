@@ -510,7 +510,7 @@ function Payment(pkgId, days,priceId) {
 
 
                 const sessionId = res.data.id;
-                const stripe = Stripe('pk_test_51M9O4qKR3yBF1l8fXy3z9Vvtnn8A5e4frQt5lJgfpPOBcBMx6ZZFG93mpFCWgN0EjYXL0l7ioxvtSA07AJzUUOJX00XWJkik2w'); // Replace with your Publishable Key
+                const stripe = Stripe('pk_live_51PVfov01TMUk2T9ME9mDuNZzwrWYZiBS6AIMT6BJNVuNmBFDtFzaakRUqjboF1ocoVUsjlSbVfvrrR0CjU0X9bgk00KXjfXToL'); // Replace with your Publishable Key
                 stripe.redirectToCheckout({ sessionId });
 
 
@@ -581,13 +581,11 @@ function Payment(pkgId, days,priceId) {
             })
 
         }
-    }).always(function () {
+
         // Re-enable all buttons
         $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
             // Re-bind click event for future use
         });
+        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text
     });
-    //   $("#paymentModal").modal('show');
-
-
 }

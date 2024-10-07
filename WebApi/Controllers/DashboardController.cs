@@ -696,7 +696,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost("Assgin_PromotionPackage_to_List")]
-        public Response Assgin_PromotionPackage_to_List([FromBody] Listing listing)
+        public async Task<Response> Assgin_PromotionPackage_to_List([FromForm] Listing listing)
         {
             Response response = new Response();
             Register claimDTO = null;
@@ -708,7 +708,7 @@ namespace WebApi.Controllers
 
                 listing.CreatedBy = (int)claimDTO.UserId;
 
-                var res = _repository.Assgin_PromotionPackage_to_List(listing);
+                var res = await _repository.Assgin_PromotionPackage_to_List(listing);
 
                 if (res == null) return CustomStatusResponse.GetResponse(320);
                 else

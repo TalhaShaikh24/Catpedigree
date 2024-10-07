@@ -323,13 +323,32 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public Listing Assgin_PromotionPackage_to_List(Listing listing)
+        public async Task<Listing> Assgin_PromotionPackage_to_List(Listing listing)
         {
+            // Function to replace spaces with underscores in file names
+            string ReplaceSpaces(string input) => input.Replace(' ', '_');
+
+            if (listing.VideoFile != null)
+            {
+                string VideoFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(listing.VideoFile.FileName));
+                string VideoFilePath = Path.Combine("UploadVideos", VideoFileName);
+                string VideoFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, VideoFilePath);
+
+                using (var stream = new FileStream(VideoFilePathDirectory, FileMode.Create))
+                {
+                    await listing.VideoFile.CopyToAsync(stream);
+                }
+                listing.VideoPath = VideoFilePath;
+            }
+
+            var isVideoPromotion = listing.VideoFile != null; // Check if video file is present
 
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@PromotionPackageId", listing.PromotionPackageId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@ListId", listing.Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("VideoPath", listing.VideoPath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsVideoPromotion", isVideoPromotion, DbType.Boolean, ParameterDirection.Input); // Set based on presence of video file
             parameters.Add("@CreatedBy", listing.CreatedBy, DbType.Int32, ParameterDirection.Input);
 
             var data = _dapper.Update<Listing>(@"dbo.[usp_assgin_PromotionPackage_to_List]", parameters);
