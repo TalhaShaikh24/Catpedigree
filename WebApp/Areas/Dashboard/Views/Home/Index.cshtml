@@ -115,16 +115,92 @@
 
         </div>
     </div>
+
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalAdvertisementPackages">0</h3>
+                <b>Total Advertisement Packages</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalUtlizedAds">0</h3>
+                <b>Total Utilized Ads</b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalAdsApproved">0</h3>
+                <b>Total Approved Advertisement </b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalAdsReject">0</h3>
+                <b>Total Advertisement Reject </b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="TotalAdsPending">0</h3>
+                <b>Total Advertisement Pending </b>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+
+        </div>
+    </div>
     <!-- ./col -->
 </div>
 
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card card-primary">
+      
             <div class="card-header">
                 <h3 class="card-title"><b>My Packages</b></h3>
             </div>
+
             <!-- /.card-header -->
             <div class="card-body">
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -160,6 +236,84 @@
    
 </div>
 
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+        
+            <div class="card-header">
+                <h3 class="card-title"><b>My Promotion Packages</b></h3>
+            </div>
+
+      
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6"></div>
+                        <div class="col-sm-12 col-md-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="TableMyPromotionPackages" class="table table-bordered table-hover dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Subscription Date</th>
+                                        <th>Expiry Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="AppendMyPromotionPackages">
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>My Advertisements</b></h3>
+            </div>
+            <div class="card-body">
+                <table id="TableApprovalListing" class="table table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                            <th>No. Of Advertisement</th>
+
+                            <th>Status</th>
+                            <th>Created On</th>
+                            <th>Image</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="AppendApprovalListing">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+   
+</div>
 
 
 @section Scripts {
