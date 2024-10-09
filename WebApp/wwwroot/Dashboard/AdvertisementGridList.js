@@ -34,7 +34,15 @@ function GetAllListings() {
             { data: 'userAdvertisementPackageID' },
             {
                 data: 'filePath', render: function (data, type, row) {
-                    return `<img src="${baseApiUrl + data}" alt="Advertisement Image" style="max-width: 60px; max-height: 60px;" />`;
+                    const mediaUrl = baseApiUrl + data;
+                    // Check if the advertisement package name indicates it's a video ad
+                    if (row.advertisementPackageName.toLowerCase().trim().includes('video ad')) {
+                        // Return a video element for video ads
+                        return `<i class="fas fa-play" style="color:#ffd74e; font-size:26px"></i>`;
+                    } else {
+                        // Return an image element for other ads
+                        return `<img src="${mediaUrl}" alt="Advertisement Image" style="max-width: 60px; max-height: 60px;" />`;
+                    }
                 }
             },
             { data: 'advertisementPackageName' },
@@ -122,29 +130,38 @@ function openViewDetailsModal(ad) {
     $('#modalNumberOfAds').text(ad.numberOfAdvertisement);
     $('#modalStatus').text(ad.status);
     $('#modalUsername').text(ad.username);
-    $('#modalCreatedOn').text(ad.createdOn);
+    $('#modalCreatedOn').text(moment(ad.createdOn).format("DD-MMM-YYYY"));
 
-    const imageUrl = baseApiUrl + ad.filePath;
+    const mediaUrl = baseApiUrl + ad.filePath;
 
-    // Create a temporary image element to load the image
-    const tempImg = new Image();
-    tempImg.src = imageUrl;
+    // Check if the file is a video
+    if (ad.advertisementPackageName.toLowerCase().trim().includes('video ad')) {
+        // If it's a video, show the video element
+        $('#modalImage').hide(); // Hide the image element
+        $('#modalVideo').attr('src', mediaUrl).show(); // Show and set the video source
 
-    tempImg.onload = function () {
-        // Once the image is loaded, get the original dimensions
-        const originalWidth = tempImg.naturalWidth;
-        const originalHeight = tempImg.naturalHeight;
+        $("#lblImage").text("Video");
+        $("#trWidth").hide();
+        $("#trHeight").hide();
+    } else {
+        // If it's an image, show the image element
+        const tempImg = new Image();
+        tempImg.src = mediaUrl;
 
-        // Set the dimensions in the modal
-        $('#modalImageWidth').text(`${originalWidth}px`);
-        $('#modalImageHeight').text(`${originalHeight}px`);
+        tempImg.onload = function () {
+            const originalWidth = tempImg.naturalWidth;
+            const originalHeight = tempImg.naturalHeight;
 
-        // Now set the image source in the modal
-        $('#modalImage').attr('src', imageUrl);
-    };
+            $('#modalImageWidth').text(`${originalWidth}px`);
+            $('#modalImageHeight').text(`${originalHeight}px`);
+            $('#modalImage').attr('src', mediaUrl).show(); // Show and set the image source
+            $('#modalVideo').hide(); // Hide the video element
+        };
+    }
 
     $('#viewDetailsModal').modal('show');
 }
+
 
 
 

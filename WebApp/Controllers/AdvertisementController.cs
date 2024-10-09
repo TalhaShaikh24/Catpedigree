@@ -28,13 +28,20 @@ namespace WebApp.Controllers
             return data;
 
         }
+        
         public async Task<object> GetSidebarAdvertisments(int Id)
         {
             string content = "";
-            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetSidebarAdvertisments/" + Id, content, HttpContext);
-
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetSidebarAdvertisments/"+Id, content, HttpContext);
             return data;
 
+        }
+
+        public async Task<object> GetAllAdsForViewListings(int Id)
+        {
+            string content = "";
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetAllAdsForViewListings/", content, HttpContext);
+            return data;
         }
 
 
@@ -68,9 +75,6 @@ namespace WebApp.Controllers
             }
         }
 
-
-
-      
         public Task<object> GetAdvertisementPackage(string currency)
         {
             if (currency == null)

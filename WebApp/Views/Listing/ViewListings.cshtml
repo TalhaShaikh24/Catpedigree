@@ -2,7 +2,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA"></script>
 
-<style>
+@* <style>
 
     .badge {
         display: inline-block;
@@ -21,6 +21,7 @@
         color: #fff;
         background-color: #ff344f;
     }
+
     .newsletter-widget-wrap {
         position: relative;
         width: 100%; /* Adjust width as needed */
@@ -29,7 +30,6 @@
     }
 
         .newsletter-widget-wrap img {
-           
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -81,24 +81,26 @@
 
 
     .skeleton-item .skeleton-content {
-    background-color: #e0e0e0;
-    height: 400px; /* Adjust as necessary */
-    margin: 0px;
-    border-radius: 14px;
-    animation: pulse 1.5s infinite;
-}
+        background-color: #e0e0e0;
+        height: 400px; /* Adjust as necessary */
+        margin: 0px;
+        border-radius: 14px;
+        animation: pulse 1.5s infinite;
+    }
 
-@@keyframes pulse {
-    0% {
-        opacity: 0.4;
+    @@keyframes pulse {
+        0% {
+            opacity: 0.4;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.4;
+        }
     }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.4;
-    }
-}
 
 </style>
 
@@ -122,6 +124,11 @@
         100% {
             transform: rotate(360deg);
         }
+    }
+</style> *@
+<style>
+    .newsletter-widget-wrap video{
+        width:100%;
     }
 </style>
 <!-- Modal -->
@@ -150,16 +157,110 @@
 <div id="count-display"></div>
 <!--====== Start Map Section ======-->
 <section class="map-area">
-    <div id="map" class="map-box" style="width: 100%; height: 400px;"></div>
+    <div id="map" class="map-box" style="width: 100%; height: 600px;"></div>
 </section>
 <!--====== End Map Section ======-->
 <!--====== Start Listing Section ======-->
+<section class="hero-area py-0">
+    <div class="hero-wrapper-three bg_cover" style="padding-top:60px; padding-bottom: 60px;">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hero-content text-center">
+
+                        <div class="hero-search-wrapper wow fadeInUp mt-0" data-wow-delay=".70s" style="visibility: visible; animation-delay: 0.7s; animation-name: none;">
+                            <form data-hs-cf-bound="true">
+                                <div class="hero-search-form tab-content">
+                                    <div class="tab-pane fade show active">
+                                        <div class="row">
+                                            <div class="col-lg-9">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <input id="keywordFilter" type="search" class="form_control" placeholder="Search keyword" name="keywordFilter" required>
+                                                            <i class="ti-search"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <select class="wide" id="categoryFilter">
+                                                                <option value="-1" selected disabled>Search By Category</option>
+                                                                <option value="1">Pedigree</option>
+                                                                <option value="2">Studs</option>
+                                                                <option value="3">Relocation</option>
+                                                                <option value="4">Kittens For Sell</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <select class="wide" id="breedFilter" placeholder="Search By breed" name="breedFilter">
+                                                                <option id="appendCatTypes" value="-1" selected disabled>Search By Breed (Cat Type)</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <input type="text" id="locationFilter" class="form_control" placeholder="Search By Location" name="locationFilter">
+                                                            <i class="ti-location-pin"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <input type="text" id="stateFilter" class="form_control" placeholder="By State" name="stateFilter">
+                                                            <i class="ti-location-arrow"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="form_group">
+                                                            <input type="text" id="cityFilter" class="form_control" placeholder="By City" name="cityFilter">
+                                                            <i class="ti-more"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="row flex-column">
+                                                    <div class="col-lg-12">
+                                                        <div class="form_group">
+                                                            <button type="button" id="btnApplyFilters" onclick="filteringSearch()" class="main-btn icon-btn">Search Now</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <div class="form_group">
+                                                            <button type="button" onclick="window.location.href='/Listing/ViewListings'" style="background-color:#787878!important" class="main-btn btn-secondary icon-btn">Reset</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <p class="pt-30 pb-6 mb-0 text-center text-white" style="font-weight: bolder; font-family: sans-serif;">
+                            Start your search for a new furry friend like a kitten or a cat that needs relocation,
+                            a top-notch stud to introduce fresh bloodlines, or pedigrees by simply entering your location,
+                            breed, or keyword in our search bar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="listing-list-area pt-120 pb-90">
     <div class="container-fluid">
+        
         <div class="row">
             <div class="col-lg-3">
-                <div class="sidebar-widget-area">
-                    <div class="widget search-listing-widget mb-30 wow fadeInUp">
+                <div class="sidebar-widget-area pr-lg-4" >
+                    <div class="widget search-listing-widget mb-30 wow fadeInUp d-none">
                         <h4 class="widget-title">Filter Search</h4>
                         <form>
                             <div class="search-form">
@@ -208,20 +309,36 @@
                         </form>
                     </div>
                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Advertisement</h4>
+                        <h4 class="widget-title" style="font-weight:900">Advertisements</h4>
+                       
+                        <div class="newsletter-widget-wrap bg_cover" id="leftAdvertisement-video-1">
+                           
+                        </div>
+                    </div>
+                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
                         <div class="newsletter-widget-wrap bg_cover">
-                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
-                            <i class="flaticon-email-1 sidebar-hide"></i>
-                            <h3 class="sidebar-hide">
-                                Place Your Ad Here
-                            </h3>
-                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                            <img id="leftAdvertisement-image-1" src="" alt="Advertisement">
+                        </div>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="leftAdvertisement-image-2" src="" alt="Advertisement">
+                        </div>
+                    </div>
+                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="leftAdvertisement-image-3" src="" alt="Advertisement">
+                        </div>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover" id="leftAdvertisement-video-2">
+                           
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-7" style=" background: #f2f2f2; padding: 26px; border-radius: 10px; ">
                 <div class="listing-list-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
@@ -259,40 +376,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="sidebar-widget-area">
                     
                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Advertisement</h4>
+                        <h4 class="widget-title" style="font-weight:900">Advertisements</h4>
                         <div class="newsletter-widget-wrap bg_cover">
-                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
-                            <i class="flaticon-email-1 sidebar-hide"></i>
-                            <h3 class="sidebar-hide">
-                                Place Your Ad Here
-                            </h3>
-                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                            <img id="rigtAdvertisement-image-1" src="" alt="Advertisement">
+                            
                         </div>
                     </div>
                      <div class="widget newsletter-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Advertisement</h4>
                         <div class="newsletter-widget-wrap bg_cover">
-                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
-                            <i class="flaticon-email-1 sidebar-hide"></i>
-                            <h3 class="sidebar-hide">
-                                Place Your Ad Here
-                            </h3>
-                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                            <img id="rigtAdvertisement-image-2" src="" alt="Advertisement">
+                           
                         </div>
                     </div>
                     <div class="widget newsletter-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Advertisement</h4>
                         <div class="newsletter-widget-wrap bg_cover">
-                            <img id="advertisement-image" src="https://localhost:7280/UploadImages/b2340__2798a2f6-a3e4-4170-bb9e-3a0fd5eb5571.jpeg" alt="Advertisement">
-                            <i class="flaticon-email-1 sidebar-hide"></i>
-                            <h3 class="sidebar-hide">
-                                Place Your Ad Here
-                            </h3>
-                            <a href="/PromotionPackage/" class="main-btn icon-btn sidebar-hide">Place Ad</a>
+                            <img id="rigtAdvertisement-image-3" src="" alt="Advertisement">
+                            
+                        </div>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="rigtAdvertisement-image-4" src="" alt="Advertisement">
+                            
+                        </div>
+                    </div>
+                    <div class="widget newsletter-widget mb-30 wow fadeInUp">
+                        <div class="newsletter-widget-wrap bg_cover">
+                            <img id="rigtAdvertisement-image-5" src="" alt="Advertisement">
+                            
                         </div>
                     </div>
 

@@ -36,6 +36,23 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetAllSidebarAdvertismentsByAdvertismentId]", parameters);
             return data;
         }
+        
+        public SidebarAdvertisements GetAllAdsForViewListings()
+        {
+
+            SidebarAdvertisements sidebarAdvertisements = new SidebarAdvertisements();
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetMultipleObjects("[sp_GetAllAdsForViewListings]", parameters, gr => gr.Read<LeftSidebar>(), gr => gr.Read<RightSidebar>());
+
+            sidebarAdvertisements.LeftSidebar = data.Item1.AsList();
+            sidebarAdvertisements.RightSidebar = data.Item2.AsList();
+
+            return sidebarAdvertisements;
+
+
+
+        }
 
         public UserAdvertisementPackage BuyAdvertisementPackage(UserAdvertisementPackage obj )
         {
@@ -127,7 +144,7 @@ namespace WebApi.Repositories
             if (obj.AddFile != null)
             {
                 string PedigreeFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.AddFile.FileName);
-                string PedigreeFilePath = Path.Combine("UploadImages", PedigreeFileName);
+                string PedigreeFilePath = Path.Combine("UploadAdvertisements", PedigreeFileName);
                 string PedigreeFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, PedigreeFilePath);
 
                 using (var stream = new FileStream(PedigreeFilePathDirectory, FileMode.Create))
@@ -146,5 +163,6 @@ namespace WebApi.Repositories
 
             return data;
         }
+
     }
 }
