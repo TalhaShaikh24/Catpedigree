@@ -35,13 +35,23 @@ namespace WebApi.Repositories
         public dynamic GetJsonDataAsync(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
+            DashboardDataAnalytics  dashboardDataAnalytics = new DashboardDataAnalytics();  
+            
             parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
 
-            var data = _dapper.Get<string>("[sp_GetAllDashboardData]", parameters);
+   
+            var data = _dapper.GetMultipleObjects("[sp_GetAllDashboardData]", parameters, gr => gr.Read<string>(), gr => gr.Read<UserPromotionPackagesAnalytics>(), gr => gr.Read<UserAdvertisementPackage>());
 
-            var jsonObject = JObject.Parse(data);
+            var jsonObject = JObject.Parse(data.Item1.FirstOrDefault());
 
-            return jsonObject["CombinedData"].ToString();
+            dashboardDataAnalytics.jsonObject = jsonObject["CombinedData"].ToString();
+
+            dashboardDataAnalytics.assignPromotionPackage=data.Item2.ToList();  
+         
+            dashboardDataAnalytics.advertisementPackage=data.Item3.ToList();  
+
+
+            return dashboardDataAnalytics;
         }
 
         public List<Listing> GetAllMyListings(int Id)
