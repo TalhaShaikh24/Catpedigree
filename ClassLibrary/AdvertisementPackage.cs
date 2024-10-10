@@ -81,4 +81,20 @@ namespace ClassLibrary
         public string? PaidAdvertisments { get; set; }
 
     }
+    public class SidebarAdvertisements
+    {
+        public List<LeftSidebar>? LeftSidebar { get; set; }
+        public List<RightSidebar>? RightSidebar { get; set; }
+
+    }
+    public class LeftSidebar
+    {
+        public string? FilePath { get; set; }
+
+    }
+    public class RightSidebar
+    {
+        public string? FilePath { get; set; }
+
+    }
 }

@@ -1,4 +1,13 @@
-﻿<!-- Rejection Reason Modal -->
+﻿<style>
+    .video-popup {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background-color: #ffd74e;
+        color: #0d0d0d;
+    }
+</style>
+<!-- Rejection Reason Modal -->
 <div class="modal fade" id="rejectionReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -36,14 +45,19 @@
                         <td id="modalPackageId"></td>
                     </tr>
                     <tr>
-                        <th>Image</th>
-                        <td><img id="modalImage" src="" alt="Advertisement Image" style="max-width: 100px;" /></td>
+                        <th id="lblImage">Image</th>
+                        <td>
+                            <img id="modalImage" src="" alt="Advertisement Image" style="max-width: 100px;" />
+                            <video id="modalVideo" controls style="max-width: 100px; display: none;">
+                                Your browser does not support the video tag.
+                            </video>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr id="trWidth">
                         <th>Original Width</th>
                         <td id="modalImageWidth"></td>
                     </tr>
-                    <tr>
+                    <tr id="trHeight">
                         <th>Original Height</th>
                         <td id="modalImageHeight"></td>
                     </tr>

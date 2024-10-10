@@ -14,7 +14,7 @@ $(document).ready(function () {
           
             await GetAllListingMarkers();
             await loadMore();
-            await GetSidebarAdvertisments();
+            await GetAllAdsForViewListings();
             await GetAllCatType();
             
         } catch (error) {
@@ -333,36 +333,162 @@ function GetAllCatType() {
     });
 }
 
-function GetSidebarAdvertisments() {
-    postRequest('/Advertisement/GetSidebarAdvertisments/' + 2, null, function (res) {
+//function GetSidebarAdvertisments() {
+//    postRequest('/Advertisement/GetSidebarAdvertisments/' + 2, null, function (res) {
+//        if (res.status == 200) {
+//            if (res.data != null && res.data.length > 0) {
+//                $('.sidebar-hide').hide();
+//                var $imageElement = $('#advertisement-image');
+//                var imageUrls = res.data.map(item => baseApiUrl + item.paidAdvertisments.replace(/\\/g, '/'));
+//                var currentIndex = 0;
+
+//                function showNextImage() {
+//                    $imageElement.attr('src', imageUrls[currentIndex])
+//                        .removeClass('show');
+
+//                    setTimeout(() => {
+//                        $imageElement.addClass('show');
+//                    }, 50); // Small delay to ensure the image loads and transition applies
+
+//                    currentIndex = (currentIndex + 1) % imageUrls.length;
+//                }
+
+//                // Start the image rotation
+//                showNextImage();
+//                setInterval(showNextImage, 3000); // Change image every 3 seconds
+//            }
+//        } else {
+//            Swal.fire({
+//                title: "Error",
+//                text: res.responseMsg,
+//                icon: res.status == 600 ? "warning" : "error"
+//            });
+//        }
+//    });
+//}
+
+function GetAllAdsForViewListings() {
+    postRequest('/Advertisement/GetAllAdsForViewListings', null, function (res) {
+
         if (res.status == 200) {
-            if (res.data != null && res.data.length > 0) {
-                $('.sidebar-hide').hide();
-                var $imageElement = $('#advertisement-image');
-                var imageUrls = res.data.map(item => baseApiUrl + item.paidAdvertisments.replace(/\\/g, '/'));
-                var currentIndex = 0;
 
-                function showNextImage() {
-                    $imageElement.attr('src', imageUrls[currentIndex])
-                        .removeClass('show');
+            if (res.data && res.data.leftSidebar && res.data.rightSidebar) {
+                // Fallback URLs
+                const fallbackLeft = `${baseApiUrl}UploadAdvertisements/YourAd.gif`;
+                const fallbackRight = `${baseApiUrl}UploadAdvertisements/YourAdRight.gif`;
 
-                    setTimeout(() => {
-                        $imageElement.addClass('show');
-                    }, 50); // Small delay to ensure the image loads and transition applies
-
-                    currentIndex = (currentIndex + 1) % imageUrls.length;
+                // Left Sidebar Videos
+                if (res.data.leftSidebar.length > 0 && res.data.leftSidebar[0].filePath) {
+                    $("#leftAdvertisement-video-1").append(`
+                        <video autoplay muted loop>
+                            <source src="${baseApiUrl + res.data.leftSidebar[0].filePath.replace(/\\/g, '/')}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `);
+                }
+                else {
+                    $("#leftAdvertisement-video-1").append(`
+                        <img src="${fallbackLeft}" alt="Advertisement">
+                    `);
                 }
 
-                // Start the image rotation
-                showNextImage();
-                setInterval(showNextImage, 3000); // Change image every 3 seconds
+                if (res.data.leftSidebar.length > 1 && res.data.leftSidebar[1].filePath) {
+                    $("#leftAdvertisement-video-2").append(`
+                        <video autoplay muted loop>
+                            <source src="${baseApiUrl + res.data.leftSidebar[1].filePath.replace(/\\/g, '/')}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `);
+                }
+                else {
+                    $("#leftAdvertisement-video-2").append(`
+                        <img src="${fallbackRight}" alt="Advertisement">
+                    `);
+                }
+
+                // Left Sidebar Images
+                for (let i = 2; i <= 4; i++) {
+                    const imgSrc = (res.data.leftSidebar.length > i && res.data.leftSidebar[i].filePath)
+                        ? baseApiUrl + res.data.leftSidebar[i].filePath.replace(/\\/g, '/')
+                        : fallbackLeft;
+
+                    $(`#leftAdvertisement-image-${i - 1}`).attr('src', imgSrc).on('error', function () {
+                        $(this).attr('src', fallbackLeft);
+                    });
+                }
+
+                // Right Sidebar Images
+                for (let i = 0; i <= 4; i++) {
+                    const imgSrc = (res.data.rightSidebar.length > i && res.data.rightSidebar[i].filePath)
+                        ? baseApiUrl + res.data.rightSidebar[i].filePath.replace(/\\/g, '/')
+                        : fallbackRight;
+
+                    $(`#rigtAdvertisement-image-${i + 1}`).attr('src', imgSrc).on('error', function () {
+                        $(this).attr('src', fallbackRight);
+                    });
+                }
+            } else {
+                console.error("Response data is incomplete or null");
             }
-        } else {
+
+
+
+        }
+        if (res.status == 304) {
+
             Swal.fire({
                 title: "Error",
                 text: res.responseMsg,
-                icon: res.status == 600 ? "warning" : "error"
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
             });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
         }
     });
 }
@@ -492,6 +618,7 @@ function GetAllListingMarkers() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            localStorage.removeItem('userAddress'); // Clear saved address if location is allowed
             loadMarkers(userLocation);
         }, () => {
             // If geolocation fails or is blocked
@@ -510,8 +637,8 @@ function GetAllListingMarkers() {
 function handleLocationError() {
     // Prompt user for address
     Swal.fire({
-        title: 'Location Access Denied',
-        text: 'Please enter your country to view nearby listings on map:',
+        title: 'OOPS,',
+        text: 'Unfortunately we cannot find out your location. Would you be so kind to enter, that way we can help you to the best of our abilities',
         input: 'text',
         showCancelButton: true,
         confirmButtonText: 'Submit',
@@ -654,21 +781,10 @@ function loadMarkers(userLocation) {
 
 function createInfoWindowContent(marker) {
     return `
-        <div style="width: 200px; font-family: Arial, sans-serif;">
-            <img src="${marker.Image || 'default-image-url.png'}" alt="${marker.Title}" style="width: 100%; height: auto;"/>
-            <h4>${marker.Title}</h4>
-            <p>Category: ${marker.CategoryName}</p>
-            <p>Location: ${marker.Location}</p>
-        </div>
-    `;
-}
-
-function createInfoWindowContent(marker) {
-    return `
-        <div style="width: 200px; font-family: Arial, sans-serif;">
+       <div style="width: 250px; max-height: 320px; overflow-y: auto; font-family: Arial, sans-serif;">
             <a onclick = "SingleListing(${marker.id})" href="${`/Listing/SingleListing?listingId=${marker.id}`}" class="w-100">
-            <img src="${baseApiUrl + marker.featureImage}" alt="${marker.title}" style="width: 100%; height: auto;"/>
-            <h5>${marker.title}</h4>
+            <img src="${baseApiUrl + marker.featureImagePath}" alt="${marker.title}" style="width: 150px; margin-bottom:10px; height: auto;"/>
+            <h5 style="font-weight:600!important">${marker.title}</h4>
             </a>
             <span class="badge badge-red mb-2">${marker.categoryName}</span>
             <p>Location: ${marker.location}</p>

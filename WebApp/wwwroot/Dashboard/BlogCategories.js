@@ -10,119 +10,83 @@ $(document).ready(function () {
 
 
 
-function GetAllBlogCategories() {
-    postRequest('/Dashboard/GetAllBlogCategories', null, function (res) {
 
-        if (res.status == 200) {
 
-            if (res.data != null) {
 
-                // Step 1: Destroy existing DataTable instance if it exists
-                if ($.fn.DataTable.isDataTable("#TableBlogCategories")) {
-                    $("#TableBlogCategories").DataTable().destroy();
+    function GetAllBlogCategories() {
+
+    // Check if the DataTable is already initialized
+    if ($.fn.DataTable.isDataTable('#TableBlogCategories')) {
+        // Destroy the existing DataTable
+        $('#TableBlogCategories').DataTable().clear().destroy();
+    }
+
+    $('#TableBlogCategories').DataTable({
+        ajax: {
+            url: '/Dashboard/GetAllBlogCategories',
+            type: 'POST',
+            dataSrc: function (res) {
+                if (res.status === 200) {
+                    return res.data || []; // Return the data or an empty array
+                } else {
+                    handleErrorResponse(res);
+                    return []; // Return empty if there's an error
                 }
-
-                // Step 2: Clear the table body
-                $("#AppendCategories").empty();
-
-                // Step 3: Sort data in descending order based on 'createdOn'
-                res.data.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
-
-                // Step 4: Append sorted data to the table
-                $.each(res.data, function (i, v) {
-                    $("#AppendCategories").append(`
-                      <tr>
-                        <td>${v.categoryName}</td>
-                        <td>${v.description}</td>
-                        <td>${moment(v.createdOn).format("DD-MMMM-YYYY")}</td>
-                        <td>
-                          <div style="display: flex; justify-content: start; align-items: center;">
-                            <button class="btn btn-info btn-md mx-2" title="Edit" id="EditCategory" data-id="${v.categoryId}" data-name="${v.categoryName}" data-description="${v.description}"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-md mx-2" title="Delete" onclick="DeleteBlogCategory(${v.id})"><i class="fa fa-trash"></i></button>
-                          </div>
-                        </td>
-                      </tr>`);
-                });
-
-                // Step 5: Reinitialize DataTable with sorting by the third column (index 2) in descending order
-                $("#TableBlogCategories").DataTable({
-                    "order": [[2, 'desc']] // 2 is the index of the 'createdOn' column (0-based index)
-                });
-
-
-
-                // Attach click event to edit buttons
-                $("#AppendCategories").on("click", "#EditCategory", function () {
-                    const id = $(this).data("id");
-                    const name = $(this).data("name");
-                    const description = $(this).data("description");
-                    $("#modalCategoryId").val(id);
-                    $("#modalCategoryName").val(name);
-                    $("#modalDescription").val(description);
-                    $("#editCategoryModal").modal("show");
-                });
-
             }
-        }
-        if (res.status == 304) {
+        },
+        "columns": [
+            { "data": "categoryName" },
+            { "data": "description" },
+            {
+                "data": "createdOn",
+                "render": function (data) {
+                    return moment(data).format("DD-MMMM-YYYY");
+                }
+            },
+            {
+                "data": null,
+                "render": function (data) {
+                    return `
+                        <div style="display: flex; justify-content: start; align-items: center;">
+                            <button class="btn btn-info btn-md mx-2 edit-category" title="Edit" data-id="${data.categoryId}" data-name="${data.categoryName}" data-description="${data.description}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-md mx-2" title="Delete" onclick="DeleteBlogCategory(${data.categoryId})">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>`;
+                }
+            }
+        ],
+        // Optional: You can customize the DataTable here
+        order: [[3, 'desc']],
+        paging: true,
+        searching: true,
+        ordering: true,
+        // Add other DataTable options as needed
+    });
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 305) {
+    function handleErrorResponse(res) {
+        HidePreloader();
+        Swal.fire({
+            title: "Error",
+            text: res.responseMsg,
+            icon: res.status >= 400 && res.status < 500 ? "error" : "warning"
+        });
+    }
 
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 401) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 403) {
-
-            Swal.fire(res.responseMsg, {
-                icon: "error",
-                title: "Error"
-            });
-        }
-        if (res.status == 320) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 500) {
-
-            Swal.fire({
-                title: "Error",
-                text: res.responseMsg,
-                icon: "error"
-            })
-        }
-        if (res.status == 600) {
-
-            Swal.fire({
-                title: "Warning",
-                text: res.responseMsg,
-                icon: "warning"
-            })
-
+    // Optionally, you might want to show a preloader while fetching data
+    $(document).on('processing.dt', function (e, settings, processing) {
+        if (processing) {
+            ShowPreloader();
+        } else {
+            HidePreloader();
         }
     });
-}
 
+
+
+}
 
 
 $("#Btn_BlogCategorySubmit").click(function () {
