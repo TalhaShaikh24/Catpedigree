@@ -683,10 +683,17 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Age").val(res.data.age);
 
                 var apiDescription = res.data.description;
-                // Replace <br> with newline characters
-                var formattedDescription = apiDescription.replace(/<br>/g, "\n");
-                // Set the formatted value in the textarea
-                $('#Description').val(formattedDescription);
+
+                // Check for null or empty value
+                if (apiDescription) {
+                    // Replace <br> with newline characters
+                    var formattedDescription = apiDescription.replace(/<br>/g, "\n");
+                    // Set the formatted value in the textarea
+                    $('#Description').val(formattedDescription);
+                } else {
+                    // Optionally set a default value or clear the textarea
+                    $('#Description').val(''); // Clear the textarea if apiDescription is null or empty
+                }
 
                 $("#Country").val(res.data.country);
                 $("#Location").val(res.data.location);

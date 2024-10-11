@@ -14,6 +14,7 @@ $(document).ready(function () {
             console.error('Error:', error);
         }
     })();
+    updatePrices(selectedCurrency);
 });
 $(document).on("click", "#btnSearch", function () {
     // Get values from input fields
@@ -89,6 +90,8 @@ function GetTopPageListings() {
                     $('#appendTopListings').append(html);
                 });
                 $("#sectionTopListings").show();
+
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -152,7 +155,7 @@ function GetTopPageListings() {
     var selectedCurrency = localStorage.getItem('cur');
     debugger;
 
-    updatePrices(selectedCurrency);
+    
 
 }
 
@@ -213,6 +216,7 @@ function GetVetRimmedPageListings() {
                 });
 
                 $("#sectionVetRimmedListings").show();
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {
@@ -333,7 +337,7 @@ function GetHomePageListings() {
                 });
 
 
-                
+                updatePrices(selectedCurrency);
             }
         }
         if (res.status == 304) {

@@ -228,9 +228,9 @@ $("#save").click(function () {
                 if (res.status == 500) {
 
                     Swal.fire({
-                        title: "Error",
+                        title: "Oops",
                         text: res.responseMsg,
-                        icon: "error"
+                        icon: "warning"
                     })
                 }
                 if (res.status == 600) {
@@ -316,9 +316,9 @@ $("#save").click(function () {
             if (res.status == 500) {
 
                 Swal.fire({
-                    title: "Error",
+                    title: "Oops",
                     text: res.responseMsg,
-                    icon: "error"
+                    icon: "warning"
                 })
             }
             if (res.status == 600) {

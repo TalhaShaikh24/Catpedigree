@@ -85,7 +85,7 @@ function getAll() {
 
             <h3>${item.advertisementPackageName}</h3>
             <p class="price">
-                From € ${item.advertisementPackageCost} / <span>year</span>
+                From € ${item.advertisementPackageCost} / <span>month</span>
             </p>
 
 

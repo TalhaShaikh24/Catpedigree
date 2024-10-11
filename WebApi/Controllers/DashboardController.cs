@@ -769,17 +769,23 @@ namespace WebApi.Controllers
                     FileName = fileInfo.FileName,
                     FilePath = $"{BaseUrl}{fileInfo.FilePath}?v={DateTime.UtcNow.Ticks}"
                 })
-                .ToList(); 
+                .ToList();
 
 
-                if (images == null) return CustomStatusResponse.GetResponse(320);
+                if (images.Count > 0)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = images;
+
+                }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = images;
-                    return response;
                 }
+                return response;
             }
             catch (DbException ex)
             {
@@ -840,14 +846,20 @@ namespace WebApi.Controllers
                 .ToList();
 
 
-                if (images == null) return CustomStatusResponse.GetResponse(320);
+                if (images.Count > 0)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = images;
+
+                }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = images;
-                    return response;
                 }
+                return response;
             }
             catch (DbException ex)
             {
@@ -919,14 +931,20 @@ namespace WebApi.Controllers
 
                 }
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
+                if (galleries.Count > 0)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+
+                }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = galleries;
-                    return response;
                 }
+                return response;
             }
             catch (DbException ex)
             {
@@ -981,14 +999,20 @@ namespace WebApi.Controllers
                     }
                 }
 
-                if (galleries.Count == 0) return CustomStatusResponse.GetResponse(320);
+                if (galleries.Count > 0 )
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+                  
+                }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = galleries;
-                    return response;
                 }
+                return response;
             }
             catch (DbException ex)
             {
@@ -1044,14 +1068,20 @@ namespace WebApi.Controllers
 
                 }
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
+                if (galleries.Count > 0)
+                {
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = galleries;
+
+                }
                 else
                 {
                     response = CustomStatusResponse.GetResponse(200);
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.Data = galleries;
-                    return response;
                 }
+                return response;
             }
             catch (DbException ex)
             {
@@ -1799,7 +1829,6 @@ namespace WebApi.Controllers
 
         }
 
-
         [HttpPost("DeleteListingById/{Id}")]
         public Response DeleteListingById(int Id)
         {
@@ -1811,16 +1840,33 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.DeleteListingById(Id);
+                // Retrieve the listing to get file paths
+                dynamic listingFiles = _repository.GetListingFilesById(Id); // Ensure you have this method implemented
+                if (listingFiles == null) return CustomStatusResponse.GetResponse(404); // Listing not found
 
+                // Delete listing from the database
+                var res = _repository.DeleteListingById(Id);
                 if (res > 0)
                 {
+                    // Delete the video and feature image
+                    DeleteFileIfExists(listingFiles.PedigreeFilePath);
+                    DeleteFileIfExists(listingFiles.VideoPath);
+                    DeleteFileIfExists(listingFiles.FeatureImagePath);
+
+                    // Handle gallery images
+                    var galleryImages = string.IsNullOrEmpty(listingFiles.GallaryImagesPath)
+                        ? new string[0]
+                        : listingFiles.GallaryImagesPath.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var imagePath in galleryImages)
+                    {
+                        DeleteFileIfExists(imagePath.Trim());
+                    }
 
                     response = CustomStatusResponse.GetResponse(200);
                     response.Data = res;
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.ResponseMsg = "Listing has been deleted successfuly!";
-
+                    response.ResponseMsg = "Listing has been deleted successfully!";
                 }
                 return response;
 
@@ -1839,8 +1885,21 @@ namespace WebApi.Controllers
                 response.ResponseMsg = ex.Message;
                 return response;
             }
-
         }
+
+        private void DeleteFileIfExists(string relativePath)
+        {
+            if (!string.IsNullOrEmpty(relativePath))
+            {
+                // Construct the full path using the wwwroot directory
+                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", relativePath);
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+            }
+        }
+
 
 
 

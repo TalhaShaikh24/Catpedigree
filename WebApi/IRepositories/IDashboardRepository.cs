@@ -12,7 +12,7 @@ namespace WebApi.IRepositories
         public Task<Listing> Assgin_PromotionPackage_to_List(Listing listing);
         List<Listing> GetAllMyListings(int Id);
         List<Listing> GetAllListings();
-        
+        Listing GetListingFilesById(int Id);
         Listing GetListingDetailById(int Id);
 
         Task<Listing> UpdateListing(Listing obj);

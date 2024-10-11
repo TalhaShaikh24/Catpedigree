@@ -61,7 +61,15 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<Listing>(@"[dbo].[sp_GetAllMyListing]", parameters);
             return data;
         }
-        
+
+        public Listing GetListingFilesById(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Get<Listing>(@"[dbo].[sp_GetListingFilesById]", parameters);
+            return data;
+        }
+
         public Listing GetListingDetailById(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();

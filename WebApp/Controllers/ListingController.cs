@@ -38,7 +38,7 @@ namespace WebApp.Controllers
                     if (items.Count<1)
                     {
                         // Redirect to another view if item3 contains data
-                        return RedirectToAction("Pricing", "Packages");
+                        return RedirectToAction("Advertising", "Home");
                     }
                 }
 
