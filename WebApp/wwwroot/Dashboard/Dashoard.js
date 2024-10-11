@@ -32,6 +32,18 @@ function GetAllDashbaord() {
                 
                 $("#TotalAdsPending").text(IndexZero.TotalAdsPending);
 
+                $("#UserTotalPromotionPackage").text(IndexZero.UserTotalPromotionPackage);
+                $("#TotalUsedPromotionPackages").text(IndexZero.TotalUsedPromotionPackages);
+                $("#TotalUnUsedPromotionPackages").text(IndexZero.TotalUnUsedPromotionPackages);
+                $("#AvailableBoldPackages").text(IndexZero.AvailableBoldPackages);
+                $("#AvailableTopPlusPackages").text(IndexZero.AvailableTopPlusPackages);
+                $("#AvailableRimmedPackages").text(IndexZero.AvailableRimmedPackages);
+
+                $("#AvailableBackgroundPackages").text(IndexZero.AvailableBackgroundPackages);
+
+                $("#AvailableTopPackages").text(IndexZero.AvailableTopPackages);
+                $("#AvailableVideoAdvertsPackages").text(IndexZero.AvailableVideoAdvertsPackages);
+                
 
                 $("#AppendMyPackages").empty();
 
@@ -51,7 +63,7 @@ function GetAllDashbaord() {
                  
                     $("#AppendMyPromotionPackages").append(`
                         <tr>
-                                <td>${res.data.assignPromotionPackage[i].promotionPackageName}</td>
+                                <td>${res.data.assignPromotionPackage[i].promotionPackageName} (${res.data.assignPromotionPackage[i].packageCount})</td>
                                 <td>${moment(res.data.assignPromotionPackage[i].subscriptionDate).format("DD - MMMM - YYYY") }</td>
                                <td>${moment(res.data.assignPromotionPackage[i].expiryDate).format("DD - MMMM - YYYY") }</td>
 
