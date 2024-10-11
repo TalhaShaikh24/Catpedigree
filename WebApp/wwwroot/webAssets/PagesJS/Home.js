@@ -1,15 +1,20 @@
 ﻿
 let baseApiUrl = "";
+
 $(document).ready(function () {
-
     baseApiUrl = $("#baseApiUrl").val();
-    GetHomePageListings();
-    GetTopPageListings();
-    //GetVetRimmedPageListings();
-    // GetHomeAdvertisments();
-})
+    (async function () {
+        try {
 
+            await GetHomePageListings();
+            await GetTopPageListings();
+            await GetHomePageBlogs();
 
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
+});
 $(document).on("click", "#btnSearch", function () {
     // Get values from input fields
     var keyword = $("#keyword").val().trim(); // trim to remove leading/trailing whitespaces
@@ -24,7 +29,6 @@ $(document).on("click", "#btnSearch", function () {
     // Redirect to the constructed URL
     window.location.href = url;
 });
-
 
 function GetTopPageListings() {
 
@@ -329,7 +333,7 @@ function GetHomePageListings() {
                 });
 
 
-                GetHomePageBlogs();
+                
             }
         }
         if (res.status == 304) {
@@ -393,7 +397,6 @@ function GetHomePageListings() {
 
 
 }
-
 
 function GetHomePageBlogs() {
     postRequest('/Blog/GetHomePageBlogs', null, function (res) {
@@ -572,8 +575,6 @@ function GetHomeAdvertisments() {
         }
     });
 }
-
-
 function SingleListing(ListId) {
     var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 
@@ -582,7 +583,6 @@ function SingleListing(ListId) {
 
 
 }
-
 function BuyPackage(pkgId) {
 
     var obj = {
