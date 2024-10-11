@@ -47,28 +47,32 @@ function GetAllDashbaord() {
 
                 $("#AppendMyPackages").empty();
 
-                for (let i = 1; i <= JSON.parse(res.data.jsonObject).length - 1; i++) {
-                    debugger
-                    $("#AppendMyPackages").append(`
-                        <tr>
-                                <td>${JSON.parse(res.data.jsonObject)[i].Name}</td>
-                                <td>${JSON.parse(res.data.jsonObject)[i].AllowedListings == 999 ? "UNLIMITED" : JSON.parse(res.data.jsonObject)[i].AllowedListings}</td>
-                                <td>${JSON.parse(res.data.jsonObject)[i].RemainingListings == 999 ? "UNLIMITED" : JSON.parse(res.data.jsonObject)[i].RemainingListings}</td>
-                        </tr>`);
-                }
+                const jsonObject = JSON.parse(res.data.jsonObject);
+
+                $.each(jsonObject, function (index, item) {
+                    if (index === 0) return; // Skip index 0
+
+                    $("#AppendMyPackages").append(
+                        `<tr>
+                            <td>${item.Name}</td>
+                            <td>${item.AllowedListings === 999 ? "UNLIMITED" : item.AllowedListings}</td>
+                            <td>${item.RemainingListings === 999 ? "UNLIMITED" : item.RemainingListings}</td>
+                        </tr>`
+                                    );
+                });
+
 
                 $('#TableMyPackages').DataTable();
                
-                for (let i = 1; i <= res.data.assignPromotionPackage.length - 1; i++) {
-                 
+                $.each(res.data.assignPromotionPackage, function (index, item) {
                     $("#AppendMyPromotionPackages").append(`
-                        <tr>
-                                <td>${res.data.assignPromotionPackage[i].promotionPackageName} (${res.data.assignPromotionPackage[i].packageCount})</td>
-                                <td>${moment(res.data.assignPromotionPackage[i].subscriptionDate).format("DD - MMMM - YYYY") }</td>
-                               <td>${moment(res.data.assignPromotionPackage[i].expiryDate).format("DD - MMMM - YYYY") }</td>
+                    <tr>
+                        <td>${item.promotionPackageName} (${item.packageCount})</td>
+                        <td>${moment(item.subscriptionDate).format("DD - MMMM - YYYY")}</td>
+                        <td>${moment(item.expiryDate).format("DD - MMMM - YYYY")}</td>
+                    </tr>`);
+                });
 
-                               </tr>`);
-                }
                
                 $('#TableMyPromotionPackages').DataTable();
 

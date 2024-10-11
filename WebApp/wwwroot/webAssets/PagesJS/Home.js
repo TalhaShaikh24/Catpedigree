@@ -1,6 +1,7 @@
 ﻿
 let baseApiUrl = "";
-
+var currencySymbols2;
+var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
 $(document).ready(function () {
     baseApiUrl = $("#baseApiUrl").val();
     (async function () {
@@ -14,7 +15,34 @@ $(document).ready(function () {
             console.error('Error:', error);
         }
     })();
-    updatePrices(selectedCurrency);
+
+    currencySymbols2 = {
+        "USD": "$",
+        "EUR": "€",
+        "GBP": "£",
+        "PLN": "zł",
+        "DKK": "kr",
+        "SEK": "kr",
+        "NOK": "kr",
+        "ANG": "ƒ",
+        "ARS": "$",
+        "AUD": "$",
+        "BAM": "KM",
+        "BGN": "лв",
+        "CAD": "$",
+        "CHF": "CHF",
+        "CNY": "¥",
+        "CZK": "Kč",
+        "HRK": "kn",
+        "HUF": "Ft",
+        "RUB": "₽",
+        "TRY": "₺"
+        // Add more mappings as needed
+    };
+
+
+
+
 });
 $(document).on("click", "#btnSearch", function () {
     // Get values from input fields
@@ -31,9 +59,33 @@ $(document).on("click", "#btnSearch", function () {
     window.location.href = url;
 });
 
+
+
+// Function to update price symbols
+function updatePrices2(selectedCurrency) {
+    debugger;
+
+
+    var symbol = currencySymbols2[selectedCurrency == null ? 'EUR' : selectedCurrency];
+    $('.price').each(function () {
+        var priceValue = $(this).attr('data-price');
+
+        if (priceValue == undefined) {
+
+
+            $(this).text(symbol);
+        }
+        else {
+
+
+            $(this).text(symbol + priceValue);
+        }
+
+    });
+}
 function GetTopPageListings() {
 
-    var curr = localStorage.getItem('cur') == null ? 'EUR' : localStorage.getItem('cur')
+    
     debugger
     postRequest('/Listing/GetTopPageListings/' + curr, null, function (res) {
 
@@ -91,7 +143,7 @@ function GetTopPageListings() {
                 });
                 $("#sectionTopListings").show();
 
-                updatePrices(selectedCurrency);
+                updatePrices2(curr);
             }
         }
         if (res.status == 304) {
@@ -216,7 +268,7 @@ function GetVetRimmedPageListings() {
                 });
 
                 $("#sectionVetRimmedListings").show();
-                updatePrices(selectedCurrency);
+                updatePrices2(curr);
             }
         }
         if (res.status == 304) {
@@ -337,7 +389,7 @@ function GetHomePageListings() {
                 });
 
 
-                updatePrices(selectedCurrency);
+                updatePrices2(curr);
             }
         }
         if (res.status == 304) {
