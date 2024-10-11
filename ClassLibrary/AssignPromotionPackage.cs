@@ -33,6 +33,7 @@ namespace ClassLibrary
         public string Username { get; set; }
         public string PromotionPackageName { get; set; }
 
+        public int? PackageCount { get; set; }
         public DateTime SubscriptionDate { get; set; }
 
        public DateTime CreatedOn { get; set; }

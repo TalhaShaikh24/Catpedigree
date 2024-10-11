@@ -31,7 +31,7 @@ function GetAllDropdowns() {
                     $("#Promotionpackage").append(`<option value="-1">Select Promotion Package</option>`);
 
                     $.each(res.data.assignPromotionPackages, function (i, v) {
-                        debugger;
+                     
                         $("#Promotionpackage").append(`<option value="${v.ppcid}">${v.promotionPackageName}</option>`);
                     });
                 }
@@ -44,8 +44,6 @@ function GetAllDropdowns() {
                 $.each(res.data.users, function (i, v) {
                     $("#UserId").append(`<option value="${v.userId}">${v.username}</option>`);
                 });
-
-                debugger;
 
                 $('select').niceSelect('update');
 
@@ -244,10 +242,11 @@ function GetDatatable() {
                 $('#packagesAssignedtable').DataTable().clear().draw();
 
                 $.each(res.data, function (i, v) {
+                    debugger;
                     $('#packagesAssignedtable').DataTable().row.add([
                         // v.userId,
                         v.username,
-                        v.promotionPackageName.replace('(0 Days)', ''), // Replacing (0 Days) with an empty string
+                        v.promotionPackageName.replace('(0 Days)', '') + " (" + v.packageCount+")", // Replacing (0 Days) with an empty string
                         moment(v.subscriptionDate).format("DD-MMM-YYYY"),
                         moment(v.createdOn).format("DD-MMM-YYYY"),
                         // v.price

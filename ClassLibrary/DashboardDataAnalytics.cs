@@ -23,6 +23,8 @@ namespace ClassLibrary
 
         public DateTime ExpiryDate { get; set; }
 
+        public int? PackageCount { get; set; }
+
     }
 
         public class DashboardDataAnalytics
