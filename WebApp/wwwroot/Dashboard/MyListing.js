@@ -19,14 +19,85 @@ $(document).ready(function () {
         }
     })();
     $('#Phone').intlTelInput({
-        initialCountry: 'br',
+        initialCountry: 'us',
         preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
         autoPlaceholder: 'aggressive',
         separateDialCode: true,
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js"
     });
+
+    initAutocomplete();
 });
 
+var autocomplete;
+function initAutocomplete() {
+    const input = document.getElementById('Location');
+    debugger;
+    autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Set up the dropdown element
+    dropdown = document.getElementById('places-dropdown');
+
+    // Listen for place selection
+    autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+
+
+// Handle place change event
+function onPlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+    }
+
+    const addressComponents = place.address_components;
+    let city = "";
+    let state = "";
+    let country = "";
+    let streetAddress = "";
+    let zipCode = "";
+
+    // Extract latitude and longitude
+    latitude = place.geometry.location.lat();
+    longitude = place.geometry.location.lng();
+
+    for (const component of addressComponents) {
+        const types = component.types;
+        if (types.includes("locality") || types.includes("sublocality")) {
+            city = component.long_name;
+        }
+        if (types.includes("administrative_area_level_1")) {
+            state = component.short_name;
+        }
+        if (types.includes("country")) {
+            country = component.long_name;
+        }
+        // Check for street number and route
+        if (types.includes("street_number")) {
+            streetAddress += component.long_name + " "; // Add street number
+        }
+        if (types.includes("route")) {
+            streetAddress += component.long_name; // Add street name
+        }
+        if (types.includes("postal_code")) {
+            zipCode = component.long_name; // Add zip code
+        }
+    }
+
+    // Trim any extra whitespace from the street address
+    streetAddress = streetAddress.trim();
+
+    // Set the street address to the Location input
+    $("#Location").val(streetAddress);
+
+    // Assign values to respective inputs
+    $("#State").val(state);
+    $("#City").val(city);
+    $("#Country").val(country);
+    $("#ZipCode").val(zipCode);
+}
 
 function GetAllDropdowns() {
 
@@ -252,8 +323,8 @@ function GetAllMyListings() {
                             <td>${v.isActive}</td>
                             <td>${moment(v.createdOn).format("DD - MMMM - YYYY")}</td>
                             <td style="display: flex; justify-content: space-evenly; align-items: center;">
-                                <button id="btn_Listing_Edit" type="button" class="btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
-                                <button id="btn_Listing_Delete" type="button" class="btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn_Listing_Edit btn btn-info btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn_Listing_Delete btn btn-danger btn-xs p-2 mx-1" data-id="${v.id}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     `);
@@ -372,7 +443,7 @@ function populateFilterOptions(selector, options, key) {
         $(selector).append(`<option value="${option[key]}">${option[key]}</option>`);
     });
 }
-$(document).on("click", "#btn_Listing_Delete", function (e) {
+$(document).on("click", ".btn_Listing_Delete", function (e) {
 
 
     let listingId = Number(e.currentTarget.dataset.id)
@@ -462,7 +533,7 @@ $(document).on("click", "#btn_Listing_Delete", function (e) {
 })
 
 
-$(document).on("click", "#btn_Listing_Edit", function (e) {
+$(document).on("click", ".btn_Listing_Edit", function (e) {
 
     $("#status_reason").text('')
 
@@ -539,6 +610,7 @@ $(document).on("click", "#btn_Listing_Edit", function (e) {
                 $("#Location").val(res.data.location);
                 $("#State").val(res.data.state);
                 $("#City").val(res.data.city);
+                $("#ZipCode").val(res.data.zipCode);
                 $("#Phone").val(res.data.phone);
                 $("#Email").val(res.data.email);
                 $("#BreerderName").val(res.data.breerderName);
@@ -974,6 +1046,7 @@ $("#Btn_Update_Listing").click(function () {
     formData.append("Location", $("#Location").val());
     formData.append("State", $("#State").val());
     formData.append("City", $("#City").val());
+    formData.append("ZipCode", $("#ZipCode").val());
     formData.append("PackageId", $("#PackageId").data("id"));
     formData.append("Gender", $("#Gender").val());
     formData.append("Phone", $("#Phone").val());
@@ -1001,8 +1074,8 @@ $("#Btn_Update_Listing").click(function () {
     let countryCode = selectedCountryData.iso2;
     debugger;
     formData.append('PhoneCode', countryCode);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
+    //formData.append('latitude', latitude);
+    //formData.append('longitude', longitude);
 
 
     //Advertisement 

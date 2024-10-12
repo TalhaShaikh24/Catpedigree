@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -770,6 +771,9 @@ namespace WebApp.HttpMethods
 
         public static async Task<object> CustomHttpListing(string baseUrl, string url, Listing obj, HttpContext httpContext)
         {
+            // Get coordinates before sending the request
+            await GetCoordinates(obj);
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
@@ -792,6 +796,7 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.Location ?? ""), "Location");
                 multiContent.Add(new StringContent(obj.State ?? ""), "State");
                 multiContent.Add(new StringContent(obj.City ?? ""), "City");
+                multiContent.Add(new StringContent(obj.ZipCode ?? ""), "ZipCode");
                 multiContent.Add(new StringContent(obj.Gender ?? ""), "Gender");
                 multiContent.Add(new StringContent(obj.Phone ?? ""), "Phone");
                 multiContent.Add(new StringContent(obj.Email ?? ""), "Email");
@@ -814,9 +819,9 @@ namespace WebApp.HttpMethods
                 multiContent.Add(new StringContent(obj.CatteryName ?? ""), "CatteryName");
                 multiContent.Add(new StringContent(obj.PhoneCode ?? ""), "PhoneCode");
                 multiContent.Add(new StringContent(obj.CountryDialCode ?? ""), "CountryDialCode");
-                multiContent.Add(new StringContent(obj.latitude ?? ""), "latitude");
-                multiContent.Add(new StringContent(obj.longitude ?? ""), "longitude");
-                
+                multiContent.Add(new StringContent(obj.latitude.ToString() ?? ""), "latitude");
+                multiContent.Add(new StringContent(obj.longitude.ToString() ?? ""), "longitude");
+
                 multiContent.Add(new StringContent(obj.FamilyTreeMother ?? ""), "FamilyTreeMother");
                 multiContent.Add(new StringContent(obj.FamilyTreeFather ?? ""), "FamilyTreeFather");
                 multiContent.Add(new StringContent(obj.MotherTested ?? ""), "MotherTested");
@@ -1096,6 +1101,50 @@ namespace WebApp.HttpMethods
                 }
                 else
                     return null;
+            }
+        }
+
+
+        //Get Latitude & Longitude
+        private static async Task GetCoordinates(Listing obj)
+        {
+            string apiKey = "AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA";
+            string address = $"{obj.Location}, {obj.City}, {obj.State}, {obj.Country}, {obj.ZipCode}";
+            string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={Uri.EscapeDataString(address)}&key={apiKey}";
+
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var response = await httpClient.GetStringAsync(url);
+                    var json = JObject.Parse(response);
+
+                    if (json["status"].ToString() == "OK")
+                    {
+                        var location = json["results"][0]["geometry"]["location"];
+                        obj.latitude = location["lat"].Value<double>().ToString();  // Convert to string
+                        obj.longitude = location["lng"].Value<double>().ToString(); // Convert to string
+                    }
+                    else
+                    {
+                        // Set latitude and longitude to null if the response is not OK
+                        obj.latitude = null;
+                        obj.longitude = null;
+                    }
+                }
+                catch (HttpRequestException)
+                {
+                    // Handle network-related errors
+                    obj.latitude = null;
+                    obj.longitude = null;
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception if necessary
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    obj.latitude = null;
+                    obj.longitude = null;
+                }
             }
         }
 

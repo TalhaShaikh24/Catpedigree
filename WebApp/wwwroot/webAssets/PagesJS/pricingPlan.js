@@ -21,7 +21,7 @@
 //});
 
 
-
+let PricingPlanId = 0;
 let baseApiUrl = "";
 
 let packageID = 0;
@@ -91,7 +91,7 @@ function getAllPackages() {
                         // Close the HTML structure
                         html += `
                         </div>
-                        <button class="button" type="button" onClick="Payment(${item.packageID}, '${item.priceId}')">
+                        <button class="button buypackage" type="button" data-packageid="${item.packageID}" data-priceid="${item.priceId}">
                             <p class="button-pt">BUY NOW!</p>
                         </button>
                     </div>
@@ -104,7 +104,7 @@ function getAllPackages() {
                     else {
 
                         $("#singleLisitngPackage").append(`    
-                        <button type="button" class="main-btn mt-5 " style="font-size: 20px;" onClick="Payment(${item.packageID}, '${item.priceId}')">
+                        <button type="button" class="main-btn mt-5 buypackage btnSingleListing" style="font-size: 20px;" data-packageid="${item.packageID}" data-priceid="${item.priceId}">
                             I'll rather buy my listings <br>
                         <span style="font-size: 15px;" class="mx-2"> separate for €7,50 per Listing</span>
                         </button>`);
@@ -178,12 +178,29 @@ function getAllPackages() {
     });
 }
 
+$(document).on('click', '.buypackage', function () {
 
+    var $this = $(this); // Cache the current button
+    PricingPlanId = $this.attr('data-packageid');
+
+
+    var priceId = $this.data("priceid");
+
+
+    // Disable all buttons
+    $('.buypackage').addClass('disabled').off('click');
+
+    // Disable only the clicked button
+    $this.addClass('disabled-current').off('click');
+    $this.find('.button-pt').text('Processing...'); // Change button text
+
+
+    Payment(PricingPlanId, priceId)
+
+
+});
 function Payment(pkgId,priceId) {
     packageID = Number(pkgId);
-
-
-
 
     var obj = {
         PurchasedProductID: Number(packageID),
@@ -275,6 +292,12 @@ function Payment(pkgId,priceId) {
             })
 
         }
+        // Re-enable all buttons
+        $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
+            // Re-bind click event for future use
+        });
+        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text
+        $('.btnSingleListing').find('.button-pt').text("I'll rather buy my listings"); // Change button text
     });
  //   $("#paymentModal").modal('show');
 

@@ -436,6 +436,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="Location">Location</label>
+
                                         <input type="text" class="form-control" id="Location" placeholder="Location">
                                     </div>
                                 </div>
@@ -453,13 +454,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="City">City</label>
                                         <input type="text" class="form-control" id="City" placeholder="City">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="ZipCode">ZipCode</label>
+                                        <input type="text" class="form-control" id="ZipCode" placeholder="ZipCode" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="PHONE" class="d-block">Contact no: (Optional)</label>
                                         <input type="tel" class="form-control" id="Phone" autofocus>
@@ -549,4 +556,6 @@
 
 @section Scripts {
     <script src="~/dashboard/MyListing.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&libraries=places&callback=initAutocomplete"></script>
+  
 }

@@ -152,6 +152,7 @@ namespace WebApi.Repositories
             parameters.Add("@Location", obj.Location, DbType.String, ParameterDirection.Input);
             parameters.Add("@State", obj.State, DbType.String, ParameterDirection.Input);
             parameters.Add("@City", obj.City, DbType.String, ParameterDirection.Input);
+            parameters.Add("@ZipCode", obj.ZipCode, DbType.String, ParameterDirection.Input);
             parameters.Add("@IsBreerderLicenseUpload", obj.IsBreerderLicenseUpload, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("@Phone", obj.Phone, DbType.String, ParameterDirection.Input);
             parameters.Add("@Email", obj.Email, DbType.String, ParameterDirection.Input);

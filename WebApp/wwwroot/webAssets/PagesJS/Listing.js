@@ -8,9 +8,35 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
+    $("#listingForm").validate({
+        errorClass: "error",
+        validClass: "valid",
+        errorElement: "span",
+        highlight: function (element) {
+            $(element).addClass('error-border');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('error-border');
+        },
+        rules: {
+            Location: { required: true },
+            Country: { required: true },
+            State: { required: true },
+            City: { required: true }
+        },
+        invalidHandler: function (event, validator) {
+            // Scroll to #step-4 if the form is invalid
+            $('html, body').animate({
+                scrollTop: $('#step-4').offset().top
+            }, 500);
+        }
+    });
+
+
+
     GetAllDropdowns();
     $('#Phone').intlTelInput({
-        initialCountry: 'br',
+        initialCountry: 'us',
         preferredCountries: ['us', 'gb', 'br', 'ru', 'cn', 'es', 'it'],
         autoPlaceholder: 'aggressive',
         separateDialCode: true,
@@ -38,6 +64,9 @@ function initAutocomplete() {
     autocomplete.addListener('place_changed', onPlaceChanged);
 }
 
+
+
+
 function onPlaceChanged() {
     const place = autocomplete.getPlace();
     if (!place.geometry) {
@@ -49,18 +78,16 @@ function onPlaceChanged() {
     let city = "";
     let state = "";
     let country = "";
-
-    debugger;
-
+    let streetAddress = "";
+    let zipCode = "";
 
     // Extracting latitude and longitude
-    latitude = place.geometry.location.lat();
-    longitude = place.geometry.location.lng();
-
+     latitude = place.geometry.location.lat();
+     longitude = place.geometry.location.lng();
 
     for (const component of addressComponents) {
         const types = component.types;
-        if (types.includes("locality")) {
+        if (types.includes("locality") || types.includes("sublocality")) {
             city = component.long_name;
         }
         if (types.includes("administrative_area_level_1")) {
@@ -69,17 +96,32 @@ function onPlaceChanged() {
         if (types.includes("country")) {
             country = component.long_name;
         }
+        // Check for street number and route
+        if (types.includes("street_number")) {
+            streetAddress += component.long_name + " "; // Add street number
+        }
+        if (types.includes("route")) {
+            streetAddress += component.long_name; // Add street name
+        }
+        if (types.includes("postal_code")) {
+            zipCode = component.long_name; // Add zip code
+        }
     }
 
-    // Log city, state, and country
+    // Trim any extra whitespace from the street address
+    streetAddress = streetAddress.trim();
 
-  
+    // Set the street address to the Location input
+    $("#Location").val(streetAddress);
+
+    // Assign values to respective inputs
     $("#State").val(state);
     $("#City").val(city);
     $("#Country").val(country);
-
-
+    $("#ZipCode").val(zipCode);
 }
+
+
 
 
 $("#FeaturedFile").on('change', function (e) {
@@ -89,7 +131,7 @@ $("#FeaturedFile").on('change', function (e) {
 
     $('#FeaturedImageAppend').empty();
     $("#FeaturedImageAppend").append(`
-                                         <div class="col-lg-4 mb-4">
+                                  <div class="col-lg-4 mb-4">
                                      <div class="form_group file-input-one">
 
                                             <div class="img-thumbnail" style="width:50%!important">
@@ -628,6 +670,11 @@ function redirectToHome() {
 
 $("#Btn_Post_Listing").click(function () {
 
+    if ($("#listingForm").valid()) {
+
+    
+
+
     $Btn_Post_Listing = $('#Btn_Post_Listing');
     $Btn_Post_Listing.prop('disabled', true);
 
@@ -690,8 +737,8 @@ $("#Btn_Post_Listing").click(function () {
 
     formData.append('PhoneCode', countryCode);
     formData.append('CountryDialCode', countryDialCode);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
+    //formData.append('latitude', latitude);
+    //formData.append('longitude', longitude);
 
     //Advertisement 
 
@@ -705,10 +752,6 @@ $("#Btn_Post_Listing").click(function () {
     formData.append('DateofBirth', $("#DataOFBirth").val());
     formData.append('PartOfAssociation', $("#PartOfAssociation").val());
     formData.append('Website', $("#Website").val());
-
-
-
-
 
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
@@ -800,6 +843,9 @@ $("#Btn_Post_Listing").click(function () {
 
         }
     });
+
+
+    }
 
 })
 
