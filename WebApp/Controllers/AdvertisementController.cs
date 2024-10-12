@@ -20,10 +20,18 @@ namespace WebApp.Controllers
 
         }
 
-        public async Task<object> GetHomeAdvertisments(int Id)
+        public async Task<object> GetFooterAdvertisments()
         {
             string content = "";
-            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetHomeAdvertisments/" + Id, content, HttpContext);
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetFooterAdvertisments", content, HttpContext);
+
+            return data;
+
+        }
+            public async Task<object> GetHomeAdvertisments()
+        {
+            string content = "";
+            var data = await HttpClientUtility.CustomHttpWithoutToken(BaseUrl, "api/Advertisement/GetHomeAdvertisments", content, HttpContext);
 
             return data;
 

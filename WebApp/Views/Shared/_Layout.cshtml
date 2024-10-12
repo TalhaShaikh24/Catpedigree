@@ -1077,7 +1077,7 @@
         $(document).ready(function () {
 
             // Initialize currency and select options
-         //   GetFooterAdvertisments();
+           GetFooterAdvertisments();
 
             let storedCurrency = localStorage.getItem('cur');
 
@@ -1095,8 +1095,9 @@
         });
 
         function GetFooterAdvertisments() {
-            postRequest('/Advertisement/GetHomeAdvertisments/' + 3, null, function (res) {
+            postRequest('/Advertisement/GetFooterAdvertisments', null, function (res) {
                 if (res.status == 200) {
+                  
                     if (res.data != null) {
                         if (res.data.length == 1) {
                             $.each(res.data, function (index, item) {

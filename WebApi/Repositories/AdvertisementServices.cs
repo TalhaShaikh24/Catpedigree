@@ -18,15 +18,24 @@ namespace WebApi.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public List<PaidAdvertisementsForView> GetHomeAdvertisments(int Id)
+        public List<PaidAdvertisementsForView> GetFooterAdvertisments()
         {
             PaidAdvertisementsForView paidAdvertisements = new PaidAdvertisementsForView();
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@AdvertismentId", Id, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetAllAdvertismentsByAdvertismentId]", parameters);
+            var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetFooterAdvertisments]", parameters);
             return data;
         }
+       public List<PaidAdvertisementsForView> GetHomeAdvertisments()
+        {
+            PaidAdvertisementsForView paidAdvertisements = new PaidAdvertisementsForView();
+
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetHomeAdvertisments]", parameters);
+            return data;
+        }
+
+
         public List<PaidAdvertisementsForView> GetSidebarAdvertisments(int Id)
         {
             PaidAdvertisementsForView paidAdvertisements = new PaidAdvertisementsForView();
