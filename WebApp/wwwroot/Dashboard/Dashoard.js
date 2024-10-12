@@ -63,7 +63,8 @@ function GetAllDashbaord() {
 
 
                 $('#TableMyPackages').DataTable();
-               
+
+                debugger;
                 $.each(res.data.assignPromotionPackage, function (index, item) {
                     $("#AppendMyPromotionPackages").append(`
                     <tr>
