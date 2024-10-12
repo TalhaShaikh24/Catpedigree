@@ -199,7 +199,7 @@
         arrows: false,
         infinite: true,
         autoplaySpeed: 1600,
-        autoplay: false,
+        autoplay: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight: true, // This helps to adapt height to the content

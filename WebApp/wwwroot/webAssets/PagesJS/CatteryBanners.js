@@ -11,7 +11,7 @@ $(document).ready(function () {
 })
 
 function GetBannerAdvertisments() {
-    postRequest('/Advertisement/GetHomeAdvertisments/' + 1, null, function (res) {
+    postRequest('/Advertisement/GetBannerAdvertisments', null, function (res) {
         if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
                 // Assuming you want to append to the .row div

@@ -34,6 +34,14 @@ namespace WebApi.Repositories
             var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetHomeAdvertisments]", parameters);
             return data;
         }
+        public List<PaidAdvertisementsForView> GetBannerAdvertisments()
+        {
+            PaidAdvertisementsForView paidAdvertisements = new PaidAdvertisementsForView();
+
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<PaidAdvertisementsForView>(@"[dbo].[sp_GetBannerAdvertisments]", parameters);
+            return data;
+        }
 
 
         public List<PaidAdvertisementsForView> GetSidebarAdvertisments(int Id)

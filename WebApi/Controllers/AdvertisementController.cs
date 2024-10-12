@@ -111,6 +111,42 @@ namespace WebApi.Controllers
                 return response;
             }
         }
+         [HttpPost("GetBannerAdvertisments")]
+        public Response GetBannerAdvertisments()
+        {
+
+            Response response = new Response();
+
+            try
+            {
+                
+
+                var res = _repository.GetBannerAdvertisments();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.ResponseMsg = "Data Fatched successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+        }
 
 
 

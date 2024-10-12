@@ -369,7 +369,7 @@
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                             </div>
                         </div>
-                        <div class="col-lg-7 col-2">
+                        <div class="col-lg-8 col-2">
                             <div class="nav-menu">
                                 <div class="navbar-close"><i class="ti-close"></i></div>
                                 <nav class="main-menu">
@@ -427,7 +427,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-5">
+                        <div class="col-lg-2 col-5">
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center">
                                     <li class="user-btn"><a href="index.html" class="icon"><i class="flaticon-avatar"></i></a></li>
@@ -576,7 +576,7 @@
                                         @{
                                             if (String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"]) && String.IsNullOrEmpty(userJson))
                                             {
-                                                <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In</a></li>
+                                                <li class="menu-item"><a href="@Url.Action("login","Home")" id="btnLogIn">Sign In/Register</a></li>
                                             }
                                             else
                                             {

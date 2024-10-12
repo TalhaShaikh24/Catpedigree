@@ -94,10 +94,13 @@ function getAll() {
 
 
                     <h3>${item.advertisementPackageName}</h3>
-                   
-                        <ul class="pricing-content" id="costs${item.advertisementPackageID}">
-                           <span class="pricess">From</span>  <span class="price"></span>    <span class="pricess">    ${item.advertisementPackageCost} </span>  <span > / Month</span>
-                         </ul>
+                   ${item.advertisementPackageName === 'Sponsored Blog Post' ?
+                            '<span class="pricess">No Duration</span>' :
+                        `<ul class="pricing-content" id="costs${item.advertisementPackageID}">
+                           <span class="pricess">From</span>  <span class="price"></span>    <span class="pricess">    ${item.advertisementPackageCost} </span>  <span > / 3 Months</span>
+                         </ul>`
+            }
+                        
 
 
                     <ul class="list-features">

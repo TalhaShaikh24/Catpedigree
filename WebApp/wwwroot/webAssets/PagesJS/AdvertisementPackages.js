@@ -85,8 +85,11 @@ function getAll() {
 
             <h3>${item.advertisementPackageName}</h3>
             <p class="price">
-                From € ${item.advertisementPackageCost} / <span>month</span>
-            </p>
+            ${item.advertisementPackageName === 'Sponsored Blog Post' ?
+                            'No Duration' :
+                            `From € ${item.advertisementPackageCost} / <span>3 months</span>`
+            }
+        </p>
 
 
             <ul class="list-features">

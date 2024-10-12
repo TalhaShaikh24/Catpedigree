@@ -8,6 +8,7 @@ namespace WebApi.IRepositories
         List<PaidAdvertisementsForView> GetFooterAdvertisments();
 
         public List<PaidAdvertisementsForView> GetHomeAdvertisments();
+        public List<PaidAdvertisementsForView> GetBannerAdvertisments();
         List<PaidAdvertisementsForView> GetSidebarAdvertisments(int Id);
         SidebarAdvertisements GetAllAdsForViewListings();
         List<AdvertisementPackage> GetAdvertisementPackage();
