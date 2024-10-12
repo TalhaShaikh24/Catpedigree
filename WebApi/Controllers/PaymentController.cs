@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
 
         //For Testing
-        //const string endpointSecret = "whsec_FpWM26SV3xYE8Q0JxmPmiNKOvTmbSIhS";
+       // const string endpointSecret = "whsec_5faaa8f893e8ee04fe332d778da9a4b4807614c9f57791447440cfdcb58bca33";
 
         //For Live
         const string endpointSecret = "whsec_vHh97mrXLLgRnbDHNtgehD4OxPegYSPX";
@@ -90,7 +90,7 @@ namespace WebApi.Controllers
                     //Mode = "subscription",
                     Mode = "payment",
                     AllowPromotionCodes = true,
-                    SuccessUrl = webUrl+ "home/thankyou?session_id={CHECKOUT_SESSION_ID}",
+                    SuccessUrl = webUrl + "home/thankyou?session_id={CHECKOUT_SESSION_ID}",
                     CancelUrl = webUrl + "dashboard",
                     Metadata = new Dictionary<string, string>
                     {
@@ -171,17 +171,14 @@ namespace WebApi.Controllers
             {
                 case Events.CheckoutSessionCompleted:
                     var checkoutSession = stripeEvent.Data.Object as Session;
-
-
-                    // To retrieve the subscription ID, check the associated invoice
-                    if (!string.IsNullOrEmpty(checkoutSession.InvoiceId))
+                    if (!string.IsNullOrEmpty(checkoutSession.PaymentIntentId))
                     {
                         // Fetch the invoice using the ID
-                        var invoiceService = new InvoiceService();
-                        var invoice1 = await invoiceService.GetAsync(checkoutSession.InvoiceId);
+                        var paymentIntentService = new PaymentIntentService();
+                        var paymentIntent = await paymentIntentService.GetAsync(checkoutSession.PaymentIntentId);
 
                         // Now extract the metadata from the invoice
-                        if (invoice1.Metadata.TryGetValue("package_type", out var packageTypePI1))
+                        if (paymentIntent.Metadata.TryGetValue("package_type", out var packageTypePI1))
                         {
                             Console.WriteLine($"Package Type from PaymentIntent Invoice: {packageTypePI1}");
                         }
@@ -200,17 +197,17 @@ namespace WebApi.Controllers
                             switch (packageTypePI)
                             {
                                 case "pricing":
-                                    await _repository.BuyPackageAsync(userIdPI, purchasedProductIdPI, invoice1.SubscriptionId);
+                                    await _repository.BuyPackageAsync(userIdPI, purchasedProductIdPI, paymentIntent.Id);
                                     break;
 
                                 case "Advertisement":
-                                    await _advertisementServices.BuyAdvertisementPackage(userIdPI, purchasedProductIdPI, invoice1.SubscriptionId);
+                                    await _advertisementServices.BuyAdvertisementPackage(userIdPI, purchasedProductIdPI, paymentIntent.Id);
                                     break;
 
                                 case "PromotionPackage":
                                     // Handle promotion payment success
                                     checkoutSession.Metadata.TryGetValue("Days", out var Days);
-                                    await _promotionPackageRepository.BuyPromotionPackageAsync(userIdPI, purchasedProductIdPI, invoice1.SubscriptionId, Convert.ToInt32(Days));
+                                    await _promotionPackageRepository.BuyPromotionPackageAsync(userIdPI, purchasedProductIdPI, paymentIntent.Id, Convert.ToInt32(Days));
 
 
                                     break;
