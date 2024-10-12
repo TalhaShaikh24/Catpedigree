@@ -128,9 +128,9 @@ $("#save").click(function () {
         var videoFile = $("#videoUpload")[0].files[0];
         if (!videoFile) {
             Swal.fire({
-                title: "Error",
+                title: "Oops",
                 text: "Video upload is required for this promotion package.",
-                icon: "error"
+                icon: "warning"
             });
             return;
         }
@@ -138,9 +138,9 @@ $("#save").click(function () {
         // Check file size (30 MB = 30 * 1024 * 1024 bytes)
         if (videoFile.size > 30 * 1024 * 1024) {
             Swal.fire({
-                title: "Error",
+                title: "Oops",
                 text: "Video file must be less than 30 MB.",
-                icon: "error"
+                icon: "warning"
             });
             return;
         }
@@ -151,9 +151,9 @@ $("#save").click(function () {
         videoElement.onloadedmetadata = function () {
             if (videoElement.duration > 30) {
                 Swal.fire({
-                    title: "Error",
+                    title: "Oops",
                     text: "Video duration must be 30 seconds or less.",
-                    icon: "error"
+                    icon: "warning"
                 });
                 return;
             }

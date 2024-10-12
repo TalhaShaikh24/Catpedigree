@@ -558,7 +558,7 @@ function GetHomePageBlogs() {
 
 function GetHomeAdvertisments() {
 
-    postRequest('/Advertisement/GetHomeAdvertisments/' + 1, null, function (res) {
+    postRequest('/Advertisement/GetHomeAdvertisments', null, function (res) {
 
         if (res.status === 200 && res.data && res.data.length > 0) {
             res.data.forEach(function (item, index) {

@@ -680,11 +680,18 @@ function getCoordinatesFromAddress(address) {
         })
         .catch(error => {
             Swal.fire({
-                title: "Error",
-                text: "An error occurred while fetching geocoding data.",
-                icon: "error"
+                title: "Oops",
+                text: "Please refresh the page",
+                icon: "warning"
             });
         });
+        //.catch(error => {
+        //    Swal.fire({
+        //        title: "Error",
+        //        text: "An error occurred while fetching geocoding data.",
+        //        icon: "error"
+        //    });
+        //});
 }
 
 function loadMarkers(userLocation) {
@@ -714,7 +721,7 @@ function loadMarkers(userLocation) {
                 const infoWindow = new google.maps.InfoWindow();
                 let isInfoWindowOpen = false; // Flag to track InfoWindow state
 
-                res.data.forEach(marker => {
+                res.data.map(marker => {
                     const lat = marker.latitude;
                     const lng = marker.longitude;
                     const location = marker.location || "";
