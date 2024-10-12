@@ -93,6 +93,31 @@
     .hero-heading-home{
         font-weight:600
     }
+
+    .banner-item {
+        position: relative;
+        overflow: hidden; /* Ensures no overflow */
+        border-radius: 4px; /* Rounded corners */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for effects */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    }
+
+        .banner-item img {
+            width: 100%; /* Make images responsive */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 4px; /* Apply same rounding to images */
+            transition: transform 0.3s ease; /* Smooth scaling effect */
+        }
+
+        .banner-item:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+        }
+
+            .banner-item:hover img {
+                transform: scale(1.1); /* Enlarge image slightly on hover */
+            }
+
     @@media only screen and (min-width:768px){
         .hero-heading-home {
             font-size: 64px!important;
@@ -342,18 +367,21 @@
 </section>
 <!--====== End category Section ======-->
 <!--====== Advertisement Section ======-->
-<section class="cta-area light-bg" id="advertisemnetSection">
-    <div class="row justify-content-center pt-5">
-        <div class="col-lg-6">
-            <div class="section-title text-center mb-60 wow fadeInUp">
-                <span class="sub-title">Advertisements</span>
-                <h2><span class="line">Advertisement</span> Banners</h2>
+<section class="cta-area light-bg pb-60" id="advertisemnetSection" style="display:none">
+    <div class="container">
+        <div class="row justify-content-center pt-5">
+            <div class="col-lg-6">
+                <div class="section-title text-center mb-60 wow fadeInUp">
+                    <span class="sub-title">Advertisements</span>
+                    <h2><span class="line">Homepage</span> Advertings</h2>
+                </div>
             </div>
         </div>
+        <div class="row justify-content-center pt-5" id="imageRow">
+            <!-- Images will be appended here -->
+        </div>
     </div>
-    <div class="row justify-content-center pt-5" id="imageRow">
-        <!-- Images will be appended here -->
-    </div>
+    
 </section>
 <!--====== End Advertisement Section ======-->
 <!--====== Start Features Section ======-->

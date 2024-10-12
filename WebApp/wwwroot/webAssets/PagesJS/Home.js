@@ -10,6 +10,7 @@ $(document).ready(function () {
             await GetHomePageListings();
             await GetTopPageListings();
             await GetHomePageBlogs();
+            await GetHomeAdvertisments();
 
         } catch (error) {
             console.error('Error:', error);
@@ -559,15 +560,25 @@ function GetHomePageBlogs() {
 function GetHomeAdvertisments() {
 
     postRequest('/Advertisement/GetHomeAdvertisments', null, function (res) {
+        debugger
+        if (res.data != null && res.data.length > 0) {
+            // Assuming you want to append to the .row div
+            var rowContainer = $('#imageRow');
 
-        if (res.status === 200 && res.data && res.data.length > 0) {
-            res.data.forEach(function (item, index) {
+            // Clear existing banners if needed
+            rowContainer.empty();
+
+            $.each(res.data, function (index, item) {
                 var html = `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img class="d-block w-100" src="${baseApiUrl + item.paidAdvertisments}" alt="${item.alt}">
-            </div>`;
-                $('#carouselExampleIndicators .carousel-inner').append(html);
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="banner-item">
+                                <img class="homeAds" src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="Banner ${index + 1}">
+                            </div>
+                        </div>
+                    `;
+                rowContainer.append(html);
             });
+            $("#advertisemnetSection").show();
         }
         else {
             $("#advertisemnetSection").hide();

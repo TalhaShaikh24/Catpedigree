@@ -377,11 +377,19 @@ function GetAllAdsForViewListings() {
                 const fallbackLeft = `${baseApiUrl}UploadAdvertisements/YourAd.gif`;
                 const fallbackRight = `${baseApiUrl}UploadAdvertisements/YourAdRight.gif`;
 
+                // Function to check if a file path is a video
+                function isVideoFile(filePath) {
+                    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+                    return videoExtensions.some(ext => filePath.toLowerCase().endsWith(ext));
+                }
+
                 // Left Sidebar Videos
-                if (res.data.leftSidebar.length > 0 && res.data.leftSidebar[0].filePath) {
+                const leftSidebar = res.data.leftSidebar;
+
+                if (leftSidebar.length > 0 && leftSidebar[0].filePath && isVideoFile(leftSidebar[0].filePath)) {
                     $("#leftAdvertisement-video-1").append(`
                         <video autoplay muted loop>
-                            <source src="${baseApiUrl + res.data.leftSidebar[0].filePath.replace(/\\/g, '/')}" type="video/mp4">
+                            <source src="${baseApiUrl + leftSidebar[0].filePath.replace(/\\/g, '/')}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     `);
@@ -392,14 +400,15 @@ function GetAllAdsForViewListings() {
                     `);
                 }
 
-                if (res.data.leftSidebar.length > 1 && res.data.leftSidebar[1].filePath) {
+                if (leftSidebar.length > 1 && leftSidebar[1].filePath && isVideoFile(leftSidebar[1].filePath)) {
                     $("#leftAdvertisement-video-2").append(`
                         <video autoplay muted loop>
-                            <source src="${baseApiUrl + res.data.leftSidebar[1].filePath.replace(/\\/g, '/')}" type="video/mp4">
+                            <source src="${baseApiUrl + leftSidebar[1].filePath.replace(/\\/g, '/')}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     `);
                 }
+
                 else {
                     $("#leftAdvertisement-video-2").append(`
                         <img src="${fallbackRight}" alt="Advertisement">

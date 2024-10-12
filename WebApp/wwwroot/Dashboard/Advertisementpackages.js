@@ -133,9 +133,7 @@ function getAll() {
                     $('#AdvertisementpackagesContainer').append(html);
                 });
 
-                // Disable the last three buttons and apply the disabled class
-                $('.pricing-table-slider .pricing-table').slice(-2).find('.buypackage').addClass('disabled').css('pointer-events', 'none');
-
+               
                 // Change the text and href for the last button
                 $('.pricing-table-slider .pricing-table').last().find('.buypackage')
                     .removeClass('disabled buypackage') // Remove the disabled class for this button
@@ -146,7 +144,7 @@ function getAll() {
 
                 // Set the text for the 2nd last and 3rd last buttons to "COMING SOON"
                 //$('.pricing-table-slider .pricing-table').slice(-3, -1).find('.button-pt').text('COMING SOON');
-                $('.pricing-table-slider .pricing-table').slice(-2, -1).find('.button-pt').text('COMING SOON');
+                //$('.pricing-table-slider .pricing-table').slice(-2, -1).find('.button-pt').text('COMING SOON');
 
 
                 debugger;

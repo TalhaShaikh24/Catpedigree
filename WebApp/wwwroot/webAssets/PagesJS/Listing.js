@@ -8,6 +8,32 @@ $(document).ready(function () {
 
     baseApiUrl = $("#baseApiUrl").val();
 
+    $("#listingForm").validate({
+        errorClass: "error",
+        validClass: "valid",
+        errorElement: "span",
+        highlight: function (element) {
+            $(element).addClass('error-border');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('error-border');
+        },
+        rules: {
+            Location: { required: true },
+            Country: { required: true },
+            State: { required: true },
+            City: { required: true }
+        },
+        invalidHandler: function (event, validator) {
+            // Scroll to #step-4 if the form is invalid
+            $('html, body').animate({
+                scrollTop: $('#step-4').offset().top
+            }, 500);
+        }
+    });
+
+
+
     GetAllDropdowns();
     $('#Phone').intlTelInput({
         initialCountry: 'us',
@@ -644,6 +670,11 @@ function redirectToHome() {
 
 $("#Btn_Post_Listing").click(function () {
 
+    if ($("#listingForm").valid()) {
+
+    
+
+
     $Btn_Post_Listing = $('#Btn_Post_Listing');
     $Btn_Post_Listing.prop('disabled', true);
 
@@ -721,10 +752,6 @@ $("#Btn_Post_Listing").click(function () {
     formData.append('DateofBirth', $("#DataOFBirth").val());
     formData.append('PartOfAssociation', $("#PartOfAssociation").val());
     formData.append('Website', $("#Website").val());
-
-
-
-
 
     FilePostRequest('/Listing/AddListting', formData, function (res) {
 
@@ -816,6 +843,9 @@ $("#Btn_Post_Listing").click(function () {
 
         }
     });
+
+
+    }
 
 })
 
