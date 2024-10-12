@@ -5,7 +5,9 @@ namespace WebApi.IRepositories
     public interface IAdvertisementServices
     {
 
-        List<PaidAdvertisementsForView>  GetHomeAdvertisments(int Id);
+        List<PaidAdvertisementsForView> GetFooterAdvertisments();
+
+        public List<PaidAdvertisementsForView> GetHomeAdvertisments();
         List<PaidAdvertisementsForView> GetSidebarAdvertisments(int Id);
         SidebarAdvertisements GetAllAdsForViewListings();
         List<AdvertisementPackage> GetAdvertisementPackage();
