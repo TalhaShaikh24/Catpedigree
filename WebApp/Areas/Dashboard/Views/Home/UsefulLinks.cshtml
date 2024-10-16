@@ -1,0 +1,111 @@
+﻿<style>
+    .table-bordered td, .table-bordered th {
+        width: 12%;
+    }
+</style>
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 mb-3">
+
+                <div class="card card-primary p-0 m-0">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title"><b>Add UsefulLink</b></h3>
+                        <button class="btn btn-success" id="Btn_UsefulLinkSubmit" style="margin-left: auto;">Submit</button>
+                    </div>
+                    <div class="card-body p-0 m-0">
+                        <form>
+                            <div class="row p-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Upload Image</label>
+                                        <input type="file" class="form-control" id="uplaodImage" name="uplaodImage">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Url</label>
+                                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter the Useful Link">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Blog Categories</b></h3>
+
+                    </div>
+                    <div class="card-body">
+                        <table id="TableUsefulLinks" class="table table-bordered" style="width:100%;">
+                            <thead>
+                                <tr>
+
+                                    <th>Id</th>
+                                    <th>Image</th>
+                                    <th>Url</th>
+                                    <th>Created On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AppendCategories">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+<!-- Modal for Editing Useful Link -->
+
+<div class="modal fade" id="editUsefulLinkModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Update Useful Link</b></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form id="editCategoryForm">
+                    <div class="mb-3">
+                        <label for="modalUsefulFilPath" class="form-label">Useful Link Image</label>
+                        <input type="file" class="form-control" id="modalUsefulFilPath" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalUrl" class="form-label">Url</label>
+                        <input type="text" class="form-control" id="modalUrl" required>
+                    </div>
+                    <input type="hidden" id="modalUsefulLinkId">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" id="Btn_Update_UsefulLink">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/dashboard/UsefulLinks.js"></script>
+}

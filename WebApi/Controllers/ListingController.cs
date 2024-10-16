@@ -7,6 +7,7 @@ using Mollie.Api.Models;
 using System.Data.Common;
 using WebApi.IRepositories;
 using WebApi.Utility;
+using Google.Cloud.Translation.V2;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers
@@ -769,7 +770,10 @@ namespace WebApi.Controllers
                      res.Price = Math.Round((decimal)(res.Price * rate), 2);
 
 
-                   
+                    // Translate res.Description
+                    string translatedDescription = await TranslateText(res.Description);
+
+                    res.Description = translatedDescription;
 
                     response = CustomStatusResponse.GetResponse(200);
                     if (claimDTO != null)
@@ -918,6 +922,17 @@ namespace WebApi.Controllers
                 response.ResponseMsg = "Internal server error!";
                 return response;
             }
+        }
+
+
+        // Method to translate text
+        private async Task<string> TranslateText(string text)
+        {
+            string apiKey = "AIzaSyBB8LsgXtHEKwk8wEhs5zdmhXZA02f9COc"; // Replace with your actual API key
+            TranslationClient client = TranslationClient.CreateFromApiKey(apiKey);
+
+            var translation = await client.TranslateTextAsync(text, "en");
+            return translation.TranslatedText;
         }
     }
 }

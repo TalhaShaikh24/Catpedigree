@@ -160,6 +160,72 @@ namespace WebApp.HttpMethods
                         return null;
                 }
         }
+        public static async Task<object> CustomHttpAddUsefulLinkDashboard(string baseUrl, string url, UsefulLinks obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    // Set the authorization header if it exists in the cookies
+
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                var multiContent = new MultipartFormDataContent();
+
+
+
+                // Add JSON content
+                multiContent.Add(new StringContent(obj.Url ?? ""), "url");
+                   
+
+
+                    if (obj.UsefulLinkFile != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.UsefulLinkFile.OpenReadStream()), "usefulLinkFile", obj.UsefulLinkFile.FileName);
+                    }
+                        else
+                        {
+
+                            multiContent.Add(new StringContent(obj.UsefulLinkFilePath ?? ""), "usefulLinkFilePath");
+                        }
+
+                // Send the HTTP request
+                HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+
+                        var objUser = new
+                        {
+                            dataObj = deserializedResponse.Data,
+                        };
+
+                        httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(objUser), cookieOptions);
+                        return responseBody;
+
+                        }
+                    else
+                        return null;
+                }
+        }
         
             public static async Task<object> CustomHttpPromotionalPackageDashboard(string baseUrl, string url, Listing obj, HttpContext httpContext)
             {

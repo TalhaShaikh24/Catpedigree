@@ -213,6 +213,15 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        
+        [HttpGet("Dashboard/UsefulLinks")]
+        public IActionResult UsefulLinks()
+        {
+
+
+            return View();
+        }
+
 
 
 
@@ -288,6 +297,7 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpreplaceFileDashboard(BaseUrl, "api/Dashboard/replaceFile", file, HttpContext);
 
         }
+       
         [HttpPost]
         [Route("Dashboard/replaceBreederLicenseFile")]
         public Task<object> replaceBreederLicenseFile(IFormFile file)
@@ -428,6 +438,22 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpIfileDashboard(BaseUrl, "api/Dashboard/UpdateProfile", obj, HttpContext);
+
+        }
+        [HttpPost]
+        [Route("Dashboard/GetAllUsefulLinks")]
+        public Task<object> GetAllUsefulLinks()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/UsefulLinks/GetAllUsefulLinks", "", HttpContext);
+
+        }
+        [HttpPost]
+        [Route("Dashboard/AddUsefulLink")]
+        public Task<object> AddUsefulLink([FromForm] UsefulLinks obj)
+        {
+
+            return HttpClientUtility.CustomHttpAddUsefulLinkDashboard(BaseUrl, "api/UsefulLinks/AddUsefulLink", obj, HttpContext);
 
         }
         

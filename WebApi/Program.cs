@@ -48,6 +48,7 @@ builder.Services.AddTransient<IMolliePaymentService  , MolliePaymentService> ();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddTransient<IStripeServices, StripeServices>();
 builder.Services.AddTransient<IEmailRepository, EmailRepository>();
+builder.Services.AddTransient<IUsefulLinksRepository, UsefulLinksRepository>();
 
 builder.Services.Configure<ExchangeRateApiSettings>(builder.Configuration.GetSection("ExchangeRateApi"));
 builder.Services.AddTransient<ICurrencyConverterService, CurrencyConverterService>();

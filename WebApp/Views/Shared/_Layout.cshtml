@@ -507,7 +507,7 @@
                                 <a href="@Url.Action("Index","Home")" class="brand-logo"><img src="~/webassets/images/logo/logo-1.png" alt="Brand Logo"></a>
                             </div>
                         </div>
-                        <div class="col-lg-7 col-2">
+                        <div class="col-lg-8 col-2">
                             <div class="nav-menu">
                                 <div class="navbar-close"><i class="ti-close"></i></div>
                                 <nav class="main-menu d-flex justify-content-center">
@@ -596,7 +596,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-5">
+                        <div class="col-lg-2 col-5">
                             <div class="header-right-nav">
                                 <ul class="d-flex align-items-center" id="headerButtons">
                                     @{
@@ -1094,51 +1094,51 @@
 
         function GetFooterAdvertisments() {
             postRequest('/Advertisement/GetFooterAdvertisments', null, function (res) {
-                if (res.status == 200) {
-                  
-                    if (res.data != null) {
-                        if (res.data.length == 1) {
-                            $.each(res.data, function (index, item) {
-                                var html = `<img class="footerAdvertise" src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="${item.alt}"/>`;
-                                $('#appendFooterAdverts').append(html);
-                            });
-                            $(".footerAdvertise").show();
-                        } else if (res.data.length > 1) {
-                            $.each(res.data, function (index, item) {
-                                var html = `<img class="footerAdvertise" src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="${item.alt}"/>`;
-                                $('#appendFooterAdverts').append(html);
-                            });
+    if (res.status == 200) {
+        if (res.data != null) {
+            if (res.data.length == 1) {
+                $.each(res.data, function (index, item) {
+                    var html = `<img class="footerAdvertise" src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="${item.alt}"/>`;
+                    $('#appendFooterAdverts').append(html);
+                });
+                $(".footerAdvertise").show();
+            } else if (res.data.length > 1) {
+                $.each(res.data, function (index, item) {
+                    var html = `<img class="footerAdvertise" src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="${item.alt}"/>`;
+                    $('#appendFooterAdverts').append(html);
+                });
 
-                            var $images = $('.footerAdvertise'); // Get all images
-                            var index = 0; // Initialize index
+                var $images = $('.footerAdvertise'); // Get all images
+                var index = 0; // Initialize index
 
-                            // Show the first image initially
-                            $images.eq(index).show();
+                // Show the first image initially
+                $images.hide().eq(index).show();
 
-                            // Function to rotate images
-                            function rotateImages() {
-                                // Hide the current image
-                                $images.eq(index).hide();
+                // Function to rotate images with fade effect
+                function rotateImages() {
+                    // Fade out the current image
+                    $images.eq(index).fadeOut(400, function() {
+                        // Increment index or reset to 0 if it exceeds the number of images
+                        index = (index + 1) % $images.length;
 
-                                // Increment index or reset to 0 if it exceeds the number of images
-                                index = (index + 1) % $images.length;
-
-                                // Show the next image
-                                $images.eq(index).show();
-                            }
-
-                            // Set interval to rotate images every X seconds
-                            setInterval(rotateImages, 800);
-                        }
-                    }
-                } else {
-                    Swal.fire({
-                        title: "Error",
-                        text: res.responseMsg,
-                        icon: res.status == 600 ? "warning" : "error"
+                        // Fade in the next image
+                        $images.eq(index).fadeIn(400);
                     });
                 }
-            });
+
+                // Set interval to rotate images every X seconds
+                setInterval(rotateImages, 3000); // Adjust the interval time as needed
+            }
+        }
+    } else {
+        Swal.fire({
+            title: "Error",
+            text: res.responseMsg,
+            icon: res.status == 600 ? "warning" : "error"
+        });
+    }
+});
+
         }
 
         $("#btnLogOFf").click(function () {

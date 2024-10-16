@@ -90,6 +90,10 @@ namespace WebApi.Controllers
                     //Mode = "subscription",
                     Mode = "payment",
                     AllowPromotionCodes = true,
+                    AutomaticTax = new SessionAutomaticTaxOptions
+                    {
+                        Enabled = true,
+                    },
                     SuccessUrl = webUrl + "home/thankyou?session_id={CHECKOUT_SESSION_ID}",
                     CancelUrl = webUrl + "dashboard",
                     Metadata = new Dictionary<string, string>
@@ -171,6 +175,7 @@ namespace WebApi.Controllers
             {
                 case Events.CheckoutSessionCompleted:
                     var checkoutSession = stripeEvent.Data.Object as Session;
+
                     if (!string.IsNullOrEmpty(checkoutSession.PaymentIntentId))
                     {
                         // Fetch the invoice using the ID
@@ -223,7 +228,45 @@ namespace WebApi.Controllers
                         }
                     }
 
-                  
+
+                    else if (checkoutSession.PaymentStatus == "paid")
+                    {
+                        // Process the order even if no PaymentIntentId is available
+                        Console.WriteLine("Session was completed with no payment (100% discount).");
+
+                        // Use metadata to handle the purchase
+                        if (checkoutSession.Metadata.TryGetValue("package_type", out var packageTypePI) &&
+                            checkoutSession.Metadata.TryGetValue("user_id", out var userIdPI) &&
+                            checkoutSession.Metadata.TryGetValue("PurchasedProductID", out var purchasedProductIdPI))
+                        {
+                            switch (packageTypePI)
+                            {
+                                case "pricing":
+                                    await _repository.BuyPackageAsync(userIdPI, purchasedProductIdPI, null); // PaymentIntentId is null
+                                    break;
+
+                                case "Advertisement":
+                                    await _advertisementServices.BuyAdvertisementPackage(userIdPI, purchasedProductIdPI, null); // PaymentIntentId is null
+                                    break;
+
+                                case "PromotionPackage":
+                                    if (checkoutSession.Metadata.TryGetValue("Days", out var days))
+                                    {
+                                        await _promotionPackageRepository.BuyPromotionPackageAsync(userIdPI, purchasedProductIdPI, null, Convert.ToInt32(days)); // PaymentIntentId is null
+                                    }
+                                    break;
+
+                                default:
+                                    Console.WriteLine($"Unknown package type: {packageTypePI}");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Checkout session metadata is missing.");
+                        }
+                    }
+
                     break;
 
                 default:

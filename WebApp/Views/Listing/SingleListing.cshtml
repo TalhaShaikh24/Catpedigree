@@ -491,7 +491,10 @@
                                                     Model.data.Listing.Location,
                                                     Model.data.Listing.City,
                                                     Model.data.Listing.State,
+                                                    Model.data.Listing.ZipCode,
                                                     Model.data.Listing.Country
+                                                    
+
                                                     }.Where(part => !string.IsNullOrEmpty(part)).ToList();
                                                 }
                                                 @for (int i = 0; i < locationParts.Count; i++)

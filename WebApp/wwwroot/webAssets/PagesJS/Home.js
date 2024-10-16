@@ -134,7 +134,7 @@ function GetTopPageListings() {
                                 <p class="text_limit_2 d-none">${item.description}</p>
                                 <div class="listing-meta">
                                     <ul>
-                                        <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
+                                        <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.zipCode, item.country].filter(Boolean).join(', ')}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@ function GetVetRimmedPageListings() {
                                     <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
-                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
+                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.zipCode, item.country].filter(Boolean).join(', ')}</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -380,7 +380,7 @@ function GetHomePageListings() {
                                     <p style="font-weight: ${item.propertiestoShow};" class="text_limit_2 d-none">${item.description}</p>
                                     <div class="listing-meta">
                                         <ul>
-                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.country].filter(Boolean).join(', ')}</span></li>
+                                            <li><span><i class="ti-location-pin"></i>${[item.location, item.state, item.city, item.zipCode, item.country].filter(Boolean).join(', ')}</span></li>
                                         </ul>
                                     </div>
                                 </div>
