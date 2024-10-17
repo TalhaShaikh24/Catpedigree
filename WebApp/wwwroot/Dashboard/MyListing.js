@@ -27,6 +27,15 @@ $(document).ready(function () {
     });
 
     initAutocomplete();
+
+
+    $('#smartwizard').smartWizard({
+        selected: 0,
+        theme: 'dots',
+        autoAdjustHeight: true,
+        transitionEffect: 'fade',
+        showStepURLhash: false,
+    });
 });
 
 var autocomplete;
@@ -1176,3 +1185,18 @@ $("#Btn_Update_Listing").click(function () {
 })
 
 
+// Add listing
+
+
+$('#showpromotionpackage').change(function () {
+    // this will contain a reference to the checkbox   
+    if (this.checked) {
+        // the checkbox is now checked
+        $("#PromotionPackagegroup").show();
+
+    } else {
+        // the checkbox is now no longer checked
+
+        $("#PromotionPackagegroup").hide();
+    }
+});

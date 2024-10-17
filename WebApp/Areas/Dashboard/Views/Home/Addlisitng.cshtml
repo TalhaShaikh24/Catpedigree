@@ -1,0 +1,690 @@
+﻿   <!--====== Favicon Icon ======-->
+
+
+<link rel="shortcut icon" href="~/webassets/images/favicon.ico" type="image/png">
+<!--====== Bootstrap css ======-->
+<!--====== FontAwesoem css ======-->
+<link rel="stylesheet" href="~/webassets/fonts/themify-icons/themify-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+<!--====== Flaticon css ======-->
+<link rel="stylesheet" href="~/webassets/fonts/flaticon/flaticon.css">
+<!--====== Magnific Popup css ======-->
+<link rel="stylesheet" href="~/webassets/css/magnific-popup.css">
+<!--====== Slick css ======-->
+<link rel="stylesheet" href="~/webassets/css/slick.css">
+<!--====== Nice-select css ======-->
+<link rel="stylesheet" href="~/webassets/css/nice-select.css">
+<!--====== Jquery ui css ======-->
+<link rel="stylesheet" href="~/webassets/css/jquery-ui.min.css">
+<!--====== Animate css ======-->
+<link rel="stylesheet" href="~/webassets/css/animate.css">
+<!--====== Default css ======-->
+<link rel="stylesheet" href="~/webassets/css/default.css">
+<!--====== Style css ======-->
+<link rel="stylesheet" href="~/webassets/css/style.css">
+
+<style>
+        .transparent-header {
+        background-color: #000000 !important;
+    }
+
+    #listingForm {
+        margin: 0; /* Remove default margins */
+        padding: 0; /* Remove default padding */
+    }
+
+    .step-form {
+        display: none;
+        margin: 0; /* Remove margin for step forms */
+        padding: 20px; /* Optional internal padding */
+    }
+
+    .step-form.active {
+        display: block;
+    }
+
+    /* Container styling */
+    .single-checkbox {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Typing effect styling */
+    .typing-text {
+        font-family: monospace; /* Monospace font for typewriter effect */
+        color: #ff344f; /* Text color */
+        font-size: 18px; /* Font size */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide text overflow */
+        border-right: 3px solid #ff344f; /* Cursor effect */
+        animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+    }
+
+    /* Typing animation */
+    @@keyframes typing {
+        0% { width: 0; }
+        50% { width: 100%; }
+        100% { width: 0; }
+    }
+
+    /* Blinking cursor animation */
+    @@keyframes blink-caret {
+        from, to { border-color: transparent; }
+        50% { border-color: #ff344f; } /* Cursor color matching text */
+    }
+
+    @@media only screen and (max-width:768px){
+        .typing-text {
+            white-space: unset;
+            animation: unset;
+            border-right:none;
+        }
+    }
+
+    span.error {
+        display: none!important;
+    }
+
+    .error-border {
+        border: 2px solid #ff344f;
+    }
+</style>
+
+<section class="fioxen-add-listing ">
+    <div class="container-fluid">
+        <form id="listingForm">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <!-- Step 1: General Information -->
+                    <div class="step-form active" id="step-1">
+                        <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">General Information</h4>
+                            <div class="row">
+                                <div class="col-lg-12 mb-4 text-right">
+                                    <a href="@Url.Action("Enhancement","Home")#pricing" class="font-weight-bold" style="font-style:italic!important;color: #ff344f;" target="_blank">Do you want to buy a Promotion Package?</a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="single-checkbox d-flex">
+                                        <input type="checkbox" id="showpromotionpackage" name="showpromotionpackage">
+                                        <label for="showpromotionpackage" class="mb-5">
+                                            <strong class="typing-text">Do you want a promotion of your listing?</strong>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group" style="display:none" id="PromotionPackagegroup">
+                                        <label>Promotion Package</label>
+                                        <select class="wide" id="PromotionPackageId">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>Pakages</label>
+                                        <select class="wide" id="PackageId" required>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>Category</label>
+                                        <select class="wide" id="Category" required>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Title</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Title" placeholder="Title" name="name" required value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Gender</label>
+                                        <select class="wide" id="Gender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Both">Both</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Cattery Name</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="CatteryName" placeholder="Title" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>TYPE OF CAT</label>
+                                        <select class="wide" id="TypeOfCat" required>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>AGE</label>
+                                        <select class="wide" id="Age" required>
+                                            <option value="-1" selected disabled>Select Age</option>
+                                            <option value="1 Months">1 Month</option>
+                                            <option value="2 Months">2 Months</option>
+                                            <option value="3 Months">3 Months</option>
+                                            <option value="4 Months">4 Months</option>
+                                            <option value="5 Months">5 Months</option>
+                                            <option value="6 Months">6 Months</option>
+                                            <option value="7 Months">7 Months</option>
+                                            <option value="8 Months">8 Months</option>
+                                            <option value="9 Months">9 Months</option>
+                                            <option value="10 Months">10 Months</option>
+                                            <option value="11 Months">11 Months</option>
+                                            <option value="1 Year">1 Year</option>
+                                            <option value="2 Years">2 Years</option>
+                                            <option value="3 Years">3 Years</option>
+                                            <option value="4 Years">4 Years</option>
+                                            <option value="5 Years">5 Years</option>
+                                            <option value="6 Years">6 Years</option>
+                                            <option value="7 Years">7 Years</option>
+                                            <option value="8 Years">8 Years</option>
+                                            <option value="9 Years">9 Years</option>
+                                            <option value="10 Years">10 Years</option>
+                                            <option value="11 Years">11 Years</option>
+                                            <option value="12 Years">12 Years</option>
+                                            <option value="13 Years">13 Years</option>
+                                            <option value="14 Years">14 Years</option>
+                                            <option value="15 Years">15 Years</option>
+                                            <option value="16 Years">16 Years</option>
+                                            <option value="17 Years">17 Years</option>
+                                            <option value="18 Years">18 Years</option>
+                                            <option value="19 Years">19 Years</option>
+                                            <option value="20 Years">20 Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Price (In Euro)</label>
+                                        <div class="form_group">
+                                            <input type="number" class="form_control" id="Price" placeholder="Request Price" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 d-none">
+                                    <div class="form_group">
+                                        <label>Weight (G)</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Weigth" placeholder="Weigth" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 d-none">
+                                    <div class="form_group">
+                                        <label>Color</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Color" placeholder="Color" name="name" required value="Green">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Price On Request</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsPriceRequestYes" name="IsPriceRequest" value="1">
+                                                <label for="IsPriceRequestYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-none mr-4">
+                                                <input type="radio" id="IsPriceRequestNo" name="IsPriceRequest" checked value="0">
+                                                <label for="IsPriceRequestNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Sterilization</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsSterilizationYes" name="IsSterilization" value="1" checked>
+                                                <label for="IsSterilizationYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsSterilizationNo" name="IsSterilization" value="0">
+                                                <label for="IsSterilizationNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Castration</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsCastrationYes" name="IsCastration" value="1" checked>
+                                                <label for="IsCastrationYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsCastrationNo" name="IsCastration" value="0">
+                                                <label for="IsCastrationNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 mt-20">
+                                    <div class="form_group">
+                                        <label class="d-block">DESCRIPTION (Optional) </label>
+
+                                        <div class="form_group">
+                                            <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">Advertisement Details (Optional) </h4>
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Pedigree name mother</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Pedigree name father</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FTFather" placeholder="Title" name="FTFather" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Mother tested</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="MotherTested" placeholder="Title" name="MotherTested" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Father tested</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FatherTested" placeholder="Title" name="FatherTested" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Part Of Association</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="PartOfAssociation" placeholder="Title" name="PartOfAssociation">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Data Of Birth</label>
+                                        <div class="form_group">
+                                            <input type="date" class="form_control" id="DataOFBirth" placeholder="Title" name="DataOFBirth">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="main-btn icon-btn" type="button" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Pedigree & Gallery Images-->
+                    <div class="step-form" id="step-2">
+                        <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp" id="PEDIGREE" style="display:none">
+                        </div>
+
+                        <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">Listing Images</h4>
+                            <p class="d-none">Click here or drop files to upload</p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form_group file-input-two">
+                                        <div class="alert alert-info mt-1 mb-2">
+                                            <strong>Feature Image Upload Guidelines:</strong><br>
+                                            - Recommended dimensions: <strong>500px × 388px | 800px × 620px</strong><br>
+                                            - If your image varies from this size, it may appear stretched or distorted on the listing page.<br>
+                                            - Supported formats: JPEG, and PNG.
+                                        </div>
+                                        <div class="form_group">
+                                            <label class="d-block" style="line-height: 20px; font-weight:900">Featured Image</label>
+
+                                            <div class="form_group">
+                                                <input type="file" id="FeaturedFile" accept="image/*" class="form_control bg-white pt-4" required style="opacity:1!important">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row my-2" id="FeaturedImageAppend">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="form_group file-input-two">
+                                        <div class="form_group">
+                                            <label class="d-block" style="line-height: 20px; font-weight:900">Other Listing Images (OPTIONAL)</label>
+
+                                            <div class="form_group">
+                                                <input type="file" multiple id="Gallery_Files" accept="image/*" class="form_control bg-white pt-4" style="opacity:1!important">
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-info mt-1 mb-2">
+                                            <strong>Listing Images Upload Guidelines:</strong><br>
+                                            - Recommended dimensions: <strong>286px x 225px | 500px x 394px.</strong><br>
+                                            - If your image varies from this size, it may appear stretched or distorted on the listing page.<br>
+                                            - Supported formats: JPEG, and PNG.
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="GalleryFilesAppend">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="main-btn icon-btn" type="button" onclick="prevStep()">Previous</button>
+                            <button class="main-btn icon-btn" type="button" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Video -->
+                    <div class="step-form" id="step-3">
+                        <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">Video</h4>
+                            <p>Click here or drop files to upload</p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form_group file-input-two">
+                                        <div class="alert alert-info mt-1 mb-2">
+                                            <strong>Video Upload Guidelines:</strong><br>
+                                            - Prerequisite : <strong>You Must Have Video Package To Upload the Video</strong><br>
+                                            - Video Duration: <strong> Maximum allowed size is 30 MBs. </strong><br>
+                                            - Video FileSize: <strong> Maximum allowed duration is 30 seconds</strong><br>
+
+                                        </div>
+                                        <div class="form_group mt-4">
+                                            <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
+                                            <small> Post video of your beloved kittens</small>
+                                            <div class="form_group">
+                                                <input type="file" id="VideoFile" class="form_control bg-white pt-4" accept="video/*" style="opacity:1!important">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-2" id="VideoFileAppend">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="main-btn icon-btn" type="button" onclick="prevStep()">Previous</button>
+                            <button class="main-btn icon-btn" type="button" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Detailed Information -->
+                    <div class="step-form" id="step-4">
+                        <div class="add-listing-form upload-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">Detailed Information</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>Address </label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Location" placeholder="Address" name="Location" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>Country </label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Country" placeholder="Country" name="Country" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>State</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="State" placeholder="State" name="State" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>City</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="City" placeholder="City" name="City" required value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>ZipCode</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="ZipCode" placeholder="ZipCode" name="ZipCode" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>CONTACT NO: (OPTIONAL)</label>
+                                        <div class="form_group">
+                                            <input id="Phone" type="tel" name="Phone" class="form_control" autofocus>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>CONTACT EMAIL</label>
+                                        <div class="form_group">
+                                            <input type="text" id="Email" class="form_control" placeholder="EMAIL" name="Email" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>BREEDER'S NAME</label>
+                                        <div class="form_group">
+                                            <input type="text" id="BreerderName" class="form_control" placeholder="BREEDER'S NAME" name="BreerderName" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form_group">
+                                        <label>Website Url</label>
+                                        <div class="form_group">
+                                            <input type="text" id="Website" class="form_control" placeholder="Website Url" name="Website" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-8">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 5px; font-weight:600">BREEDER'S LICENSE</label>
+                                        <small>We need your Breeder's License to verify that you are an authorized person.</small>
+                                        <small>No listing will be posted until we have and review all documentation.</small>
+                                        <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                        <small>Please check our Terms and Conditions page for further information.</small>
+                                        <div class="form_group mt-3 mb-4">
+                                            <div class="single-checkbox d-flex mb-2">
+                                                <input type="radio" id="check2" name="IsBreerderLicenseUpload" value="false">
+                                                <label for="check2"><span>I will upload my license to my profile.</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex">
+                                                <input type="radio" id="check3" name="IsBreerderLicenseUpload" value="true">
+                                                <label for="check3"><span>I've already uploaded my license to my profile.</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="form_group">
+                                        <label class="d-block" style="line-height: 30px; font-weight:900">ZOOLOGICAL NUMBER (OPTIONAL)</label>
+                                        <label class="d-block mb-3" style="line-height: 5px; font-size:12px; font-style:italic; font-weight:900">VENDORS FROM SPAIN ONLY</label>
+                                        <small>If you're selling from spain, we need your zoological number, to verify that you are an authorized vendor.</small>
+                                        <small>No listing will be posted until we have, and review all documentation.</small>
+                                        <small>Please upload your license to your profile. This is your profile page: My Profile</small>
+                                        <small>Please check our Terms and Conditions page for further information.</small>
+
+                                        <div class="form_group mt-2">
+                                            <div class="single-checkbox d-flex">
+                                                <input type="checkbox" id="ZoologicalNumber" name="hereby" value="true">
+                                                <label for="ZoologicalNumber"><span>Hereby i confirm, that I've added my zoological number to my profile.</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="main-btn icon-btn" type="button" onclick="prevStep()">Previous</button>
+                            <button class="main-btn icon-btn" type="button" id="Btn_Post_Listing">Submit Listing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<style>
+    .invalid {
+        border: 2px solid red;
+    }
+</style>
+
+@section Scripts {
+
+
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function showStep(step) {
+            document.querySelectorAll('.step-form').forEach((el) => el.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+        }
+
+        function nextStep() {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        }
+
+        function prevStep() {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+            const stepForm = document.getElementById(`step-${step}`);
+            const requiredFields = stepForm.querySelectorAll('[required]');
+
+            clearValidation(requiredFields);
+
+            requiredFields.forEach(field => {
+                if (field.type === 'checkbox' && !field.checked) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else if (field.type === 'radio') {
+                    const radioGroup = stepForm.querySelectorAll(`input[name="${field.name}"]:checked`);
+                    if (radioGroup.length === 0) {
+                        isValid = false;
+                        field.classList.add('invalid');
+                    }
+                } else if (field.type === 'file' && field.files.length === 0) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else if (field.tagName === 'SELECT' && (field.value === '' || field.value === '-1')) {
+                    isValid = false;
+                    field.classList.add('invalid');
+
+                    // Find the closest div with class 'nice-select' and apply border
+                    const niceSelectDiv = field.nextElementSibling; // Assuming the nice-select div is the next sibling
+                    if (niceSelectDiv && niceSelectDiv.classList.contains('nice-select')) {
+                        niceSelectDiv.style.border = '1px solid red'; // Example border style
+                    }
+                }
+                else if (field.value.trim() === '') {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else if (field.id === 'Email' && !validateEmail(field.value)) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                }
+            });
+
+            return isValid;
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            return re.test(email.toLowerCase());
+        }
+
+        function clearValidation(elements) {
+            elements.forEach((el) => el.classList.remove('invalid'));
+        }
+    </script>
+    @* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&amp;v=weekly&amp;libraries=places&amp;callback=initMap" async defer></script> *@
+    @* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz7rPf5wTgxQt0ZxMl4gNuxtO5Rd5H1Sk&amp;v=weekly&amp;libraries=places&amp;callback=initMap" id="script-loader" async="" data-state="ready"></script> *@
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&libraries=places"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+
+}<script src="~/dashboard/addlisting.js"></script>
