@@ -73,12 +73,17 @@ namespace WebApi.Controllers
                 var options = new SessionCreateOptions
                 {
                     PaymentMethodTypes = new List<string>
-                    {
+{
+                        "bancontact",
+                        "blik",
                         "card",
-                        "klarna",
+                        "eps",
                         "ideal",
+                        "klarna",
                         "paypal",
+                        "twint"
                     },
+
                     LineItems = new List<SessionLineItemOptions>
                     {
                         new SessionLineItemOptions

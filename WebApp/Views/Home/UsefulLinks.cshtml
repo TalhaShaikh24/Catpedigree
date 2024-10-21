@@ -1,7 +1,20 @@
-﻿<style>
+﻿<!-- Fancybox CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- Fancybox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+<style>
     .breadcrumbs-wrapper:after {
         background-image: url(/webassets/images/elements/cat_bg_3.jpg)!important;
     }
+
+    /* Optional styles */
+    .img-fluid {
+        cursor: pointer; /* Change cursor for images */
+    }
+
 </style>
 <!--====== Start Hero Section ======-->
 <section class="hero-area" >
@@ -44,12 +57,21 @@
         </div>
     </div>
 </section>
+
+
 <section class="features-area pt-4 pb-0">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <img class="p-100 pt-100" src="~/webassets/images/usefullinks/useful-1.jpg" style="width:300px" />
+                <div class="row" id="useful-links">
+                    <!-- Images will be dynamically inserted here -->
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script src="~/webassets/pagesjs/usefullinks.js"></script>
+}
+

@@ -160,6 +160,8 @@ namespace WebApp.HttpMethods
                         return null;
                 }
         }
+       
+        
         public static async Task<object> CustomHttpAddUsefulLinkDashboard(string baseUrl, string url, UsefulLinks obj, HttpContext httpContext)
         {
             using (var client = new HttpClient())
@@ -178,24 +180,27 @@ namespace WebApp.HttpMethods
 
 
 
+
                 // Add JSON content
+                // Add JSON content
+                multiContent.Add(new StringContent(obj.Id.ToString() ?? ""), "id");
                 multiContent.Add(new StringContent(obj.Url ?? ""), "url");
-                   
 
 
-                    if (obj.UsefulLinkFile != null)
+                if (obj.UsefulLinkFile != null)
                     {
 
                         multiContent.Add(new StreamContent(obj.UsefulLinkFile.OpenReadStream()), "usefulLinkFile", obj.UsefulLinkFile.FileName);
                     }
-                        else
-                        {
+                    else
+                    {
 
-                            multiContent.Add(new StringContent(obj.UsefulLinkFilePath ?? ""), "usefulLinkFilePath");
-                        }
+                        multiContent.Add(new StringContent(obj.UsefulLinkFilePath ?? ""), "UsefulLinkFilePath");
+                    }
 
-                // Send the HTTP request
-                HttpResponseMessage response = await client.PostAsync(url, multiContent);
+                   
+                    // Send the HTTP request
+                    HttpResponseMessage response = await client.PostAsync(url, multiContent);
 
 
 
@@ -213,12 +218,7 @@ namespace WebApp.HttpMethods
 
                         httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
 
-                        var objUser = new
-                        {
-                            dataObj = deserializedResponse.Data,
-                        };
-
-                        httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(objUser), cookieOptions);
+                     
                         return responseBody;
 
                         }
@@ -226,6 +226,7 @@ namespace WebApp.HttpMethods
                         return null;
                 }
         }
+       
         
             public static async Task<object> CustomHttpPromotionalPackageDashboard(string baseUrl, string url, Listing obj, HttpContext httpContext)
             {

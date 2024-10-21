@@ -2,6 +2,10 @@
     .table-bordered td, .table-bordered th {
         width: 12%;
     }
+
+    .error{
+        font-weight:400!important;
+    }
 </style>
 
 <section class="content pb-4 pt-4">
@@ -16,18 +20,18 @@
                         <button class="btn btn-success" id="Btn_UsefulLinkSubmit" style="margin-left: auto;">Submit</button>
                     </div>
                     <div class="card-body p-0 m-0">
-                        <form>
+                        <form id="formAddUsefulLink">
                             <div class="row p-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Upload Image</label>
-                                        <input type="file" class="form-control" id="uplaodImage" name="uplaodImage">
+                                        <input type="file" class="form-control" id="uploadImage" name="uploadImage" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Url</label>
-                                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter the Useful Link">
+                                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter the Useful Link" required>
                                     </div>
                                 </div>
                             </div>
@@ -48,11 +52,11 @@
                             <thead>
                                 <tr>
 
-                                    <th>Id</th>
-                                    <th>Image</th>
-                                    <th>Url</th>
-                                    <th>Created On</th>
-                                    <th>Actions</th>
+                                    <th width="10%">Id</th>
+                                    <th width ="20%">Image</th>
+                                    <th width="30%">Url</th>
+                                    <th width="20%">Created On</th>
+                                    <th width="20%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="AppendCategories">
@@ -82,11 +86,13 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-
                 <form id="editCategoryForm">
                     <div class="mb-3">
-                        <label for="modalUsefulFilPath" class="form-label">Useful Link Image</label>
-                        <input type="file" class="form-control" id="modalUsefulFilPath" required>
+                        <img id="currentImage" src="" alt="Current Image" style="width: 200px; height: auto; display: none;" />
+                        </div>
+                    <div class="mb-3">
+                        <label for="modalUsefulFilPath" class="form-label">Replace Image</label>
+                        <input type="file" class="form-control" id="modalUsefulFilPath" accept="image/*" required>
                     </div>
                     <div class="mb-3">
                         <label for="modalUrl" class="form-label">Url</label>
@@ -96,9 +102,10 @@
                 </form>
             </div>
 
+
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button class="btn btn-success" type="button" id="Btn_Update_UsefulLink">Update</button>
+                <button class="btn btn-success" type="button" id="Btn_UpdateUsefulLink">Update</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
@@ -107,5 +114,6 @@
 </div>
 
 @section Scripts {
+    <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/dashboard/UsefulLinks.js"></script>
 }

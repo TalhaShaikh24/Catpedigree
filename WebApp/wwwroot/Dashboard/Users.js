@@ -38,6 +38,7 @@ function GetAllUsers() {
             "orderMulti": false, // Disable multiple column ordering
             "pageLength": 10,
             "orderClasses": false,
+            "order": [[0, 'desc']], 
             "language": {
                 "search": "Search:",
                 "processing": "Processing...",
@@ -98,6 +99,7 @@ function GetAllUsers() {
                 }
             },
             "columns": [
+                { "data": "userId", "name": "userId", "autoWidth": true, "visible": false },
                 { "data": "firstname", "name": "firstname", "autoWidth": true },
                 { "data": "lastname", "name": "lastname", "autoWidth": true },
                 { "data": "username", "name": "username", "autoWidth": true },

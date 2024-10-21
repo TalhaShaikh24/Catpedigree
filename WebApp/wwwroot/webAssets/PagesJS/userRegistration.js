@@ -45,27 +45,27 @@ $(document).ready(function () {
                 minlength: 6
             },
             contactNo: {
-                required: true,
+               // required: true,
                 pattern: /^\+?\d{1,3}?\d{10,15}$/, // Allows optional country code
                 minlength: 10, // Adjust based on actual digit count required after country code
                 maxlength: 15 // Adjust based on the total length of the number
             },
             datepicker: {
-                required: true,
+              //  required: true,
                 date: true
             },
             address: {
-                required: true,
-                minlength: 10
+              //  required: true,
+              //  minlength: 10
             },
             country: {
-                required: true
+                //required: true
             },
             province: {
-                required: true
+                //required: true
             },
             city: {
-                required: true
+               // required: true
             },
             FbProfile: {
                 url: true
@@ -77,14 +77,14 @@ $(document).ready(function () {
                 url: true
             },
             profilePic: {
-                required: true,
-                extension: "jpg|jpeg|png"
+               // required:true,
+                extension: "jpg|jpeg|png|webp"
             },
             breederLicense: {
                 required: function (element) {
                     return $("#vendor").is(":checked");
                 },
-                extension: "jpg|jpeg|png|pdf"
+                extension: "jpg|jpeg|png|pdf|webp"
             }
         },
         messages: {
@@ -109,29 +109,29 @@ $(document).ready(function () {
                 minlength: "Password must be at least 6 characters long"
             },
             contactNo: {
-                required: "Please provide a contact number",
-                digits: "Please enter a valid contact number",
+             //   required: "Please provide a contact number",
+                pattern: "Please enter a valid contact number",
                 minlength: "Contact number must be at least 10 digits long",
                 maxlength: "Contact number cannot exceed 15 digits"
             },
             datepicker: {
-                required: "Please provide your date of birth"
+              //  required: "Please provide your date of birth"
             },
             address: {
-                required: "Please provide your address",
-                minlength: "Address must be at least 10 characters long"
+               // required: "Please provide your address",
+               // minlength: "Address must be at least 10 characters long"
             },
             country: {
-                required: "Please select a country"
+                //required: "Please select a country"
             },
             province: {
-                required: "Please select a province"
+                //required: "Please select a province"
             },
             city: {
-                required: "Please select a city"
+              //  required: "Please select a city"
             },
             profilePic: {
-                required: "Please upload your profile picture",
+               // required: "Please upload your profile picture",
                 extension: "Only JPG, JPEG, and PNG files are allowed"
             },
             breederLicense: {

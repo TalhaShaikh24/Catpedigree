@@ -13,7 +13,10 @@ namespace WebApi.IRepositories
     public interface IUsefulLinksRepository
     {
         List<UsefulLinks> GetAllUsefulLinks();
+        UsefulLinks GetUsefulLinkById(int Id);
         public Task<UsefulLinks> AddUsefulLink(UsefulLinks obj);
+        public Task<UsefulLinks> UpdateUsefulLinkById(UsefulLinks obj);
+        int DeleteUsefulLinkById(int Id);
 
     }
 }

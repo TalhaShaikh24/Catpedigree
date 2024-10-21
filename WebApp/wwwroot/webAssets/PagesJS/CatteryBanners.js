@@ -25,7 +25,7 @@ function GetBannerAdvertisments() {
                         <div class="col-md-6 mb-4">
                             <div class="banner-item">
                                 <img src="${baseApiUrl.value == undefined ? baseApiUrl + item.paidAdvertisments : baseApiUrl.value + item.paidAdvertisments}" alt="Banner ${index + 1}">
-                                <div class="banner-overlay">Banner ${index + 1}</div>
+                                <div class="banner-overlay"></div>
                             </div>
                         </div>
                     `;

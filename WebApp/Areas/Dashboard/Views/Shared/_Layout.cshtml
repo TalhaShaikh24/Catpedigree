@@ -113,6 +113,14 @@
             display:none!important;
         }
 
+        .form-control{
+            height:auto!important;
+        }
+
+            .form-control[type="text"],
+            .form-control[type="password"] {
+                padding: 0.58rem 0.75rem !important;
+            }
         #preloader {
             height:100vh;
             display: -ms-flexbox;
@@ -186,6 +194,16 @@
             vertical-align: middle !important;
         }
     </style>
+
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY6ZE7JB3K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZY6ZE7JB3K');
+    </script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -462,7 +480,7 @@
                                         <ul class="nav nav-treeview" style="display: none;">
                                             @if (displayedMenus.Add("MediaList"))
                                             {
-                                                <li class="nav-item">
+                                                <li class="nav-item d-none">
                                                     <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
                                                         <i class="nav-icon fas fa-list"></i>
                                                         <p>Media</p>

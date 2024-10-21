@@ -391,6 +391,7 @@ namespace WebApi.Repositories
             var data = _dapper.Get<bool>(@"[dbo].[sp_DeleteSelectedGalleryPath]", parameters);
             return data;
         }
+       
 
         public List<string> GetAllPedigreeGallary()
         {

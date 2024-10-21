@@ -387,6 +387,14 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedGalleryPath/" + Path, "", HttpContext);
 
         }
+         [HttpPost]
+        [Route("Dashboard/DeleteSelectedVideoGalleryPath/{Path}")]
+        public Task<object> DeleteSelectedVideoGalleryPath(string Path)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeleteSelectedVideoGalleryPath/" + Path, "", HttpContext);
+
+        }
 
          [HttpPost]
         [Route("Dashboard/DeleteSelectedMediaPath/{Path}")]
@@ -449,6 +457,14 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
         [HttpPost]
+        [Route("Dashboard/GetAllUsefulLinkById/{Id}")]
+        public Task<object> GetAllUsefulLinkById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/UsefulLinks/GetAllUsefulLinkById/" + Id, "", HttpContext);
+
+        }
+        [HttpPost]
         [Route("Dashboard/AddUsefulLink")]
         public Task<object> AddUsefulLink([FromForm] UsefulLinks obj)
         {
@@ -456,7 +472,23 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpAddUsefulLinkDashboard(BaseUrl, "api/UsefulLinks/AddUsefulLink", obj, HttpContext);
 
         }
-        
+        [HttpPost]
+        [Route("Dashboard/UpdateUsefulLink")]
+        public Task<object> UpdateUsefulLink([FromForm] UsefulLinks obj)
+        {
+
+            return HttpClientUtility.CustomHttpAddUsefulLinkDashboard(BaseUrl, "api/UsefulLinks/UpdateUsefulLinkById", obj, HttpContext);
+
+        }
+        [HttpPost]
+        [Route("Dashboard/DeleteUsefulLinkById")]
+        public Task<object> DeleteUsefulLinkById(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/UsefulLinks/DeleteUsefulLinkById/" + Id, "", HttpContext);
+
+        }
+
         [HttpPost]
         [Route("Dashboard/UpdateUserProfile")]
         public Task<object> UpdateUserProfile([FromForm] Register obj)

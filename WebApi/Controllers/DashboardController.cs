@@ -28,6 +28,7 @@ namespace WebApi.Controllers
 
         
         private readonly string _breederlicensePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Profile");
+        private readonly string _videoGalleryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadVideos");
 
 
 
@@ -744,18 +745,15 @@ namespace WebApi.Controllers
         [HttpPost("GetAllGallery")]
         public Response GetAllGallery()
         {
-
             Response response = new Response();
             Register claimDTO = null;
             try
             {
-               claimDTO = TokenManager.GetValidateToken(Request);
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-               if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
-
-
-            if (!Directory.Exists(_galleryimagesPath))
-            {
+                if (!Directory.Exists(_galleryimagesPath))
+                {
                     response = CustomStatusResponse.GetResponse(600);
                     response.ResponseMsg = "Image directory not found.";
                     response.Token = TokenManager.GenerateToken(claimDTO);
@@ -763,43 +761,35 @@ namespace WebApi.Controllers
                     return response;
                 }
 
-                var images = _repository.GetAllGallary().Select(fileInfo => new Gallery
-                {
-                    Id = Path.GetFileNameWithoutExtension(fileInfo.FileName).GetHashCode(),
-                    FileName = fileInfo.FileName,
-                    FilePath = $"{BaseUrl}{fileInfo.FilePath}?v={DateTime.UtcNow.Ticks}"
-                })
-                .ToList();
+                // Get all files in the gallery directory
+                var filesInDirectory = Directory.GetFiles(_galleryimagesPath);
 
+                // Fetch gallery data from the repository
+                var images = _repository.GetAllGallary()
+                    .Where(fileInfo => filesInDirectory.Contains(Path.Combine(_galleryimagesPath, fileInfo.FileName)))
+                    .Select(fileInfo => new Gallery
+                    {
+                        Id = Path.GetFileNameWithoutExtension(fileInfo.FileName).GetHashCode(),
+                        FileName = fileInfo.FileName,
+                        FilePath = $"{BaseUrl}{fileInfo.FilePath}?v={DateTime.UtcNow.Ticks}"
+                    })
+                    .ToList();
 
-                if (images.Count > 0)
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = images;
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = images;
 
-                }
-                else
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = images;
-                }
                 return response;
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
-
                 response.ResponseMsg = ex.Message;
                 response.Token = TokenManager.GenerateToken(claimDTO);
-
                 return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
                 response.Token = TokenManager.GenerateToken(claimDTO);
@@ -809,7 +799,7 @@ namespace WebApi.Controllers
 
 
 
-        
+
 
         [HttpPost("GetAllMedia")]
         public Response GetAllMedia()
@@ -1034,68 +1024,64 @@ namespace WebApi.Controllers
         [HttpPost("GetAllVideosGallery")]
         public Response GetAllVideosGallery()
         {
-
             Response response = new Response();
             Register claimDTO = null;
             try
             {
                 claimDTO = TokenManager.GetValidateToken(Request);
-
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
+                // Check if the video directory exists
+                if (!Directory.Exists(_videoGalleryPath))
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.ResponseMsg = "Video directory not found.";
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = null;
+                    return response;
+                }
 
+                // Get all files in the video directory
+                var filesInDirectory = Directory.GetFiles(_videoGalleryPath);
 
-
+                // Fetch video data from the repository
                 var res = _repository.GetAllVideosGallery();
 
-
                 List<Gallery> galleries = new List<Gallery>();
-
 
                 foreach (var item in res)
                 {
                     string fileName = Path.GetFileName(item);
-                    galleries.Add(new Gallery
+                    string fullFilePath = Path.Combine(_videoGalleryPath, fileName);
+
+                    // Check if the file exists in the directory
+                    if (filesInDirectory.Contains(fullFilePath))
                     {
-
-
-                        Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
-                        FileName = fileName,
-                        FilePath = $"{BaseUrl}UploadVideos/{fileName}?v={DateTime.UtcNow.Ticks}"
-                    });
-
-
-
+                        galleries.Add(new Gallery
+                        {
+                            Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                            FileName = fileName,
+                            FilePath = $"{BaseUrl}UploadVideos/{fileName}?v={DateTime.UtcNow.Ticks}"
+                        });
+                    }
                 }
 
-                if (galleries.Count > 0)
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = galleries;
+                // Prepare the response
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = galleries;
 
-                }
-                else
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = galleries;
-                }
                 return response;
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
-
                 response.ResponseMsg = ex.Message;
                 response.Token = TokenManager.GenerateToken(claimDTO);
-
                 return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
                 response.Token = TokenManager.GenerateToken(claimDTO);
@@ -1127,7 +1113,9 @@ namespace WebApi.Controllers
                 }
                 else
                 {
-                    var filePath = Path.Combine("UploadImages", file.FileName);
+                    var filePath = Path.Combine("UploadImages", file.FileName)
+                                       .Replace("(", "_")
+                                       .Replace(")", "_");
                     string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
                     // Check if the file already exists
@@ -1195,7 +1183,9 @@ namespace WebApi.Controllers
                 }
                 else
                 {
-                    var filePath = Path.Combine("Profile", file.FileName);
+                    var filePath = Path.Combine("Profile", file.FileName)
+                                        .Replace("(", "_")
+                                        .Replace(")", "_");
                     string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
                     // Check if the file already exists
@@ -1269,7 +1259,9 @@ namespace WebApi.Controllers
                     }
                     else
                     {
-                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName)
+                                                        .Replace("(", "_")
+                                                        .Replace(")", "_");
                         var filePath = Path.Combine("UploadImages", FileName);
                         string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
@@ -1352,7 +1344,9 @@ namespace WebApi.Controllers
                 }
                 else
                 {
-                    var filePath = Path.Combine("UploadGallery", file.FileName);
+                    var filePath = Path.Combine("UploadGallery", file.FileName)
+                                        .Replace("(", "_")
+                                        .Replace(")", "_"); ;
                     string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
                     // Check if the file already exists
@@ -1425,7 +1419,10 @@ namespace WebApi.Controllers
                     }
                     else
                     {
-                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName);
+                        string FileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(item.FileName)
+                                               .Replace(',','_')
+                                               .Replace("(", "_")
+                                               .Replace(")", "_"); 
                         var filePath = Path.Combine("UploadGallery", FileName);
                         string FullFilePath = Path.Combine(_hostingEnvironment.WebRootPath, filePath);
 
@@ -1509,8 +1506,11 @@ namespace WebApi.Controllers
                     //    save in database
 
                     Gallery gallery = new Gallery();
-                    gallery.FileName = item.Replace("UploadGallery/", string.Empty);
-            
+                    gallery.FileName = item.Replace("UploadGallery/", string.Empty)
+                                            .Replace(',','_')
+                                            .Replace("(", "_")
+                                            .Replace(")", "_");
+
                     gallery.FilePath = item;
                     gallery.CreatedBy = claimDTO.UserId;
 
@@ -1595,6 +1595,67 @@ namespace WebApi.Controllers
                     response.ResponseMsg = "Gallery Deleted successfully!";
 
                 }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+       [HttpPost("DeleteSelectedVideoGalleryPath/{Path}")]
+        public Response DeleteSelectedVideoGalleryPath(string Path)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                string[] filepaths = Path.Split(',');
+
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+               
+
+                    foreach (var item in filepaths)
+                    {
+
+                        string FullFilePath = _videoGalleryPath + "\\"+item; 
+
+
+                        // Check if the file already exists
+                        if (System.IO.File.Exists(FullFilePath))
+                        {
+                            // Delete the existing file
+                            System.IO.File.Delete(FullFilePath);
+                        }
+
+
+
+
+
+                    }
+
+
+
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = true;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Gallery Deleted successfully!";
+
                 return response;
 
             }
