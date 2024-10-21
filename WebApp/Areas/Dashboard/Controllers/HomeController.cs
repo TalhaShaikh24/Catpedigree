@@ -48,6 +48,11 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+        public IActionResult Addlisitng()
+        {
+            
+            return View(); // Return the partial view
+        }
 
 
         [Route("Dashboard/Users")]

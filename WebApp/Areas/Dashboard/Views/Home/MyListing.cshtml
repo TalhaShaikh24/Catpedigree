@@ -1,7 +1,11 @@
-﻿
-<section class="content pb-4 pt-4">
+﻿<section class="content pb-4 pt-4">
     <div class="container-fluid">
-
+        <a href="/Dashboard/Home/Addlisitng" class="btn btn-primary mb-3">
+            Add Listing
+        </a>
+@*         <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+Add Listing
+        </button> *@
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title"><b>Filters</b></h3>
@@ -553,8 +557,315 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Smart Wizard modal</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+                <div id="smartwizard">
+                    <ul>
+                        <li><a href="#step-1">Step 1<br /><small>General Info</small></a></li>
+                        <li><a href="#step-2">Step 2<br /><small>Personal Info</small></a></li>
+                        <li><a href="#step-3">Step 3<br /><small>Payment Info</small></a></li>
+                        <li><a href="#step-4">Step 4<br /><small>Confirm details</small></a></li>
+                    </ul>
+                    <div>
+                        <div id="step-1">
 
+                            <div class="row">
+                                <div class="col-lg-12 mb-4 text-right">
+                                    <a href="@Url.Action("Enhancement","Home")#pricing" class="font-weight-bold" style="font-style:italic!important;color: #ff344f;" target="_blank">Do you want to buy a Promotion Package?</a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="single-checkbox d-flex">
+                                        <input type="checkbox" id="showpromotionpackage" name="showpromotionpackage">
+                                        <label for="showpromotionpackage" class="mb-5">
+                                            <strong class="typing-text">Do you want a promotion of your listing?</strong>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form_group" style="display:none" id="PromotionPackagegroup">
+                                        <label>Promotion Package</label>
+                                        <select class="wide" id="PromotionPackageId">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form_group">
+                                        <label>Category</label>
+                                        <select class="wide" id="Category" required>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Title</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Title" placeholder="Title" name="name" required value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Gender</label>
+                                        <select class="wide" id="Gender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Both">Both</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Cattery Name</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="CatteryName" placeholder="Title" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>TYPE OF CAT</label>
+                                        <select class="wide" id="TypeOfCat" required>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>AGE</label>
+                                        <select class="wide" id="Age" required>
+                                            <option value="-1" selected disabled>Select Age</option>
+                                            <option value="1 Months">1 Month</option>
+                                            <option value="2 Months">2 Months</option>
+                                            <option value="3 Months">3 Months</option>
+                                            <option value="4 Months">4 Months</option>
+                                            <option value="5 Months">5 Months</option>
+                                            <option value="6 Months">6 Months</option>
+                                            <option value="7 Months">7 Months</option>
+                                            <option value="8 Months">8 Months</option>
+                                            <option value="9 Months">9 Months</option>
+                                            <option value="10 Months">10 Months</option>
+                                            <option value="11 Months">11 Months</option>
+                                            <option value="1 Year">1 Year</option>
+                                            <option value="2 Years">2 Years</option>
+                                            <option value="3 Years">3 Years</option>
+                                            <option value="4 Years">4 Years</option>
+                                            <option value="5 Years">5 Years</option>
+                                            <option value="6 Years">6 Years</option>
+                                            <option value="7 Years">7 Years</option>
+                                            <option value="8 Years">8 Years</option>
+                                            <option value="9 Years">9 Years</option>
+                                            <option value="10 Years">10 Years</option>
+                                            <option value="11 Years">11 Years</option>
+                                            <option value="12 Years">12 Years</option>
+                                            <option value="13 Years">13 Years</option>
+                                            <option value="14 Years">14 Years</option>
+                                            <option value="15 Years">15 Years</option>
+                                            <option value="16 Years">16 Years</option>
+                                            <option value="17 Years">17 Years</option>
+                                            <option value="18 Years">18 Years</option>
+                                            <option value="19 Years">19 Years</option>
+                                            <option value="20 Years">20 Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Price (In Euro)</label>
+                                        <div class="form_group">
+                                            <input type="number" class="form_control" id="Price" placeholder="Request Price" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 d-none">
+                                    <div class="form_group">
+                                        <label>Weight (G)</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Weigth" placeholder="Weigth" name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 d-none">
+                                    <div class="form_group">
+                                        <label>Color</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="Color" placeholder="Color" name="name" required value="Green">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Price On Request</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsPriceRequestYes" name="IsPriceRequest" value="1">
+                                                <label for="IsPriceRequestYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-none mr-4">
+                                                <input type="radio" id="IsPriceRequestNo" name="IsPriceRequest" checked value="0">
+                                                <label for="IsPriceRequestNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Sterilization</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsSterilizationYes" name="IsSterilization" value="1" checked>
+                                                <label for="IsSterilizationYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsSterilizationNo" name="IsSterilization" value="0">
+                                                <label for="IsSterilizationNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label class="d-block">Castration</label>
+                                        <div class="form_group my-3" style="display: flex;align-items: baseline;">
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsCastrationYes" name="IsCastration" value="1" checked>
+                                                <label for="IsCastrationYes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="single-checkbox d-flex mr-4">
+                                                <input type="radio" id="IsCastrationNo" name="IsCastration" value="0">
+                                                <label for="IsCastrationNo"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 mt-20">
+                                    <div class="form_group">
+                                        <label class="d-block">DESCRIPTION (Optional) </label>
+
+                                        <div class="form_group">
+                                            <textarea rows="5" cols="5" id="Description" class="form_control" placeholder="" value=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
+                            <h4 class="title">Advertisement Details (Optional) </h4>
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Pedigree name mother</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Pedigree name father</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FTFather" placeholder="Title" name="FTFather" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Mother tested</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="MotherTested" placeholder="Title" name="MotherTested" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Father tested</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="FatherTested" placeholder="Title" name="FatherTested" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Part Of Association</label>
+                                        <div class="form_group">
+                                            <input type="text" class="form_control" id="PartOfAssociation" placeholder="Title" name="PartOfAssociation">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form_group">
+                                        <label>Data Of Birth</label>
+                                        <div class="form_group">
+                                            <input type="date" class="form_control" id="DataOFBirth" placeholder="Title" name="DataOFBirth">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Name" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Email" required> </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Password" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Repeat password" required> </div>
+                            </div>
+                        </div>
+                        <div id="step-2">
+                            <div class="row">
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Address" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="City" required> </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="State" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Country" required> </div>
+                            </div>
+                        </div>
+                        <div id="step-3" class="">
+                            <div class="row">
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Card Number" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Card Holder Name" required> </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="CVV" required> </div>
+                                <div class="col-md-6"> <input type="text" class="form-control" placeholder="Mobile Number" required> </div>
+                            </div>
+                        </div>
+                        <div id="step-4" class="">
+                            <div class="row">
+                                <div class="col-md-12"> <span>Thanks For submitting your details with BBBootstrap.com. we will send you a confirmation email. We will review your details and revert back.</span> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
+    <script type="text/javascript" src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+
+
     <script src="~/dashboard/MyListing.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&libraries=places&callback=initAutocomplete"></script>
   
