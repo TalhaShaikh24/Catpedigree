@@ -88,7 +88,7 @@ function GetAllUsefulLinks() {
             }
         ],
         // Optional: You can customize the DataTable here
-        order: [[3, 'desc']],
+        order: [[0, 'desc']],
         paging: true,
         searching: true,
         ordering: true,
@@ -141,7 +141,7 @@ $(document).on('click','#Btn_UsefulLinkSubmit', function () {
     if ($("#formAddUsefulLink").valid()) {
         let formData = new FormData();
 
-        formData.append("UsefulLinkFile", $("#uplaodImage")[0].files[0]);
+        formData.append("UsefulLinkFile", $("#uploadImage")[0].files[0]);
         formData.append("Url", $("#url").val());
 
         debugger;

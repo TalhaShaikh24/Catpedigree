@@ -368,6 +368,15 @@
                                         </a>
                                     </li>
                                 }
+                                if (displayedMenus.Add("Usefullinks"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Usefullinks","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Usefullinks"))">
+                                            <i class="nav-icon fas fa-link"></i>
+                                            <p>Useful Links</p>
+                                        </a>
+                                    </li>
+                                }
 
                                 if (displayedMenus.Add("ListingApproval"))
                                 {
@@ -482,7 +491,7 @@
                                         <ul class="nav nav-treeview" style="display: none;">
                                             @if (displayedMenus.Add("MediaList"))
                                             {
-                                                <li class="nav-item d-none">
+                                                <li class="nav-item">
                                                     <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
                                                         <i class="nav-icon fas fa-list"></i>
                                                         <p>Media</p>
