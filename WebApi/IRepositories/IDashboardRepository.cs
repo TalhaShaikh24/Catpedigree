@@ -100,8 +100,10 @@ namespace WebApi.IRepositories
 
 
 
+        object GetAllRoles();
 
 
+        Task<Register> AddUser(Register formData);
 
 
 

@@ -248,6 +248,29 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
 
+
+        [HttpGet("Dashboard/Createuser")]
+        public IActionResult Createuser()
+        {
+            return View();
+
+        }
+
+
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllRoles")]
+        public Task<object> GetAllRoles()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllRoles", "", HttpContext);
+
+        }
+
+
+
+
         [HttpPost]
         [Route("Dashboard/GetPedigreeGallery")]
         public Task<object> GetPedigreeGallery()
@@ -1015,6 +1038,23 @@ namespace WebApp.Areas.Dashboard.Controllers
 
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllListingFiltersDashboard", "", HttpContext);
 
+        }
+
+
+        [HttpPost("Dashboard/AddUser")]
+        public Task<object> AddUser([FromForm] Register obj)
+        {
+
+            string content = JsonConvert.SerializeObject(obj);
+            try
+            {
+                return HttpClientUtility.CustomHttpIfileUserDashBoard(BaseUrl, "api/Dashboard/AddUser", obj, HttpContext);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

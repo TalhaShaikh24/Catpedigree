@@ -836,6 +836,114 @@ namespace WebApp.HttpMethods
             }
         }
 
+        public static async Task<object> CustomHttpIfileUserDashBoard(string baseUrl, string url, Register obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+
+
+                    // Set the authorization header if it exists in the cookies
+
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                    var multiContent = new MultipartFormDataContent();
+
+
+
+                    // Convert DateTime to string
+                    string dateOfBirthString = obj.DateofBirth?.ToString("yyyy-MM-dd") ?? "";
+
+                    // Create StringContent with the formatted date string
+
+                    // Add JSON content
+                    multiContent.Add(new StringContent(obj.Firstname ?? ""), "firstname");
+                    multiContent.Add(new StringContent(obj.Lastname ?? ""), "lastname");
+                    multiContent.Add(new StringContent(obj.Username ?? ""), "username");
+                    multiContent.Add(new StringContent(obj.Email ?? ""), "email");
+                    multiContent.Add(new StringContent(obj.Password ?? ""), "password");
+                    multiContent.Add(new StringContent(obj.ContactNo ?? ""), "contactNo");
+                    multiContent.Add(new StringContent(obj.Address ?? ""), "address");
+                    multiContent.Add(new StringContent(obj.ProfileInfo ?? ""), "profileInfo");
+                    multiContent.Add(new StringContent(obj.ZoologicalNumber ?? ""), "zoologicalNumber");
+                    multiContent.Add(new StringContent(obj.Roles ?? null), "roles");
+
+                    multiContent.Add(new StringContent(obj.Country ?? ""), "country");
+                    multiContent.Add(new StringContent(obj.City ?? ""), "city");
+                    multiContent.Add(new StringContent(obj.Province ?? ""), "province");
+                    multiContent.Add(new StringContent(dateOfBirthString ?? null), "DateofBirth");
+
+                    multiContent.Add(new StringContent(obj.FaceBook ?? ""), "FaceBook");
+                    multiContent.Add(new StringContent(obj.Insta ?? ""), "Insta");
+                    multiContent.Add(new StringContent(obj.Twitter ?? ""), "Twitter");
+
+
+
+                    if (obj.ProfilePic != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.ProfilePic.OpenReadStream()), "profilePic", obj.ProfilePic.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.ProfilePicPath ?? ""), "ProfilePicPath");
+                    }
+
+                    if (obj.BreederLicense != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.BreederLicense.OpenReadStream()), "breederLicense", obj.BreederLicense.FileName);
+                    }
+                    else
+                    {
+
+                        multiContent.Add(new StringContent(obj.BreederLicensePath ?? ""), "BreederLicensePath");
+                    }
+
+                    // Send the HTTP request
+                    HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+                        return responseBody;
+                    }
+                    else
+                    {
+                        // Handle unsuccessful response
+                        // Log error message
+                        Console.WriteLine($"HTTP request failed with status code: {response.StatusCode}");
+                        // Return a meaningful response indicating failure
+                        return new { Success = false, ErrorMessage = "Failed to send request" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle the exception appropriately
+                    Console.WriteLine("Error in CustomHttp: " + ex.Message);
+                    return new { Success = false, ErrorMessage = ex.Message };
+                }
+            }
+        }
+
+
+
         public static async Task<object> CustomHttpListing(string baseUrl, string url, Listing obj, HttpContext httpContext)
         {
             // Get coordinates before sending the request

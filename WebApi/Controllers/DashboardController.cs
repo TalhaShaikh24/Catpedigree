@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         private string BaseUrl = "";
         private readonly IDashboardRepository _repository;
         private readonly IEmailRepository _emailRepository;
-
+        private readonly IPackagesRepository _repositoryPkg;
         private readonly IStripeServices _stripeServices;
         private readonly IConfiguration _configuration;
 
@@ -33,14 +33,18 @@ namespace WebApi.Controllers
 
 
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices,IEmailRepository emailRepository)
+        public DashboardController(IDashboardRepository repository, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IStripeServices stripeServices,IEmailRepository emailRepository,
+
+            IPackagesRepository repositoryPkg
+            )
         {
             _repository = repository;
             _emailRepository = emailRepository;
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
+            _repositoryPkg = repositoryPkg;
 
-            BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
+             BaseUrl = configuration.GetSection("UrlSetting").GetSection("baseApiUrl").Value ?? "";
             _stripeServices = stripeServices;   
         }
 
@@ -3638,5 +3642,114 @@ namespace WebApi.Controllers
             }
 
         }
+
+
+
+
+        [HttpPost("GetAllRoles")]
+        public Response GetAllRoles()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllRoles();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Record Fetched successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+
+        [HttpPost("AddUser")]
+        public async Task<Response> AddUser([FromForm] Register formData)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                var res = await _repository.AddUser(formData);
+
+                if (res != null)
+                {
+                    // Create a new user package
+                    UserPackages userPkg = new UserPackages
+                    {
+                        UserID = res.UserId,
+                        PackageID = 1,
+                        SubscriptionDate = DateTime.Now,
+                        ExpiryDate = DateTime.Now.AddDays(365), // Calculate expiry date by adding 365 days
+                        RemainingListings = 999,
+                        IsActive = true,
+                        IsExpired = false
+                    };
+
+                    // Buy the package
+                    var respKG = _repositoryPkg.BuyPackage(userPkg);
+
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    response.ResponseMsg = "Congratulations! Your registration was successful.";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Failed to register user."; // Handle the case where res is null
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+
+
+
     }
 }
