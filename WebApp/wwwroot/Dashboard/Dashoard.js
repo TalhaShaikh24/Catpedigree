@@ -71,6 +71,7 @@ function GetAllDashbaord() {
                         <td>${item.promotionPackageName} (${item.packageCount})</td>
                         <td>${moment(item.subscriptionDate).format("DD - MMMM - YYYY")}</td>
                         <td>${moment(item.expiryDate).format("DD - MMMM - YYYY")}</td>
+                         <td><a href="/Home/Enhancement" class="btn btn-primary">Renew</a></td>
                     </tr>`);
                 });
 
@@ -89,15 +90,12 @@ function GetAllDashbaord() {
                                                    <td>${v.advertisementPackageCost}</td>
                                                    <td>${v.advertisementPackageType}</td>
                                                    <td>${v.numberOfAdvertisement}</td>
-                                                   <td>${v.status}</td>
-                                                 
+                                           
                                                    
                                                    <td>${moment(v.createdOn).format("DD - MMMM - YYYY") }</td>
-                                                   <td> <img src="${baseApiUrl + v.filePath}" style="
+      
 
-    height: 51px;
-    width: 51px;
-" />   </td>
+  <td><a href="/Home/BusinessAdvertising" class="btn btn-primary">Renew</a></td>
                                                    
 
                                                 </tr>`);
