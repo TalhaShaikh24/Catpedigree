@@ -613,20 +613,34 @@
 
                                         if (userJson != null && userJson != "")
                                         {
-
                                             var userdata = JsonConvert.DeserializeObject<DataObj>(userJson);
 
-                                            if (!(String.IsNullOrEmpty(@Accessor.HttpContext.Request.Cookies["authorization"])))
+                                            // Split the RoleIds into an array
+                                            var roleIds = userdata.dataObj.RoleIds.Split(',');
+
+                                            // Check if there is an authorization cookie
+                                            if (!String.IsNullOrEmpty(Accessor.HttpContext.Request.Cookies["authorization"]))
                                             {
                                                 <li class="user-btn"><a href="/Dashboard" class="icon"><i class="flaticon-avatar"></i></a></li>
-                                                if (!userdata.dataObj.RoleIds.Contains("User"))
+
+                                                // Check if RoleIds only contains "User"
+                                                if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
+                                                {
+                                                    // Do nothing or show a different UI
+                                                }
+                                                else
                                                 {
                                                     <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
                                                 }
                                             }
                                             else
                                             {
-                                                if (!userdata.dataObj.RoleIds.Contains("User"))
+                                                // No authorization cookie
+                                                if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
+                                                {
+                                                    // Do nothing or show a different UI
+                                                }
+                                                else
                                                 {
                                                     <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
                                                 }
@@ -634,10 +648,11 @@
                                         }
                                         else
                                         {
-
+                                            // No userJson available
                                             <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
-
                                         }
+
+
                                     }
                                     <li class="nav-toggle-btn">
                                         <div class="navbar-toggler">

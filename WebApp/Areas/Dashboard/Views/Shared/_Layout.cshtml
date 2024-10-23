@@ -300,7 +300,7 @@
                                 </a>
                            
                             </li>
-                            }
+                         }
                            
                         <li class="nav-item">
                             <a href="@Url.Action("Profile","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
@@ -459,7 +459,8 @@
                                         </a>
                                     </li>
                                 }
-                                    if (displayedMenus.Add("AssignAdvertisement"))
+                                
+                                if (displayedMenus.Add("AssignAdvertisement"))
                                 {
                                     <li class="nav-item">
                                         <a href="@Url.Action("AssignAdvertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignAdvertisement"))">
@@ -561,6 +562,30 @@
                                         </ul>
                                     </li>
                                 }
+
+                                if (displayedMenus.Add("Advertisement"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                My Advertisements
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
+                                if (displayedMenus.Add("Advertisementpackages"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
+                                            <i class="nav-icon fas fa-list"></i>
+                                            <p>
+                                                Advertisement Packages
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
+                               
                             }
 
                             if (userinfo.RoleIds.Contains("Blogger"))
@@ -628,7 +653,7 @@
                                     </a>
                                 </li>
 
-                               }
+                            }
 
                                
                             
