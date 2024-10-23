@@ -42,9 +42,11 @@ namespace WebApi.IRepositories
 
 
         public List<Gallery> GetAllGallary();
+        public List<string> GetAllMedia();
 
 
         public int AddGallary(Gallery obj);
+        public int AddMedia(Gallery obj);
         public int UpdateRoles(userRolesUpdate obj);
         public int UpdateActiveInActiveUser(int UserId);
         public int DeleteUser(int UserId);

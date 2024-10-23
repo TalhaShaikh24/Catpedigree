@@ -14,6 +14,7 @@ namespace ClassLibrary
 
         public string? GalleryImagesPath { get; set; }
         public int CreatedBy { get; set; }
+        public DateTime LastModified { get; set; }
 
 
 

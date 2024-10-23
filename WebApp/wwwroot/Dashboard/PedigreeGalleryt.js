@@ -164,30 +164,27 @@ function GetAllGellary() {
 
         if (res.status == 200) {
 
-            $(".gallery").html("");
+            $(".gallery").empty();
 
             $.each(res.data, function (i, v) {
-
                 $(".gallery").append(`<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                                        <div class="CheckBoxSelection shadow-sm">
-                                                           <input type="checkbox" value="${v.fileName}"/>
-                                                        </div>
-                                                         <a href="${v.filePath}">
-                                                        <figure class="position-relative">
-                                                             <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
-                                                            
-                                                     </figure>
-                                                      
-                                                    </a>
-                                                    <div class="Watermarkbutton">
-                                                                <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
-                                                        </div>
-                                                        <div class="DownloadButton">
-                                                            <button type="button" class="btn btn-primary btn-sm" onclick="downloadImage('${v.filePath}')">Download</button>
-                                                        </div>
-                                                </div>`);
-
+                    <div class="CheckBoxSelection shadow-sm">
+                        <input type="checkbox" value="${v.fileName}"/>
+                    </div>
+                    <a href="${v.filePath}">
+                        <figure class="position-relative">
+                            <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
+                        </figure>
+                    </a>
+                    <div class="Watermarkbutton">
+                        <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
+                    </div>
+                    <div class="DownloadButton">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="downloadImage('${v.filePath}')">Download</button>
+                    </div>
+                </div>`);
             });
+
 
 
 

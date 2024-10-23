@@ -805,78 +805,139 @@ namespace WebApi.Controllers
 
 
 
+
+
+        //[HttpPost("GetAllMedia")]
+        //public Response GetAllMedia()
+        //{
+
+        //    Response response = new Response();
+        //    Register claimDTO = null;
+        //    try
+        //    {
+        //       claimDTO = TokenManager.GetValidateToken(Request);
+
+        //       if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+        //    if (!Directory.Exists(_imagesPath))
+        //    {
+        //            response = CustomStatusResponse.GetResponse(600);
+        //            response.ResponseMsg = "Image directory not found.";
+        //            response.Token = TokenManager.GenerateToken(claimDTO);
+        //            response.Data = null;
+        //            return response;
+        //        }
+
+        //        var images = Directory.GetFiles(_imagesPath)
+        //        .Select(filePath => new FileInfo(filePath))
+        //        .OrderByDescending(fileInfo => fileInfo.LastWriteTime)
+        //        .Select(fileInfo => new Gallery
+        //        {
+        //            Id = Path.GetFileNameWithoutExtension(fileInfo.Name).GetHashCode(),
+        //            FileName = fileInfo.Name,
+        //            FilePath = $"{BaseUrl}UploadImages/{fileInfo.Name}?v={DateTime.UtcNow.Ticks}",
+        //            GalleryImagesPath= $"UploadImages/{fileInfo.Name}",
+        //        })
+        //        .ToList();
+
+
+        //        if (images.Count > 0)
+        //        {
+        //            response = CustomStatusResponse.GetResponse(200);
+        //            response.Token = TokenManager.GenerateToken(claimDTO);
+        //            response.Data = images;
+
+        //        }
+        //        else
+        //        {
+        //            response = CustomStatusResponse.GetResponse(200);
+        //            response.Token = TokenManager.GenerateToken(claimDTO);
+        //            response.Data = images;
+        //        }
+        //        return response;
+        //    }
+        //    catch (DbException ex)
+        //    {
+
+        //        response = CustomStatusResponse.GetResponse(600);
+
+        //        response.ResponseMsg = ex.Message;
+        //        response.Token = TokenManager.GenerateToken(claimDTO);
+
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        response = CustomStatusResponse.GetResponse(500);
+        //        response.ResponseMsg = "Internal server error!";
+        //        response.Token = TokenManager.GenerateToken(claimDTO);
+        //        return response;
+        //    }
+        //}
+
+
+
+
         [HttpPost("GetAllMedia")]
         public Response GetAllMedia()
         {
-
             Response response = new Response();
             Register claimDTO = null;
             try
             {
-               claimDTO = TokenManager.GetValidateToken(Request);
+                claimDTO = TokenManager.GetValidateToken(Request);
 
-               if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
+                var res = _repository.GetAllMedia();
+                List<Gallery> galleries = new List<Gallery>();
 
-            if (!Directory.Exists(_imagesPath))
-            {
-                    response = CustomStatusResponse.GetResponse(600);
-                    response.ResponseMsg = "Image directory not found.";
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = null;
-                    return response;
+                foreach (var item in res)
+                {
+                    string fileName = Path.GetFileName(item);
+                    string fullPath = Path.Combine(_imagesPath, fileName).Replace("\\", "/");
+
+                    // Check if the file exists
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        var lastWriteTime = System.IO.File.GetLastWriteTime(fullPath); // Get last modified date
+                        galleries.Add(new Gallery
+                        {
+                            Id = Path.GetFileNameWithoutExtension(fileName).GetHashCode(),
+                            FileName = fileName,
+                            FilePath = $"{BaseUrl}UploadImages/{fileName}?v={DateTime.UtcNow.Ticks}",
+                            GalleryImagesPath = fileName,
+                            LastModified = lastWriteTime // Assuming Gallery has a LastModified property
+                        });
+                    }
                 }
 
-                var images = Directory.GetFiles(_imagesPath)
-                .Select(filePath => new FileInfo(filePath))
-                .OrderByDescending(fileInfo => fileInfo.LastWriteTime)
-                .Select(fileInfo => new Gallery
-                {
-                    Id = Path.GetFileNameWithoutExtension(fileInfo.Name).GetHashCode(),
-                    FileName = fileInfo.Name,
-                    FilePath = $"{BaseUrl}UploadImages/{fileInfo.Name}?v={DateTime.UtcNow.Ticks}",
-                    GalleryImagesPath= $"UploadImages/{fileInfo.Name}",
-                })
-                .ToList();
+                // Sort galleries by LastModified date (newest first)
+                galleries = galleries.OrderByDescending(g => g.LastModified).ToList();
 
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = galleries;
 
-                if (images.Count > 0)
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = images;
-
-                }
-                else
-                {
-                    response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = images;
-                }
                 return response;
             }
             catch (DbException ex)
             {
-
                 response = CustomStatusResponse.GetResponse(600);
-
                 response.ResponseMsg = ex.Message;
                 response.Token = TokenManager.GenerateToken(claimDTO);
-
                 return response;
             }
             catch (Exception ex)
             {
-
                 response = CustomStatusResponse.GetResponse(500);
                 response.ResponseMsg = "Internal server error!";
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 return response;
             }
         }
-
-
-
 
         [HttpPost("PedigreeGallery")]
         public Response PedigreeGallery()
@@ -1280,15 +1341,15 @@ namespace WebApi.Controllers
                             await item.CopyToAsync(stream);
                         }
 
-                    //    save in database
+                        //    save in database
 
-                        //Gallery gallery = new Gallery();
-                        //gallery.FileName = FileName;
-                        //gallery.FilePath = filePath;
-                        //gallery.CreatedBy = claimDTO.UserId;
+                        Gallery gallery = new Gallery();
+                        gallery.FileName = FileName;
+                        gallery.FilePath = filePath;
+                        gallery.CreatedBy = claimDTO.UserId;
 
 
-                        //_repository.AddGallary(gallery);
+                        _repository.AddMedia(gallery);
 
 
 
@@ -1710,9 +1771,12 @@ namespace WebApi.Controllers
 
                     foreach (var item in filepaths)
                     {
-                  
-                        string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, item);
-                     
+
+                        //string FullFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, item);
+                        string FullFilePath = _imagesPath + "\\" + item;
+
+
+
 
                         // Check if the file already exists
                         if (System.IO.File.Exists(FullFilePath))
