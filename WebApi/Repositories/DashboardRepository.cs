@@ -323,6 +323,14 @@ namespace WebApi.Repositories
 
             return data;
         }
+        public List<string> GetAllMedia()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            var data = _dapper.GetAll<string>(@"[sp_GetAllMedia]", parameters);
+
+            return data;
+        }
 
      
 
@@ -477,6 +485,18 @@ namespace WebApi.Repositories
              parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
 
             var data = _dapper.Insert<int>(@"[sp_AddGallary]", parameters);
+
+            return data;
+        }
+        public int AddMedia(Gallery obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+             parameters.Add("@FilePath", obj.FilePath, DbType.String, ParameterDirection.Input);
+             parameters.Add("@FileName", obj.FileName, DbType.String, ParameterDirection.Input);
+             parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Insert<int>(@"[sp_AddMedia]", parameters);
 
             return data;
         }

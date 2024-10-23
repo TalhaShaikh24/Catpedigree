@@ -21,9 +21,10 @@ function GetAllUsefulLinksForGuest() {
                     const col = document.createElement('div');
                     col.className = 'col-4'; // Bootstrap column for three in a row
                     col.innerHTML = `
-                        <a href="${baseApiUrl+link.usefulLinkFilePath}" data-fancybox="gallery">
-                            <img src="${baseApiUrl +link.usefulLinkFilePath}" class="img-fluid" alt="Useful Link">
+                        <a href="${baseApiUrl + link.usefulLinkFilePath}" data-fancybox="gallery">
+                            <img src="${baseApiUrl + link.usefulLinkFilePath}" class="img-fluid" alt="Useful Link">
                         </a>
+                        <a href="${link.url}" class="btn btn-primary btn-block mt-2" target="_blank">Visit Now</a>
                     `;
                     usefulLinksContainer.appendChild(col);
                 });
@@ -40,4 +41,5 @@ function GetAllUsefulLinksForGuest() {
         }
     });
 }
+
 
