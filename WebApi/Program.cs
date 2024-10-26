@@ -49,6 +49,7 @@ builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Str
 builder.Services.AddTransient<IStripeServices, StripeServices>();
 builder.Services.AddTransient<IEmailRepository, EmailRepository>();
 builder.Services.AddTransient<IUsefulLinksRepository, UsefulLinksRepository>();
+builder.Services.AddTransient<IShowRepository, ShowRepository>();
 
 builder.Services.Configure<ExchangeRateApiSettings>(builder.Configuration.GetSection("ExchangeRateApi"));
 builder.Services.AddTransient<ICurrencyConverterService, CurrencyConverterService>();

@@ -134,6 +134,8 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+
+
         [Route("Dashboard/Comments")]
         public IActionResult Comments()
         {
@@ -257,6 +259,31 @@ namespace WebApp.Areas.Dashboard.Controllers
         }
 
 
+
+
+        [HttpGet("Dashboard/Show")]
+        public IActionResult Show()
+        {
+            return View();
+
+        }
+
+
+
+
+        [HttpGet("Dashboard/ShowList")]
+        public IActionResult ShowList()
+        {
+            return View();
+
+        }
+
+
+        [Route("Dashboard/EditShow")]
+        public IActionResult EditShow()
+        {
+            return View();
+        }
 
 
         [HttpPost]
@@ -873,12 +900,31 @@ namespace WebApp.Areas.Dashboard.Controllers
             return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllAdminBLogs", "", HttpContext);
         }
 
+
+
+        [HttpPost]
+        [Route("Dashboard/GetAllAdminShow")]
+        public Task<object> GetAllAdminShow()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllAdminShow", "", HttpContext);
+        }
+
         [HttpPost]
         [Route("Dashboard/AddBlog")]
         public Task<object> AddBlog([FromForm] Blog obj)
         {
 
             return HttpClientUtility.CustomHttpBlog(BaseUrl, "api/Dashboard/AddBlog", obj, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/AddShow")]
+        public Task<object> AddShow([FromForm] Show obj)
+        {
+
+            return HttpClientUtility.CustomHttpShow(BaseUrl, "api/Dashboard/AddShow", obj, HttpContext);
 
         }
 
@@ -891,6 +937,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+        [HttpPost]
+        [Route("Dashboard/GetShowbyID")]
+        public Task<object> GetShowbyID(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetShowbyID/" + Id, "", HttpContext);
+
+        }   
+        
         [HttpPost]
         [Route("Dashboard/BlogEditById")]
         public Task<object> BlogEditById(int Id)
@@ -909,7 +964,15 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
-        
+        [HttpPost]
+        [Route("Dashboard/ShowDelete")]
+        public Task<object> ShowDelete(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/ShowDelete/" + Id, "", HttpContext);
+
+        }
+
         [HttpPost]
         [Route("Dashboard/GetAllBlogCategories")]
         public Task<object> GetAllBlogCategories()
@@ -1024,6 +1087,15 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
 
             return HttpClientUtility.CustomHttpBlogFileDashboard(BaseUrl, "api/Dashboard/UploadBlogImage", file, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/UploadShowImage")]
+        public Task<object> UploadShowImage(IFormFile file)
+        {
+
+            return HttpClientUtility.CustomHttpBlogFileDashboard(BaseUrl, "api/Dashboard/UploadShowImage", file, HttpContext);
 
         }
 

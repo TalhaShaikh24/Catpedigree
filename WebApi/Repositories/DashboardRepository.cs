@@ -946,6 +946,142 @@ namespace WebApi.Repositories
             }
         }
 
+        public async Task<Show> UpdateShow(Show obj)
+        {
+            // Function to replace spaces with underscores in file names
+            string ReplaceSpaces(string input) => input.Replace(' ', '_');
+
+            if (obj.FeatureImage != null)
+            {
+                string FeatureImageName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImage.FileName);
+                string FeatureFilePath = Path.Combine("UploadFeatureShows", FeatureImageName);
+                string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
+
+                using (var stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+                {
+                    await obj.FeatureImage.CopyToAsync(stream);
+                }
+                obj.FeatureImagePath = FeatureFilePath;
+            }
+
+            if (obj.GallaryImage != null)
+            {
+                List<string> GalleryPath = new List<string>();
+
+                foreach (var item in obj.GallaryImage)
+                {
+                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(item.FileName));
+                    string GalleryFilePath = Path.Combine("UploadGallaryImages", GalleryFileName);
+                    string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
+
+                    using (var stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+                    GalleryPath.Add(GalleryFilePath);
+                }
+
+                obj.GallaryImagePath = string.Join(",", GalleryPath);
+            }
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", obj.ShowId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Title", obj.Title, DbType.String, ParameterDirection.Input);
+           
+            parameters.Add("@FeatureImagePath", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@GallaryImagePath", obj.GallaryImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Content", obj.Content, DbType.String, ParameterDirection.Input);
+         
+            parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<Show>(@"[sp_UpdateShows]", parameters);
+
+            return data;
+        }
+        public async Task<Show> AddShow(Show obj)
+        {
+            // Function to replace spaces with underscores in file names
+            string ReplaceSpaces(string input) => input.Replace(' ', '_');
+
+            if (obj.FeatureImage != null)
+            {
+                string FeatureImageName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + Path.GetFileName(obj.FeatureImage.FileName);
+                string FeatureFilePath = Path.Combine("UploadFeatureShows", FeatureImageName);
+                string FeatureFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, FeatureFilePath);
+
+                using (var stream = new FileStream(FeatureFilePathDirectory, FileMode.Create))
+                {
+                    await obj.FeatureImage.CopyToAsync(stream);
+                }
+                obj.FeatureImagePath = FeatureFilePath;
+            }
+
+            if (obj.GallaryImage != null)
+            {
+                List<string> GalleryPath = new List<string>();
+
+                foreach (var item in obj.GallaryImage)
+                {
+                    string GalleryFileName = Guid.NewGuid().ToString().Substring(0, 5) + "_" + ReplaceSpaces(Path.GetFileName(item.FileName));
+                    string GalleryFilePath = Path.Combine("UploadGallaryImages", GalleryFileName);
+                    string UploadImagesFilePathDirectory = Path.Combine(_hostingEnvironment.WebRootPath, GalleryFilePath);
+
+                    using (var stream = new FileStream(UploadImagesFilePathDirectory, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+                    GalleryPath.Add(GalleryFilePath);
+                }
+
+                obj.GallaryImagePath = string.Join(",", GalleryPath);
+            }
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Title", obj.Title, DbType.String, ParameterDirection.Input);
+           
+            parameters.Add("@FeatureImagePath", obj.FeatureImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@GallaryImagePath", obj.GallaryImagePath, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Content", obj.Content, DbType.String, ParameterDirection.Input);
+         
+            parameters.Add("@CreatedBy", obj.CreatedBy, DbType.String, ParameterDirection.Input);
+
+            var data = _dapper.Get<Show>(@"[sp_AddShows]", parameters);
+
+            return data;
+        }
+
+        public List<Show> ShowList()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Show>(@"[sp_ShowList]", parameters);
+
+            return data;
+        }
+
+
+        public Show GetShowbyID(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.Get<Show>(@"[sp_ShowbyID]", parameters);
+
+            return data;
+        }
+
+
+
+
+        public void ShowDelete(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
+
+          _dapper.Update<int>(@"[sp_ShowDelete]", parameters);
+            
+        }
 
 
     }

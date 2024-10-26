@@ -1,0 +1,65 @@
+﻿<link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<style>
+    body{
+        background: #f5f6f778;
+    }
+
+    .blog-standard-wrapper:last-child {
+        padding-bottom: 0px !important;
+        margin-bottom:10px!important;
+    }
+
+    a.tag-cloud-link {
+        border: 1px solid #cdcdcd;
+        padding: 2px 20px;
+        margin: 4px;
+        text-transform: capitalize;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        a.tag-cloud-link:hover {
+            background: #ff344f;
+            color: #fff;
+            border-color: #e31d37;
+        }
+
+    .blog_links:hover{
+        color: #e31d37;
+    }
+
+</style>
+
+<section class="blog-area pb-70 mt-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex mb-30 d-none">
+                    <h6 class="mr-10">Records:</h6>
+                    <span id="count-display"></span>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row m-0">
+                    <div class="col-lg-12 m-0" id="appendBlogs">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="button mx-4">
+                            <a id="load-more" style="display:none" class="main-btn icon-btn">Load More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/webassets/pagesjs/show.js"></script>
+}

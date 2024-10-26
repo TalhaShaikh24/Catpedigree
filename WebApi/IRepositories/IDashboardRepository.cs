@@ -109,7 +109,13 @@ namespace WebApi.IRepositories
 
 
 
+        Task<Show> AddShow(Show obj);
+        Task<Show> UpdateShow(Show obj);
 
+        List<Show> ShowList();
 
+         Show GetShowbyID(int id);
+
+         void ShowDelete(int id);
     }
 }
