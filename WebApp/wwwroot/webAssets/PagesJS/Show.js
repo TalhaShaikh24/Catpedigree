@@ -15,17 +15,13 @@ $(document).ready(function () {
 
 
 // Function to load blogs
-async  function loadBlogs() {
-
-  
+async function loadBlogs() {
     let obj = {
         PageNumber: pageNumber,
         PageSize: pageSize,
-       
-      
     };
 
-     const response = await fetch('/Show/GetAllShowsPagination', {
+    const response = await fetch('/Show/GetAllShowsPagination', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -36,34 +32,34 @@ async  function loadBlogs() {
     const data = await response.json();
 
     if (data.data) {
-        debugger;
         const { shows, totalCount, currentCount } = data.data;
         varTotalCount = totalCount;
         varCurrentCount = currentCount;
 
-        $.each(shows, function (index, blog) {
-            $("#appendBlogs").append(`<div class="blog-standard-wrapper pb-50">
-
-                <div class="blog-post-item blog-post-item-four mb-50 wow fadeInUp">
-                    <div class="post-thumbnail">
-                        <a href="/Show/ShowDetails?Id=${blog.showId}"><img class="w-100" src="${baseApiUrl + blog.featureImagePath}" alt="Show Image"></a>
-                    </div>
-                    <div class="entry-content">
-                        <a href="javascript:void(0);" class="cat-btn">${moment(blog.createdOn).format("DD-MMMM-YYYY")}</a>
-                     
-                        <h3 class="title"><a href="/Show/ShowDetails?Id=${blog.showId}">${blog.title}</a></h3>
-                  
-                        <a href="/Show/ShowDetails?Id=${blog.showId}" class="btn-link">Continue Reading</a>
-                    </div>
-                </div>
-
-            </div>`);
-        });
+        // Create a new row for each two blogs
+        for (let i = 0; i < shows.length; i += 2) {
+            for (let j = i; j < i + 2 && j < shows.length; j++) {
+                const blog = shows[j];
+                $("#appendBlogs").append(`
+                    <div class="col-lg-6 mb-30">
+                        <div class="blog-standard-wrapper pb-50">
+                            <div class="blog-post-item blog-post-item-four mb-50 wow fadeInUp">
+                                <div class="post-thumbnail">
+                                    <a href="/Show/ShowDetails?Id=${blog.showId}"><img class="w-100" src="${baseApiUrl + blog.featureImagePath}" alt="Show Image"></a>
+                                </div>
+                                <div class="entry-content">
+                                    <a href="javascript:void(0);" class="cat-btn">${moment(blog.createdOn).format("DD-MMMM-YYYY")}</a>
+                                    <h3 class="title"><a href="/Show/ShowDetails?Id=${blog.showId}">${blog.title}</a></h3>
+                                    <a href="/Show/ShowDetails?Id=${blog.showId}" class="btn-link">Continue Reading</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`);
+            }
+        }
 
         pageNumber++;
-        //await GetAllBlogCategories();
         updateCountDisplay();
-
 
         if (varCurrentCount >= varTotalCount) {
             $('#load-more').hide();
@@ -75,6 +71,7 @@ async  function loadBlogs() {
         $('#load-more').hide();
     }
 }
+
 
 
 

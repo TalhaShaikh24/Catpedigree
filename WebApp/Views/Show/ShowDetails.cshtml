@@ -1,4 +1,8 @@
-﻿<style>
+﻿<!-- Fancybox CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<style>
     font span {
         color: unset !important;
     }
@@ -14,7 +18,9 @@
 
     .post-thumbnail img{
         margin-bottom:50px;
+        height: 450px !important;
     }
+
     .title {
         display: none;
     }
@@ -22,12 +28,93 @@
     h1, h2, h3, h4, h5, h6 {
         margin: 26px 0px;
     }
+
+
+
+    /* clear fix */
+    .grid:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    /* ---- .grid-item ---- */
+
+    .grid-sizer,
+    .grid-item {
+        width: 33.333%;
+    }
+
+    .grid-item {
+        float: left;
+    }
+
+        .grid-item a {
+            position: relative;
+            padding: 2px 6px;
+        }
+
+        .grid-item img {
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+
+    .loader-gallery {
+        width: 48px;
+        height: 48px;
+        border: 3px dotted #FFF;
+        border-style: solid solid dotted dotted;
+        border-radius: 50%;
+        display: none;
+        position: relative;
+        box-sizing: border-box;
+        animation: rotation 2s linear infinite;
+    }
+
+        .loader-gallery::after {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px dotted #FF3D00;
+            border-style: solid solid dotted;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            animation: rotationBack 1s linear infinite;
+            transform-origin: center center;
+        }
+
+    @@keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes rotationBack {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
 </style>
 <!--====== Start Blog Section ======-->
-<section class="blog-area pt-80 pb-90">
+<section class="blog-area pt-80 pb-0">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-1"></div>
+        <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="blog-details-wrapper mb-30 wow fadeInUp">
                     <div class="blog-post-item d-flex flex-column">
@@ -42,12 +129,39 @@
                 </div>
 
             </div>
-            <div class="col-lg-1"></div>
 
         </div>
+
     </div>
 </section>
 <!--====== End Blog Section ======-->
+
+<section class="products-area pt-0 pb-120">
+    <div class="container">
+        <div class="products-filter mb-30">
+            <div class="row justify-content-center pt-5" id="showMoments" style="display:none">
+                <div class="col-lg-6">
+                    <div class="section-title text-center mb-0 wow fadeInUp">
+                        <span class="sub-title">Show Highlights</span>
+                        <h2><span class="line">Relive the Best</span> Moments</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center pt-5">
+                <div class="col-10">
+                    <div class="grid mx-100" style="visibility:hidden">
+                        <div class="grid-sizer" id="grid-wrapper"></div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
 @section Scripts {
+
+    <!-- Fancybox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script src="~/webassets/pagesjs/showdetails.js"></script>
 }

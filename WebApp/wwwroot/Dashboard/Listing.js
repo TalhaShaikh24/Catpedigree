@@ -358,11 +358,10 @@ function GetAllListings() {
                     var catType = $('#filterCatType').val();
                     var categoryName = $('#filterCategoryName').val();
                     var packageName = $('#filterPackageName').val();
-
                     var rowStatus = $(table.row(dataIndex).node()).find('td:eq(1) span').text().trim();
                     var rowCatType = data[4] || '';
-                    var rowCategoryName = data[5] || '';
-                    var rowPackageName = data[6] || '';
+                    var rowCategoryName = data[6] || '';
+                    var rowPackageName = data[7] || '';
 
                     if ((status === '' || rowStatus === status) &&
                         (catType === '' || rowCatType === catType) &&

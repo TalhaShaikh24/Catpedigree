@@ -21,34 +21,80 @@ function ShowDetails(Id) {
     postRequest('/Show/GetAllShowDetails/' + Id, null, function (res) {
 
         if (res.status == 200) {
-
             if (res.data != null) {
-
                 debugger;
                 $("#BlogDetails_Append").append(`
-
-
-                        <h1 >${res.data.title}</h1>
-                        <div class="post-thumbnail">
-                            <img class="w-100" src="${baseApiUrl + res.data.featureImagePath}" alt="Blog Image">
+                    
+                    <div class="post-thumbnail mb-90">
+                        <img class="w-100" src="${baseApiUrl + res.data.featureImagePath}" alt="Blog Image">
+                         <h1 class="my-0" style="font-weight:900">${res.data.title}</h1>
+                    </div>
+                   
+                    <div class="entry-content">
+                        <div class="post-meta d-none">
+                            <ul>
+                                <li><span><i class="ti-id-badge"></i><a href="javascript:void(0);">${res.data.username}</a></span></li>
+                                <li><span><i class="ti-calendar"></i><a href="javascript:void(0);">${moment(res.data.createdOn).format("DD MMMM - YYYY")}</a></span></li>
+                            </ul>
                         </div>
-                        <div class="entry-content">
-                            <div class="post-meta d-none">
-                                <ul>
-                                    <li><span><i class="ti-id-badge"></i><a href="javascript:void(0);">${res.data.username}</a></span></li>
-                                    <li><span><i class="ti-calendar"></i><a href="javascript:void(0);">${moment(res.data.createdOn).format("DD MMMM - YYYY")}</a></span></li>
-                                </ul>
-                            </div>
+                        ${res.data.content}
+                    </div>
+                `);
 
+                // Split the comma-separated string into an array
+                const galleryImages = res.data.gallaryImagePath.split(',');
 
-                              ${res.data.content}
-                         
-                       </div>`);
+                if (galleryImages.length>0) {
+                    // Clear previous gallery items
+                    $("#showMoments").show();
+                    $("#Gallery").empty();
 
-                console.log(res.data.gallaryImagePath)
+                    // Iterate through each image path
+                    $.each(galleryImages, function (index, imagePath) {
+                        const trimmedPath = imagePath.trim(); // Trim any extra spaces
+
+                        // Create the <a> tag with appropriate attributes
+                        const $a = $('<a></a>')
+                            .attr('href', baseApiUrl + trimmedPath)
+                            .attr('data-fancybox', 'gallery')
+                            .attr('data-caption', `Image ${index + 1}`);
+
+                        // Create the <img> tag
+                        const $img = $('<img />')
+                            .attr('src', baseApiUrl + trimmedPath)
+                            .attr('alt', `Gallery Image ${index + 1}`);
+
+                        // Append the <img> tag to the <a> tag
+                        $a.append($img);
+
+                        // Create the grid item and append the <a> tag inside it
+                        const $gridItem = $('<div class="grid-item"></div>').append($a);
+
+                        // Append the grid item to the gallery
+                        $("#grid-wrapper").append($gridItem);
+                    });
+
+                    // Initialize Masonry layout after images are loaded
+                    var $grid = $('.grid').imagesLoaded(function () {
+                        $grid.masonry({
+                            itemSelector: '.grid-item',
+                            percentPosition: true,
+                            columnWidth: '.grid-sizer'
+                        });
+
+                        // Hide the loader after a 3-second delay
+                        setTimeout(function () {
+                            $('.loader-gallery').fadeOut(); // Use fadeOut for a smoother effect
+                            $('.grid').css({
+                                "visibility": "visible"
+                            });
+                        }, 3000);
+                    });
+                }
+
+                
+
                 $("#HDBLOGID").val(res.data.showId);
-
-
             }
         }
 
