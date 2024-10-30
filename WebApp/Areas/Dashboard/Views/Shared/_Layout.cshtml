@@ -441,6 +441,17 @@
                                     </li>
                                 }
 
+                                if (displayedMenus.Add("Show"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("ShowList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>Show</p>
+                                        </a>
+                                    </li>
+                                }
+                           
+
                                 if (displayedMenus.Add("PromotionPackages"))
                                 {
                                     <li class="nav-item">

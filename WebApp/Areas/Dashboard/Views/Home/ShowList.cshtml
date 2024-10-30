@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Breadcrumb"] = "Blogs";
+}
+<style>
+    .table-bordered td, .table-bordered th {
+        width: 12%;
+    }
+</style>
+
+<section class="content pb-4 pt-4">
+    <div class="container-fluid">
+
+        <a class="btn btn-primary mb-2" href="/Dashboard/Show">Add Show</a>
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><b>Shows</b></h3>
+
+            </div>
+            <div class="card-body">
+                <table id="TableShows" class="table table-bordered table-responsive" style="width:100%;">
+                    <thead>
+                        <tr>
+
+                            <th>Title</th>
+                           
+                            <th>Author</th>
+                            <th>CreatedOn</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="AppendBlogs">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/dashboard/ShowList.js"></script>
+}

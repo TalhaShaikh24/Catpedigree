@@ -2481,6 +2481,55 @@ namespace WebApi.Controllers
             }
         }
 
+
+        //Dashboard
+        [HttpPost("GetAllAdminShow")]
+        public Response GetAllAdminShow()
+        {
+            Response response = new Response();
+
+            Register claimDTO = null;
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.ShowList();
+
+                if (res == null) return CustomStatusResponse.GetResponse(320);
+
+                else
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    return response;
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+
+                return response;
+            }
+        }
+
+
+
         [HttpPost("AddBlog")]
         public async Task<Response> AddBlog([FromForm] Blog obj)
         {
@@ -3662,6 +3711,88 @@ namespace WebApi.Controllers
 
 
 
+      
+        [HttpPost("UploadShowImage")]
+        public async Task<Response> UploadShowImage(IFormFile file)
+        {
+            Response response = new Response();
+            Register claimDTO = null;
+
+            try
+            {
+                // Validate the token
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null)
+                {
+                    response = CustomStatusResponse.GetResponse(401);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Unauthorized: Invalid token.";
+                    return response;
+                }
+
+                // Check if the file is null or empty
+                if (file == null || file.Length == 0)
+                {
+                    response = CustomStatusResponse.GetResponse(600);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "File is empty.";
+                    response.Data = null;
+                    return response;
+                }
+
+                // Define the path for saving the file
+                var uploadsFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "UploadShows");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+                // Generate a unique file name if the file already exists
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var fileExtension = Path.GetExtension(file.FileName);
+                var newFileName = file.FileName;
+                var filePath = Path.Combine(uploadsFolderPath, newFileName);
+                int count = 1;
+
+                while (System.IO.File.Exists(filePath))
+                {
+                    newFileName = $"{fileName}_{count}{fileExtension}";
+                    filePath = Path.Combine(uploadsFolderPath, newFileName);
+                    count++;
+                }
+
+                // Save the file asynchronously
+                using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Construct the URL
+                var fileUrlPath = Path.Combine("UploadShows", newFileName).Replace(Path.DirectorySeparatorChar, '/');
+                string imageUrl = $"{BaseUrl.TrimEnd('/')}/{fileUrlPath}";
+
+                // Prepare success response
+                response = CustomStatusResponse.GetResponse(200);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = imageUrl;
+                response.ResponseMsg = "File uploaded successfully!";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                // Log exception details here if needed
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = $"An error occurred: {ex.Message}";
+                return response;
+            }
+        }
+
+
+
+
         #endregion
 
 
@@ -3814,6 +3945,218 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("AddShow")]
+        public async Task<Response> AddShow([FromForm] Show formData)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
 
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+
+                formData.CreatedBy = claimDTO.UserId;
+
+                if (formData.ShowId>0)
+                {
+
+
+                   var  res = await _repository.UpdateShow(formData);
+                    if (res != null)
+                    {
+
+
+                        // Prepare the response
+                        response = CustomStatusResponse.GetResponse(200);
+
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.Data = res;
+                        response.ResponseMsg = "Updated Successfully.";
+                    }
+                    else
+                    {
+                        response = CustomStatusResponse.GetResponse(500);
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.ResponseMsg = "Internal Server Error."; // Handle the case where res is null
+                    }
+
+                }
+                else
+                {
+                    var res = await _repository.AddShow(formData);
+                    if (res != null)
+                    {
+
+
+                        // Prepare the response
+                        response = CustomStatusResponse.GetResponse(200);
+
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.Data = res;
+                        response.ResponseMsg = "Added Successfully.";
+                    }
+                    else
+                    {
+                        response = CustomStatusResponse.GetResponse(500);
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.ResponseMsg = "Internal Server Error."; // Handle the case where res is null
+                    }
+
+                }
+
+
+            
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+
+
+
+        [HttpPost("ShowList")]
+        public  Response ShowList()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                var res =  _repository.ShowList();
+
+                if (res != null)
+                {
+              
+                 
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    response.ResponseMsg = "";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = ""; // Handle the case where res is null
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+
+
+        [HttpPost("GetShowbyID/{Id}")]
+        public Response GetShowbyID(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                var res = _repository.GetShowbyID(Id);
+
+                if (res != null)
+                {
+
+
+                    // Prepare the response
+                    response = CustomStatusResponse.GetResponse(200);
+
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.Data = res;
+                    response.ResponseMsg = "";
+                }
+                else
+                {
+                    response = CustomStatusResponse.GetResponse(500);
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = ""; // Handle the case where res is null
+                }
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+
+
+
+
+
+        [HttpPost("ShowDelete/{Id}")]
+        public Response ShowDelete(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+               _repository.ShowDelete(Id);
+                // Prepare the response
+                response = CustomStatusResponse.GetResponse(200);
+
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = "";
+                response.ResponseMsg = "Deleted Successfully"; 
+                
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
     }
 }

@@ -1228,6 +1228,74 @@ namespace WebApp.HttpMethods
                 
         }
    
+            public static async Task<object> CustomHttpShow(string baseUrl, string url, Show obj, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+              
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    // Set the authorization header if it exists in the Cookies
+                    //if (!string.IsNullOrEmpty(httpContext.Session.GetString("authorization")))
+                    //    client.DefaultRequestHeaders.Add("authorization", httpContext.Session.GetString("authorization"));
+
+                    if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                    {
+                        client.DefaultRequestHeaders.Add("authorization", authorizationToken);
+                    }
+
+                var multiContent = new MultipartFormDataContent();
+                    multiContent.Add(new StringContent(obj.ShowId.ToString()), "ShowId");
+                    multiContent.Add(new StringContent(obj.Title ?? ""), "Title");
+                
+                    multiContent.Add(new StringContent(obj.Content ?? ""), "Content");
+                
+
+                    if (obj.FeatureImage != null)
+                    {
+
+                        multiContent.Add(new StreamContent(obj.FeatureImage.OpenReadStream()), "FeatureImage", obj.FeatureImage.FileName);
+                    }
+                     if (obj.GallaryImage != null)
+                     {
+                         foreach (var item in obj.GallaryImage)
+                         {
+                   
+                             multiContent.Add(new StreamContent(item.OpenReadStream()), "GallaryImage", item.FileName);
+                   
+                         }
+                   
+                     }
+           
+
+
+                    // Send the HTTP request
+                    HttpResponseMessage response = await client.PostAsync(url, multiContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var deserializedResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                        httpContext.Session.SetString("authorization", deserializedResponse.Token ?? ""); // Ensure token is set
+
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTimeOffset.UtcNow.AddDays(5)
+                        };
+
+                        httpContext.Response.Cookies.Append("authorization", deserializedResponse.Token == null ? "" : deserializedResponse.Token, cookieOptions);
+                    return responseBody;
+                    }
+
+                    return null;
+
+                }
+                
+        }
+   
 
         public static async Task<object> CustomHttpForGetAll(string BaseUrl, string Url, string content, HttpContext httpContext)
         {
