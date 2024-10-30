@@ -315,6 +315,7 @@ function GetAllListings() {
                         <td>${v.title}</td>
                         <td>${v.email}</td>
                         <td>${v.catType}</td>
+                        <td>${v.username}</td>
                         <td>${v.categoryName}</td>
                         <td>${v.packageName}</td>
                         <td>${promotionBadges}</td>

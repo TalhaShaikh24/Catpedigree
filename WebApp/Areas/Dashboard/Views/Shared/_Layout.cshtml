@@ -285,22 +285,23 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
+                        @{
+                            var roleIds = userinfo.RoleIds.Split(',');
+                        }
 
-                        @if (!userinfo.RoleIds.Contains("User"))
+                        @if (roleIds.Length != 1 && userinfo.RoleIds.Contains("User"))
                         {
-                             <li class="nav-item menu-open">
-
-                         
-                                <a href="@Url.Action("Index","Dashboard")" class="nav-link">
+                            <li class="nav-item menu-open">
+                                <a href="@Url.Action("Index", "Dashboard")" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Dashboard
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                           
                             </li>
-                         }
+                        }
+
                            
                         <li class="nav-item">
                             <a href="@Url.Action("Profile","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
