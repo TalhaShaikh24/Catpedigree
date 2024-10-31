@@ -114,6 +114,28 @@ namespace ClassLibrary
         public string? ScreenName { get; set; }
     }
 
+    public class ScreenPermission
+    {
+        public int? RoleId { get; set; }
+        public string? ScreenIds { get; set; }
+        public int UserId { get; set; }
+    }
+
+
+
+    public class PermissionScreens
+    {
+        public int ScreenId { get; set; }
+        public string? ScreenName { get; set; }
+    }
+    public class DTORoleScreenPermission
+    {
+        public int? UserId { get; set; }
+        public int? RoleId { get; set; }
+        public string? Role { get; set; }
+        public string? ScreenName { get; set; }
+        public string? ScreenIds { get; set; }
+    }
 
 
 

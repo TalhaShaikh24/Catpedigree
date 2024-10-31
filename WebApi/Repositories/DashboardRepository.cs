@@ -1083,7 +1083,64 @@ namespace WebApi.Repositories
             
         }
 
+        public Roles CreateRole(Roles obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Role", obj.Role, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Insert<Roles>(@"[dbo].[sp_CreateRole]", parameters);
+            return data;
+        }
 
+
+        public List<Register> GetAllUsersDropdown()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<Register>(@"[dbo].[sp_GetAllUsersDropdown]", parameters);
+            return data;
+        }
+
+        public List<Roles> GetAllRoleDropdownByUserId(int UserId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserId", UserId, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetAll<Roles>(@"[dbo].[sp_GetAllRoleDropdownByUserId]", parameters);
+            return data;
+        }
+
+        public List<PermissionScreens> GetAllPermissionScreensDropdown()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<PermissionScreens>(@"[dbo].[sp_GetAllPermissionScreensDropdown]", parameters);
+            return data;
+        }
+
+        public bool AddRoleScreenPermission(ScreenPermission obj)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@RoleId", obj.RoleId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ScreenIds", obj.ScreenIds, DbType.String, ParameterDirection.Input);
+            var data = _dapper.Insert<bool>(@"[dbo].[AddRoleScreenPermission]", parameters);
+
+            return data;
+        }
+
+        public List<DTORoleScreenPermission> GetAllRoleScreenPermissions()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            var data = _dapper.GetAll<DTORoleScreenPermission>(@"[dbo].[sp_GetRoleScreenPermissions]", parameters);
+            
+            return data;
+        }
+
+        public int DeletePermission(int Id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserId", Id, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.Insert<int>(@"[dbo].[sp_DeletePermission]", parameters);
+
+            return data;
+        }
     }
 
 

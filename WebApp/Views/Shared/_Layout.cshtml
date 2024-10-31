@@ -618,7 +618,7 @@
                                             var userdata = JsonConvert.DeserializeObject<DataObj>(userJson);
 
                                             // Split the RoleIds into an array
-                                            if (userdata.dataObj.RoleIds != null)
+                                            if (userdata.dataObj!=null && userdata.dataObj.RoleIds != null)
                                             {
                                                 var roleIds = userdata.dataObj.RoleIds.Split(',');
 

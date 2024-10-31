@@ -329,6 +329,7 @@
                                 </li>
                             }
 
+
                             // Users
                             if (displayedMenus.Add("Users") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Users")))
                             {
@@ -336,6 +337,18 @@
                                     <a href="@Url.Action("Users", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
                                         <i class="nav-icon fas fa-users"></i>
                                         <p>Users</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Role and Permission
+
+                            if (displayedMenus.Add("RolePermission") && userinfo.RoleIds.Split(",").Contains("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("RolePermission", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "RolePermission"))">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>Role and Permission</p>
                                     </a>
                                 </li>
                             }

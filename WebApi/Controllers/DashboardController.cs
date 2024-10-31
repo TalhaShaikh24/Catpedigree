@@ -3884,6 +3884,265 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("CreateRole")]
+        public Response CreateRole(Roles obj)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.CreateRole(obj);
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Role Created successfully!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("GetAllUsersDropdown")]
+        public Response GetAllUsersDropdown()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllUsersDropdown();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("GetAllRoleDropdownByUserId/{UserId}")]
+        public Response GetAllRoleDropdownByUserId(int UserId)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllRoleDropdownByUserId(UserId);
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("GetAllPermissionScreensDropdown")]
+        public Response GetAllPermissionScreensDropdown()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllPermissionScreensDropdown();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
+        [HttpPost("AddRoleScreenPermission")]
+        public Response AddRoleScreenPermission(ScreenPermission obj)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.AddRoleScreenPermission(obj);
+
+                if (res)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "Role Screen Permission Created Successfuly!";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+        
+
+        [HttpPost("GetAllRoleScreenPermissions")]
+        public Response GetAllRoleScreenPermissions()
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+
+                var res = _repository.GetAllRoleScreenPermissions();
+
+                if (res != null)
+                {
+
+                    response = CustomStatusResponse.GetResponse(200);
+                    response.Data = res;
+                    response.Token = TokenManager.GenerateToken(claimDTO);
+                    response.ResponseMsg = "";
+
+                }
+                return response;
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
 
         [HttpPost("AddUser")]
         public async Task<Response> AddUser([FromForm] Register formData)
@@ -4158,5 +4417,42 @@ namespace WebApi.Controllers
 
             return response;
         }
+
+
+        [HttpPost("DeletePermission/{Id}")]
+        public Response DeletePermission(int Id)
+        {
+            Register claimDTO = null;
+            Response response = new Response();
+
+            try
+            {
+                claimDTO = TokenManager.GetValidateToken(Request);
+                if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
+                _repository.DeletePermission(Id);
+                // Prepare the response
+                response = CustomStatusResponse.GetResponse(200);
+
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.Data = "";
+                response.ResponseMsg = "Deleted Successfully";
+
+            }
+            catch (DbException ex)
+            {
+                response = CustomStatusResponse.GetResponse(600);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response = CustomStatusResponse.GetResponse(500);
+                response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+            }
+
+            return response;
+        }
+        
     }
 }

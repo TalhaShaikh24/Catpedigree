@@ -7,6 +7,18 @@ namespace WebApi.IRepositories
         dynamic GetJsonDataAsync(int userId);
         object GetAllDropdowns(int Id);
 
+        List<Register> GetAllUsersDropdown();
+        List<DTORoleScreenPermission> GetAllRoleScreenPermissions();
+        List<Roles> GetAllRoleDropdownByUserId(int UserId);
+
+        
+
+        List<PermissionScreens> GetAllPermissionScreensDropdown();
+
+        bool AddRoleScreenPermission(ScreenPermission obj);
+
+        int DeletePermission(int Id);
+
         object GetListing_ProdictionPackages(int id);
 
         public Task<Listing> Assgin_PromotionPackage_to_List(Listing listing);
@@ -104,6 +116,7 @@ namespace WebApi.IRepositories
 
         object GetAllRoles();
 
+         Roles CreateRole(Roles obj);
 
         Task<Register> AddUser(Register formData);
 

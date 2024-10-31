@@ -61,7 +61,17 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View();
         }
 
+
+
+        [Route("Dashboard/RolePermission")]
+        public IActionResult RolePermission()
+        {
+            return View();
+        }
+
         
+
+
         [Route("Dashboard/MyListing")]
         public IActionResult MyListing()
         {
@@ -296,6 +306,77 @@ namespace WebApp.Areas.Dashboard.Controllers
 
         }
 
+
+        [HttpPost]
+        [Route("Dashboard/CreateRole")]
+        public Task<object> CreateRole([FromBody] Roles obj)
+        {
+
+            var content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/CreateRole", content, HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllUsersDropdown")]
+        public Task<object> GetAllUsersDropdown()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllUsersDropdown", "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllRoleDropdownByUserId/{Id}")]
+        public Task<object> GetAllRoleDropdownByUserId(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllRoleDropdownByUserId/"+Id, "", HttpContext);
+
+        }
+
+        [HttpPost]
+        [Route("Dashboard/GetAllPermissionScreensDropdown")]
+        public Task<object> GetAllPermissionScreensDropdown()
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllPermissionScreensDropdown", "", HttpContext);
+
+        }
+
+
+        [HttpPost]
+        [Route("Dashboard/AddRoleScreenPermission")]
+        public Task<object> AddRoleScreenPermission([FromBody] ScreenPermission obj)
+        {
+            string content = JsonConvert.SerializeObject(obj);
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AddRoleScreenPermission",content, HttpContext);
+
+        }
+
+        [HttpPost]
+
+        [Route("Dashboard/GetAllRoleScreenPermissions")]
+        public Task<object> GetAllRoleScreenPermissions()
+        {
+
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/GetAllRoleScreenPermissions","", HttpContext);
+
+        }
+
+        [HttpPost]
+
+        [Route("Dashboard/DeletePermission/{Id}")]
+        public Task<object> DeletePermission(int Id)
+        {
+
+            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/DeletePermission/"+Id, "", HttpContext);
+
+        }
+        
 
 
 
