@@ -1,0 +1,707 @@
+﻿var watermarkRatio = 0.3; // Set the ratio (% of the main image width)
+var WaterMarkURL = "";
+var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
+$(document).ready(function () {
+
+
+    $('#WaterMarkModal').on('hidden.bs.modal', function () {
+        $('#position').prop('selectedIndex', 0); // Reset to the first option
+    });
+
+
+    $(".gallery").magnificPopup({
+        delegate: "a",
+        type: "image",
+        tLoading: "Loading image #%curr%...",
+        mainClass: "mfp-img-mobile",
+        gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+        },
+        image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
+        }
+    });
+
+    GetAllGellary();
+
+});
+
+$("#UploadWaterMark").change(function () {
+
+    var file = document.getElementById('UploadWaterMark').files[0];
+
+    WaterMarkURL = window.URL.createObjectURL(file);
+
+    var img = new Image();
+    img.src = WaterMarkURL;
+    // img.crossOrigin = "Anonymous";
+
+    img.onload = function () {
+        var width = img.naturalWidth;
+        var height = img.naturalHeight;
+        $('#watermarkWidth').val(width);
+    };
+});
+
+
+$('#addWatermark, #UploadWaterMark, #position, #offsetX, #offsetY, #watermarkWidth, #watermarkOpacity').on('change keyup', function () {
+    var mainImageSrc = $("#mainImage").attr("value");
+    var watermarkImageSrc = "/webassets/images/watermarks/watermark-3.png";
+
+    Promise.all([
+        loadImage(mainImageSrc),
+        loadImageWatermark(watermarkImageSrc)
+    ]).then(function (images) {
+        debugger;
+        var mainImage = images[0];
+        var watermarkImage = images[1];
+
+
+        //    mainImage.crossOrigin = "Anonymous";
+
+        var canvas = document.createElement('canvas');
+
+        var ctx = canvas.getContext('2d');
+
+        canvas.width = mainImage.width;
+        canvas.height = mainImage.height;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(mainImage, 0, 0);
+        // ctx.crossOrigin = true;
+
+        // Calculate watermark size based on the main image size
+        var watermarkWidth = mainImage.width * watermarkRatio; // 10% of the main image width
+        var aspectRatio = watermarkImage.width / watermarkImage.height;
+        var watermarkHeight = watermarkWidth / aspectRatio;
+        var watermarkOpacity = parseFloat($('#watermarkOpacity').val());
+        var offsetX = parseInt($('#offsetX').val()) || 0;
+        var offsetY = parseInt($('#offsetY').val()) || 0;
+        var position = $('#position').val();
+
+        if (watermarkOpacity < 0 || watermarkOpacity > 1 || isNaN(watermarkOpacity)) {
+            alert("Opacity must be a number between 0 and 1");
+            return;
+        }
+
+        var watermarkX, watermarkY;
+
+        switch (position) {
+            case 'top-left':
+                watermarkX = offsetX;
+                watermarkY = offsetY;
+                break;
+            case 'top-center':
+                watermarkX = (canvas.width - watermarkWidth) / 2;
+                watermarkY = offsetY;
+                break;
+            case 'top-right':
+                watermarkX = canvas.width - watermarkWidth - offsetX;
+                watermarkY = offsetY;
+                break;
+            case 'center-left':
+                watermarkX = offsetX;
+                watermarkY = (canvas.height - watermarkHeight) / 2;
+                break;
+            case 'center':
+                watermarkX = (canvas.width - watermarkWidth) / 2;
+                watermarkY = (canvas.height - watermarkHeight) / 2;
+                break;
+            case 'center-right':
+                watermarkX = canvas.width - watermarkWidth - offsetX;
+                watermarkY = (canvas.height - watermarkHeight) / 2;
+                break;
+            case 'bottom-left':
+                watermarkX = offsetX;
+                watermarkY = canvas.height - watermarkHeight - offsetY;
+                break;
+            case 'bottom-center':
+                watermarkX = (canvas.width - watermarkWidth) / 2;
+                watermarkY = canvas.height - watermarkHeight - offsetY;
+                break;
+            case 'bottom-right':
+                watermarkX = canvas.width - watermarkWidth - offsetX;
+                watermarkY = canvas.height - watermarkHeight - offsetY;
+                break;
+            default:
+                watermarkX = offsetX;
+                watermarkY = offsetY;
+                break;
+        }
+
+        ctx.globalAlpha = watermarkOpacity;
+        ctx.drawImage(watermarkImage, watermarkX, watermarkY, watermarkWidth, watermarkHeight);
+
+        var resultImageSrc = canvas.toDataURL('image/jpeg', 0.7);
+        $("#mainImage").attr("src", resultImageSrc);
+    }).catch(function (error) {
+        console.error("Error adding watermark: ", error);
+    });
+});
+
+function downloadImage(url) {
+    // Create a temporary <a> element
+    var link = document.createElement('a');
+    link.href = url;
+    link.target = "_blank";
+    link.download = url.substring(url.lastIndexOf('/') + 1); // Extract the file name from the URL
+
+    // Append the <a> element to the body
+    document.body.appendChild(link);
+
+    // Trigger a click on the link
+    link.click();
+
+    // Remove the <a> element from the document
+    document.body.removeChild(link);
+}
+function GetAllGellary() {
+
+    postRequest("/Dashboard/GetPedigreeGallery", null, function (res) {
+
+        if (res.status == 200) {
+
+            $(".gallery").empty();
+
+            $.each(res.data, function (i, v) {
+                $(".gallery").append(`<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <div class="CheckBoxSelection shadow-sm">
+                        <input type="checkbox" value="${v.fileName}"/>
+                    </div>
+                    <a href="${v.filePath}">
+                        <figure class="position-relative">
+                            <img class="img-fluid img-thumbnail" src="${v.filePath}" alt="${v.fileName}">
+                        </figure>
+                    </a>
+                    <div class="Watermarkbutton">
+                        <button type="button" class="btn btn-info btn-sm" id="ShowModalWatermark" data-filename="${v.fileName}" data-imageurl="${v.filePath}">Add Water Mark</button>
+                    </div>
+                    <div class="DownloadButton">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="downloadImage('${v.filePath}')">Download</button>
+                    </div>
+                </div>`);
+            });
+
+
+
+
+            $('.thumb').hover(
+                function () {
+                    $(this).find('img').css({
+                        '-webkit-filter': 'grayscale(0)',
+                        'filter': 'grayscale(0)'
+                    });
+                },
+
+            );
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+
+    });
+
+
+}
+
+
+$('#replaceImage').on('click', function () {
+
+    debugger;
+
+    var base64String = $("#mainImage").attr("src");
+
+    var matches = base64String.match(/^data:image\/(png|jpg|jpeg);base64,(.*)$/);
+    var mimeType = matches[1];
+    var base64Data = matches[2];
+
+    var filename = $("#mainImage").attr("alt");
+
+    var byteCharacters = atob(base64Data);
+    var byteNumbers = new Array(byteCharacters.length);
+    for (var i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    var byteArray = new Uint8Array(byteNumbers);
+    var blob = new Blob([byteArray], { type: 'image/' + mimeType });
+
+    var formData = new FormData();
+    formData.append('file', blob, filename);
+
+    FilePostRequest(`/Dashboard/replaceFile`, formData, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+                $("#WaterMarkModal").modal("hide");
+                GetAllGellary();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+});
+
+
+$(document).on("click", "#ShowModalWatermark", function () {
+
+    debugger
+
+    var ImageUrl = $(this).attr("data-imageurl");
+
+    var filename = $(this).attr("data-filename");
+
+    $("#WaterMarkModal").modal("show");
+
+    $("#apppendImage").empty().append(`
+                        <a href="javascript:void(0)">
+                            <figure>
+                             <img id="mainImage" class="img-fluid " src="${ImageUrl}" value="${ImageUrl}" alt="${filename}">
+                            </figure>
+                         </a>`);
+   
+
+})
+
+
+function loadImageWatermark(src) {
+    debugger;
+    return new Promise(function (resolve, reject) {
+        const img = new Image();
+
+        img.onload = function () {
+            resolve(img);
+        };
+        img.onerror = function (error) {
+            reject(new Error('Failed to load image: ' + src + " " + error));
+        };
+
+
+
+        img.src = src;
+
+
+    });
+}
+
+function loadImage(src) {
+
+    return new Promise(function (resolve, reject) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+
+        img.onload = function () {
+            resolve(img);
+        };
+        img.onerror = function (error) {
+            reject(new Error('Failed to load image: ' + src + " " + error));
+        };
+
+
+        let oldUrl = src;
+        let newUrl = oldUrl.replace(/\/UploadImages\//, '/api/images/').replace(/v=\d+/, 'v=638540547168663316');
+
+
+        img.src = newUrl;
+
+
+    });
+}
+
+
+
+$('#UploadNewFile').on('change', function () {
+
+    var file = document.getElementById('UploadNewFile').files[0];
+
+    var formData = new FormData();
+    formData.append('file', file);
+
+    FilePostRequest(`/Dashboard/UploadNewGallery`, formData, function (res) {
+
+        if (res.status == 200) {
+
+            if (res.data != null) {
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+                GetAllGellary();
+            }
+        }
+        if (res.status == 304) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 305) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 401) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 403) {
+
+            Swal.fire(res.responseMsg, {
+                icon: "error",
+                title: "Error"
+            });
+        }
+        if (res.status == 320) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 500) {
+
+            Swal.fire({
+                title: "Error",
+                text: res.responseMsg,
+                icon: "error"
+            })
+        }
+        if (res.status == 600) {
+
+            Swal.fire({
+                title: "Warning",
+                text: res.responseMsg,
+                icon: "warning"
+            })
+
+        }
+    });
+});
+
+
+
+$("#masterCheckbox").change(function () {
+    if ($(this).is(":checked")) {
+        $(".CheckBoxSelection input[type='checkbox']").prop("checked", true);
+    } else {
+        $(".CheckBoxSelection input[type='checkbox']").prop("checked", false);
+    }
+});
+
+
+$("#btn-saveGallery").click(function () {
+
+    debugger
+    var checkedValues = [];
+    $(".CheckBoxSelection input[type='checkbox']:checked").each(function () {
+        checkedValues.push($(this).val());
+    });
+
+    if (checkedValues.length > 0) {
+        postRequest("/Dashboard/UploadSelectedGalleryPath/" + checkedValues.join(", "), null, function (res) {
+
+            if (res.status == 200) {
+
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+
+        });
+
+    }
+    else {
+
+        Swal.fire({
+            title: "Warning",
+            text: "Please Select Gallery Images",
+            icon: "warning"
+        })
+
+    }
+
+});
+
+
+$("#btn-deleteGallery").click(function () {
+    debugger;
+    var checkedValues = [];
+    $(".CheckBoxSelection input[type='checkbox']:checked").each(function () {
+        checkedValues.push($(this).val());
+    });
+
+    if (checkedValues.length > 0) {
+        postRequest("/Dashboard/DeleteSelectedPedigreePath/" + encodeURIComponent(checkedValues.join(",")), null, function (res) {
+
+            if (res.status == 200) {
+
+
+                Swal.fire({
+                    title: "Success",
+                    text: res.responseMsg,
+                    icon: "success"
+                });
+
+                GetAllGellary();
+
+            }
+            if (res.status == 304) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 305) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 401) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 403) {
+
+                Swal.fire(res.responseMsg, {
+                    icon: "error",
+                    title: "Error"
+                });
+            }
+            if (res.status == 320) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 500) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: res.responseMsg,
+                    icon: "error"
+                })
+            }
+            if (res.status == 600) {
+
+                Swal.fire({
+                    title: "Warning",
+                    text: res.responseMsg,
+                    icon: "warning"
+                })
+
+            }
+
+        });
+
+    }
+    else {
+
+        Swal.fire({
+            title: "Warning",
+            text: "Please Select Gallery Images",
+            icon: "warning"
+        })
+
+    }
+
+});
