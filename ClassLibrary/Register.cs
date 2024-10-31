@@ -54,6 +54,8 @@ namespace ClassLibrary
 
         public string? IsActive { get; set; }
 
+        public List<RoleScreenPermission>? RoleScreenPermission { get; set; }
+
 
     }
 
@@ -104,6 +106,14 @@ namespace ClassLibrary
     {
         public Register? dataObj { get; set; }
     }
+
+    public class RoleScreenPermission
+    {
+        public string? RoleIds { get; set; }
+        public int ScreenId { get; set; }
+        public string? ScreenName { get; set; }
+    }
+
 
 
 

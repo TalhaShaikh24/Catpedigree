@@ -27,13 +27,19 @@ namespace WebApi.Repositories
         public Register Authenticate(Register obj)
         {
 
+            Register register = obj as Register;
+
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@UsernameEmail", obj.Email, DbType.String, ParameterDirection.Input);
             parameters.Add("@Password", obj.Password, DbType.String, ParameterDirection.Input);
 
-            var data = _dapper.Get<Register>(@"[sp_Login]", parameters);
+            var data = _dapper.GetMultipleObjects(@"[sp_Login]", parameters, gr => gr.Read<Register>(),gr => gr.Read<RoleScreenPermission>());
 
-            return data;
+            register = data.Item1.FirstOrDefault();
+
+            register.RoleScreenPermission=data.Item2.ToList();
+
+            return register;
         }
 
         public  ForgotPassword ForgotPassword(ForgotPassword obj)

@@ -618,33 +618,36 @@
                                             var userdata = JsonConvert.DeserializeObject<DataObj>(userJson);
 
                                             // Split the RoleIds into an array
-                                            var roleIds = userdata.dataObj.RoleIds.Split(',');
-
-                                            // Check if there is an authorization cookie
-                                            if (!String.IsNullOrEmpty(Accessor.HttpContext.Request.Cookies["authorization"]))
+                                            if (userdata.dataObj.RoleIds != null)
                                             {
-                                                <li class="user-btn"><a href="/Dashboard" class="icon"><i class="flaticon-avatar"></i></a></li>
+                                                var roleIds = userdata.dataObj.RoleIds.Split(',');
 
-                                                // Check if RoleIds only contains "User"
-                                                if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
+                                                // Check if there is an authorization cookie
+                                                if (!String.IsNullOrEmpty(Accessor.HttpContext.Request.Cookies["authorization"]))
                                                 {
-                                                    // Do nothing or show a different UI
+                                                    <li class="user-btn"><a href="/Dashboard" class="icon"><i class="flaticon-avatar"></i></a></li>
+
+                                                    // Check if RoleIds only contains "User"
+                                                    if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
+                                                    {
+                                                        // Do nothing or show a different UI
+                                                    }
+                                                    else
+                                                    {
+                                                        <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Index","Listing")" class="main-btn icon-btn">Add Listing</a></li>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                // No authorization cookie
-                                                if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
-                                                {
-                                                    // Do nothing or show a different UI
-                                                }
-                                                else
-                                                {
-                                                    <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
+                                                    // No authorization cookie
+                                                    if (roleIds.Length == 1 && roleIds[0].Trim() == "User")
+                                                    {
+                                                        // Do nothing or show a different UI
+                                                    }
+                                                    else
+                                                    {
+                                                        <li id="btnAddListing" class="hero-nav-btn"><a href="@Url.Action("Login","Home")" class="main-btn icon-btn">Add Listing</a></li>
+                                                    }
                                                 }
                                             }
                                         }

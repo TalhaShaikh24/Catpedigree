@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 
 namespace WebApi.Utility
 {
@@ -17,50 +18,47 @@ namespace WebApi.Utility
         //static string encryptionSecureKey = "-AASA-BMCReuters2020";
         private static string Secret = "J8c20cxkPZCC/0e0ZUcjrGocsk95gOAqjzJ09apAklM=";
         private static double TokenExpireTime = 3600.0;
+
         public static string GenerateToken(Register obj)
         {
-
-            byte[] key = Convert.FromBase64String(Secret);
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
-            SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
+            var key = Convert.FromBase64String(Secret);
+            var securityKey = new SymmetricSecurityKey(key);
+            var claims = new List<Claim>
             {
-                    Subject = new ClaimsIdentity(new[] {
-                    
-                        new Claim("UserId",Convert.ToString(obj.UserId)),
-                    
-                        new Claim("Username", Convert.ToString(obj.Username)),
-
-                        new Claim("Email", Convert.ToString(obj.Email)),
-
-                        new Claim("Role", Convert.ToString(obj.RoleIds))
-                   
-                }
-                ),
-                Issuer = "CatPedigree",
-                /*IssuedAt = DateTime.UtcNow.AddHours(Convert.ToDouble(ConfigurationManager.AppSettings["UTCTime"])),*/
-                Expires = DateTime.Now.AddMinutes(TokenExpireTime),
-                SigningCredentials = new SigningCredentials(securityKey,
-                SecurityAlgorithms.HmacSha256Signature)
+                new Claim("UserId", Convert.ToString(obj.UserId)),
+                new Claim("Username", Convert.ToString(obj.Username)),
+                new Claim("Email", Convert.ToString(obj.Email)),
+                new Claim("Role", Convert.ToString(obj.RoleIds ?? ""))
             };
 
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken token = handler.CreateJwtSecurityToken(descriptor);
+            // Add claims for each permission separately
 
-            string value = string.Empty;
-            //bool keyExists = GeneratedTokens.TryGetValue(obj.Username, out value);
+                    if (obj.RoleScreenPermission != null && obj.RoleScreenPermission.Count > 0)
+                    {
+                        foreach (var permission in obj.RoleScreenPermission ?? Enumerable.Empty<RoleScreenPermission>())
+                        {
+                            claims.Add(new Claim($"RoleIds:{permission.RoleIds}", string.Empty)); // Create a claim for RoleId
+                            claims.Add(new Claim($"ScreenId:{permission.RoleIds}", permission.ScreenId.ToString())); // Create a claim for ScreenId
+                            claims.Add(new Claim($"ScreenName:{permission.RoleIds}", permission.ScreenName ?? string.Empty)); // Create a claim for ScreenName
+                        }
+                    }
 
-            //if (keyExists)
-            //{
-            //    GeneratedTokens.Remove(obj.Username);
-            //    GeneratedTokens.Add(obj.Username, handler.WriteToken(token).ToString());
-            //}
-            //else
-            //{
-            //    GeneratedTokens.Add(obj.Username, handler.WriteToken(token).ToString());
-            //}
+                    var descriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(claims),
+                        Issuer = "CatPedigree",
+                        Expires = DateTime.Now.AddMinutes(TokenExpireTime),
+                        SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
+                    };
 
-            return handler.WriteToken(token);
+                    var handler = new JwtSecurityTokenHandler();
+                    var token = handler.CreateJwtSecurityToken(descriptor);
+                    var tokenString = handler.WriteToken(token);
+
+                    return tokenString;
         }
+
+
         public static ClaimsPrincipal GetPrincipal(string token)
         {
             try
@@ -87,96 +85,60 @@ namespace WebApi.Utility
                 return null;
             }
         }
+
         public static Register ValidateToken(string token)
         {
-            Register obj = new Register();
-            ClaimsPrincipal principal = GetPrincipal(token);
-            if (principal == null)
-                return null;
-            ClaimsIdentity identity = null;
-            try
+            var principal = GetPrincipal(token);
+            if (principal == null) return null;
+
+            var identity = principal.Identity as ClaimsIdentity;
+            if (identity == null) return null;
+
+            var obj = new Register
             {
-                identity = (ClaimsIdentity)principal.Identity;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
+                UserId = int.TryParse(identity.FindFirst("UserId")?.Value, out var userId) ? userId : 0,
+                Username = identity.FindFirst("Username")?.Value,
+                Email = identity.FindFirst("Email")?.Value,
+                RoleIds = identity.FindFirst("Role")?.Value,
 
-           
-            Claim userId = identity.FindFirst("UserId");
-            Claim userName = identity.FindFirst("Username");
-            Claim Email = identity.FindFirst("Email");
-            Claim Role = identity.FindFirst("Role");
+                RoleScreenPermission = identity.Claims
+                    .Where(claim => claim.Type.StartsWith("RoleIds:"))
+                    .GroupBy(claim => claim.Type.Split(':')[1]) // Group by RoleId
+                    .Select(group =>
+                    {
+                        var roleIds = group.Key?.ToString() ?? "";
+                        var screenId = int.TryParse(identity.FindFirst($"ScreenId:{roleIds}")?.Value, out var screenIdValue) ? screenIdValue : 0;
+                        var screenName = identity.FindFirst($"ScreenName:{roleIds}")?.Value;
 
-
-            obj.UserId = Convert.ToInt32(userId.Value);
-            obj.Username = Convert.ToString(userName.Value);
-            obj.Email = Convert.ToString(Email.Value);
-            obj.RoleIds = Convert.ToString(Role.Value);
+                        return new RoleScreenPermission
+                        {
+                            RoleIds = roleIds,
+                            ScreenId = screenId,
+                            ScreenName = screenName
+                        };
+                    })
+                    .ToList()
+            };
 
             return obj;
         }
 
         public static Register GetValidateToken(HttpRequest httpRequest)
         {
-            string value = string.Empty;
-            if (!httpRequest.Headers.ContainsKey("Authorization"))
+            if (!httpRequest.Headers.ContainsKey("Authorization")) return null;
+
+            var authHeader = httpRequest.Headers["Authorization"].ToString();
+            if (string.IsNullOrWhiteSpace(authHeader)) return null;
+
+            var token = authHeader;
+            var item = GeneratedTokens.FirstOrDefault(kvp => kvp.Value == token);
+            if (!item.Equals(default(KeyValuePair<string, string>)))
             {
-                return null;
+                GeneratedTokens.Remove(item.Key);
             }
 
-            string authHeader = httpRequest.Headers["Authorization"];
-            Register LoginCredentials = null;
-            string token = authHeader;
-            //if (authHeader !=n)
-            //{
-            //    token = Request.Headers.Authorization.Scheme.ToString() + " " + Request.Headers.Authorization.Parameter.ToString();
-            //}
-            //else
-            //{
-            //    return null;
-            //}
-            //if (authHeader != null)
-            //{
-            //    token = authHeader.ToString().Split(" ")[1];
-            //}
-
-            //var token = Request.Headers.Authorization.Parameter.ToString(); //GetValues("Authorization").FirstOrDefault();
-            //if (token == null)
-            //{
-            //    token = Request.Headers.GetValues("Authorization").FirstOrDefault();
-            //    if(token==null)
-            //        return null;
-            //}
-
-
-
-            // string[] headerValues = token.Split(' ');
-            //string generatedToken = null;
-            if (token != null)
-            {
-                var item = GeneratedTokens.FirstOrDefault(kvp => kvp.Value == token);
-                //if (GeneratedTokens.TryGetValue(headerValues[2], out generatedToken))
-                //{
-                //    generatedToken=GeneratedTokens[headerValues[2]];
-                //}
-                if (!item.Equals(default(KeyValuePair<string, string>)))
-                {
-                    GeneratedTokens.Remove(item.Key);
-                }
-                
-            }
-
-            LoginCredentials = TokenManager.ValidateToken(token);
-            if (LoginCredentials == null)
-            {
-                return null;
-            }
-
-            return LoginCredentials;
+            return ValidateToken(token);
         }
-
         public static string RemoveToken(string token)
         {
             var item = GeneratedTokens.FirstOrDefault(kvp => kvp.Value == token);

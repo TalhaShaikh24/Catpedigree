@@ -283,13 +283,8 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        @{
-                            var roleIds = userinfo.RoleIds.Split(',');
-                        }
-
-                        @if (roleIds.Length != 1 && userinfo.RoleIds.Contains("User"))
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        @if (userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Index")))
                         {
                             <li class="nav-item menu-open">
                                 <a href="@Url.Action("Index", "Dashboard")" class="nav-link">
@@ -302,249 +297,213 @@
                             </li>
                         }
 
-                           
                         <li class="nav-item">
-                            <a href="@Url.Action("Profile","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
+                            <a href="@Url.Action("Profile", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
                                 <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Profile
-                                </p>
+                                <p>Profile</p>
                             </a>
                         </li>
-                        
+
                         @{
                             var displayedMenus = new HashSet<string>();
 
-                            if (userinfo.RoleIds.Contains("Vendor"))
+                            // My Listings
+                            if (displayedMenus.Add("MyListing") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("MyListing")))
                             {
-                                if (displayedMenus.Add("MyListing"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>My Listings</p>
-                                        </a>
-                                    </li>
-                                }
-
-                                if (displayedMenus.Add("PromotionPackages"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Promotion Packages</p>
-                                        </a>
-                                    </li>
-                                }
-
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MyListing", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>My Listings</p>
+                                    </a>
+                                </li>
                             }
-                            if (userinfo.RoleIds.Contains("Admin"))
+
+                            // Promotion Packages
+                            if (displayedMenus.Add("PromotionPackages") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("PromotionPackages")))
                             {
-                                if (displayedMenus.Add("MyListing"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("MyListing","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "MyListing"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>My Listings</p>
-                                        </a>
-                                    </li>
-                                }
+                                <li class="nav-item">
+                                    <a href="@Url.Action("PromotionPackages", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>Promotion Packages</p>
+                                    </a>
+                                </li>
+                            }
 
-                                if (displayedMenus.Add("Users"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Users","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
-                                            <i class="nav-icon fas fa-users"></i>
-                                            <p>Users</p>
-                                        </a>
-                                    </li>
-                                }
+                            // Users
+                            if (displayedMenus.Add("Users") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Users")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Users", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Users"))">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                            }
 
-                                if (displayedMenus.Add("Gallery"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Gallary","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallary"))">
-                                            <i class="nav-icon fas fa-users"></i>
-                                            <p>Gallery</p>
-                                        </a>
-                                    </li>
-                                }
-                                if (displayedMenus.Add("Usefullinks"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Usefullinks","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Usefullinks"))">
-                                            <i class="nav-icon fas fa-link"></i>
-                                            <p>Useful Links</p>
-                                        </a>
-                                    </li>
-                                }
+                            // Gallery
+                            if (displayedMenus.Add("Gallery") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Gallery")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Gallery", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Gallery"))">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>Gallery</p>
+                                    </a>
+                                </li>
+                            }
 
-                                if (displayedMenus.Add("ListingApproval"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("ListingApproval","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
-                                            <i class="nav-icon fas fa-thumbs-up"></i>
-                                            <p>Listing Approvals</p>
-                                        </a>
-                                    </li>
-                                }
+                            // Useful Links
+                            if (displayedMenus.Add("Usefullinks") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Usefullinks")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Usefullinks", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Usefullinks"))">
+                                        <i class="nav-icon fas fa-link"></i>
+                                        <p>Useful Links</p>
+                                    </a>
+                                </li>
+                            }
 
-                                if (displayedMenus.Add("AdvertiseApprovals"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("advertisementApprovals","Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
-                                            <i class="nav-icon fas fa-thumbs-up"></i>
-                                            <p>Advertise Approvals</p>
-                                        </a>
-                                    </li>
-                                }
+                            // Listing Approvals
+                            if (displayedMenus.Add("ListingApproval") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("ListingApproval")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ListingApproval", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ListingApproval"))">
+                                        <i class="nav-icon fas fa-thumbs-up"></i>
+                                        <p>Listing Approvals</p>
+                                    </a>
+                                </li>
+                            }
 
-                                if (displayedMenus.Add("Blogs"))
-                                {
-                                    <li class="nav-item">
+                            // Advertise Approvals
+                            if (displayedMenus.Add("AdvertiseApprovals") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("advertisementApprovals")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("advertisementApprovals", "Dashboard")" class="nav-link @(IsMenuItemActive("Dashboard", "advertisementApprovals"))">
+                                        <i class="nav-icon fas fa-thumbs-up"></i>
+                                        <p>Advertise Approvals</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Show
+                            if (displayedMenus.Add("Show") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("ShowList")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ShowList", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "ShowList"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>Show</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Assign Pricing Package
+                            if (displayedMenus.Add("AssignPricingPackage") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("AssignPricingPackage")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AssignPricingPackage", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignPricingPackage"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>Assign Pricing Packages</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Assign Advertisement
+                            if (displayedMenus.Add("AssignAdvertisement") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("AssignAdvertisement")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AssignAdvertisement", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignAdvertisement"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>Assign Advertisement Packages</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Assign User Promotion Packages to User
+                            if (displayedMenus.Add("AssignUserPromotionPackagesToUser") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("AssignUserPromotionPackagesToUser")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AssignUserPromotionPackagesToUser", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignUserPromotionPackagesToUser"))">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>Assign Promotion Packages</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Media Section
+                            if (displayedMenus.Add("Media"))
+                            {
+                                var MediascreenNames = new[] { "Media", "PedigreeGallery", "BreederLicense", "VideoGallery" };
+
+                                <li class="nav-item">
+                                    @if (userinfo.RoleScreenPermission.Any(x => MediascreenNames.Any(name => x.ScreenName.Contains(name))))
+                                    {
                                         <a href="#" class="nav-link">
-                                            <i class="nav-icon fas fa-book"></i>
-                                            <p>
-                                                Blogs
-                                                <i class="fas fa-angle-left right"></i>
-                                            </p>
-                                        </a>
-                                        <ul class="nav nav-treeview" style="display: none;">
-                                            @if (displayedMenus.Add("BlogCategories"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Categories</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("AddBlog"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Add Blog</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("BlogsList"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Blogs</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-
-                                if (displayedMenus.Add("Show"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("ShowList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Show</p>
-                                        </a>
-                                    </li>
-                                }
-                           
-
-                                if (displayedMenus.Add("PromotionPackages"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("PromotionPackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PromotionPackages"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Promotion Packages</p>
-                                        </a>
-                                    </li>
-                                }
-
-                                if (displayedMenus.Add("AssignPricingPackage"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("AssignPricingPackage","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignPricingPackage"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Assign Pricing Packages</p>
-                                        </a>
-                                    </li>
-                                }
-                                
-                                if (displayedMenus.Add("AssignAdvertisement"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("AssignAdvertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignAdvertisement"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Assign Advertisement Packages</p>
-                                        </a>
-                                    </li>
-                                }
-                                if (displayedMenus.Add("AssignUserPromotionPackagesToUser"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("AssignUserPromotionPackagesToUser","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "AssignUserPromotionPackagesToUser"))">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>Assign Promotion Packages</p>
-                                        </a>
-                                    </li>
-                                }
-
-                                if (displayedMenus.Add("Media"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="" class="nav-link">
                                             <i class="nav-icon fas fa-edit"></i>
                                             <p>
                                                 Media
                                                 <i class="fas fa-angle-left right"></i>
                                             </p>
                                         </a>
-                                        <ul class="nav nav-treeview" style="display: none;">
-                                            @if (displayedMenus.Add("MediaList"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Media","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Media</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("PedigreeGallery"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("PedigreeGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Pedigree</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("BreederLicense"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("BreederLicense","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Breeder License</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("VideoGallery"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("VideoGallery","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Videos</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
+                                    }
+                                    <ul class="nav nav-treeview" style="display: none;">
+                                       
+                                        @if (displayedMenus.Add("MediaList") && userinfo.RoleScreenPermission.Any(x => MediascreenNames.Any(name => x.ScreenName.Contains(name))))
+                                        {
+                                            // Media List
 
-                                if (displayedMenus.Add("CouponsCodes"))
-                                {
-                                    <li class="nav-item">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Media", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Media"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Media</p>
+                                                </a>
+                                            </li>
+                                        }
+                                       
+                                        @if (displayedMenus.Add("PedigreeGallery") && userinfo.RoleScreenPermission.Any(x => MediascreenNames.Any(name => x.ScreenName.Contains(name))))
+                                        {
+                                             // Pedigree Gallery
+
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("PedigreeGallery", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "PedigreeGallery"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Pedigree</p>
+                                                </a>
+                                            </li>
+                                        }
+                                       
+                                        @if (displayedMenus.Add("BreederLicense") && userinfo.RoleScreenPermission.Any(x => MediascreenNames.Any(name => x.ScreenName.Contains(name))))
+                                        {
+                                             // Breeder License
+
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("BreederLicense", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BreederLicense"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Breeder License</p>
+                                                </a>
+                                            </li>
+                                        }
+                                       
+                                        @if (displayedMenus.Add("VideoGallery") && userinfo.RoleScreenPermission.Any(x => MediascreenNames.Any(name => x.ScreenName.Contains(name))))
+                                        {
+                                            // Video Gallery
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("VideoGallery", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "VideoGallery"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Video Gallery</p>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            if (displayedMenus.Add("CouponsCodes"))
+                            {
+                                var CouponsscreenNames = new[] { "CouponsList", "Coupons" };
+                                bool hasCouponsPermission = userinfo.RoleScreenPermission.Any(x => CouponsscreenNames.Any(name => x.ScreenName.Contains(name)));
+
+                                <li class="nav-item">
+                                    @if (hasCouponsPermission)
+                                    {
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-edit"></i>
                                             <p>
@@ -552,59 +511,62 @@
                                                 <i class="fas fa-angle-left right"></i>
                                             </p>
                                         </a>
-                                        <ul class="nav nav-treeview">
-                                            @if (displayedMenus.Add("CouponsList"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("CouponsList","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Code Lists</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("GenerateCodes"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Coupons","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Generate Codes</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-
-                                if (displayedMenus.Add("Advertisement"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>
-                                                My Advertisements
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                                if (displayedMenus.Add("Advertisementpackages"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
-                                            <i class="nav-icon fas fa-list"></i>
-                                            <p>
-                                                Advertisement Packages
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                               
+                                    }
+                                    <ul class="nav nav-treeview">
+                                        @if (displayedMenus.Add("CouponsList") && hasCouponsPermission)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("CouponsList", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "CouponsList"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Code Lists</p>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (displayedMenus.Add("GenerateCodes") && hasCouponsPermission)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Coupons", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Coupons"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Generate Codes</p>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
                             }
 
-                            if (userinfo.RoleIds.Contains("Blogger"))
+                            // Advertisement Menu
+                            if (displayedMenus.Add("Advertisement") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Advertisement")))
                             {
-                                if (displayedMenus.Add("Blogs"))
-                                {
-                                    <li class="nav-item">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisement", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>My Advertisements</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Advertisement Packages Menu
+                            if (displayedMenus.Add("Advertisementpackages") && userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Advertisementpackages")))
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Advertisementpackages", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>Advertisement Packages</p>
+                                    </a>
+                                </li>
+                            }
+
+                            // Blogs Menu
+
+                            if (displayedMenus.Add("Blogs"))
+                            {
+                                var BlogsscreenNames = new[] { "BlogCategories", "Blog", "Blogs" };
+                                bool hasBlogsPermission = userinfo.RoleScreenPermission.Any(x => BlogsscreenNames.Any(name => x.ScreenName.Contains(name)));
+
+                                <li class="nav-item">
+                                    @if (hasBlogsPermission)
+                                    {
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
                                             <p>
@@ -612,63 +574,38 @@
                                                 <i class="fas fa-angle-left right"></i>
                                             </p>
                                         </a>
-                                        <ul class="nav nav-treeview" style="display: none;">
-                                            @if (displayedMenus.Add("BlogCategories"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("BlogCategories","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Categories</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("AddBlog"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Blog","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Add Blog</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                            @if (displayedMenus.Add("BlogsList"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a href="@Url.Action("Blogs","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
-                                                        <i class="nav-icon fas fa-list"></i>
-                                                        <p>Blogs</p>
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-                            }
-
-                            if (!userinfo.RoleIds.Contains("User"))
-                            {
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Advertisement","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisement"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            My Advertisements
-                                        </p>
-                                    </a>
+                                    }
+                                    <ul class="nav nav-treeview" style="display: none;">
+                                        @if (displayedMenus.Add("BlogCategories") && hasBlogsPermission)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("BlogCategories", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "BlogCategories"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Categories</p>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (displayedMenus.Add("AddBlog") && hasBlogsPermission)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Blog", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blog"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Add Blog</p>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (displayedMenus.Add("BlogsList") && hasBlogsPermission)
+                                        {
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Blogs", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Blogs"))">
+                                                    <i class="nav-icon fas fa-list"></i>
+                                                    <p>Blogs</p>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
                                 </li>
-
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Advertisementpackages","Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Advertisementpackages"))">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>
-                                            Advertisement Packages
-                                        </p>
-                                    </a>
-                                </li>
-
                             }
-
-                               
-                            
                         }
 
                         <li class="nav-item">
@@ -679,11 +616,9 @@
                                 </p>
                             </a>
                         </li>
-                       
-                        
- 
                     </ul>
                 </nav>
+
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->

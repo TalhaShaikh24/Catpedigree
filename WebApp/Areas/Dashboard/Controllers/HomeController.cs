@@ -150,6 +150,7 @@ namespace WebApp.Areas.Dashboard.Controllers
 
 
         [Route("Dashboard/PromotionPackages")]
+        [RolePermission("PromotionPackages")]
         public IActionResult PromotionPackages()
         {
             return View();
