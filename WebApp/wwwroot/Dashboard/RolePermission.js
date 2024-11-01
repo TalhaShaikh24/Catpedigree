@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(async function () {
-    await GetAllUsersDropdown();
+    //await GetAllUsersDropdown();
     await GetAllRoleByUserIdChange(0);
     await GetAllPermissionScreensDropdown();
     await GetAllRoleScreenPermissions();
@@ -359,9 +359,9 @@ function GetAllRoleScreenPermissions() {
                 render: function (data, type, row) {
                     return `
                         <div class="d-flex align-items-center">
-                        <button class="btn btn-primary btn-sm mr-1" onclick="EditPermission('${row.screenIds}', ${row.userId}, ${row.roleId})">Edit</button>
+                        <button class="btn btn-primary btn-sm mr-1" onclick="EditPermission('${row.screenIds}',${row.roleId})">Edit</button>
                          |
-                        <button class="btn btn-danger btn-sm ml-1" onclick="DeletePermission(${row.userId})">Delete</button>
+                        <button class="btn btn-danger btn-sm ml-1" onclick="DeletePermission(${row.roleId})">Delete</button>
                         </div>
                         `;
                 }
@@ -465,11 +465,9 @@ $("#Btn_CreateRoleSubmit").click(function () {
 
 $("#Btn_RoleScreenPermissionSubmit").click(function () {
 
-
     var obj = {
         RoleId: Number($("#ddlRoles").selectpicker("val")),
-        ScreenIds: $("#ddlScreens").selectpicker("val").join(","),
-        UserId: Number($("#ddlUsers").selectpicker("val"))
+        ScreenIds: $("#ddlScreens").selectpicker("val").join(",")
     }
 
     postRequest('/Dashboard/AddRoleScreenPermission', obj, async function (res) {
@@ -478,9 +476,8 @@ $("#Btn_RoleScreenPermissionSubmit").click(function () {
 
             if (res.data != null) {
 
-                $("#ddlRoles").empty().attr("disabled", true).val("");
-                $("#ddlScreens").attr("disabled",true).val("");
-                $("#ddlUsers").val("");
+                $("#ddlRoles").val("");
+                $("#ddlScreens").val("");
                 $(".selectpicker").selectpicker("refresh");
 
                 await GetAllRoleScreenPermissions();
@@ -555,9 +552,7 @@ $("#Btn_RoleScreenPermissionSubmit").click(function () {
 });
 
 
-async function EditPermission(screenId, userId, roleId) {
-
- $("#ddlUsers").selectpicker("val", userId);
+async function EditPermission(screenId, roleId) {
 
  $("#ddlRoles").selectpicker("val", roleId);
 
@@ -569,7 +564,7 @@ async function EditPermission(screenId, userId, roleId) {
     
 }
 
-function DeletePermission(userId) {
+function DeletePermission(RoleId) {
     Swal.fire({
         title: "Are you sure?",
         text: "If you proceed, permissions for all roles associated with this user will be removed. Do you want to continue?",
@@ -579,7 +574,7 @@ function DeletePermission(userId) {
         cancelButtonText: "Cancel",
     }).then((result) => {
         if (result.isConfirmed) {
-            postRequest('/Dashboard/DeletePermission/' + userId, null, function (res) {
+            postRequest('/Dashboard/DeletePermission/' + RoleId, null, function (res) {
                 if (res.status == 200) {
                     GetAllRoleScreenPermissions();
                 } else if ([304, 305, 401, 320, 500].includes(res.status)) {

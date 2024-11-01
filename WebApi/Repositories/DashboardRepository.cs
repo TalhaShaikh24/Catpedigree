@@ -1114,13 +1114,12 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public bool AddRoleScreenPermission(ScreenPermission obj)
+        public List<RoleScreenPermission> AddRoleScreenPermission(ScreenPermission obj)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@RoleId", obj.RoleId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@ScreenIds", obj.ScreenIds, DbType.String, ParameterDirection.Input);
-            var data = _dapper.Insert<bool>(@"[dbo].[AddRoleScreenPermission]", parameters);
+            var data = _dapper.GetAll<RoleScreenPermission>(@"[dbo].[AddRoleScreenPermission]", parameters);
 
             return data;
         }
@@ -1136,7 +1135,7 @@ namespace WebApi.Repositories
         public int DeletePermission(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@UserId", Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RoleId", Id, DbType.Int32, ParameterDirection.Input);
             var data = _dapper.Insert<int>(@"[dbo].[sp_DeletePermission]", parameters);
 
             return data;

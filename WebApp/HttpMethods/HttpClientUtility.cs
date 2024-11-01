@@ -17,6 +17,55 @@ namespace WebApp.HttpMethods
 
 
 
+        public static async Task<object> CustomHttpScreenPermissionDashboard(string BaseUrl, string Url, string content, HttpContext httpContext)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Url);
+
+                // Get authorization token from cookies
+                if (httpContext.Request.Cookies.TryGetValue("authorization", out var authorizationToken))
+                {
+                    request.Headers.Add("authorization", authorizationToken);
+                }
+
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage Res = await client.SendAsync(request);
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = await Res.Content.ReadAsStringAsync();
+
+                    var obj = JsonConvert.DeserializeObject<Response>(response);
+
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = false, // Should be true in production to ensure cookies are sent over HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddDays(5)
+                    };
+
+                    // Set cookies
+                    httpContext.Response.Cookies.Append("authorization", obj.Token ?? "", cookieOptions);
+                    var objUser = new { dataObj = obj.Data };
+                    httpContext.Response.Cookies.Append("user", JsonConvert.SerializeObject(objUser), cookieOptions);
+
+                    return response;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+
+
 
         public static async Task<object> CustomHttpDashboard(string BaseUrl, string Url, string content, HttpContext httpContext)
         {

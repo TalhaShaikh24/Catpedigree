@@ -352,7 +352,7 @@ namespace WebApp.Areas.Dashboard.Controllers
         {
             string content = JsonConvert.SerializeObject(obj);
 
-            return HttpClientUtility.CustomHttpDashboard(BaseUrl, "api/Dashboard/AddRoleScreenPermission",content, HttpContext);
+            return HttpClientUtility.CustomHttpScreenPermissionDashboard(BaseUrl, "api/Dashboard/AddRoleScreenPermission",content, HttpContext);
 
         }
 

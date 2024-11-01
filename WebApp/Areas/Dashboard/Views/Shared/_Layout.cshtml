@@ -16,38 +16,43 @@
     }
 }
  
-
 @{
-    string userJson = JsonConvert.SerializeObject(@Accessor.HttpContext.Request.Cookies["user"]);
-
+    string userJson = Accessor.HttpContext.Request.Cookies["user"];
     string roles = string.Empty;
-
     var userinfo = new Register();
 
-    if (@Accessor.HttpContext.Request.Cookies["authorization"] != null && userJson != null)
+    if (Accessor.HttpContext.Request.Cookies["authorization"] != null && !string.IsNullOrEmpty(userJson))
     {
-
-        // Check if userJson starts and ends with quotes and remove them if necessary
-        if (userJson.StartsWith("\"") && userJson.EndsWith("\""))
+        // Ensure proper deserialization
+        try
         {
-            userJson = userJson.Substring(1, userJson.Length - 2);
+            // Check if userJson starts and ends with quotes and remove them if necessary
+            if (userJson.StartsWith("\"") && userJson.EndsWith("\""))
+            {
+                userJson = userJson.Substring(1, userJson.Length - 2);
+            }
+
+            // Replace escaped quotes if any
+            userJson = userJson.Replace("\\\"", "\"");
+
+            // Parse the outer JSON object
+            var outerObject = JObject.Parse(userJson);
+
+            // Extract the 'dataObj' inner JSON string
+            var dataObjJson = outerObject["dataObj"].ToString();
+
+            // Deserialize the inner JSON string to the Register object
+            userinfo = JsonConvert.DeserializeObject<Register>(dataObjJson);
+
+            roles = userinfo.RoleIds;
         }
+        catch (Exception ex)
+        {
+            // Log or display the error for debugging
+            Console.WriteLine("Error deserializing user JSON: " + ex.Message);
+        }
+    }
 
-        // Replace escaped quotes if any
-        userJson = userJson.Replace("\\\"", "\"");
-
-        // Parse the outer JSON object
-        var outerObject = JObject.Parse(userJson);
-
-        // Extract the 'dataObj' inner JSON string
-        var dataObjJson = outerObject["dataObj"].ToString();
-
-        // Deserialize the inner JSON string to the Register object
-        userinfo = JsonConvert.DeserializeObject<Register>(dataObjJson);
-
-        roles=userinfo.RoleIds;
-
-}
     else
     {
         // This part of the layout will be visible to unauthenticated users
@@ -297,12 +302,15 @@
                             </li>
                         }
 
-                        <li class="nav-item">
-                            <a href="@Url.Action("Profile", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Profile</p>
-                            </a>
-                        </li>
+                        @if (userinfo.RoleScreenPermission.Any(x => x.ScreenName.Contains("Profile")))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Profile", "Dashboard")" class="nav-link @(IsMenuItemActive("Home", "Profile"))">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>Profile</p>
+                                </a>
+                            </li>
+                        }
 
                         @{
                             var displayedMenus = new HashSet<string>();

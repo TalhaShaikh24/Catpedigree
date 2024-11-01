@@ -130,7 +130,6 @@ namespace ClassLibrary
     }
     public class DTORoleScreenPermission
     {
-        public int? UserId { get; set; }
         public int? RoleId { get; set; }
         public string? Role { get; set; }
         public string? ScreenName { get; set; }

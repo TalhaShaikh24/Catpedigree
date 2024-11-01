@@ -15,7 +15,7 @@ namespace WebApi.IRepositories
 
         List<PermissionScreens> GetAllPermissionScreensDropdown();
 
-        bool AddRoleScreenPermission(ScreenPermission obj);
+        List<RoleScreenPermission> AddRoleScreenPermission(ScreenPermission obj);
 
         int DeletePermission(int Id);
 

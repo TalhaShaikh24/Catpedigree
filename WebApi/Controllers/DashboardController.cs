@@ -4069,11 +4069,12 @@ namespace WebApi.Controllers
 
                 var res = _repository.AddRoleScreenPermission(obj);
 
-                if (res)
+                if (res.Count > 0)
                 {
 
+                    claimDTO.RoleScreenPermission = res.ToList();
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Data = res;
+                    response.Data = claimDTO;
                     response.Token = TokenManager.GenerateToken(claimDTO);
                     response.ResponseMsg = "Role Screen Permission Created Successfuly!";
 
