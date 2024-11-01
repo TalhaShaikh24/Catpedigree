@@ -4067,7 +4067,7 @@ namespace WebApi.Controllers
                 claimDTO = TokenManager.GetValidateToken(Request);
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
-                var res = _repository.AddRoleScreenPermission(obj);
+                var res = _repository.AddRoleScreenPermission(obj,claimDTO.UserId, claimDTO.RoleIds);
 
                 if (res.Count > 0)
                 {

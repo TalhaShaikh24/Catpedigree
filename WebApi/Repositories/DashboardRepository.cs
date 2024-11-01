@@ -1114,11 +1114,13 @@ namespace WebApi.Repositories
             return data;
         }
 
-        public List<RoleScreenPermission> AddRoleScreenPermission(ScreenPermission obj)
+        public List<RoleScreenPermission> AddRoleScreenPermission(ScreenPermission obj, int UserId,string Roles)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@RoleId", obj.RoleId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@ScreenIds", obj.ScreenIds, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Roles", Roles, DbType.String, ParameterDirection.Input);
+            parameters.Add("@UserId",UserId, DbType.String, ParameterDirection.Input);
             var data = _dapper.GetAll<RoleScreenPermission>(@"[dbo].[AddRoleScreenPermission]", parameters);
 
             return data;
