@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     public class PaymentController : ControllerBase
     {
 
-          private readonly IPackagesRepository _repository;
+        private readonly IPackagesRepository _repository;
         private readonly IPromotionPackageRepository _promotionPackageRepository;
         private readonly IStripeServices _stripeServices;
         private readonly IAccountRepository _accountRepository;
@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
 
         //For Testing
-       // const string endpointSecret = "whsec_5faaa8f893e8ee04fe332d778da9a4b4807614c9f57791447440cfdcb58bca33";
+        // const string endpointSecret = "whsec_5faaa8f893e8ee04fe332d778da9a4b4807614c9f57791447440cfdcb58bca33";
 
         //For Live
         const string endpointSecret = "whsec_vHh97mrXLLgRnbDHNtgehD4OxPegYSPX";
@@ -39,9 +39,9 @@ namespace WebApi.Controllers
         private readonly ICurrencyConverterService _currencyConverterService;
         private readonly IAdvertisementServices _advertisementServices;
 
-        public PaymentController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration,IAccountRepository accountRepository, ICurrencyConverterService currencyConverterService,
+        public PaymentController(IPackagesRepository repository, IStripeServices stripeServices, IConfiguration configuration, IAccountRepository accountRepository, ICurrencyConverterService currencyConverterService,
             IPromotionPackageRepository promotionPackageRepository
-            ,IAdvertisementServices advertisementServices
+            , IAdvertisementServices advertisementServices
 
             )
         {
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
                 var options = new SessionCreateOptions
                 {
                     PaymentMethodTypes = new List<string>
-{
+                    {
                         "bancontact",
                         "blik",
                         "card",
@@ -92,22 +92,37 @@ namespace WebApi.Controllers
                             Quantity = 1,
                         },
                     },
-                    //Mode = "subscription",
                     Mode = "payment",
-                    AllowPromotionCodes = true,
                     AutomaticTax = new SessionAutomaticTaxOptions
                     {
                         Enabled = true,
                     },
-                    SuccessUrl = webUrl + "home/thankyou?session_id={CHECKOUT_SESSION_ID}",
-                    CancelUrl = webUrl + "dashboard",
-                    Metadata = new Dictionary<string, string>
+                };
+
+                // Conditional logic to set Discounts or AllowPromotionCodes
+                if (request.PriceId == "price_1Q1iJU01TMUk2T9MYgSRhSmX")
+                {
+                    options.Discounts = new List<SessionDiscountOptions>
                     {
-                        { "package_type", request.packageType },
-                        { "PurchasedProductID", request.PurchasedProductID.ToString() },
-                        { "user_id", claimDTO.UserId.ToString() },
-                        { "Days", request.Days.ToString() },
-                    },
+                        new SessionDiscountOptions
+                        {
+                            Coupon = "eeIGD3VI" // Replace with your actual coupon ID
+                        }
+                    };
+                }
+                else
+                {
+                    options.AllowPromotionCodes = true; // Enable promotion codes for other price IDs
+                }
+
+                options.SuccessUrl = webUrl + "home/thankyou?session_id={CHECKOUT_SESSION_ID}";
+                options.CancelUrl = webUrl + "dashboard";
+                options.Metadata = new Dictionary<string, string>
+                {
+                    { "package_type", request.packageType },
+                    { "PurchasedProductID", request.PurchasedProductID.ToString() },
+                    { "user_id", claimDTO.UserId.ToString() },
+                    { "Days", request.Days.ToString() },
                 };
 
                 var service = new SessionService();
@@ -203,7 +218,7 @@ namespace WebApi.Controllers
                         checkoutSession.Metadata.TryGetValue("PurchasedProductID", out var purchasedProductIdPI))
                         { // Handle subscription ID accordingly
 
-                        
+
                             switch (packageTypePI)
                             {
                                 case "pricing":
@@ -302,7 +317,7 @@ namespace WebApi.Controllers
                 request.Name,
                 request.AmountOff,
                 request.Currency,
-            
+
                 request.AllowedUsers,
                 request.ExpiresAt
             );
@@ -316,13 +331,14 @@ namespace WebApi.Controllers
                 }
                 return response;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 response = CustomStatusResponse.GetResponse(500);
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = ex.Message;
                 return response;
             }
-          //  return Ok(promotionCode);
+            //  return Ok(promotionCode);
         }
 
         [HttpPost("GetAllCoupons")]
@@ -343,7 +359,7 @@ namespace WebApi.Controllers
                 response.Token = TokenManager.GenerateToken(claimDTO);
                 response.ResponseMsg = "";
 
-                return response;    
+                return response;
             }
             catch (Exception ex)
             {
@@ -352,7 +368,7 @@ namespace WebApi.Controllers
                 response.ResponseMsg = ex.Message;
                 return response;
             }
-             
+
         }
     }
 }

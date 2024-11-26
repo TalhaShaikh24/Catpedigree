@@ -41,7 +41,17 @@
     <!--====== Default css ======-->
     <link rel="stylesheet" href="~/webassets/css/default.css">
     <!--====== Style css ======-->
-    <link rel="stylesheet" href="~/webassets/css/style.css">
+    <!-- Conditionally include CDN only if ExcludeCDN is false or not set -->
+    @if (!(ViewData["ExcludeCDN"] is bool exclude && exclude))
+    {
+        <link rel="stylesheet" href="~/webassets/css/style.css">
+    }
+    else
+    {
+        <link href="~/webassets/css/styleblogsshows.css" rel="stylesheet" />
+    }
+    <!--====== Translate css ======-->
+    <link href="~/webassets/css/translate.css" rel="stylesheet" />
     <!--====== Toast Alert css ======-->
     <link href="~/webassets/css/toats.css" rel="stylesheet" />
     <!--====== BoxIcon css ======-->
@@ -52,8 +62,8 @@
 
     @* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-rumzqYksPNWDfb0_rwyW2YSAeBvfQA&callback=initMap" async defer></script> *@
 
-    <!-- Include Google Translate API -->
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    @* <!-- Include Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> *@
     <style>
         section.hero-area {
             padding-top: 0px;
@@ -95,9 +105,9 @@
     </style>
     <style>
         /* Style for the translation dropdown */
-        .goog-te-menu-value {
+        /* .goog-te-menu-value {
             padding: 0 !important;
-        }
+        } */
     </style>
 
     <!--====== Jquery js ======-->
@@ -472,11 +482,11 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-4 d-flex flex-column align-items-center">
-                        <div class="top-content text-center">
-                            <p class="google-languages">
-                                <a id="google_translate_element" href="#"></a> <!-- Google Translate dropdown element -->
-                            </p>
-                        </div>
+                         <!-- Translate Button with "notranslate" class -->
+                          <button type="button" class="translate-button notranslate" id="translateButton" onclick="openModal()" data-toggle="modal" data-target="#languageModal">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English" id="selectedFlag">
+                            <span id="selectedLanguage">English</span>
+                          </button>
                     </div>
                     <div class="col-6 col-md-4 d-flex flex-column align-items-center">
                         <div class="currency-dropdown">
@@ -566,7 +576,7 @@
                                                 <li><a href="@Url.Action("FelineFood", "Home")">Feline Food</a></li>
                                                 <li><a href="@Url.Action("PoisonousPlants", "Home")">Poisonous Plants</a></li>
                                                 <li><a href="@Url.Action("Shows","Home")">Shows</a></li>
-                                                <li><a href="@Url.Action("Index","Show")">Shows new</a></li>
+                                                <li><a href="@Url.Action("Index","Show")">Show news</a></li>
                                                 <li><a href="@Url.Action("houseRules","Home")">House rules</a></li>
                                                 <li><a href="@Url.Action("PaymentOptions","Home")">Payment Options</a></li>
                                                 <li><a href="@Url.Action("UsefulLinks","Home")">Useful Links</a></li>
@@ -674,6 +684,30 @@
         </div>
     </header>
     <!--====== End Header Section ======-->
+
+    <!-- Modal Translation-->
+      <div class="modal fade notranslate languageModal" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="m-0">Select Language</h2>
+              <!-- Close Button -->
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ul class="language-list" id="languageList">
+                <!-- Language List with flags -->
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger reset-button" onclick="resetTranslation()">Reset to English</button>
+            </div>
+          </div>
+        </div>
+      </div>
     @RenderBody()
 
 
@@ -689,7 +723,7 @@
                                 <div>
                                     <h6 class="text-white mb-2 mt-4">CAT PEDIGREE WORLD</h6>
                                     <p>
-                                        The place to be if you are looking for a pedigree cat. Here you can find your beautiful and unique breed with pedigree all over the world!
+                                        The place to be if you are looking for a pedigree cat. Here you can find your beautiful and unique breed with pedigrees all over the world!
                                     </p>
                                 </div>
                                 <div class="d-none">
@@ -797,6 +831,9 @@
 
 
     <!--====== End Footer ======-->
+
+    
+
     <!--====== back-to-top ======-->
     <a href="#" class="back-to-top"><i class="ti-angle-up"></i></a>
 
@@ -841,196 +878,10 @@
         let markers = [];
 
     </script>
-    <script type="text/javascript">
+    <div id="google_translate_element"></div>
 
-
-
-
-        $(document).on('click', '.google_translate_element', function (event) {
-            event.preventDefault();
-
-        })
-
-
-        // Function to initialize Google Translate Element
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-
-                includedLanguages: 'es,fr,de,it,ja,ko,zh-CN,nl,da,sv,fi,el,iw,no,pl,ro,ru,pt-PT,pt,en,tr,uk', // Adding pt-PT for Portuguese
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-
-
-        // Function to save selected language in local storage
-        function saveLanguagePreference(lang) {
-            localStorage.setItem('preferredLanguage', lang);
-        }
-
-        // Function to apply saved language preference
-        function applySavedLanguage() {
-            var lang = localStorage.getItem('preferredLanguage');
-            if (lang) {
-                var translateFrame = document.querySelector('iframe.goog-te-banner-frame');
-                if (translateFrame) {
-                    var translateDoc = translateFrame.contentDocument || translateFrame.contentWindow.document;
-                    var langButtons = translateDoc.querySelectorAll('button[lang]');
-                    for (var i = 0; i < langButtons.length; i++) {
-                        if (langButtons[i].getAttribute('lang') === lang) {
-                            langButtons[i].click();
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Initialize Google Translate
-        function initializeGoogleTranslate() {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            document.getElementsByTagName('head')[0].appendChild(script);
-
-            // Apply saved language preference after Google Translate loads
-            script.onload = function () {
-                setTimeout(applySavedLanguage, 1000); // Delay to ensure translate frame is loaded
-            };
-        }
-
-        // Save language selection on change
-        document.addEventListener('click', function (event) {
-            if (event.target.tagName === 'A' && event.target.classList.contains('goog-te-menu2-item')) {
-                var lang = event.target.getAttribute('lang');
-                saveLanguagePreference(lang);
-            }
-        });
-
-        window.onload = function () {
-            // Ensure initializeGoogleTranslate is called as a function
-            initializeGoogleTranslate();
-
-            // Function to check if an element with the specified class exists inside an iframe
-            function checkElementInIframe(iframe, className) {
-                // Access the iframe's document
-                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-                // Check if the element with the specified class exists in the iframe's document
-                var element = iframeDocument.querySelector(`.${className}`);
-
-                // Return the iframe document and the found element (if any)
-                return { document: iframeDocument, element: element };
-            }
-
-            // Function to insert CSS into the iframe's head
-            function insertCssIntoIframe(iframeDocument, cssRules) {
-                var head = iframeDocument.head || iframeDocument.getElementsByTagName('head')[0];
-                var style = iframeDocument.createElement('style');
-                style.type = 'text/css';
-
-                if (style.styleSheet) {
-                    // This is required for IE8 and below.
-                    style.styleSheet.cssText = cssRules;
-                } else {
-                    style.appendChild(iframeDocument.createTextNode(cssRules));
-                }
-
-                head.appendChild(style);
-            }
-
-            // Function to continuously check for the element inside all iframes
-            function continuouslyCheckElement(iframeSelector, className, cssRules, interval = 1000, maxAttempts = 10) {
-                let attempts = 0;
-
-                // Create a timer to repeatedly check for the element
-                const timer = setInterval(() => {
-                    // Get all iframes matching the selector
-                    var iframes = document.querySelectorAll(iframeSelector);
-
-                    let foundElement = false;
-
-                    iframes.forEach((iframe) => {
-                        iframe.style.boxShadow = '2px 6px 8px 2px #00000057';
-                        iframe.style.borderRadius = '14px';
-                        iframe.style.marginTop = '10px';
-                        const result = checkElementInIframe(iframe, className);
-                        const iframeDocument = result.document;
-                        const element = result.element;
-
-                        if (element) {
-                            console.log('Element found inside the iframe.');
-
-                            // Insert CSS into the iframe's document
-                            if (iframeDocument) {
-                                insertCssIntoIframe(iframeDocument, cssRules);
-                            }
-
-                            foundElement = true; // Mark that we found the element
-                        }
-                    });
-
-                    if (foundElement) {
-                        clearInterval(timer); // Stop the timer if the element is found in any iframe
-                    } else {
-                        attempts++;
-                        console.log(`Attempt ${attempts}: Element not found inside the iframes.`);
-
-                        // Stop the timer after reaching the maximum number of attempts
-                        if (attempts >= maxAttempts) {
-                            console.log('Maximum attempts reached. Stopping check.');
-                            clearInterval(timer);
-                        }
-                    }
-                }, interval);
-            }
-
-            // Usage
-            var iframeSelector = 'iframe.skiptranslate'; // Target the iframe with class 'skiptranslate'
-            var className = 'VIpgJd-ZVi9od-vH1Gmf'; // Replace with the class name you're looking for
-            var cssRules = `
-                            body .VIpgJd-ZVi9od-vH1Gmf {
-                                max-height: 600px;
-                                height: auto !important;
-                                overflow-y: auto;
-                                width: 500px !important;
-                                max-width: 500px;
-                                border: 1px solid #fff !important;
-                                border-radius: 14px;
-                                padding-bottom: 20px;
-                                background-color: #4d4f5f;
-                                box-shadow: none !important;
-                            }
-                            table{
-                                  width:100%!important;
-                            }
-                            .VIpgJd-ZVi9od-vH1Gmf-ibnC6b div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:link div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:visited div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:active div {
-                                color: #fff;
-                                background: transparent;
-                                padding: 14px 8px;
-                                -webkit-transition: all 0.2s;
-                                transition: all 0.2s;
-                            }
-                            .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:hover div {
-                                color: #FFF;
-                                background: #c1c1c17a;
-                            }
-                            a.VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd div span {
-                                font-size: 12pt !important;
-                                color:#fff
-                            }
-                            span.indicator {
-                                margin-right: 8px;
-                            }
-                    `;
-
-            // Start checking for the element with a 1-second interval and a maximum of 10 attempts
-            continuouslyCheckElement(iframeSelector, className, cssRules, 1000, 10);
-
-        };
-
-    </script>
-
-
+      <!-- Link to external JavaScript -->
+      <script src="~/webassets/js/translate.js"></script>
     <script>
 
 

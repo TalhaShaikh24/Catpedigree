@@ -18,11 +18,14 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
         public IActionResult BlogDetails()
         {
+            // This page will exclude the Style.css CDN link
+            ViewData["ExcludeCDN"] = true;
             return View();
         }
 

@@ -61,7 +61,7 @@ function getAllPackages() {
                             <div class="col-12 col-lg-3">
                                 <div class="pricing-table pedigree">
                                     <h3>${item.name}*</h3>
-                                    <p class="price">Now for € ${item.price.toFixed(2)}** / <span>year</span></p>
+                                    <p class="price">${item.name === 'STARTER' ? 'Now for Free' : 'Now for € ' + item.price.toFixed(2) + '** / <span>year</span>'}</p>
                                     <p class="description">Key Features:</p>
                                     <div class="accordion">
                         `;
@@ -92,7 +92,8 @@ function getAllPackages() {
                         html += `
                         </div>
                         <button class="button buypackage" type="button" data-packageid="${item.packageID}" data-priceid="${item.priceId}">
-                            <p class="button-pt">BUY NOW!</p>
+                            
+                            <p class="button-pt">${item.name === 'STARTER' ? 'GET FOR FREE' : 'BUY NOW!'}</p>
                         </button>
                     </div>
                 </div>
@@ -296,7 +297,9 @@ function Payment(pkgId,priceId) {
         $('.buypackage').removeClass('disabled').removeClass('disabled-current').on('click', function () {
             // Re-bind click event for future use
         });
-        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text
+        $('.button-pt').first().text('GET FOR FREE'); // Change the first button text
+        $('.buypackage').find('.button-pt').text('BUY NOW!'); // Change button text for buypackage
+
         $('.btnSingleListing').find('.button-pt').text("I'll rather buy my listings"); // Change button text
     });
  //   $("#paymentModal").modal('show');

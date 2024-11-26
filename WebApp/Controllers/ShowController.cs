@@ -22,6 +22,8 @@ namespace WebApp.Controllers
 
         public IActionResult ShowDetails()
         {
+            // This page will exclude the Style.css CDN link
+            ViewData["ExcludeCDN"] = true;
             return View();
         }
 

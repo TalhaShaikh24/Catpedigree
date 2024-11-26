@@ -287,30 +287,41 @@ namespace WebApi.Controllers
             {
                 var smtpSettings = _configuration.GetSection("SmtpSettings");
 
+                var smtpServer = smtpSettings["Server"];
+                int port = int.Parse(smtpSettings["Port"]);
+                var senderEmail = smtpSettings["SenderEmail"];
+                var username = smtpSettings["Username"];
+                var password = smtpSettings["Password"];
+                var senderName = smtpSettings["SenderName"];
+                bool isEnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
                 using (var mail = new MailMessage())
-                using (var smtpClient = new SmtpClient(smtpSettings["Server"]))
+                using (var smtpClient = new SmtpClient(smtpServer))
                 {
-                    mail.From = new MailAddress(smtpSettings["SenderEmail"], smtpSettings["SenderName"]);
+                    mail.From = new MailAddress(senderEmail, senderName);
                     mail.To.Add(toEmail);
                     mail.Subject = "Password Reset Request";
 
                     mail.Body = $@"
-                <html>
-                <body>
-                    <p>Dear User,</p>
-                    <p>We received a request to reset your password. Please use the following verification code to proceed:</p>
-                    <h2 style='color: #007bff;'>{verificationCode}</h2>
-                    <p>If you did not request this password reset, please ignore this email. Your password will not be changed.</p>
-                    <p>Thank you,</p>
-                    <p>The Support Team</p>
-                </body>
-                </html>";
+                    <html>
+                    <body>
+                        <p>Dear User,</p>
+                        <p>We received a request to reset your password. Please use the following verification code to proceed:</p>
+                        <h2 style='color: #007bff;'>{verificationCode}</h2>
+                        <p>If you did not request this password reset, please ignore this email. Your password will not be changed.</p>
+                        <p>Thank you,</p>
+                        <p>The Support Team</p>
+                    </body>
+                    </html>";
 
                     mail.IsBodyHtml = true;
 
-                    smtpClient.Port = int.Parse(smtpSettings["Port"]);
-                    smtpClient.Credentials = new System.Net.NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
-                    smtpClient.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+                    smtpClient.Port = port;
+                    smtpClient.Credentials = new System.Net.NetworkCredential(username, password);
+                    smtpClient.EnableSsl = true;
+
+                    // Increase timeout for connection
+                    smtpClient.Timeout = 200000; // Timeout set to 200 seconds
 
                     smtpClient.Send(mail);
                 }
@@ -319,15 +330,14 @@ namespace WebApi.Controllers
             {
                 // Log SMTP-specific exceptions
                 Console.WriteLine($"SMTP Error: {smtpEx.Message}");
-                // Handle or rethrow according to your needs
             }
             catch (Exception ex)
             {
                 // Log other exceptions
                 Console.WriteLine($"General Error: {ex.Message}");
-                // Handle or rethrow according to your needs
             }
         }
+
 
 
     }

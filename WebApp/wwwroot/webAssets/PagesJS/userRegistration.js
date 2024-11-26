@@ -81,9 +81,9 @@ $(document).ready(function () {
                 extension: "jpg|jpeg|png|webp"
             },
             breederLicense: {
-                required: function (element) {
-                    return $("#vendor").is(":checked");
-                },
+                //required: function (element) {
+                //    return $("#vendor").is(":checked");
+                //},
                 extension: "jpg|jpeg|png|pdf|webp"
             }
         },
@@ -135,7 +135,7 @@ $(document).ready(function () {
                 extension: "Only JPG, JPEG, and PNG files are allowed"
             },
             breederLicense: {
-                required: "Please upload your breeder license (required for Breeder)",
+                //required: "Please upload your breeder license (required for Breeder)",
                 extension: "Only JPG, JPEG, PDF, and PNG files are allowed"
             }
         },
