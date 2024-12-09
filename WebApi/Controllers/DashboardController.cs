@@ -485,14 +485,26 @@ namespace WebApi.Controllers
                 if (claimDTO == null) return CustomStatusResponse.GetResponse(401);
 
 
-                var res = _repository.GetListingDetailById(Id);
+                if (claimDTO.RoleIds.Split(",").Any(x => x.Contains("Admin")))
+                {
+                    var res = _repository.GetListingDetailById(Id);
 
-                if (res == null) return CustomStatusResponse.GetResponse(320);
+                    if (res == null) return CustomStatusResponse.GetResponse(320);
+                    else
+                    {
+                        response = CustomStatusResponse.GetResponse(200);
+                        response.Token = TokenManager.GenerateToken(claimDTO);
+                        response.Data = res;
+
+                        return response;
+                    }
+                }
                 else
                 {
-                    response = CustomStatusResponse.GetResponse(200);
+                    response = CustomStatusResponse.GetResponse(600);
                     response.Token = TokenManager.GenerateToken(claimDTO);
-                    response.Data = res;
+                    response.ResponseMsg = "You can not edit pedigree listings";
+                    response.Data =null;
 
                     return response;
                 }

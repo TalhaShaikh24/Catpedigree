@@ -201,6 +201,12 @@
         table th, table td {
             vertical-align: middle !important;
         }
+
+        #btn_AddPedigree {
+            border-radius: 50px !important;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+        }
+
     </style>
 
      <!-- Google tag (gtag.js) -->
@@ -238,6 +244,11 @@
             </ul>
             <ul class="navbar-nav ml-auto">
 
+                <li class="nav-item dropdown d-flex align-items-center">
+                    <a class="btn btn-info btn-md px-4" id="btn_AddPedigree" href="@Url.Action("AddPedigree","Dashboard")">
+                       Add Pedigree
+                    </a>
+                </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="/Dashboard/Blogs">

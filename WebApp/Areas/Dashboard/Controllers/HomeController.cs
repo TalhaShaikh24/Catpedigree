@@ -54,6 +54,13 @@ namespace WebApp.Areas.Dashboard.Controllers
             return View(); // Return the partial view
         }
 
+        [Route("Dashboard/AddPedigree")]
+        public IActionResult AddPedigree()
+        {
+
+            return View(); // Return the partial view
+        }
+
 
         [Route("Dashboard/Users")]
         public IActionResult Users()

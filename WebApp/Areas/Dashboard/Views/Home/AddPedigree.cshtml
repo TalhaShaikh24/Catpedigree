@@ -1,51 +1,84 @@
-﻿
+﻿   <!--====== Favicon Icon ======-->
+
+
+<link rel="shortcut icon" href="~/webassets/images/favicon.ico" type="image/png">
+<!--====== Bootstrap css ======-->
+<!--====== FontAwesoem css ======-->
+<link rel="stylesheet" href="~/webassets/fonts/themify-icons/themify-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+<!--====== Flaticon css ======-->
+<link rel="stylesheet" href="~/webassets/fonts/flaticon/flaticon.css">
+<!--====== Magnific Popup css ======-->
+<link rel="stylesheet" href="~/webassets/css/magnific-popup.css">
+<!--====== Slick css ======-->
+<link rel="stylesheet" href="~/webassets/css/slick.css">
+<!--====== Nice-select css ======-->
+<link rel="stylesheet" href="~/webassets/css/nice-select.css">
+<!--====== Jquery ui css ======-->
+<link rel="stylesheet" href="~/webassets/css/jquery-ui.min.css">
+<!--====== Animate css ======-->
+<link rel="stylesheet" href="~/webassets/css/animate.css">
+<!--====== Default css ======-->
+<link rel="stylesheet" href="~/webassets/css/default.css">
+<!--====== Style css ======-->
+<link rel="stylesheet" href="~/webassets/css/style.css">
+
 <style>
-    .transparent-header {
+
+    .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+        height: fit-content!important;
+        overflow: hidden !important;
+       }
+        .transparent-header {
         background-color: #000000 !important;
     }
-</style>
-<style>
-    .transparent-header {
-        background-color: #000000 !important;
+
+    #listingForm {
+        margin: 0; /* Remove default margins */
+        padding: 0; /* Remove default padding */
     }
 
     .step-form {
         display: none;
+        margin: 0; /* Remove margin for step forms */
+        padding: 20px; /* Optional internal padding */
     }
 
-        .step-form.active {
-            display: block;
-        }
-/* Container styling */
-.single-checkbox {
-    display: flex;
-    align-items: center;
-}
+    .step-form.active {
+        display: block;
+    }
 
-/* Typing effect styling */
-.typing-text {
-    font-family: monospace; /* Monospace font for typewriter effect */
-    color: #ff344f; /* Text color */
-    font-size: 18px; /* Font size */
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide text overflow */
-    border-right: 3px solid #ff344f; /* Cursor effect */
-    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
-}
+    /* Container styling */
+    .single-checkbox {
+        display: flex;
+        align-items: center;
+    }
 
-/* Typing animation */
-@@keyframes typing {
-    0% { width: 0; }
-    50% { width: 100%; }
-    100% { width: 0; }
-}
+    /* Typing effect styling */
+    .typing-text {
+        font-family: monospace; /* Monospace font for typewriter effect */
+        color: #ff344f; /* Text color */
+        font-size: 18px; /* Font size */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide text overflow */
+        border-right: 3px solid #ff344f; /* Cursor effect */
+        animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+    }
 
-/* Blinking cursor animation */
-@@keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: #ff344f; } /* Cursor color matching text */
-}
-@@media only screen and (max-width:768px){
+    /* Typing animation */
+    @@keyframes typing {
+        0% { width: 0; }
+        50% { width: 100%; }
+        100% { width: 0; }
+    }
+
+    /* Blinking cursor animation */
+    @@keyframes blink-caret {
+        from, to { border-color: transparent; }
+        50% { border-color: #ff344f; } /* Cursor color matching text */
+    }
+
+    @@media only screen and (max-width:768px){
         .typing-text {
             white-space: unset;
             animation: unset;
@@ -62,11 +95,11 @@
     }
 </style>
 
-<section class="fioxen-add-listing pt-120 pb-120 mt-60">
+<section class="fioxen-add-listing ">
     <div class="container-fluid">
         <form id="listingForm">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <!-- Step 1: General Information -->
                     <div class="step-form active" id="step-1">
                         <div class="add-listing-form general-listing-form mb-60 wow fadeInUp">
@@ -102,14 +135,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="form_group">
-                                        <label>
-                                            Category
-                                            <span style="font-size: smaller; color: gray;">
-                                                (Pedigree Listing can only be added through the dashboard.)
-                                            </span>
-                                        </label>
-
-                                        <select class="wide" id="Category" required>
+                                        <label>Category</label>
+                                        <select class="wide" id="Category" required disabled>
+                                            <option value="1" selected disabled>Pedigree</option>
                                         </select>
                                     </div>
                                 </div>
@@ -285,7 +313,7 @@
                                     <div class="form_group">
                                         <label>Pedigree name mother</label>
                                         <div class="form_group">
-                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother"  value="">
+                                            <input type="text" class="form_control" id="FTMother" placeholder="Title" name="FTMother" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +328,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form_group">
-                                        <label>Mother tested on</label>
+                                        <label>Mother tested</label>
                                         <div class="form_group">
                                             <input type="text" class="form_control" id="MotherTested" placeholder="Title" name="MotherTested" value="">
                                         </div>
@@ -308,7 +336,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form_group">
-                                        <label>Father tested on</label>
+                                        <label>Father tested</label>
                                         <div class="form_group">
                                             <input type="text" class="form_control" id="FatherTested" placeholder="Title" name="FatherTested" value="">
                                         </div>
@@ -363,10 +391,10 @@
                                         </div>
 
                                     </div>
-                                   
+
                                     <div class="row my-2" id="FeaturedImageAppend">
                                     </div>
-                                    
+
                                 </div>
 
 
@@ -412,13 +440,13 @@
                                             - Prerequisite : <strong>You Must Have Video Package To Upload the Video</strong><br>
                                             - Video Duration: <strong> Maximum allowed size is 30 MBs. </strong><br>
                                             - Video FileSize: <strong> Maximum allowed duration is 30 seconds</strong><br>
-                                           
+
                                         </div>
                                         <div class="form_group mt-4">
                                             <label class="d-block" style="line-height: 5px;">VIDEO POST (OPTIONAL)</label>
                                             <small> Post video of your beloved kittens</small>
                                             <div class="form_group">
-                                                <input type="file" id="VideoFile"  class="form_control bg-white pt-4" accept="video/*" style="opacity:1!important">
+                                                <input type="file" id="VideoFile" class="form_control bg-white pt-4" accept="video/*" style="opacity:1!important">
 
                                             </div>
                                         </div>
@@ -509,7 +537,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <div class="form_group">
                                         <label>Website Url</label>
@@ -665,5 +693,4 @@
     <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
 
-    <script src="~/webAssets/PagesJS/Listing.js"></script>
-}
+}<script src="~/dashboard/addpedigree.js"></script>
