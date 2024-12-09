@@ -265,21 +265,22 @@ function GetAllDropdowns() {
 
             if (res.data != null) {
 
-                $("#PackageId").empty();
+                //$("#PackageId").empty();
                 //$("#Category").empty();
                 $("#Category").change();
                 $("#TypeOfCat").empty();
                 $("#PromotionPackageId").empty();
 
 
-                $("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+                //$("#PackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
+
                 $("#PromotionPackageId").append(`<option value="-1" disabled selected>Select Packages</option>`);
 
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
 
-                $.each(res.data.item3, function (i, v) {
-                    $("#PackageId").append(`<option value="${v.packageID}">${v.name}-(${v.remainingListings == 999 ? "Unlimited" : v.remainingListings})</option>`);
-                });
+                //$.each(res.data.item3, function (i, v) {
+                //    $("#PackageId").append(`<option value="${v.packageID}">${v.name}-(${v.remainingListings == 999 ? "Unlimited" : v.remainingListings})</option>`);
+                //});
 
                 $.each(res.data.item2, function (i, v) {
                     $("#TypeOfCat").append(`<option value="${v.id}">${v.catType}</option>`);
@@ -697,14 +698,14 @@ $("#Btn_Post_Listing").click(function () {
 
         formData.append("FeatureImageFile", $("#FeaturedFile")[0].files[0]);
         formData.append("VideoFile", $("#VideoFile")[0].files[0]);
-        formData.append("CategoryId", Number($("#Category option:selected").val()));
+        formData.append("CategoryId", Number(1));
         formData.append("Title", $("#Title").val());
         formData.append("Country", $("#Country").val());
         formData.append("Location", $("#Location").val());
         formData.append("State", $("#State").val());
         formData.append("City", $("#City").val());
         formData.append("ZipCode", $("#ZipCode").val());
-        formData.append("PackageId", Number($("#PackageId").val()));
+        formData.append("PackageId", Number(1));
         formData.append("Gender", $("#Gender").val());
         formData.append("Phone", $("#Phone").val());
         formData.append("Email", $("#Email").val());
