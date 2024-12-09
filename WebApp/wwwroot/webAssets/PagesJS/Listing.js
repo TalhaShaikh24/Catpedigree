@@ -232,7 +232,7 @@ $("#Category").change(function (e) {
                             <small class="d-block"><strong>Upload a copy of your original pedigree</strong></small>
                             <small class="d-block mb-2">Please make sure the text on the pictures is readable and correctly aligned.</small>
                             <div class="form_group">
-                                <input type="file" id="PedigreeFile" class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
+                                <input type="file" id="PedigreeFile" required class="form_control bg-white pt-4" style="opacity: 1!important; height: 70px;">
                                 <div class="w-100" id="PedigreeImageViewAppend"></div>
                             </div>
                         </div>
