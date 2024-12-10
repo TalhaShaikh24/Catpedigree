@@ -53,6 +53,13 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult HowToUploadPedigree()
+        {
+            return View();
+        }
+
+        
         public IActionResult WhyCatPedigree()
         {
             return View();
