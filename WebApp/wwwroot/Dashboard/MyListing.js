@@ -658,9 +658,9 @@ $(document).on("click", ".btn_Listing_Edit", function (e) {
                 longitude = res.data.longitude;
 
                 //update code changes 
-                if (res.data.isPriceRequest) $('input[name="IsPriceRequest"][value="1"]').prop('checked', true); else $('input[name="IsPriceRequest"][value="0"]').prop('checked', true);
-                if (res.data.isSterilization) $('input[name="IsSterilization"][value="1"]').prop('checked', true); else $('input[name="IsSterilization"][value="0"]').prop('checked', true);
-                if (res.data.isCastration) $('input[name="IsCastration"][value="1"]').prop('checked', true); else $('input[name="IsCastration"][value="0"]').prop('checked', true);
+                if (res.data.isPriceRequest) $('#IsPriceRequestYes').prop('checked', true); else $('#IsPriceRequestNo').prop('checked', true);
+                if (res.data.isSterilization) $('#IsSterilizationYes').prop('checked', true); else $('#IsSterilizationNo').prop('checked', true);
+                if (res.data.isCastration) $('#IsCastrationYes').prop('checked', true); else $('#IsCastrationNo').prop('checked', true);
 
                 $("#CatteryName").val(res.data.catteryName);
 
