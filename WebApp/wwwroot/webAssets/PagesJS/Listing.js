@@ -277,6 +277,7 @@ function GetAllDropdowns() {
                 $("#TypeOfCat").append(`<option value="-1" disabled selected>Select Type Of Cat</option>`);
 
                 $.each(res.data.item3, function (i, v) {
+                    debugger;
                     $("#PackageId").append(`<option value="${v.packageID}">${v.name}-(${v.remainingListings == 999 ? "Unlimited" : v.remainingListings})</option>`);
                 });
 
